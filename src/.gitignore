@@ -1,8 +1,3 @@
-# VSCode folder
-.vscode/
-
-# Build folder
-build/
 # This file is used to ignore files which are generated
 # ----------------------------------------------------------------------------
 
@@ -22,10 +17,13 @@ build/
 *.qm
 .#*
 *.*#
+core
+!core/
 tags
 .DS_Store
 .directory
 *.debug
+Makefile*
 *.prl
 *.app
 moc_*.cpp
