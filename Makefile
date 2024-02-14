@@ -11,13 +11,13 @@ all: clean q_prepare
 	make -C src
 
 q_prepare:
-	qmake -o src/Makefile sim_robots.pro
+	qmake -o src/Makefile icp2024.pro
 
 run:
-	./src/sim_robots
+	./src/icp2024
 
 clean: clean_pack
-	rm -f src/sim_robots src/*.o src/moc_mainwindow.cpp src/moc_predefs.h src/ui_mainwindow.h src/Makefile src/.qmake.stash
+	rm -f src/icp2024 src/*.o src/moc_mainwindow.cpp src/moc_predefs.h src/ui_mainwindow.h src/Makefile src/.qmake.stash
 	rm -rf logs
 
 clean_pack:
@@ -27,4 +27,4 @@ doxygen:
 	echo man
 
 pack: clean
-	zip -r xbatur00_xkukht01.zip src LICENSE Makefile README.txt sim_robots.pro doc/Doxyfile examples
+	zip -r xbatur00_xkukht01.zip src LICENSE Makefile README.txt icp2024.pro doc/Doxyfile examples

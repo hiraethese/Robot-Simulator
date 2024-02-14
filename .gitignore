@@ -5,7 +5,8 @@
 build/
 # This file is used to ignore files which are generated
 # ----------------------------------------------------------------------------
-
+src/icp2024
+src/Makefile
 *~
 *.autosave
 *.a
@@ -34,9 +35,9 @@ qrc_*.cpp
 Thumbs.db
 *.res
 *.rc
-/.qmake.cache
-/.qmake.stash
-
+src/.qmake.cache
+src/.qmake.stash
+moc_predefs.h
 # qtcreator generated files
 *.pro.user*
 CMakeLists.txt.user*
