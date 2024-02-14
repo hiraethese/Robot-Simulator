@@ -18,13 +18,13 @@ run:
 
 clean: clean_pack
 	rm -f src/icp2024 src/*.o src/moc_mainwindow.cpp src/moc_predefs.h src/ui_mainwindow.h src/Makefile src/.qmake.stash
-	rm -rf logs
+	rm -rf logs doc/html doc/latex
 
 clean_pack:
 	rm -f xbatur00_xkukht01.zip
 
 doxygen:
-	echo man
+	doxygen doc/Doxyfile
 
 pack: clean
-	zip -r xbatur00_xkukht01.zip src LICENSE Makefile README.txt icp2024.pro doc/Doxyfile examples
+	zip -r xbatur00_xkukht01.zip src LICENSE Makefile README.txt icp2024.pro examples doc/Doxyfile
