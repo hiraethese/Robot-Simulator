@@ -10,11 +10,15 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 #gui/
 SOURCES += \
+    src/gui/menuwindow.cpp \
+    src/gui/simulationwindow.cpp \
     src/main.cpp \
     src/gui/mainwindow.cpp
 
 HEADERS += \
-    src/gui/mainwindow.h
+    src/gui/mainwindow.h \
+    src/gui/menuwindow.h \
+    src/gui/simulationwindow.h
 
 FORMS += \
     src/gui/mainwindow.ui

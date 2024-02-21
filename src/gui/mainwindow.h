@@ -5,10 +5,16 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QLabel>
+#include <QVBoxLayout>
+
+#include "simulationwindow.h"
+#include "menuwindow.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
+class SimulationWindow;
 }
 QT_END_NAMESPACE
 
@@ -21,39 +27,19 @@ public:
     ~MainWindow();
 
 private:
-    bool crutchMenuWindowFlag;
-    bool crutchSimulationWindowFlag;
 
-    QLabel *l;
-
-    QPushButton* startMenuButton;
-    QPushButton* settingsMenuButton;
-
-    QPushButton* startSimulationButton;
-    QPushButton* stopSimulationButton;
-    QPushButton* continueSimulationButton;
-
-    QPushButton* settingsSimulationButton;
-
-    QPushButton* forwardMoveSimulationButton;
-    QPushButton* moveRotateLeftSimulationButton;
-    QPushButton* moveRotateRightSimulationButton;
-    QPushButton* movestopSimulationButton;
-
-    void createSimulationWindowButtons();
-    void deleteSimulationWindowButtons();
-
-    void createMenuWindowButtons();
-    void deleteMenuWindowButtons();
+    MenuWindow* menuWind;
+    SimulationWindow* simWind;
+    void initAppWindows();
+    void deleteAppWindows();
+    void runApp();
+    QPushButton* testButton;
+    //void runApplication();
 
     Ui::MainWindow *ui;
 
 public slots:
-    void createMenuWindow();
-    void deleteMenuWindow();
-    void createSimulationWindow();
-    void deleteSimulationWindow();
-    void createLabel();
-    void deleteLabel();
+    void fromMenuToSimulation();
+    void fromSimulationToMenu();
 };
 #endif // MAINWINDOW_H
