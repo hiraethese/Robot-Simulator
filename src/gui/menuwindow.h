@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QPushButton>
-
+#include <QHBoxLayout>
 class MenuWindow : public QWidget
 {
     Q_OBJECT
@@ -13,9 +13,13 @@ public:
     QPushButton* startButton;
 
 private:
+
     void initMenuWindowButtons();
     void deleteMenuWindowButtons();
-
+    QHBoxLayout* menuBoxForButton;
+    QPushButton* settingsButton;
+    QPushButton* setPlaceButton;
+    //QPushButton* helpButton;
 signals:
 };
 
