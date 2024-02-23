@@ -88,9 +88,32 @@ private:
     void deleteActions();
 
 public slots:
+    /**
+     * @brief functional for widget with help message for user
+     * @param void
+     * @return void
+    */
     void helpTextToolActionFunctional();
+
+    /**
+     * @brief functional for widget with creating new map
+     * @param void
+     * @return void
+    */
     void newMapToolActionFunctional();
+
+    /**
+     * @brief functional for widget with list of all maps (can choose one like actula or delete old map)
+     * @param void
+     * @return void
+    */
     void listMapToolActionFunctional();
+
+    /**
+     * @brief functional for widget with settings
+     * @param void
+     * @return void
+    */
     void settingsToolActionFunctional();
 };
 #endif // MAINWINDOW_H
