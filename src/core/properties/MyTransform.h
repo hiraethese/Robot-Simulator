@@ -3,8 +3,7 @@
 
 #include "../icplib.h"
 
-class MyTransform
-{
+class MyTransform {
 private:
     Vector2d _position;
     Vector2d _size;
