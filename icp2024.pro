@@ -10,11 +10,15 @@ RESOURCES += res/icons.qrc
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 #gui/
 SOURCES += \
+    src/core/textparser.cpp \
+    src/gui/simulationbody.cpp \
     src/main.cpp \
     src/gui/mainwindow.cpp
 
 HEADERS += \
+    src/core/textparser.h \
     src/gui/mainwindow.h \
+    src/gui/simulationbody.h
 
 FORMS += \
     src/gui/mainwindow.ui

@@ -12,6 +12,10 @@
 #include <iostream>
 #include <QIcon>
 #include <QMessageBox>
+#include <QMenu>
+#include <QString>
+#include <QInputDialog>
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -29,17 +33,22 @@ public:
 private:
 
     // BAR && ACTIONS
-
     QToolBar* helpToolBar;
     QAction* helpToolAction;
 
     QToolBar* mapToolBar;
     QAction* newMapToolAction;
+    /*QMenu* newMapMenu;
+    QAction* newMapDownload;
+    QAction* newMapCreate;
+    */
     QAction* listMapToolAction;
 
     QToolBar* settingsToolBar;
     QAction* settingsToolAction;
 
+    // inside attribute
+    QString absolutePathToTextMapFile;
     // UI
     Ui::MainWindow *ui;
 
