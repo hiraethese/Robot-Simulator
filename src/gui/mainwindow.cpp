@@ -41,6 +41,14 @@ void MainWindow::createActions(){
     newMapToolAction = new QAction(QIcon(":/icons/newMapTool.png"), "&New map", this);
     connect(newMapToolAction, SIGNAL(triggered()), this, SLOT(newMapToolActionFunctional()));
 
+    /* MENU FOR NEW MAP
+    newMapMenu = new QMenu(this);
+    newMapDownload = new QAction("download new map");
+    newMapCreate = new QAction("create new map");
+    newMapMenu->addAction(newMapDownload);
+    newMapMenu->addAction(newMapCreate);
+    newMapToolAction->setMenu(newMapMenu);
+    */
     listMapToolAction = new QAction(QIcon(":/icons/listOfMapTool.png"), "&List of maps", this);
     connect(listMapToolAction, SIGNAL(triggered()), this, SLOT(listMapToolActionFunctional()));
 
@@ -66,6 +74,7 @@ void MainWindow::createTools(){
     helpToolBar = addToolBar("&help");
     helpToolBar->addAction(helpToolAction);
 
+
     mapToolBar = addToolBar("&maps");
     mapToolBar->addAction(newMapToolAction);
     mapToolBar->addAction(listMapToolAction);
@@ -89,7 +98,8 @@ void MainWindow::helpTextToolActionFunctional(){
 
 void MainWindow::newMapToolActionFunctional(){
     // !!! creatting widget for writting new map, parsing and sending do simulations widget creatting
-    QMessageBox::about(this, "Help", "<b>This place will be for creatting new maps!</b>");
+    //QMessageBox::about(this, "Help", "<b>This place will be for creatting new maps!</b>");
+    absolutePathToTextMapFile = QInputDialog::getText(this, tr("new map"), tr("Enter path to map file")); // QLineEdit::Normal
 }
 
 void MainWindow::listMapToolActionFunctional(){
