@@ -17,7 +17,7 @@ run:
 	./src/icp2024
 
 clean: clean_pack
-	rm -f src/icp2024 src/*.o src/moc_*.cpp src/moc_predefs.h src/ui_mainwindow.h src/Makefile src/.qmake.stash
+	rm -f src/icp2024 src/*.o src/moc_*.cpp src/moc_*.h src/qrc_icons.cpp src/ui_mainwindow.h src/Makefile src/.qmake.stash
 	rm -rf logs doc/html doc/latex
 
 clean_pack:
