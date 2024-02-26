@@ -17,10 +17,15 @@ private:
     SimulationWindow* simWind;
 
     QVBoxLayout* simulationsLayot;
-    QHBoxLayout* windowBoxLayout;
-    QHBoxLayout* buttonsHighLayout;
-    QHBoxLayout* buttonsLowLayout;
+    QHBoxLayout* simWindowBoxLayout;      // simulations window layout
+    QHBoxLayout* simulatyonEngineLayout;  // engine for simulation
+    QVBoxLayout* robotsEngineLayout;      // moves button layput
+    QHBoxLayout* highRobotsEngineLayout;  // forward move button layout
+    QHBoxLayout* lowRobotsEngineLayout;   // right/stop/left buttons layout
 
+    QPushButton* startSimulationButton;
+    QPushButton* stopSimulatopnButton;
+    QPushButton* continueSimulationButton;
     QPushButton* forwardMoveButton;
     QPushButton* leftMoveButton;
     QPushButton* stopMoveButton;

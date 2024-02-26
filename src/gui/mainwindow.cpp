@@ -64,6 +64,17 @@ void MainWindow::createActions(){
 
     settingsToolAction = new QAction(QIcon(":/icons/settingsTool.png"), "&Settings", this);
     connect(settingsToolAction, SIGNAL(triggered()), this, SLOT(settingsToolActionFunctional()));
+
+    runSimulationAction = new QAction(QIcon(":/icons/playTool.png"), "&Run", this);
+    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionFunctional()));
+
+
+    pauseSimulationAction = new QAction(QIcon(":/icons/pauseTool.png"), "&Pause", this);
+    connect(pauseSimulationAction, SIGNAL(triggered()), this, SLOT(pauseSimulationActionFunctional()));
+
+
+    restartSimulationAction = new QAction(QIcon(":/icons/restartTool.png"), "&Continue", this);
+    connect(restartSimulationAction, SIGNAL(triggered()), this, SLOT(restartSimulationActionFunctional()));
 }
 
 
@@ -72,32 +83,55 @@ void MainWindow::deleteActions(){
     disconnect(newMapToolAction, 0, 0, 0);
     disconnect(listMapToolAction, 0, 0, 0);
     disconnect(settingsToolAction, 0, 0, 0);
-
+    disconnect(runSimulationAction, 0, 0, 0);
+    disconnect(pauseSimulationAction, 0, 0, 0);
+    disconnect(restartSimulationAction, 0, 0, 0);
     delete helpToolAction;
     delete newMapToolAction;
     delete listMapToolAction;
     delete settingsToolAction;
+    delete runSimulationAction;
+    delete pauseSimulationAction;
+    delete restartSimulationAction;
 }
 
 
 void MainWindow::createTools(){
-    helpToolBar = addToolBar("&help");
-    helpToolBar->addAction(helpToolAction);
 
+    settingsToolBar = addToolBar(tr("settings"));
+    settingsToolBar->addAction(settingsToolAction);
 
-    mapToolBar = addToolBar("&maps");
+    engineSimRunToolBar = addToolBar(tr("engineSimRun"));
+    engineSimRunToolBar->addAction(runSimulationAction);
+    engineSimRunToolBar->addAction(pauseSimulationAction);
+    engineSimRunToolBar->addAction(restartSimulationAction);
+
+    simulationIdToolBar = addToolBar(tr("simulationId"));
+    labelSimIdToolBar = new QLabel("Simulation: ");
+    simulationIdToolBar->addWidget(labelSimIdToolBar);
+    lineMapNameSimIdToolBar = new QLineEdit();
+    lineMapNameSimIdToolBar->setReadOnly(true);
+    lineMapNameSimIdToolBar->setText("test");
+    lineMapNameSimIdToolBar->setFixedWidth(500);
+    simulationIdToolBar->addWidget(lineMapNameSimIdToolBar);
+
+    mapToolBar = addToolBar(tr("maps"));
     mapToolBar->addAction(newMapToolAction);
     mapToolBar->addAction(listMapToolAction);
+    helpToolBar = addToolBar(tr("help"));
+    helpToolBar->addAction(helpToolAction);
 
-    settingsToolBar = addToolBar("&settings");
-    settingsToolBar->addAction(settingsToolAction);
 }
 
 
 void MainWindow::deleteTools(){
+    delete labelSimIdToolBar;
+    delete lineMapNameSimIdToolBar;
     delete helpToolBar;
     delete mapToolBar;
     delete settingsToolBar;
+    delete engineSimRunToolBar;
+    delete simulationIdToolBar;
 }
 
 
@@ -122,6 +156,20 @@ void MainWindow::settingsToolActionFunctional(){
     QMessageBox::about(this, "Help", "<b>This place will be for setting!</b>");
 }
 
+
+void MainWindow::runSimulationActionFunctional(){
+    lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
+    //QMessageBox::about(this, "RunSimulation", "<b>This place will be for creatting running simulation functional!</b>");
+}
+void MainWindow::pauseSimulationActionFunctional(){
+    lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
+    //QMessageBox::about(this, "PauseSimulation", "<b>This place will be for creatting pause simulation functional!</b>");
+}
+void MainWindow::restartSimulationActionFunctional(){
+    //QMessageBox::about(this, "ContinueSimulation", "<b>This place will be for creatting continue running simulation functional!</b>");
+
+    lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
+}
 
 
 

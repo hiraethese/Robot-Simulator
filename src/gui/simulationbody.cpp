@@ -17,42 +17,65 @@ SimulationBody::~SimulationBody(){
 void SimulationBody::createSimulationsLayout(){
     simulationsLayot = new QVBoxLayout();
 
-    windowBoxLayout = new QHBoxLayout();
-    windowBoxLayout->addStretch();
-    windowBoxLayout->addWidget(simWind);
-    windowBoxLayout->addStretch();
+    simWindowBoxLayout = new QHBoxLayout();
+    simWindowBoxLayout->addStretch();
+    simWindowBoxLayout->addWidget(simWind);
+    simWindowBoxLayout->addStretch();
 
-    buttonsHighLayout = new QHBoxLayout();
-    buttonsHighLayout->addStretch();
-    buttonsHighLayout->addWidget(forwardMoveButton);
-    buttonsHighLayout->addStretch();
+    simulatyonEngineLayout = new QHBoxLayout();
+    robotsEngineLayout = new QVBoxLayout();
+    //simulationRunEngineLayout = new QHBoxLayout();
 
-    buttonsLowLayout = new QHBoxLayout();
-    buttonsLowLayout->addStretch();
-    buttonsLowLayout->addWidget(leftMoveButton);
-    buttonsLowLayout->addWidget(stopMoveButton);
-    buttonsLowLayout->addWidget(rightMoveButton);
-    buttonsLowLayout->addStretch();
+    highRobotsEngineLayout = new QHBoxLayout();
+    highRobotsEngineLayout->addStretch();
+    highRobotsEngineLayout->addWidget(forwardMoveButton);
+    highRobotsEngineLayout->addStretch();
 
-    simulationsLayot->addLayout(windowBoxLayout);
-    simulationsLayot->addLayout(buttonsHighLayout);
-    simulationsLayot->addLayout(buttonsLowLayout);
+    lowRobotsEngineLayout = new QHBoxLayout();
+    lowRobotsEngineLayout->addStretch();
+    lowRobotsEngineLayout->addWidget(leftMoveButton);
+    lowRobotsEngineLayout->addWidget(stopMoveButton);
+    lowRobotsEngineLayout->addWidget(rightMoveButton);
+    lowRobotsEngineLayout->addStretch();
+
+    robotsEngineLayout->addLayout(highRobotsEngineLayout);
+    robotsEngineLayout->addLayout(lowRobotsEngineLayout);
+
+    simulatyonEngineLayout->addStretch();
+    simulatyonEngineLayout->addLayout(robotsEngineLayout);
+    simulatyonEngineLayout->addStretch();
+
+    simulationsLayot->addLayout(simWindowBoxLayout);
+    simulationsLayot->addLayout(simulatyonEngineLayout);
     setLayout(simulationsLayot);
 }
 void SimulationBody::deleteSimulationsLayout(){
-    delete windowBoxLayout;
-    delete buttonsHighLayout;
-    delete buttonsLowLayout;
+    delete simWindowBoxLayout;
+    delete highRobotsEngineLayout;
+    delete lowRobotsEngineLayout;
+    delete robotsEngineLayout;
+    delete simulatyonEngineLayout;
     delete simulationsLayot;
 }
 void SimulationBody::createSimulattionsButtons(){
+
+    //startSimulationButton = new QPushButton("start");
+    //stopSimulatopnButton = new QPushButton("stop");
+    //continueSimulationButton = new QPushButton("continue");
+
     forwardMoveButton = new QPushButton("forward");
     leftMoveButton = new QPushButton("left");
     stopMoveButton = new QPushButton("stop");
     rightMoveButton = new QPushButton("right");
+
 }
 
 void SimulationBody::deleteSimulationsButtons(){
+
+    //delete startSimulationButton;
+    //delete stopSimulatopnButton;
+    //delete continueSimulationButton;
+
     delete forwardMoveButton;
     delete leftMoveButton;
     delete stopMoveButton;

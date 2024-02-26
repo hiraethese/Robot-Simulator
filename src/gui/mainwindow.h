@@ -16,6 +16,7 @@
 #include <QString>
 #include <QInputDialog>
 #include <QPainter>
+#include <QLineEdit>
 
 #include "simulationbody.h"
 
@@ -43,6 +44,9 @@ private:
     void deleteSimulationBody();
 
     // BAR && ACTIONS
+    QToolBar* simulationIdToolBar;
+    QLabel* labelSimIdToolBar;
+    QLineEdit* lineMapNameSimIdToolBar;
     QToolBar* helpToolBar;
     QAction* helpToolAction;
 
@@ -52,6 +56,11 @@ private:
 
     QToolBar* settingsToolBar;
     QAction* settingsToolAction;
+
+    QToolBar* engineSimRunToolBar;
+    QAction* runSimulationAction;
+    QAction* pauseSimulationAction;
+    QAction* restartSimulationAction;
 
     // inside attribute
     QString absolutePathToTextMapFile;
@@ -130,5 +139,9 @@ public slots:
      * @return void
     */
     void settingsToolActionFunctional();
+
+    void runSimulationActionFunctional();
+    void pauseSimulationActionFunctional();
+    void restartSimulationActionFunctional();
 };
 #endif // MAINWINDOW_H
