@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QApplication::setApplicationDisplayName("ICP2024");
     createAppWindows();
-    //centralWidget->setStyleSheet("QWidget { background-color: white; }");
 }
 
 
@@ -25,14 +24,25 @@ MainWindow::~MainWindow()
 void MainWindow::createAppWindows(){
     createActions();
     createTools();
+    createSimulationBody();
 }
 
 
 void MainWindow::deleteAppWindows(){
     deleteActions();
     deleteTools();
+    deleteSimulationBody();
 }
 
+void MainWindow::createSimulationBody(){
+
+    simBody = new SimulationBody(this);
+    setCentralWidget(simBody);
+}
+
+void MainWindow::deleteSimulationBody(){
+    //delete simBody;
+}
 
 void MainWindow::createActions(){
     helpToolAction = new QAction(QIcon(":/icons/helpTool.jpg"), "&Help", this);

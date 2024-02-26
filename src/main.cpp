@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     a.setApplicationName("icp2024");
     MainWindow w;
+    w.showMaximized();
     w.show();
     return a.exec();
 }

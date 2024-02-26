@@ -15,10 +15,14 @@
 #include <QMenu>
 #include <QString>
 #include <QInputDialog>
+#include <QPainter>
+
+#include "simulationbody.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
+class SimulationBody;
 }
 QT_END_NAMESPACE
 
@@ -32,16 +36,18 @@ public:
 
 private:
 
+    // SIM BODY
+    QVBoxLayout* vbl;
+    SimulationBody* simBody;
+    void createSimulationBody();
+    void deleteSimulationBody();
+
     // BAR && ACTIONS
     QToolBar* helpToolBar;
     QAction* helpToolAction;
 
     QToolBar* mapToolBar;
     QAction* newMapToolAction;
-    /*QMenu* newMapMenu;
-    QAction* newMapDownload;
-    QAction* newMapCreate;
-    */
     QAction* listMapToolAction;
 
     QToolBar* settingsToolBar;
