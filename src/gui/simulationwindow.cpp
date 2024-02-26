@@ -3,7 +3,7 @@
 SimulationWindow::SimulationWindow(QWidget *parent)
     : QWidget{parent}
 {
-    setFixedSize(1800, 850);
+    setFixedSize(1800, 750);
     pal = QPalette();
     pal.setColor(QPalette::Window, Qt::white);
     setAutoFillBackground(true);
