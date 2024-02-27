@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QRectF>
 #include <QPushButton>
+#include <QColor>
 class SimulationWindow : public QWidget
 {
     Q_OBJECT
