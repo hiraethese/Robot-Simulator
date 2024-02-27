@@ -59,7 +59,6 @@ private:
 
     QToolBar* engineSimRunToolBar;
     QAction* runSimulationAction;
-    QAction* pauseSimulationAction;
     QAction* restartSimulationAction;
 
     // inside attribute

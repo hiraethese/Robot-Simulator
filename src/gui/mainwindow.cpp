@@ -68,11 +68,6 @@ void MainWindow::createActions(){
     runSimulationAction = new QAction(QIcon(":/icons/playTool.png"), "&Run", this);
     connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionFunctional()));
 
-
-    pauseSimulationAction = new QAction(QIcon(":/icons/pauseTool.png"), "&Pause", this);
-    connect(pauseSimulationAction, SIGNAL(triggered()), this, SLOT(pauseSimulationActionFunctional()));
-
-
     restartSimulationAction = new QAction(QIcon(":/icons/restartTool.png"), "&Continue", this);
     connect(restartSimulationAction, SIGNAL(triggered()), this, SLOT(restartSimulationActionFunctional()));
 }
@@ -84,14 +79,12 @@ void MainWindow::deleteActions(){
     disconnect(listMapToolAction, 0, 0, 0);
     disconnect(settingsToolAction, 0, 0, 0);
     disconnect(runSimulationAction, 0, 0, 0);
-    disconnect(pauseSimulationAction, 0, 0, 0);
     disconnect(restartSimulationAction, 0, 0, 0);
     delete helpToolAction;
     delete newMapToolAction;
     delete listMapToolAction;
     delete settingsToolAction;
     delete runSimulationAction;
-    delete pauseSimulationAction;
     delete restartSimulationAction;
 }
 
@@ -103,7 +96,6 @@ void MainWindow::createTools(){
 
     engineSimRunToolBar = addToolBar(tr("engineSimRun"));
     engineSimRunToolBar->addAction(runSimulationAction);
-    engineSimRunToolBar->addAction(pauseSimulationAction);
     engineSimRunToolBar->addAction(restartSimulationAction);
 
     simulationIdToolBar = addToolBar(tr("simulationId"));
@@ -111,7 +103,6 @@ void MainWindow::createTools(){
     simulationIdToolBar->addWidget(labelSimIdToolBar);
     lineMapNameSimIdToolBar = new QLineEdit();
     lineMapNameSimIdToolBar->setReadOnly(true);
-    lineMapNameSimIdToolBar->setText("test");
     lineMapNameSimIdToolBar->setFixedWidth(500);
     simulationIdToolBar->addWidget(lineMapNameSimIdToolBar);
 
@@ -142,33 +133,34 @@ void MainWindow::helpTextToolActionFunctional(){
 
 void MainWindow::newMapToolActionFunctional(){
     // !!! creatting widget for writting new map, parsing and sending do simulations widget creatting
-    //QMessageBox::about(this, "Help", "<b>This place will be for creatting new maps!</b>");
     absolutePathToTextMapFile = QInputDialog::getText(this, tr("new map"), tr("Enter path to map file")); // QLineEdit::Normal
+    lineMapNameSimIdToolBar->setText(absolutePathToTextMapFile);
 }
 
 void MainWindow::listMapToolActionFunctional(){
     // !!! creatting widget list all existting maps and choosing one actual or delete
-    QMessageBox::about(this, "Help", "<b>This place will be for creatting new maps!</b>");
 }
 
 void MainWindow::settingsToolActionFunctional(){
     // !!! creatting widget for setting
-    QMessageBox::about(this, "Help", "<b>This place will be for setting!</b>");
 }
 
 
 void MainWindow::runSimulationActionFunctional(){
+    disconnect(runSimulationAction, 0, 0, 0);
+    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(pauseSimulationActionFunctional()));
+    runSimulationAction->setIcon(QIcon(":/icons/pauseTool.png"));
     lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
-    //QMessageBox::about(this, "RunSimulation", "<b>This place will be for creatting running simulation functional!</b>");
 }
 void MainWindow::pauseSimulationActionFunctional(){
+    disconnect(runSimulationAction, 0, 0, 0);
+    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionFunctional()));
+    runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
+    runSimulationAction->setText(tr("Run"));
     lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
-    //QMessageBox::about(this, "PauseSimulation", "<b>This place will be for creatting pause simulation functional!</b>");
 }
 void MainWindow::restartSimulationActionFunctional(){
-    //QMessageBox::about(this, "ContinueSimulation", "<b>This place will be for creatting continue running simulation functional!</b>");
-
-    lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
+    runSimulationActionFunctional();
 }
 
 
