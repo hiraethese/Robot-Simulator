@@ -16,6 +16,7 @@ SimulationWindow::~SimulationWindow(){
 }
 void SimulationWindow::paintEvent(QPaintEvent *event){
     painter = new QPainter(this);
+    painter->setBrush(QColor(255, 0, 0)); // Красный цвет (RGB)
     painter->drawRect(*rect);
     painter->end();
 }
