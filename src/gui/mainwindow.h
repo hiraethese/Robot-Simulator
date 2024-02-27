@@ -15,10 +15,15 @@
 #include <QMenu>
 #include <QString>
 #include <QInputDialog>
+#include <QPainter>
+#include <QLineEdit>
+
+#include "simulationbody.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
+class SimulationBody;
 }
 QT_END_NAMESPACE
 
@@ -32,20 +37,29 @@ public:
 
 private:
 
+    // SIM BODY
+    QVBoxLayout* vbl;
+    SimulationBody* simBody;
+    void createSimulationBody();
+    void deleteSimulationBody();
+
     // BAR && ACTIONS
+    QToolBar* simulationIdToolBar;
+    QLabel* labelSimIdToolBar;
+    QLineEdit* lineMapNameSimIdToolBar;
     QToolBar* helpToolBar;
     QAction* helpToolAction;
 
     QToolBar* mapToolBar;
     QAction* newMapToolAction;
-    /*QMenu* newMapMenu;
-    QAction* newMapDownload;
-    QAction* newMapCreate;
-    */
     QAction* listMapToolAction;
 
     QToolBar* settingsToolBar;
     QAction* settingsToolAction;
+
+    QToolBar* engineSimRunToolBar;
+    QAction* runSimulationAction;
+    QAction* restartSimulationAction;
 
     // inside attribute
     QString absolutePathToTextMapFile;
@@ -124,5 +138,9 @@ public slots:
      * @return void
     */
     void settingsToolActionFunctional();
+
+    void runSimulationActionFunctional();
+    void pauseSimulationActionFunctional();
+    void restartSimulationActionFunctional();
 };
 #endif // MAINWINDOW_H

@@ -11,12 +11,14 @@ RESOURCES += res/icons.qrc
 #gui/
 SOURCES += \
     src/gui/simulationbody.cpp \
+    src/gui/simulationwindow.cpp \
     src/main.cpp \
     src/gui/mainwindow.cpp
 
 HEADERS += \
     src/gui/mainwindow.h \
-    src/gui/simulationbody.h
+    src/gui/simulationbody.h \
+    src/gui/simulationwindow.h
 
 FORMS += \
     src/gui/mainwindow.ui

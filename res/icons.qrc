@@ -4,5 +4,8 @@
         <file>icons/newMapTool.png</file>
         <file>icons/listOfMapTool.png</file>
         <file>icons/settingsTool.png</file>
+        <file>icons/playTool.png</file>
+        <file>icons/pauseTool.png</file>
+        <file>icons/restartTool.png</file>
     </qresource>
 </RCC>

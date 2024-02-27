@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     QApplication::setApplicationDisplayName("ICP2024");
     createAppWindows();
-    //centralWidget->setStyleSheet("QWidget { background-color: white; }");
 }
 
 
@@ -25,14 +24,25 @@ MainWindow::~MainWindow()
 void MainWindow::createAppWindows(){
     createActions();
     createTools();
+    createSimulationBody();
 }
 
 
 void MainWindow::deleteAppWindows(){
     deleteActions();
     deleteTools();
+    deleteSimulationBody();
 }
 
+void MainWindow::createSimulationBody(){
+
+    simBody = new SimulationBody(this);
+    setCentralWidget(simBody);
+}
+
+void MainWindow::deleteSimulationBody(){
+    //delete simBody;
+}
 
 void MainWindow::createActions(){
     helpToolAction = new QAction(QIcon(":/icons/helpTool.jpg"), "&Help", this);
@@ -54,6 +64,12 @@ void MainWindow::createActions(){
 
     settingsToolAction = new QAction(QIcon(":/icons/settingsTool.png"), "&Settings", this);
     connect(settingsToolAction, SIGNAL(triggered()), this, SLOT(settingsToolActionFunctional()));
+
+    runSimulationAction = new QAction(QIcon(":/icons/playTool.png"), "&Run", this);
+    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionFunctional()));
+
+    restartSimulationAction = new QAction(QIcon(":/icons/restartTool.png"), "&Continue", this);
+    connect(restartSimulationAction, SIGNAL(triggered()), this, SLOT(restartSimulationActionFunctional()));
 }
 
 
@@ -62,32 +78,51 @@ void MainWindow::deleteActions(){
     disconnect(newMapToolAction, 0, 0, 0);
     disconnect(listMapToolAction, 0, 0, 0);
     disconnect(settingsToolAction, 0, 0, 0);
-
+    disconnect(runSimulationAction, 0, 0, 0);
+    disconnect(restartSimulationAction, 0, 0, 0);
     delete helpToolAction;
     delete newMapToolAction;
     delete listMapToolAction;
     delete settingsToolAction;
+    delete runSimulationAction;
+    delete restartSimulationAction;
 }
 
 
 void MainWindow::createTools(){
-    helpToolBar = addToolBar("&help");
-    helpToolBar->addAction(helpToolAction);
 
+    settingsToolBar = addToolBar(tr("settings"));
+    settingsToolBar->addAction(settingsToolAction);
 
-    mapToolBar = addToolBar("&maps");
+    engineSimRunToolBar = addToolBar(tr("engineSimRun"));
+    engineSimRunToolBar->addAction(runSimulationAction);
+    engineSimRunToolBar->addAction(restartSimulationAction);
+
+    simulationIdToolBar = addToolBar(tr("simulationId"));
+    labelSimIdToolBar = new QLabel("Simulation: ");
+    simulationIdToolBar->addWidget(labelSimIdToolBar);
+    lineMapNameSimIdToolBar = new QLineEdit();
+    lineMapNameSimIdToolBar->setReadOnly(true);
+    lineMapNameSimIdToolBar->setFixedWidth(500);
+    simulationIdToolBar->addWidget(lineMapNameSimIdToolBar);
+
+    mapToolBar = addToolBar(tr("maps"));
     mapToolBar->addAction(newMapToolAction);
     mapToolBar->addAction(listMapToolAction);
+    helpToolBar = addToolBar(tr("help"));
+    helpToolBar->addAction(helpToolAction);
 
-    settingsToolBar = addToolBar("&settings");
-    settingsToolBar->addAction(settingsToolAction);
 }
 
 
 void MainWindow::deleteTools(){
+    delete labelSimIdToolBar;
+    delete lineMapNameSimIdToolBar;
     delete helpToolBar;
     delete mapToolBar;
     delete settingsToolBar;
+    delete engineSimRunToolBar;
+    delete simulationIdToolBar;
 }
 
 
@@ -98,20 +133,35 @@ void MainWindow::helpTextToolActionFunctional(){
 
 void MainWindow::newMapToolActionFunctional(){
     // !!! creatting widget for writting new map, parsing and sending do simulations widget creatting
-    //QMessageBox::about(this, "Help", "<b>This place will be for creatting new maps!</b>");
     absolutePathToTextMapFile = QInputDialog::getText(this, tr("new map"), tr("Enter path to map file")); // QLineEdit::Normal
+    lineMapNameSimIdToolBar->setText(absolutePathToTextMapFile);
 }
 
 void MainWindow::listMapToolActionFunctional(){
     // !!! creatting widget list all existting maps and choosing one actual or delete
-    QMessageBox::about(this, "Help", "<b>This place will be for creatting new maps!</b>");
 }
 
 void MainWindow::settingsToolActionFunctional(){
     // !!! creatting widget for setting
-    QMessageBox::about(this, "Help", "<b>This place will be for setting!</b>");
 }
 
+
+void MainWindow::runSimulationActionFunctional(){
+    disconnect(runSimulationAction, 0, 0, 0);
+    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(pauseSimulationActionFunctional()));
+    runSimulationAction->setIcon(QIcon(":/icons/pauseTool.png"));
+    lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
+}
+void MainWindow::pauseSimulationActionFunctional(){
+    disconnect(runSimulationAction, 0, 0, 0);
+    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionFunctional()));
+    runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
+    runSimulationAction->setText(tr("Run"));
+    lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
+}
+void MainWindow::restartSimulationActionFunctional(){
+    runSimulationActionFunctional();
+}
 
 
 
