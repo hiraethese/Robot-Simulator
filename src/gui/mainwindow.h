@@ -17,8 +17,10 @@
 #include <QInputDialog>
 #include <QPainter>
 #include <QLineEdit>
-
+#include <QScrollArea>
+#include <QString>
 #include "simulationbody.h"
+#include "settingswindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -43,16 +45,16 @@ private:
     void createSimulationBody();
     void deleteSimulationBody();
 
+    int simulationSpeed = 50;
+    int simulationCorner = 45;
+    QString simulationMap = QString("");
+
     // BAR && ACTIONS
     QToolBar* simulationIdToolBar;
     QLabel* labelSimIdToolBar;
     QLineEdit* lineMapNameSimIdToolBar;
     QToolBar* helpToolBar;
     QAction* helpToolAction;
-
-    QToolBar* mapToolBar;
-    QAction* newMapToolAction;
-    QAction* listMapToolAction;
 
     QToolBar* settingsToolBar;
     QAction* settingsToolAction;
@@ -61,8 +63,11 @@ private:
     QAction* runSimulationAction;
     QAction* restartSimulationAction;
 
+    // settings area
+    settingsWindow* settingBody = nullptr;
+
     // inside attribute
-    QString absolutePathToTextMapFile;
+    QString absolutePathToTextMapFile = QString("");
     // UI
     Ui::MainWindow *ui;
 
@@ -118,19 +123,6 @@ public slots:
     */
     void helpTextToolActionFunctional();
 
-    /**
-     * @brief functional for widget with creating new map
-     * @param void
-     * @return void
-    */
-    void newMapToolActionFunctional();
-
-    /**
-     * @brief functional for widget with list of all maps (can choose one like actula or delete old map)
-     * @param void
-     * @return void
-    */
-    void listMapToolActionFunctional();
 
     /**
      * @brief functional for widget with settings
@@ -142,5 +134,12 @@ public slots:
     void runSimulationActionFunctional();
     void pauseSimulationActionFunctional();
     void restartSimulationActionFunctional();
+
+
+    void createSettings();
+    void deleteSettings();
+private slots:
+    void updateSettings();
+
 };
 #endif // MAINWINDOW_H
