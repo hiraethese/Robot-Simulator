@@ -8,7 +8,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    a.setApplicationName("icp2024");
+    a.setApplicationName("ICP2024");
     MainWindow w;
     w.showMaximized();
     w.show();

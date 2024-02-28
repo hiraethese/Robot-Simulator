@@ -12,6 +12,7 @@ RESOURCES += res/icons.qrc
 SOURCES += \
     src/main.cpp \
     src/gui/mainwindow.cpp \
+    src/gui/settingswindow.cpp \
     src/gui/simulationbody.cpp \
     src/gui/simulationwindow.cpp \
     src/core/core.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 
 HEADERS += \
     src/gui/mainwindow.h \
+    src/gui/settingswindow.h \
     src/gui/simulationbody.h \
     src/gui/simulationwindow.h \
     src/core/icplib.h \
