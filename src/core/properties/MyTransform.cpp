@@ -6,10 +6,10 @@ MyTransform::MyTransform(Vector2d position, Vector2d size)
     _size = size;
 }
 
-QRectF MyTransform::GuiGetQRectF()
+Rectangle MyTransform::GetRect()
 {
-    return QRectF(  _position.x - _size.x * 0.5,
-                    _position.y - _size.y * 0.5,
-                    _size.x,
-                    _size.y);
+    return {_position.x - 0.5f * _size.x,
+            _position.y - 0.5f * _size.y,
+            _size.x,
+            _size.y};
 }

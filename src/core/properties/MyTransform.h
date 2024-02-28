@@ -3,8 +3,6 @@
 
 #include "../icplib.h"
 
-#include <QRectF>
-
 class MyTransform {
 private:
     Vector2d _position;
@@ -12,7 +10,7 @@ private:
 
 public:
     MyTransform(Vector2d position, Vector2d size);
-    QRectF GuiGetQRectF();
+    Rectangle GetRect();
 };
 
 #endif // MYTRANSFORM_H

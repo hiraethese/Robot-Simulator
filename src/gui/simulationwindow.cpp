@@ -11,7 +11,8 @@ SimulationWindow::SimulationWindow(QWidget *parent)
     setAutoFillBackground(true);
     setPalette(pal);
     SimStart();
-    QRectF rect = newRect->GetTransform()->GuiGetQRectF();
+    Rectangle r = newRect->GetTransform()->GetRect();
+    rect = new QRectF(r.x, r.y, r.w, r.h);
 }
 SimulationWindow::~SimulationWindow(){
     delete rect;
