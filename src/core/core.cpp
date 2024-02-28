@@ -4,6 +4,6 @@ SimObject* newRect = nullptr;
 
 int SimStart()
 {
-    newRect = new SimObject({400.0f, 400.0f}, {20.0f, 20.0f});
+    newRect = new SimObject({50.0, 50.0}, {100.0, 100.0});
     return 0;
 }

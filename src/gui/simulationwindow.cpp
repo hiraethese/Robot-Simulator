@@ -1,5 +1,7 @@
 #include "simulationwindow.h"
 
+#include "../core/core.h"
+
 SimulationWindow::SimulationWindow(QWidget *parent)
     : QWidget{parent}
 {
@@ -8,7 +10,8 @@ SimulationWindow::SimulationWindow(QWidget *parent)
     pal.setColor(QPalette::Window, Qt::white);
     setAutoFillBackground(true);
     setPalette(pal);
-    rect = new QRectF(200.0, 200.0, 100.0, 100.0);
+    SimStart();
+    QRectF rect = newRect->GetTransform()->GuiGetQRectF();
 }
 SimulationWindow::~SimulationWindow(){
     delete rect;
@@ -20,4 +23,3 @@ void SimulationWindow::paintEvent(QPaintEvent *event){
     painter->drawRect(*rect);
     painter->end();
 }
-
