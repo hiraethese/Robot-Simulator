@@ -11,6 +11,11 @@ void MyTransform::SetPosition(Vector2d newPosition)
     _position = newPosition;
 }
 
+Vector2d MyTransform::GetPosition()
+{
+    return _position;
+}
+
 Rectangle MyTransform::GetRect()
 {
     return {_position.x - 0.5f * _size.x,
