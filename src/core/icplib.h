@@ -15,4 +15,10 @@ typedef struct Rectangle {
     float h; // Rectangle height component
 } Rectangle;
 
+// Integer size
+typedef struct IntSize {
+    int w; // Size width component
+    int h; // Size height component
+} IntSize;
+
 #endif // ICPLIB_H

@@ -11,23 +11,27 @@ RESOURCES += res/icons.qrc
 #gui/
 SOURCES += \
     src/main.cpp \
+    src/core/core.cpp \
+    src/core/entities/SimField.cpp \
+    src/core/entities/SimObject.cpp \
+    src/core/properties/Movement.cpp \
+    src/core/properties/MyTransform.cpp \
     src/gui/mainwindow.cpp \
     src/gui/settingswindow.cpp \
     src/gui/simulationbody.cpp \
-    src/gui/simulationwindow.cpp \
-    src/core/core.cpp \
-    src/core/entities/SimObject.cpp \
-    src/core/properties/MyTransform.cpp
+    src/gui/simulationwindow.cpp
 
 HEADERS += \
+    src/core/icplib.h \
+    src/core/core.h \
+    src/core/entities/SimField.h \
+    src/core/entities/SimObject.h \
+    src/core/properties/Movement.h \
+    src/core/properties/MyTransform.h \
     src/gui/mainwindow.h \
     src/gui/settingswindow.h \
     src/gui/simulationbody.h \
-    src/gui/simulationwindow.h \
-    src/core/icplib.h \
-    src/core/core.h \
-    src/core/entities/SimObject.h \
-    src/core/properties/MyTransform.h
+    src/gui/simulationwindow.h
 
 FORMS += \
     src/gui/mainwindow.ui

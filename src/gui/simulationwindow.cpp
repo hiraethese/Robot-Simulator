@@ -19,8 +19,9 @@ SimulationWindow::~SimulationWindow(){
     delete painter;
 }
 void SimulationWindow::paintEvent(QPaintEvent *event){
+    (void)event; // Avoid unused parameter warning
     painter = new QPainter(this);
-    painter->setBrush(QColor(255, 0, 0)); // Красный цвет (RGB)
+    painter->setBrush(QColor(255, 0, 0)); // Red color (RGB)
     painter->drawRect(*rect);
     painter->end();
 }

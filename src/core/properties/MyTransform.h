@@ -10,6 +10,7 @@ private:
 
 public:
     MyTransform(Vector2d position, Vector2d size);
+    void SetPosition(Vector2d newPosition);
     Rectangle GetRect();
 };
 
