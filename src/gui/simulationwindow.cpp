@@ -1,7 +1,5 @@
 #include "simulationwindow.h"
 
-#include "../core/core.h"
-
 SimulationWindow::SimulationWindow(QWidget *parent)
     : QWidget{parent}
 {
@@ -10,17 +8,32 @@ SimulationWindow::SimulationWindow(QWidget *parent)
     pal.setColor(QPalette::Window, Qt::white);
     setAutoFillBackground(true);
     setPalette(pal);
-    SimStart();
-    Rectangle r = newRect->GetTransform()->GetRect();
-    rect = new QRectF(r.x, r.y, r.w, r.h);
 }
+
 SimulationWindow::~SimulationWindow(){
-    delete rect;
+    if(simRobotsGUI) delete simRobotsGUI;
     delete painter;
 }
+
 void SimulationWindow::paintEvent(QPaintEvent *event){
+    std::cout << "TESTEDT3STEST" << std::endl;
+    Q_UNUSED(event);
+    if(drawFlag) drawSimObjects();
+}
+
+
+void SimulationWindow::simStore(){
     painter = new QPainter(this);
-    painter->setBrush(QColor(255, 0, 0)); // Красный цвет (RGB)
-    painter->drawRect(*rect);
+    SimStart();
+    if(!simRobotsGUI)simRobotsGUI = new RobotsGUI(painter, QColor(255, 0, 0), 1);
+    else{} // update data
+}
+void SimulationWindow::drawSimObjects(){
+    painter->begin(this);
+    simRobotsGUI->draw();
     painter->end();
 }
+/*
+void SimulationWindow::moveSimRectDown(){
+    repaint();
+}*/

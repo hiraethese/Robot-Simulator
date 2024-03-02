@@ -8,6 +8,7 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QSpinBox>
+#include <QCheckBox>
 #include <iostream>
 class settingsWindow : public QWidget
 {
@@ -18,12 +19,16 @@ public:
     ~settingsWindow();
     QPushButton* setPushButton;
 
+
+    bool isSetMapValue();
     QString getMapValue();
     void setMapValue(QString map);
 
+    bool isSetSpeedValue();
     int getSpeedValue();
     void setSpeedValue(int speed);
 
+    bool isSetCornerValue();
     int getCornerValue();
     void setCornerValue(int corner);
 private:
@@ -32,13 +37,16 @@ private:
     QLabel* newMapLabel;
     QLineEdit* newMapLine;
     QLabel mapValue;
+    QCheckBox* newMapCheckBox;
 
     QLabel* speedLabel;
     QSpinBox* speedSpinBox;
+    QCheckBox* speedCheckBox;
     int speedValue;
 
     QLabel* cornerLabel;
     QSpinBox* cornerSpinBox;
+    QCheckBox* cornerCheckBox;
     int cornerValue;
 
 private slots:

@@ -21,7 +21,7 @@
 #include <QString>
 #include "simulationbody.h"
 #include "settingswindow.h"
-
+#include "infonotification.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -29,7 +29,7 @@ class SimulationBody;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public InfoNotification
 {
     Q_OBJECT
 
@@ -45,8 +45,11 @@ private:
     void createSimulationBody();
     void deleteSimulationBody();
 
-    int simulationSpeed = 50;
-    int simulationCorner = 45;
+
+    // simulation
+    bool flagMapIsSet = false; // should be pulling by core
+    int simulationSpeed = 50;  // should be pulling by core
+    int simulationCorner = 45; // should be pulling by core
     QString simulationMap = QString("");
 
     // BAR && ACTIONS

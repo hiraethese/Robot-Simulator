@@ -7,12 +7,24 @@
 #include <QHBoxLayout>
 #include <QPalette>
 #include "simulationwindow.h"
+#include "../core/core.h"
+
 class SimulationBody : public QWidget
 {
     Q_OBJECT
 public:
     explicit SimulationBody(QWidget *parent = nullptr);
     ~SimulationBody();
+
+    void runSimObject();
+    void storeSimulationMap();
+    void pauseSimObject();
+    void continueSimulObject();
+
+    bool devSimIsRun = false;
+    bool devSimMapIsSet = false;
+    bool isSimRun();
+    bool isSimMapSet();
 private:
     SimulationWindow* simWind;
 
@@ -35,7 +47,11 @@ private:
     void deleteSimulationsButtons();
     void createSimulationsLayout();
     void deleteSimulationsLayout();
+    void setSimualtionEngineSignals();
+
 signals:
+private slots:
+
 };
 
 #endif // SIMULATIONBODY_H

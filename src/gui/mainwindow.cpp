@@ -21,9 +21,9 @@ MainWindow::~MainWindow()
 
 
 void MainWindow::createAppWindows(){
+    createSimulationBody();
     createActions();
     createTools();
-    createSimulationBody();
 }
 
 
@@ -122,37 +122,60 @@ void MainWindow::settingsToolActionFunctional(){
     if(settingBody == nullptr){
         createSettings();
     }
+    // *** should be set by core ***
     settingBody->setMapValue(simulationMap);
     settingBody->setSpeedValue(simulationSpeed);
     settingBody->setCornerValue(simulationCorner);
+    // *** *** *** *** *** *** *** ***
     settingBody->show();
 }
 
 void MainWindow::updateSettings(){
-    simulationMap = settingBody->getMapValue();
-    lineMapNameSimIdToolBar->setText(simulationMap);
-    simulationSpeed = settingBody->getSpeedValue();
-    simulationCorner = settingBody->getCornerValue();
+    if(settingBody->isSetMapValue()){
+        flagMapIsSet = true;
+        simulationMap = settingBody->getMapValue();
+        lineMapNameSimIdToolBar->setText(simulationMap);
+    }
+    if(settingBody->isSetSpeedValue()) simulationSpeed = settingBody->getSpeedValue();
+    if(settingBody->isSetCornerValue()) simulationCorner = settingBody->getCornerValue();
     settingBody->close();
+
+    simBody->storeSimulationMap();
 }
 
 void MainWindow::runSimulationActionFunctional(){
+    if(!flagMapIsSet){
+        warningMsgSimNotSet();
+        return;
+    }
     disconnect(runSimulationAction, 0, 0, 0);
     connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(pauseSimulationActionFunctional()));
     runSimulationAction->setIcon(QIcon(":/icons/pauseTool.png"));
     lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
+
+    simBody->runSimObject();
 }
 void MainWindow::pauseSimulationActionFunctional(){
+    if(!flagMapIsSet){
+        warningMsgSimNotSet();
+        return;
+    }
     disconnect(runSimulationAction, 0, 0, 0);
     connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionFunctional()));
     runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
     runSimulationAction->setText(tr("Run"));
     lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
-}
-void MainWindow::restartSimulationActionFunctional(){
-    runSimulationActionFunctional();
+
+    simBody->pauseSimObject();
 }
 
+void MainWindow::restartSimulationActionFunctional(){
+    //runSimulationActionFunctional();
+    if(!flagMapIsSet){
+        warningMsgSimNotSet();
+        return;
+    }
+}
 
 
 

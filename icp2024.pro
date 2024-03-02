@@ -10,17 +10,23 @@ RESOURCES += res/icons.qrc
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 #gui/
 SOURCES += \
+    src/gui/infonotification.cpp \
+    src/gui/iobjectgui.cpp \
+    src/gui/robotsgui.cpp \
     src/main.cpp \
     src/gui/mainwindow.cpp \
     src/gui/settingswindow.cpp \
-    src/gui/simulationbody.cpp \
     src/gui/simulationwindow.cpp \
+    src/gui/simulationbody.cpp \
     src/core/core.cpp \
     src/core/entities/SimObject.cpp \
     src/core/properties/MyTransform.cpp
 
 HEADERS += \
+    src/gui/infonotification.h \
+    src/gui/iobjectgui.h \
     src/gui/mainwindow.h \
+    src/gui/robotsgui.h \
     src/gui/settingswindow.h \
     src/gui/simulationbody.h \
     src/gui/simulationwindow.h \

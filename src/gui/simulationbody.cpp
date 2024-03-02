@@ -29,6 +29,8 @@ void SimulationBody::createSimulationsLayout(){
     highRobotsEngineLayout = new QHBoxLayout();
     highRobotsEngineLayout->addStretch();
     highRobotsEngineLayout->addWidget(forwardMoveButton);
+    //connect(forwardMoveButton, SIGNAL(clicked()), simWind, SLOT(moveSimRectDown()));
+    connect(forwardMoveButton, SIGNAL(clicked()), simWind, SLOT(repaint()));
     highRobotsEngineLayout->addStretch();
 
     lowRobotsEngineLayout = new QHBoxLayout();
@@ -57,27 +59,40 @@ void SimulationBody::deleteSimulationsLayout(){
     delete simulatyonEngineLayout;
     delete simulationsLayot;
 }
-void SimulationBody::createSimulattionsButtons(){
 
-    //startSimulationButton = new QPushButton("start");
-    //stopSimulatopnButton = new QPushButton("stop");
-    //continueSimulationButton = new QPushButton("continue");
+void SimulationBody::createSimulattionsButtons(){
 
     forwardMoveButton = new QPushButton("forward");
     leftMoveButton = new QPushButton("left");
     stopMoveButton = new QPushButton("stop");
     rightMoveButton = new QPushButton("right");
-
 }
 
 void SimulationBody::deleteSimulationsButtons(){
-
-    //delete startSimulationButton;
-    //delete stopSimulatopnButton;
-    //delete continueSimulationButton;
 
     delete forwardMoveButton;
     delete leftMoveButton;
     delete stopMoveButton;
     delete rightMoveButton;
+}
+
+void SimulationBody::runSimObject(){
+    std::cout << "start simulation" << std::endl;
+}
+void SimulationBody::storeSimulationMap(){
+    std::cout << "store simulation" << std::endl;
+}
+void SimulationBody::pauseSimObject(){
+    std::cout << "break simulation" << std::endl;
+}
+void SimulationBody::continueSimulObject(){
+    std::cout << "continue simulation" << std::endl;
+}
+
+bool SimulationBody::isSimRun(){
+    return devSimIsRun;
+}
+
+bool SimulationBody::isSimMapSet(){
+    return devSimMapIsSet;
 }
