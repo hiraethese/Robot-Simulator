@@ -39,18 +39,13 @@ public:
 
 private:
 
-    // SIM BODY
-    QVBoxLayout* vbl;
-    SimulationBody* simBody;
-    void createSimulationBody();
-    void deleteSimulationBody();
-
-
-    // simulation
-    bool flagMapIsSet = false; // should be pulling by core
-    int simulationSpeed = 50;  // should be pulling by core
-    int simulationCorner = 45; // should be pulling by core
-    QString simulationMap = QString("");
+    // APPLICATION
+    void createAppWindows();
+    void deleteAppWindows();
+    void createTools();
+    void createActions();
+    void deleteTools();
+    void deleteActions();
 
     // BAR && ACTIONS
     QToolBar* simulationIdToolBar;
@@ -66,83 +61,51 @@ private:
     QAction* runSimulationAction;
     QAction* restartSimulationAction;
 
+    // SETTINGS
+    SettingsWindow* settings;
+
+    // SIMULATION
+    QVBoxLayout* vbl;
+    SimulationBody* simBody;
+    bool devflagMapIsSet = false; // should be pulling by core
+    int devSimulationSpeed = 50;  // should be pulling by core
+    int devSimulationCorner = 45; // should be pulling by core
+    QString simulationMap = QString("");
+
+    void createSimulationBody();
+    void deleteSimulationBody();
+
     // settings area
-    settingsWindow* settingBody = nullptr;
 
     // inside attribute
     QString absolutePathToTextMapFile = QString("");
     // UI
     Ui::MainWindow *ui;
 
-
-    // METHODS
-    /**
-     * @brief creatting default body of applications window
-     * @param void
-     * @return void
-    */
-    void createAppWindows();
-
-    /**
-     * @brief deleting all defaults widget of applications widnows body
-     * @param void
-     * @return void
-    */
-    void deleteAppWindows();
-
-    /**
-     * @brief creating all applications windows tools and adding their actions
-     * @param void
-     * @return void
-    */
-    void createTools();
-
-    /**
-     * @brief creating all tools actions and connect their with functional slots
-     * @param void
-     * @return void
-    */
-    void createActions();
-
-    /**
-     * @brief clean tools memmory
-     * @param void
-     * @return void
-    */
-    void deleteTools();
-
-    /**
-     * @brief disconnect actions with slots and clean their memmory
-     * @param void
-     * @return void
-    */
-    void deleteActions();
-
 public slots:
-    /**
-     * @brief functional for widget with help message for user
-     * @param void
-     * @return void
-    */
+    // APPLICATION PUBLIC SLOTS
+
+    // BARS && ACTIONS PUBLIC SLOTS
+
+    // SETTINGS PUBLIC SLOTS
+
+    // SIMULATIONS PUBLIC SLOTS
+
+private slots:
+    // APPLICATION PRIVATE SLOTS
     void helpTextToolActionFunctional();
-
-
-    /**
-     * @brief functional for widget with settings
-     * @param void
-     * @return void
-    */
     void settingsToolActionFunctional();
 
+    // BARS && ACTIONS PRIVATE SLOTS
+
+    // SETTINGS PRIVATE SLOTS
+    void createSettings();
+    void deleteSettings();
+    void updateSettings();
+
+    // SIMULATIONS PRIVATE SLOTS
     void runSimulationActionFunctional();
     void pauseSimulationActionFunctional();
     void restartSimulationActionFunctional();
-
-
-    void createSettings();
-    void deleteSettings();
-private slots:
-    void updateSettings();
-
 };
 #endif // MAINWINDOW_H

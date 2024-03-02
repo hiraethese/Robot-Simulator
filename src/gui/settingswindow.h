@@ -10,13 +10,13 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <iostream>
-class settingsWindow : public QWidget
+class SettingsWindow : public QWidget
 {
     Q_OBJECT
 public:
 
-    settingsWindow();
-    ~settingsWindow();
+    SettingsWindow();
+    ~SettingsWindow();
     QPushButton* setPushButton;
 
 
@@ -50,6 +50,9 @@ private:
     int cornerValue;
 
 private slots:
+    void blockNewMapLine();
+    void blockSpeedSpinBox();
+    void blockCornerSpinBox();
 };
 
 #endif // SETTINGSWINDOW_H

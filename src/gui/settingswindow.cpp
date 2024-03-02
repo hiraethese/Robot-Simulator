@@ -1,13 +1,15 @@
 #include "settingswindow.h"
 
-settingsWindow::settingsWindow() {
+SettingsWindow::SettingsWindow() {
     this->setWindowTitle("Settings");
     setWindowFlags(Qt::WindowTitleHint);
     settingGridLayot = new QGridLayout();
 
     newMapLabel = new QLabel(tr("New map path: "));
     newMapLine = new QLineEdit();
+    newMapLine->setEnabled(false);
     newMapCheckBox = new QCheckBox();
+    connect(newMapCheckBox, SIGNAL(stateChanged(int)), this, SLOT(blockNewMapLine()));
     settingGridLayot->addWidget(newMapLabel, 0, 0);
     settingGridLayot->addWidget(newMapLine, 0, 1);
     settingGridLayot->addWidget(newMapCheckBox, 0, 2);
@@ -17,6 +19,8 @@ settingsWindow::settingsWindow() {
     speedCheckBox = new QCheckBox();
     speedSpinBox->setMinimum(1);
     speedSpinBox->setMaximum(100);
+    speedSpinBox->setEnabled(false);
+    connect(speedCheckBox, SIGNAL(stateChanged(int)), this, SLOT(blockSpeedSpinBox()));
     settingGridLayot->addWidget(speedLabel, 1, 0);
     settingGridLayot->addWidget(speedSpinBox, 1, 1);
     settingGridLayot->addWidget(speedCheckBox, 1, 2);
@@ -26,6 +30,8 @@ settingsWindow::settingsWindow() {
     cornerCheckBox = new QCheckBox();
     cornerSpinBox->setMinimum(0);
     cornerSpinBox->setMaximum(360);
+    cornerSpinBox->setEnabled(false);
+    connect(cornerCheckBox, SIGNAL(stateChanged(int)), this, SLOT(blockCornerSpinBox()));
     settingGridLayot->addWidget(cornerLabel, 2, 0);
     settingGridLayot->addWidget(cornerSpinBox, 2, 1);
     settingGridLayot->addWidget(cornerCheckBox, 2, 2);
@@ -35,55 +41,73 @@ settingsWindow::settingsWindow() {
     setLayout(settingGridLayot);
 }
 
-settingsWindow::~settingsWindow(){
+SettingsWindow::~SettingsWindow(){
+    std::cout << "YES I AM DELETED" << std::endl;
     delete newMapLabel;
     delete newMapLine;
+    disconnect(newMapCheckBox, 0, 0, 0);
     delete newMapCheckBox;
 
     delete speedLabel;
     delete speedSpinBox;
+    disconnect(speedCheckBox, 0, 0, 0);
     delete speedCheckBox;
 
     delete cornerLabel;
     delete cornerSpinBox;
+    disconnect(cornerCheckBox, 0, 0, 0);
     delete cornerCheckBox;
 
+    disconnect(setPushButton, 0, 0, 0);
     delete setPushButton;
 
     delete settingGridLayot;
 }
 
 
-bool settingsWindow::isSetMapValue(){
+bool SettingsWindow::isSetMapValue(){
     return newMapCheckBox->isChecked();
 }
-QString settingsWindow::getMapValue(){
+QString SettingsWindow::getMapValue(){
     return this->newMapLine->text();
 }
-void settingsWindow::setMapValue(QString map){
+void SettingsWindow::setMapValue(QString map){
     this->newMapLine->setText(map);
 }
 
 
-bool settingsWindow::isSetSpeedValue(){
+bool SettingsWindow::isSetSpeedValue(){
     return speedCheckBox->isChecked();
 }
-int settingsWindow::getSpeedValue(){
+int SettingsWindow::getSpeedValue(){
     return this->speedSpinBox->value();
 }
-void settingsWindow::setSpeedValue(int speed){
+void SettingsWindow::setSpeedValue(int speed){
     this->speedSpinBox->setValue(speed);
 }
 
 
-bool settingsWindow::isSetCornerValue(){
+bool SettingsWindow::isSetCornerValue(){
     return cornerCheckBox->isChecked();
 }
-int settingsWindow::getCornerValue(){
+int SettingsWindow::getCornerValue(){
     return this->cornerSpinBox->value();
 }
-void settingsWindow::setCornerValue(int corner){
+void SettingsWindow::setCornerValue(int corner){
     this->cornerSpinBox->setValue(corner);
 }
 
+
+void SettingsWindow::blockNewMapLine(){
+    if(isSetMapValue()) newMapLine->setEnabled(true);
+    else newMapLine->setEnabled(false);
+}
+void SettingsWindow::blockSpeedSpinBox(){
+    if(isSetSpeedValue()) speedSpinBox->setEnabled(true);
+    else speedSpinBox->setEnabled(false);
+}
+void SettingsWindow::blockCornerSpinBox(){
+    if(isSetSpeedValue()) cornerSpinBox->setEnabled(true);
+    else cornerSpinBox->setEnabled(false);
+}
 
