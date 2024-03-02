@@ -2,15 +2,12 @@
 #define SIMULATIONWINDOW_H
 
 #include <QWidget>
-#include <QPalette>
-#include <QPainter>
-#include <QRectF>
 #include <QPushButton>
-#include <QColor>
-#include <iostream>
-
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QPalette>
+#include "simulationbody.h"
 #include "../core/core.h"
-#include "robotsgui.h"
 
 class SimulationWindow : public QWidget
 {
@@ -18,18 +15,43 @@ class SimulationWindow : public QWidget
 public:
     explicit SimulationWindow(QWidget *parent = nullptr);
     ~SimulationWindow();
-    void simStore();
-protected:
-    void paintEvent(QPaintEvent *event);
+
+    void runSimObject();
+    void storeSimulationMap();
+    void pauseSimObject();
+    void continueSimulObject();
+
+    bool devSimIsRun = false;
+    bool devSimMapIsSet = false;
+    bool isSimRun();
+    bool isSimMapSet();
 private:
-    bool drawFlag = false;
-    RobotsGUI* simRobotsGUI = nullptr;
-    QPalette pal;
-    QPainter* painter;
-    void drawSimObjects();
+    SimulationBody* simBody;
+
+    QVBoxLayout* simulationsLayot;
+    QHBoxLayout* simBodyowBoxLayout;      // simulations window layout
+    QHBoxLayout* simulatyonEngineLayout;  // engine for simulation
+    QVBoxLayout* robotsEngineLayout;      // moves button layput
+    QHBoxLayout* highRobotsEngineLayout;  // forward move button layout
+    QHBoxLayout* lowRobotsEngineLayout;   // right/stop/left buttons layout
+
+    QPushButton* startSimulationButton;
+    QPushButton* stopSimulatopnButton;
+    QPushButton* continueSimulationButton;
+    QPushButton* forwardMoveButton;
+    QPushButton* leftMoveButton;
+    QPushButton* stopMoveButton;
+    QPushButton* rightMoveButton;
+
+    void createSimulattionsButtons();
+    void deleteSimulationsButtons();
+    void createSimulationsLayout();
+    void deleteSimulationsLayout();
+    void setSimualtionEngineSignals();
+
 signals:
-public slots:
-    //void moveSimRectDown();
+private slots:
+
 };
 
 #endif // SIMULATIONWINDOW_H

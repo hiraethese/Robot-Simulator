@@ -24,7 +24,7 @@ MainWindow::~MainWindow()
 
 // ************************************  APPLICATION    *********************************************************
 void MainWindow::createAppWindows(){
-    createSimulationBody();
+    createSimulationWindow();
     createSettings();
     createActions();
     createTools();
@@ -34,9 +34,9 @@ void MainWindow::createAppWindows(){
 void MainWindow::deleteAppWindows(){
     deleteActions();
     deleteTools();
-    deleteSimulationBody();
+    deleteSimulationWindow();
     delete settings;
-    delete simBody;
+    delete simWind;
 }
 // **************************************************************************************************************
 
@@ -115,7 +115,7 @@ void MainWindow::runSimulationActionFunctional(){
     runSimulationAction->setIcon(QIcon(":/icons/pauseTool.png"));
     lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
 
-    simBody->runSimObject();
+    simWind->runSimObject();
 }
 void MainWindow::pauseSimulationActionFunctional(){
     if(!devflagMapIsSet){
@@ -128,7 +128,7 @@ void MainWindow::pauseSimulationActionFunctional(){
     runSimulationAction->setText(tr("Run"));
     lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
 
-    simBody->pauseSimObject();
+    simWind->pauseSimObject();
 }
 
 void MainWindow::restartSimulationActionFunctional(){
@@ -158,7 +158,7 @@ void MainWindow::updateSettings(){
         devflagMapIsSet = true;
         simulationMap = settings->getMapValue();
         lineMapNameSimIdToolBar->setText(simulationMap);
-        simBody->storeSimulationMap();
+        simWind->storeSimulationMap();
     }
     if(settings->isSetSpeedValue()) devSimulationSpeed = settings->getSpeedValue();
     if(settings->isSetCornerValue()) devSimulationCorner = settings->getCornerValue();
@@ -177,14 +177,14 @@ void MainWindow::settingsToolActionFunctional(){
 
 
 // ************************************  SIMULATION     *********************************************************
-void MainWindow::createSimulationBody(){
+void MainWindow::createSimulationWindow(){
 
-    simBody = new SimulationBody(this);
-    setCentralWidget(simBody);
+    simWind = new SimulationWindow(this);
+    setCentralWidget(simWind);
 }
 
-void MainWindow::deleteSimulationBody(){
-    //delete simBody;
+void MainWindow::deleteSimulationWindow(){
+    //delete simWind;
 }
 // **************************************************************************************************************
 

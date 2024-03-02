@@ -19,13 +19,14 @@
 #include <QLineEdit>
 #include <QScrollArea>
 #include <QString>
-#include "simulationbody.h"
+#include "simulationwindow.h"
 #include "settingswindow.h"
 #include "infonotification.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
-class SimulationBody;
+class SimulationWindow;
+class SettinsgWindow;
 }
 QT_END_NAMESPACE
 
@@ -66,14 +67,14 @@ private:
 
     // SIMULATION
     QVBoxLayout* vbl;
-    SimulationBody* simBody;
+    SimulationWindow* simWind;
     bool devflagMapIsSet = false; // should be pulling by core
     int devSimulationSpeed = 50;  // should be pulling by core
     int devSimulationCorner = 45; // should be pulling by core
     QString simulationMap = QString("");
 
-    void createSimulationBody();
-    void deleteSimulationBody();
+    void createSimulationWindow();
+    void deleteSimulationWindow();
 
     // settings area
 
