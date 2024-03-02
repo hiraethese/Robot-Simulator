@@ -1,4 +1,4 @@
-#include "settingswindow.h"
+#include "SettingsWindow.h"
 
 SettingsWindow::SettingsWindow() {
     this->setWindowTitle("Settings");

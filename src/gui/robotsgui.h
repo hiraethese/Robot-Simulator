@@ -7,7 +7,7 @@
 #include <QColor>
 
 #include "../core/core.h"
-#include "iobjectgui.h"
+#include "IObjectGUI.h"
 
 
 class RobotsGUI : public IObjectGUI

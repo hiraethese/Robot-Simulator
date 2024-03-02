@@ -6,7 +6,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPalette>
-#include "simulationbody.h"
+#include "SimulationBody.h"
 #include "../core/core.h"
 
 class SimulationWindow : public QWidget

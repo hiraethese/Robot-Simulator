@@ -10,7 +10,7 @@
 #include <iostream>
 
 #include "../core/core.h"
-#include "robotsgui.h"
+#include "RobotsGUI.h"
 
 class SimulationBody : public QWidget
 {

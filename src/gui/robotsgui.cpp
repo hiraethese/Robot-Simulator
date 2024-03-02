@@ -1,4 +1,4 @@
-#include "robotsgui.h"
+#include "RobotsGUI.h"
 
 RobotsGUI::RobotsGUI(QPainter* localPainter, QColor objectColor, unsigned objectCount):IObjectGUI(localPainter, objectColor, objectCount) {
     Rectangle rectFromCore;

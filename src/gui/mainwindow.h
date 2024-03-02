@@ -19,9 +19,9 @@
 #include <QLineEdit>
 #include <QScrollArea>
 #include <QString>
-#include "simulationwindow.h"
-#include "settingswindow.h"
-#include "infonotification.h"
+#include "SimulationWindow.h"
+#include "SettingsWindow.h"
+#include "InfoNotification.h"
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
