@@ -11,7 +11,7 @@ RESOURCES += res/icons.qrc
 #gui/
 SOURCES += \
     src/gui/InfoNotification.cpp \
-    src/gui/IObjectGUI.cpp \
+    src/gui/AObjectGUI.cpp \
     src/gui/RobotsGUI.cpp \
     src/main.cpp \
     src/gui/MainWindow.cpp \
@@ -24,7 +24,7 @@ SOURCES += \
 
 HEADERS += \
     src/gui/InfoNotification.h \
-    src/gui/IObjectGUI.h \
+    src/gui/AObjectGUI.h \
     src/gui/MainWindow.h \
     src/gui/RobotsGUI.h \
     src/gui/SettingsWindow.h \
