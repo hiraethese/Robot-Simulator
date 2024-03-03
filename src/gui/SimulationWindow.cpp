@@ -14,6 +14,7 @@ SimulationWindow::~SimulationWindow(){
     deleteSimulationsButtons();
     deleteSimulationsLayout();
 }
+
 void SimulationWindow::createSimulationsLayout(){
     simulationsLayot = new QVBoxLayout();
 
@@ -76,23 +77,9 @@ void SimulationWindow::deleteSimulationsButtons(){
     delete rightMoveButton;
 }
 
-void SimulationWindow::runSimObject(){
-    std::cout << "start simulation" << std::endl;
+void SimulationWindow::emitStoreGUISimSigFromSimWind(){
+    simBody->emitStoreGUISimSig();
 }
-void SimulationWindow::storeSimulationMap(){
-    std::cout << "store simulation" << std::endl;
-}
-void SimulationWindow::pauseSimObject(){
-    std::cout << "break simulation" << std::endl;
-}
-void SimulationWindow::continueSimulObject(){
-    std::cout << "continue simulation" << std::endl;
-}
-
-bool SimulationWindow::isSimRun(){
-    return devSimIsRun;
-}
-
-bool SimulationWindow::isSimMapSet(){
-    return devSimMapIsSet;
+void SimulationWindow::emitRunGUISimSigFromSimWind(){
+    simBody->emitRunGUISimSig();
 }

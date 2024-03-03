@@ -16,15 +16,8 @@ public:
     explicit SimulationWindow(QWidget *parent = nullptr);
     ~SimulationWindow();
 
-    void runSimObject();
-    void storeSimulationMap();
-    void pauseSimObject();
-    void continueSimulObject();
-
-    bool devSimIsRun = false;
-    bool devSimMapIsSet = false;
-    bool isSimRun();
-    bool isSimMapSet();
+    void emitStoreGUISimSigFromSimWind();
+    void emitRunGUISimSigFromSimWind();
 private:
     SimulationBody* simBody;
 
@@ -51,7 +44,6 @@ private:
 
 signals:
 private slots:
-
 };
 
 #endif // SIMULATIONWINDOW_H

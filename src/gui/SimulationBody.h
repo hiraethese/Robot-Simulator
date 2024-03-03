@@ -11,6 +11,9 @@
 
 #include "../core/core.h"
 #include "RobotsGUI.h"
+#include "../controller/controller.h"
+#include "../controller/PseudoCore.h"
+
 
 class SimulationBody : public QWidget
 {
@@ -18,18 +21,22 @@ class SimulationBody : public QWidget
 public:
     explicit SimulationBody(QWidget *parent = nullptr);
     ~SimulationBody();
-    void simStore();
+    void emitStoreGUISimSig();
+    void emitRunGUISimSig();
 protected:
     void paintEvent(QPaintEvent *event);
 private:
-    bool drawFlag = false;
     RobotsGUI* simRobotsGUI = nullptr;
     QPalette pal;
-    QPainter* painter;
-    void drawSimObjects();
+    QPainter* painter = nullptr;
+    void drawGUISimObj();
+    void connectSignals();
 signals:
+    void runGUISimSig();
+    void storeGUISimSig();
 public slots:
-    //void moveSimRectDown();
+    void runGUISim();
+    void storeGUISim();
 };
 
 #endif // SIMULATIONBODY_H

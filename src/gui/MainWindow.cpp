@@ -10,6 +10,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     //QApplication::setApplicationDisplayName("ICP2024");
     setWindowTitle("");
+
+    contr_create_core(); // input point: init core
+
     createAppWindows();
 }
 
@@ -34,9 +37,10 @@ void MainWindow::createAppWindows(){
 void MainWindow::deleteAppWindows(){
     deleteActions();
     deleteTools();
-    deleteSimulationWindow();
     delete settings;
     delete simWind;
+
+    contr_delete_core(); // input point: delete core
 }
 // **************************************************************************************************************
 
@@ -77,16 +81,16 @@ void MainWindow::deleteTools(){
 
 void MainWindow::createActions(){
     helpToolAction = new QAction(QIcon(":/icons/helpTool.jpg"), "&Help", this);
-    connect(helpToolAction, SIGNAL(triggered()), this, SLOT(helpTextToolActionFunctional()));
+    connect(helpToolAction, SIGNAL(triggered()), this, SLOT(helpTextToolActionSlot()));
 
     settingsToolAction = new QAction(QIcon(":/icons/settingsTool.png"), "&Settings", this);
-    connect(settingsToolAction, SIGNAL(triggered()), this, SLOT(settingsToolActionFunctional()));
+    connect(settingsToolAction, SIGNAL(triggered()), this, SLOT(settingsToolActionSlot()));
 
     runSimulationAction = new QAction(QIcon(":/icons/playTool.png"), "&Run", this);
-    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionFunctional()));
+    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionSlot()));
 
     restartSimulationAction = new QAction(QIcon(":/icons/restartTool.png"), "&Continue", this);
-    connect(restartSimulationAction, SIGNAL(triggered()), this, SLOT(restartSimulationActionFunctional()));
+    connect(restartSimulationAction, SIGNAL(triggered()), this, SLOT(restartSimulationActionSlot()));
 }
 
 
@@ -100,40 +104,37 @@ void MainWindow::deleteActions(){
     delete runSimulationAction;
     delete restartSimulationAction;
 }
-void MainWindow::helpTextToolActionFunctional(){
+void MainWindow::helpTextToolActionSlot(){
     // !!! need add help text for users interface actions
     QMessageBox::about(this, "Help", "<b>This place will be for help users text!</b>");
 }
 
-void MainWindow::runSimulationActionFunctional(){
-    if(!devflagMapIsSet){
+void MainWindow::runSimulationActionSlot(){
+    if(!contr_is_sim_ready()){
         warningMsgSimNotSet();
         return;
     }
     disconnect(runSimulationAction, 0, 0, 0);
-    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(pauseSimulationActionFunctional()));
+    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(pauseSimulationActionSlot()));
     runSimulationAction->setIcon(QIcon(":/icons/pauseTool.png"));
     lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
 
-    simWind->runSimObject();
+    contr_run_sim_command();
+    simWind->emitRunGUISimSigFromSimWind();
 }
-void MainWindow::pauseSimulationActionFunctional(){
-    if(!devflagMapIsSet){
-        warningMsgSimNotSet();
-        return;
-    }
+void MainWindow::pauseSimulationActionSlot(){
     disconnect(runSimulationAction, 0, 0, 0);
-    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionFunctional()));
+    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionSlot()));
     runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
     runSimulationAction->setText(tr("Run"));
     lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
 
-    simWind->pauseSimObject();
+    contr_stop_sim_command();
 }
 
-void MainWindow::restartSimulationActionFunctional(){
-    //runSimulationActionFunctional();
-    if(!devflagMapIsSet){
+void MainWindow::restartSimulationActionSlot(){
+    //runSimulationActionSlot();
+    if(contr_is_sim_ready()){
         warningMsgSimNotSet();
         return;
     }
@@ -145,7 +146,7 @@ void MainWindow::restartSimulationActionFunctional(){
 // ************************************  SETTINGS       *********************************************************
 void MainWindow::createSettings(){
     settings = new SettingsWindow();
-    connect(settings->setPushButton, SIGNAL(clicked()), this, SLOT(updateSettings()));
+    connect(settings->setPushButton, SIGNAL(clicked()), this, SLOT(updateSettingsSlot()));
     settings->hide();
 }
 
@@ -153,22 +154,22 @@ void MainWindow::deleteSettings(){
     disconnect(settings, 0, 0, 0);
     delete settings;
 }
-void MainWindow::updateSettings(){
+void MainWindow::updateSettingsSlot(){
+
+    // !!! try catch filtering errors
+    contr_set_new_settings(settings->isSetMapValue(), settings->getMapValue().toStdString(), settings->isSetSpeedValue(), settings->getSpeedValue(), settings->isSetCornerValue(), settings->getCornerValue());
+    //
     if(settings->isSetMapValue()){
-        devflagMapIsSet = true;
-        simulationMap = settings->getMapValue();
-        lineMapNameSimIdToolBar->setText(simulationMap);
-        simWind->storeSimulationMap();
+        lineMapNameSimIdToolBar->setText(settings->getMapValue());
     }
-    if(settings->isSetSpeedValue()) devSimulationSpeed = settings->getSpeedValue();
-    if(settings->isSetCornerValue()) devSimulationCorner = settings->getCornerValue();
     settings->close();
 }
-void MainWindow::settingsToolActionFunctional(){
+void MainWindow::settingsToolActionSlot(){
+    if(contr_is_sim_run()) pauseSimulationActionSlot();
     // *** should be set by core ***
-    settings->setMapValue(simulationMap);
-    settings->setSpeedValue(devSimulationSpeed);
-    settings->setCornerValue(devSimulationCorner);
+    settings->setMapValue(QString::fromStdString(contr_get_map_value()));
+    settings->setSpeedValue(contr_get_speed_value());
+    settings->setCornerValue(contr_get_corner_value());
     // *** *** *** *** *** *** *** ***
     settings->show();
 }
@@ -183,9 +184,6 @@ void MainWindow::createSimulationWindow(){
     setCentralWidget(simWind);
 }
 
-void MainWindow::deleteSimulationWindow(){
-    //delete simWind;
-}
 // **************************************************************************************************************
 
 

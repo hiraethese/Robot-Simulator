@@ -50,9 +50,9 @@ private:
     int cornerValue;
 
 private slots:
-    void blockNewMapLine();
-    void blockSpeedSpinBox();
-    void blockCornerSpinBox();
+    void blockNewMapLineSlot();
+    void blockSpeedSpinBoxSlot();
+    void blockCornerSpinBoxSlot();
 };
 
 #endif // SETTINGSWINDOW_H

@@ -16,24 +16,32 @@ SimulationBody::~SimulationBody(){
 }
 
 void SimulationBody::paintEvent(QPaintEvent *event){
-    std::cout << "TESTEDT3STEST" << std::endl;
+    std::cout << "PAINT EVENT" << std::endl;
     Q_UNUSED(event);
-    if(drawFlag) drawSimObjects();
+    //if(drawFlag) drawGUISimObj();
 }
 
 
-void SimulationBody::simStore(){
-    painter = new QPainter(this);
-    SimStart();
-    if(!simRobotsGUI)simRobotsGUI = new RobotsGUI(painter, QColor(255, 0, 0), 1);
-    else{} // update data
+void SimulationBody::connectSignals(){
+    connect(this, SIGNAL(runGUISimSig()), this, SLOT(runGUISim()));
+    connect(this, SIGNAL(storGUIeSimSig()), this, SLOT(storeGUISim()));
 }
-void SimulationBody::drawSimObjects(){
+void SimulationBody::drawGUISimObj(){
+    std::cout << "DRAW SIM OBJECT" << std::endl;
     painter->begin(this);
     simRobotsGUI->draw();
     painter->end();
 }
-/*
-void SimulationBody::moveSimRectDown(){
-    repaint();
-}*/
+
+void SimulationBody::emitRunGUISimSig(){
+    emit runGUISimSig();
+}
+
+void SimulationBody::emitStoreGUISimSig(){
+    emit storeGUISimSig();
+}
+
+void SimulationBody::runGUISim(){
+    while(contr_is_sim_run()){}
+}
+void SimulationBody::storeGUISim(){}

@@ -3,6 +3,9 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+#OBJECTS_DIR += obj
+#MOC_DIR += moc
+#DESTDIR += bin
 CONFIG += c++17
 RESOURCES += res/icons.qrc
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -20,7 +23,9 @@ SOURCES += \
     src/gui/SimulationBody.cpp \
     src/core/core.cpp \
     src/core/entities/SimObject.cpp \
-    src/core/properties/MyTransform.cpp
+    src/core/properties/MyTransform.cpp \
+    src/controller/PseudoCore.cpp \
+    src/controller/controller.cpp
 
 HEADERS += \
     src/gui/InfoNotification.h \
@@ -33,8 +38,9 @@ HEADERS += \
     src/core/icplib.h \
     src/core/core.h \
     src/core/entities/SimObject.h \
-    src/core/properties/MyTransform.h
-
+    src/core/properties/MyTransform.h \
+    src/controller/PseudoCore.h \
+    src/controller/controller.h
 FORMS += \
     src/gui/MainWindow.ui
 

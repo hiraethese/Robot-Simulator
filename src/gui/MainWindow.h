@@ -22,6 +22,11 @@
 #include "SimulationWindow.h"
 #include "SettingsWindow.h"
 #include "InfoNotification.h"
+#include "../controller/controller.h"
+#include "../controller/PseudoCore.h"
+
+#include <iostream>
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -64,17 +69,14 @@ private:
 
     // SETTINGS
     SettingsWindow* settings;
+    void createSettings();
+    void deleteSettings();
 
     // SIMULATION
     QVBoxLayout* vbl;
     SimulationWindow* simWind;
-    bool devflagMapIsSet = false; // should be pulling by core
-    int devSimulationSpeed = 50;  // should be pulling by core
-    int devSimulationCorner = 45; // should be pulling by core
-    QString simulationMap = QString("");
 
     void createSimulationWindow();
-    void deleteSimulationWindow();
 
     // settings area
 
@@ -94,19 +96,17 @@ public slots:
 
 private slots:
     // APPLICATION PRIVATE SLOTS
-    void helpTextToolActionFunctional();
-    void settingsToolActionFunctional();
+    void helpTextToolActionSlot();
+    void settingsToolActionSlot();
 
     // BARS && ACTIONS PRIVATE SLOTS
 
     // SETTINGS PRIVATE SLOTS
-    void createSettings();
-    void deleteSettings();
-    void updateSettings();
+    void updateSettingsSlot();
 
     // SIMULATIONS PRIVATE SLOTS
-    void runSimulationActionFunctional();
-    void pauseSimulationActionFunctional();
-    void restartSimulationActionFunctional();
+    void runSimulationActionSlot();
+    void pauseSimulationActionSlot();
+    void restartSimulationActionSlot();
 };
 #endif // MAINWINDOW_H

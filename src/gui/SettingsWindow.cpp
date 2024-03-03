@@ -9,7 +9,7 @@ SettingsWindow::SettingsWindow() {
     newMapLine = new QLineEdit();
     newMapLine->setEnabled(false);
     newMapCheckBox = new QCheckBox();
-    connect(newMapCheckBox, SIGNAL(stateChanged(int)), this, SLOT(blockNewMapLine()));
+    connect(newMapCheckBox, SIGNAL(stateChanged(int)), this, SLOT(blockNewMapLineSlot()));
     settingGridLayot->addWidget(newMapLabel, 0, 0);
     settingGridLayot->addWidget(newMapLine, 0, 1);
     settingGridLayot->addWidget(newMapCheckBox, 0, 2);
@@ -20,7 +20,7 @@ SettingsWindow::SettingsWindow() {
     speedSpinBox->setMinimum(1);
     speedSpinBox->setMaximum(100);
     speedSpinBox->setEnabled(false);
-    connect(speedCheckBox, SIGNAL(stateChanged(int)), this, SLOT(blockSpeedSpinBox()));
+    connect(speedCheckBox, SIGNAL(stateChanged(int)), this, SLOT(blockSpeedSpinBoxSlot()));
     settingGridLayot->addWidget(speedLabel, 1, 0);
     settingGridLayot->addWidget(speedSpinBox, 1, 1);
     settingGridLayot->addWidget(speedCheckBox, 1, 2);
@@ -31,7 +31,7 @@ SettingsWindow::SettingsWindow() {
     cornerSpinBox->setMinimum(0);
     cornerSpinBox->setMaximum(360);
     cornerSpinBox->setEnabled(false);
-    connect(cornerCheckBox, SIGNAL(stateChanged(int)), this, SLOT(blockCornerSpinBox()));
+    connect(cornerCheckBox, SIGNAL(stateChanged(int)), this, SLOT(blockCornerSpinBoxSlot()));
     settingGridLayot->addWidget(cornerLabel, 2, 0);
     settingGridLayot->addWidget(cornerSpinBox, 2, 1);
     settingGridLayot->addWidget(cornerCheckBox, 2, 2);
@@ -98,15 +98,15 @@ void SettingsWindow::setCornerValue(int corner){
 }
 
 
-void SettingsWindow::blockNewMapLine(){
+void SettingsWindow::blockNewMapLineSlot(){
     if(isSetMapValue()) newMapLine->setEnabled(true);
     else newMapLine->setEnabled(false);
 }
-void SettingsWindow::blockSpeedSpinBox(){
+void SettingsWindow::blockSpeedSpinBoxSlot(){
     if(isSetSpeedValue()) speedSpinBox->setEnabled(true);
     else speedSpinBox->setEnabled(false);
 }
-void SettingsWindow::blockCornerSpinBox(){
+void SettingsWindow::blockCornerSpinBoxSlot(){
     if(isSetSpeedValue()) cornerSpinBox->setEnabled(true);
     else cornerSpinBox->setEnabled(false);
 }
