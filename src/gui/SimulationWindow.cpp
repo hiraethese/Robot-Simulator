@@ -70,7 +70,6 @@ void SimulationWindow::createSimulattionsButtons(){
 }
 
 void SimulationWindow::deleteSimulationsButtons(){
-
     delete forwardMoveButton;
     delete leftMoveButton;
     delete stopMoveButton;
