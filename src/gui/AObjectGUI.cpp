@@ -2,6 +2,7 @@
 
 AObjectGUI::AObjectGUI(QPainter* localPainter, QColor objectColor, unsigned objectCount) {
     simPainter = localPainter;
+    std::cout << "yes" << std::endl;
     this->objectColor = objectColor;
     this->objectCount = objectCount;
 }

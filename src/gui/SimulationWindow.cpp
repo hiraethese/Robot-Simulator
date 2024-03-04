@@ -77,8 +77,16 @@ void SimulationWindow::deleteSimulationsButtons(){
 }
 
 void SimulationWindow::emitStoreGUISimSigFromSimWind(){
+    std::cout << "EMIT STORING FROM SIM WIND!!!" << std::endl;
     simBody->emitStoreGUISimSig();
 }
 void SimulationWindow::emitRunGUISimSigFromSimWind(){
+    std::cout << "EMIT RUNING FROM SIM WIND!!!" << std::endl;
     simBody->emitRunGUISimSig();
+    //emit simBody->runGUISimSig();
+}
+
+void SimulationWindow::emitStopGUISimSigFromSimWind(){
+    std::cout << "EMIT STOP FROM SIM WIND!!!" << std::endl;
+    simBody->emitStopGUISimSig();
 }

@@ -18,6 +18,7 @@ public:
 
     void emitStoreGUISimSigFromSimWind();
     void emitRunGUISimSigFromSimWind();
+    void emitStopGUISimSigFromSimWind();
 private:
     SimulationBody* simBody;
 

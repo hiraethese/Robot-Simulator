@@ -13,9 +13,12 @@ RobotsGUI::~RobotsGUI(){
         delete robot;
 }
 void RobotsGUI::draw(){
+    std::cout << "1r" << simPainter << std::endl;
     Rectangle rectFromCore;
     simPainter->setBrush(objectColor);
+    std::cout << "2r" << std::endl;
     for(QRectF* robot : robotsGUIVector){
+        std::cout << "3r" << std::endl;
         rectFromCore = newRect->GetTransform()->GetRect();
         robot->setX(rectFromCore.x);
         robot->setY(rectFromCore.y);
@@ -23,4 +26,5 @@ void RobotsGUI::draw(){
         robot->setHeight(rectFromCore.h);
         simPainter->drawRect(*robot);
     }
+    std::cout << "4r" << std::endl;
 }

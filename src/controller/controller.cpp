@@ -9,6 +9,8 @@ void contr_delete_core(){
 void contr_set_new_settings(bool flagNewMap, std::string newMapValue, bool flagNewSpeed, int newSpeedValue, bool flagNewCorner, int newCornerValue){
     if(flagNewMap){
         ps_core->map = newMapValue;
+        ps_core->simIsReady = true;
+        std::cout << "SET SIM IS READY " << ps_core->simIsReady << std::endl;
     }
     if(flagNewSpeed){
         ps_core->speed = newSpeedValue;
@@ -16,7 +18,6 @@ void contr_set_new_settings(bool flagNewMap, std::string newMapValue, bool flagN
     if(flagNewCorner){
         ps_core->corner = newCornerValue;
     }
-    ps_core->simIsReady = true;
 }
 
 std::string contr_get_map_value(){
@@ -41,9 +42,11 @@ bool contr_is_sim_run(){
 
 void contr_run_sim_command(){
     ps_core->simIsRun = true;
+    std::cout << "RUN SIM IS READY " << ps_core->simIsRun << std::endl;
 }
 
 void contr_stop_sim_command(){
     ps_core->simIsRun = false;
+    std::cout << "STOP SIM IS READY " << ps_core->simIsRun << std::endl;
 }
 

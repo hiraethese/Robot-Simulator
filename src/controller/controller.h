@@ -1,6 +1,7 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 #include <string>
+#include <iostream>
 #include "PseudoCore.h"
 
 void contr_create_core();

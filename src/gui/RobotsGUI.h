@@ -5,7 +5,7 @@
 #include <QRectF>
 #include <QPainter>
 #include <QColor>
-
+#include <iostream>
 #include "../core/core.h"
 #include "AObjectGUI.h"
 

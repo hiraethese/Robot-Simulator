@@ -120,16 +120,18 @@ void MainWindow::runSimulationActionSlot(){
     lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
 
     contr_run_sim_command();
+
     simWind->emitRunGUISimSigFromSimWind();
 }
 void MainWindow::pauseSimulationActionSlot(){
+
+    contr_stop_sim_command();
+    simWind->emitStopGUISimSigFromSimWind();
     disconnect(runSimulationAction, 0, 0, 0);
     connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionSlot()));
     runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
     runSimulationAction->setText(tr("Run"));
     lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
-
-    contr_stop_sim_command();
 }
 
 void MainWindow::restartSimulationActionSlot(){
@@ -161,6 +163,7 @@ void MainWindow::updateSettingsSlot(){
     //
     if(settings->isSetMapValue()){
         lineMapNameSimIdToolBar->setText(settings->getMapValue());
+        simWind->emitStoreGUISimSigFromSimWind();
     }
     settings->close();
 }

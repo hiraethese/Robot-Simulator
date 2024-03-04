@@ -3,6 +3,7 @@
 
 #include <QPainter>
 #include <QColor>
+#include <iostream>
 class AObjectGUI
 {
 public:
