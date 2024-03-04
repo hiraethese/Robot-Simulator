@@ -1,6 +1,9 @@
 #ifndef ICPLIB_H
 #define ICPLIB_H
 
+#include <math.h>
+// Note: I was planning to use cmath instead, but VS Code has problems with it
+
 // 2D vector
 typedef struct Vector2d {
     float x; // Vector x component
@@ -14,11 +17,5 @@ typedef struct Rectangle {
     float w; // Rectangle width component
     float h; // Rectangle height component
 } Rectangle;
-
-// Integer size
-typedef struct IntSize {
-    int w; // Size width component
-    int h; // Size height component
-} IntSize;
 
 #endif // ICPLIB_H
