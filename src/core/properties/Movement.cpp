@@ -1,5 +1,8 @@
 #include "Movement.h"
 
+#include "../core.h"
+// Note: We need this to get simulation field width and height
+
 Movement::Movement(float speed, float angle, MyTransform *transform)
 {
     _speed = speed;
