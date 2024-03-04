@@ -1,15 +1,15 @@
 #include "core.h"
 
-Wall* newRect = nullptr;
+Robot* controlledRobot = nullptr;
 
 int SimStart()
 {
-    newRect = new Wall({50.0f, 50.0f}, {100.0f, 100.0f});
+    controlledRobot = new Robot({50.0f, 50.0f}, {100.0f, 100.0f}, 10.0f, 180.0f);
     return 0;
 }
 
 int SimEnd()
 {
-    delete newRect;
+    delete controlledRobot;
     return 0;
 }

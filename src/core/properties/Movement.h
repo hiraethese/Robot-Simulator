@@ -7,11 +7,11 @@ class Movement
 {
 private:
     float _speed;
-    float _angle;
+    float _angleDegrees;
     MyTransform* _transform;
 
 public:
-    Movement(float speed, float angle, MyTransform* transform);
+    Movement(float speed, float angleDegrees, MyTransform* transform);
     void Move();
 };
 

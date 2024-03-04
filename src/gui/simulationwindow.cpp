@@ -11,7 +11,7 @@ SimulationWindow::SimulationWindow(QWidget *parent)
     setAutoFillBackground(true);
     setPalette(pal);
     SimStart();
-    Rectangle r = newRect->GetTransform()->GetRect();
+    Rectangle r = controlledRobot->GetTransform()->GetRect();
     rect = new QRectF(r.x, r.y, r.w, r.h);
 }
 SimulationWindow::~SimulationWindow(){
