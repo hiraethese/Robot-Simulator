@@ -12,7 +12,9 @@ RESOURCES += res/icons.qrc
 SOURCES += \
     src/main.cpp \
     src/core/core.cpp \
+    src/core/entities/Robot.cpp \
     src/core/entities/SimObject.cpp \
+    src/core/entities/Wall.cpp \
     src/core/properties/Movement.cpp \
     src/core/properties/MyTransform.cpp \
     src/gui/mainwindow.cpp \
@@ -23,7 +25,9 @@ SOURCES += \
 HEADERS += \
     src/core/icplib.h \
     src/core/core.h \
+    src/core/entities/Robot.h \
     src/core/entities/SimObject.h \
+    src/core/entities/Wall.h \
     src/core/properties/Movement.h \
     src/core/properties/MyTransform.h \
     src/gui/mainwindow.h \
