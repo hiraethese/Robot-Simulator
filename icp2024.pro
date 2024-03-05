@@ -12,56 +12,42 @@ RESOURCES += res/icons.qrc
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 #gui/
+
 SOURCES += \
-    src/gui/InfoNotification.cpp \
-    src/gui/AObjectGUI.cpp \
-    src/gui/RobotsGUI.cpp \
-    src/main.cpp \
-    src/gui/MainWindow.cpp \
-    src/gui/SettingsWindow.cpp \
-    src/gui/SimulationWindow.cpp \
-    src/gui/SimulationBody.cpp \
-    src/core/core.cpp \
-    src/core/entities/SimObject.cpp \
-    src/core/properties/MyTransform.cpp \
+    src/controller/controller.cpp \
     src/controller/PseudoCore.cpp \
-    src/controller/controller.cpp
-    src/core/core.cpp \
     src/core/entities/Robot.cpp \
     src/core/entities/SimObject.cpp \
     src/core/entities/Wall.cpp \
     src/core/properties/Movement.cpp \
     src/core/properties/MyTransform.cpp \
-    src/gui/mainwindow.cpp \
-    src/gui/settingswindow.cpp \
-    src/gui/simulationbody.cpp \
-    src/gui/simulationwindow.cpp
+    src/core/core.cpp \
+    src/gui/AObjectGUI.cpp \
+    src/gui/InfoNotification.cpp \
+    src/gui/MainWindow.cpp \
+    src/gui/RobotsGUI.cpp \
+    src/gui/SettingsWindow.cpp \
+    src/gui/SimulationBody.cpp \
+    src/gui/SimulationWindow.cpp \
+    src/main.cpp
 
 HEADERS += \
-    src/gui/InfoNotification.h \
-    src/gui/AObjectGUI.h \
-    src/gui/MainWindow.h \
-    src/gui/RobotsGUI.h \
-    src/gui/SettingsWindow.h \
-    src/gui/SimulationBody.h \
-    src/gui/SimulationWindow.h \
-    src/core/icplib.h \
-    src/core/core.h \
-    src/core/entities/SimObject.h \
-    src/core/properties/MyTransform.h \
+    src/controller/controller.h \
     src/controller/PseudoCore.h \
-    src/controller/controller.h
-    src/core/icplib.h \
-    src/core/core.h \
     src/core/entities/Robot.h \
     src/core/entities/SimObject.h \
     src/core/entities/Wall.h \
     src/core/properties/Movement.h \
     src/core/properties/MyTransform.h \
-    src/gui/mainwindow.h \
-    src/gui/settingswindow.h \
-    src/gui/simulationbody.h \
-    src/gui/simulationwindow.h
+    src/core/core.h \
+    src/core/icplib.h \
+    src/gui/AObjectGUI.h \
+    src/gui/InfoNotification.h \
+    src/gui/MainWindow.h \
+    src/gui/RobotsGUI.h \
+    src/gui/SettingsWindow.h \
+    src/gui/SimulationBody.h \
+    src/gui/SimulationWindow.h
 
 FORMS += \
     src/gui/MainWindow.ui

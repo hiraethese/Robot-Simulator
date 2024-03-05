@@ -3,7 +3,7 @@
 RobotsGUI::RobotsGUI(QPainter* localPainter, QColor objectColor, unsigned objectCount):AObjectGUI(localPainter, objectColor, objectCount) {
     Rectangle rectFromCore;
     for(unsigned robot = 0; robot < objectCount; robot++){
-        rectFromCore = newRect->GetTransform()->GetRect();
+        rectFromCore = controlledRobot->GetTransform()->GetRect();
         robotsGUIVector.push_back(new QRectF(rectFromCore.x, rectFromCore.y, rectFromCore.w, rectFromCore.h));
     }
 }
@@ -19,7 +19,7 @@ void RobotsGUI::draw(){
     std::cout << "2r" << std::endl;
     for(QRectF* robot : robotsGUIVector){
         std::cout << "3r" << std::endl;
-        rectFromCore = newRect->GetTransform()->GetRect();
+        rectFromCore = controlledRobot->GetTransform()->GetRect();
         robot->setX(rectFromCore.x);
         robot->setY(rectFromCore.y);
         robot->setWidth(rectFromCore.w);
