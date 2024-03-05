@@ -9,7 +9,7 @@ SettingsWindow::SettingsWindow() {
     newMapLine = new QLineEdit();
     newMapLine->setEnabled(false);
     newMapCheckBox = new QCheckBox();
-    connect(newMapCheckBox, SIGNAL(stateChanged(int)), this, SLOT(blockNewMapLineSlot()));
+    connect(newMapCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::blockNewMapLineSlot);
     settingGridLayot->addWidget(newMapLabel, 0, 0);
     settingGridLayot->addWidget(newMapLine, 0, 1);
     settingGridLayot->addWidget(newMapCheckBox, 0, 2);
@@ -20,21 +20,21 @@ SettingsWindow::SettingsWindow() {
     speedSpinBox->setMinimum(1);
     speedSpinBox->setMaximum(100);
     speedSpinBox->setEnabled(false);
-    connect(speedCheckBox, SIGNAL(stateChanged(int)), this, SLOT(blockSpeedSpinBoxSlot()));
+    connect(speedCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::blockSpeedSpinBoxSlot);
     settingGridLayot->addWidget(speedLabel, 1, 0);
     settingGridLayot->addWidget(speedSpinBox, 1, 1);
     settingGridLayot->addWidget(speedCheckBox, 1, 2);
 
-    cornerLabel = new QLabel(tr("Corner(degree) : "));
-    cornerSpinBox = new QSpinBox();
-    cornerCheckBox = new QCheckBox();
-    cornerSpinBox->setMinimum(0);
-    cornerSpinBox->setMaximum(360);
-    cornerSpinBox->setEnabled(false);
-    connect(cornerCheckBox, SIGNAL(stateChanged(int)), this, SLOT(blockCornerSpinBoxSlot()));
-    settingGridLayot->addWidget(cornerLabel, 2, 0);
-    settingGridLayot->addWidget(cornerSpinBox, 2, 1);
-    settingGridLayot->addWidget(cornerCheckBox, 2, 2);
+    angleLabel = new QLabel(tr("Angle(degree) : "));
+    angleSpinBox = new QSpinBox();
+    angleCheckBox = new QCheckBox();
+    angleSpinBox->setMinimum(0);
+    angleSpinBox->setMaximum(360);
+    angleSpinBox->setEnabled(false);
+    connect(angleCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::blockAngleSpinBoxSlot);
+    settingGridLayot->addWidget(angleLabel, 2, 0);
+    settingGridLayot->addWidget(angleSpinBox, 2, 1);
+    settingGridLayot->addWidget(angleCheckBox, 2, 2);
 
     setPushButton = new QPushButton(tr("set"));
     settingGridLayot->addWidget(setPushButton, 3, 0);
@@ -53,10 +53,10 @@ SettingsWindow::~SettingsWindow(){
     disconnect(speedCheckBox, 0, 0, 0);
     delete speedCheckBox;
 
-    delete cornerLabel;
-    delete cornerSpinBox;
-    disconnect(cornerCheckBox, 0, 0, 0);
-    delete cornerCheckBox;
+    delete angleLabel;
+    delete angleSpinBox;
+    disconnect(angleCheckBox, 0, 0, 0);
+    delete angleCheckBox;
 
     disconnect(setPushButton, 0, 0, 0);
     delete setPushButton;
@@ -87,14 +87,14 @@ void SettingsWindow::setSpeedValue(int speed){
 }
 
 
-bool SettingsWindow::isSetCornerValue(){
-    return cornerCheckBox->isChecked();
+bool SettingsWindow::isSetAngleValue(){
+    return angleCheckBox->isChecked();
 }
-int SettingsWindow::getCornerValue(){
-    return this->cornerSpinBox->value();
+int SettingsWindow::getAngleValue(){
+    return this->angleSpinBox->value();
 }
-void SettingsWindow::setCornerValue(int corner){
-    this->cornerSpinBox->setValue(corner);
+void SettingsWindow::setAngleValue(int angle){
+    this->angleSpinBox->setValue(angle);
 }
 
 
@@ -106,8 +106,8 @@ void SettingsWindow::blockSpeedSpinBoxSlot(){
     if(isSetSpeedValue()) speedSpinBox->setEnabled(true);
     else speedSpinBox->setEnabled(false);
 }
-void SettingsWindow::blockCornerSpinBoxSlot(){
-    if(isSetSpeedValue()) cornerSpinBox->setEnabled(true);
-    else cornerSpinBox->setEnabled(false);
+void SettingsWindow::blockAngleSpinBoxSlot(){
+    if(isSetSpeedValue()) angleSpinBox->setEnabled(true);
+    else angleSpinBox->setEnabled(false);
 }
 

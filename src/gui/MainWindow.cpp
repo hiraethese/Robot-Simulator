@@ -81,16 +81,16 @@ void MainWindow::deleteTools(){
 
 void MainWindow::createActions(){
     helpToolAction = new QAction(QIcon(":/icons/helpTool.jpg"), "&Help", this);
-    connect(helpToolAction, SIGNAL(triggered()), this, SLOT(helpTextToolActionSlot()));
+    connect(helpToolAction, &QAction::triggered, this, &MainWindow::helpTextToolActionSlot);
 
     settingsToolAction = new QAction(QIcon(":/icons/settingsTool.png"), "&Settings", this);
-    connect(settingsToolAction, SIGNAL(triggered()), this, SLOT(settingsToolActionSlot()));
+    connect(settingsToolAction, &QAction::triggered, this, &MainWindow::settingsToolActionSlot);
 
     runSimulationAction = new QAction(QIcon(":/icons/playTool.png"), "&Run", this);
-    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionSlot()));
+    connect(runSimulationAction, &QAction::triggered, this, &MainWindow::runSimulationActionSlot);
 
     restartSimulationAction = new QAction(QIcon(":/icons/restartTool.png"), "&Continue", this);
-    connect(restartSimulationAction, SIGNAL(triggered()), this, SLOT(restartSimulationActionSlot()));
+    connect(restartSimulationAction, &QAction::triggered, this, &MainWindow::restartSimulationActionSlot);
 }
 
 
@@ -115,7 +115,7 @@ void MainWindow::runSimulationActionSlot(){
         return;
     }
     disconnect(runSimulationAction, 0, 0, 0);
-    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(pauseSimulationActionSlot()));
+    connect(runSimulationAction, &QAction::triggered, this, &MainWindow::pauseSimulationActionSlot);
     runSimulationAction->setIcon(QIcon(":/icons/pauseTool.png"));
     lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
 
@@ -128,7 +128,7 @@ void MainWindow::pauseSimulationActionSlot(){
     contr_stop_sim_command();
     simWind->emitStopGUISimSigFromSimWind();
     disconnect(runSimulationAction, 0, 0, 0);
-    connect(runSimulationAction, SIGNAL(triggered()), this, SLOT(runSimulationActionSlot()));
+    connect(runSimulationAction, &QAction::triggered, this, &MainWindow::runSimulationActionSlot);
     runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
     runSimulationAction->setText(tr("Run"));
     lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
@@ -148,7 +148,7 @@ void MainWindow::restartSimulationActionSlot(){
 // ************************************  SETTINGS       *********************************************************
 void MainWindow::createSettings(){
     settings = new SettingsWindow();
-    connect(settings->setPushButton, SIGNAL(clicked()), this, SLOT(updateSettingsSlot()));
+    connect(settings->setPushButton, &QPushButton::clicked, this, &MainWindow::updateSettingsSlot);
     settings->hide();
 }
 
@@ -159,7 +159,7 @@ void MainWindow::deleteSettings(){
 void MainWindow::updateSettingsSlot(){
 
     // !!! try catch filtering errors
-    contr_set_new_settings(settings->isSetMapValue(), settings->getMapValue().toStdString(), settings->isSetSpeedValue(), settings->getSpeedValue(), settings->isSetCornerValue(), settings->getCornerValue());
+    contr_set_new_settings(settings->isSetMapValue(), settings->getMapValue().toStdString(), settings->isSetSpeedValue(), settings->getSpeedValue(), settings->isSetAngleValue(), settings->getAngleValue());
     //
     if(settings->isSetMapValue()){
         lineMapNameSimIdToolBar->setText(settings->getMapValue());
@@ -172,7 +172,7 @@ void MainWindow::settingsToolActionSlot(){
     // *** should be set by core ***
     settings->setMapValue(QString::fromStdString(contr_get_map_value()));
     settings->setSpeedValue(contr_get_speed_value());
-    settings->setCornerValue(contr_get_corner_value());
+    settings->setAngleValue(contr_get_angle_value());
     // *** *** *** *** *** *** *** ***
     settings->show();
 }

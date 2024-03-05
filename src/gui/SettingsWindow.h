@@ -28,9 +28,9 @@ public:
     int getSpeedValue();
     void setSpeedValue(int speed);
 
-    bool isSetCornerValue();
-    int getCornerValue();
-    void setCornerValue(int corner);
+    bool isSetAngleValue();
+    int getAngleValue();
+    void setAngleValue(int angle);
 private:
     QGridLayout* settingGridLayot;
 
@@ -44,15 +44,15 @@ private:
     QCheckBox* speedCheckBox;
     int speedValue;
 
-    QLabel* cornerLabel;
-    QSpinBox* cornerSpinBox;
-    QCheckBox* cornerCheckBox;
-    int cornerValue;
+    QLabel* angleLabel;
+    QSpinBox* angleSpinBox;
+    QCheckBox* angleCheckBox;
+    int angleValue;
 
 private slots:
     void blockNewMapLineSlot();
     void blockSpeedSpinBoxSlot();
-    void blockCornerSpinBoxSlot();
+    void blockAngleSpinBoxSlot();
 };
 
 #endif // SETTINGSWINDOW_H

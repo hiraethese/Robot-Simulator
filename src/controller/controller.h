@@ -13,10 +13,10 @@ void contr_delete_core();
  * @param newMapValue       : absolute path to map
  * @param flagNewSpeed      : flag is need updating for speed
  * @param newSpeedValue     : new speed value
- * @param flagNewCorner     : flag is need updating for corner
- * @param newCornerValue    : new corner value
+ * @param flagNewAngle     : flag is need updating for Angle
+ * @param newAngleValue    : new Angle value
  */
-void contr_set_new_settings(bool flagNewMap, std::string newMapValue, bool flagNewSpeed, int newSpeedValue, bool flagNewCorner, int newCornerValue);
+void contr_set_new_settings(bool flagNewMap, std::string newMapValue, bool flagNewSpeed, int newSpeedValue, bool flagNewAngle, int newAngleValue);
 
 /**
  * @brief get_map_value getter with actual path to map
@@ -31,10 +31,10 @@ std::string contr_get_map_value();
 int contr_get_speed_value();
 
 /**
- * @brief get_corner_value  : getter with actual corner value
+ * @brief get_angle_value  : getter with actual angle value
  * @return                  : int
  */
-int contr_get_corner_value();
+int contr_get_angle_value();
 
 /**
  * @brief is_simulation_map_ready   : flag is simulation ready to starting

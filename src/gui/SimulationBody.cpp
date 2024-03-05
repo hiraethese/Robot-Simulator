@@ -36,10 +36,12 @@ void SimulationBody::paintEvent(QPaintEvent *event){
 
 
 void SimulationBody::connectSignals(){
-    connect(this, SIGNAL(stopGUISimSig()), this, SLOT(stopGUISim()));
-    connect(this, SIGNAL(runGUISimSig()), this, SLOT(runGUISim()));
-    connect(this, SIGNAL(storeGUISimSig()), this, SLOT(storeGUISim()));
-    connect(simTimer, SIGNAL(timeout()), this, SLOT(repaint()));
+    connect(this, &SimulationBody::stopGUISimSig, this, &SimulationBody::stopGUISim);
+    connect(this, &SimulationBody::runGUISimSig, this, &SimulationBody::runGUISim);
+    connect(this, &SimulationBody::storeGUISimSig, this, &SimulationBody::storeGUISim);
+    //connect(simTimer, SIGNAL(timeout()), this, SLOT(repaint()));
+    connect(simTimer, &QTimer::timeout, this, [=](){repaint();});
+
 }
 
 void SimulationBody::emitRunGUISimSig(){

@@ -6,7 +6,7 @@ void contr_delete_core(){
     delete ps_core;
 }
 
-void contr_set_new_settings(bool flagNewMap, std::string newMapValue, bool flagNewSpeed, int newSpeedValue, bool flagNewCorner, int newCornerValue){
+void contr_set_new_settings(bool flagNewMap, std::string newMapValue, bool flagNewSpeed, int newSpeedValue, bool flagNewAngle, int newAngleValue){
     if(flagNewMap){
         ps_core->map = newMapValue;
         ps_core->simIsReady = true;
@@ -15,8 +15,8 @@ void contr_set_new_settings(bool flagNewMap, std::string newMapValue, bool flagN
     if(flagNewSpeed){
         ps_core->speed = newSpeedValue;
     }
-    if(flagNewCorner){
-        ps_core->corner = newCornerValue;
+    if(flagNewAngle){
+        ps_core->angle = newAngleValue;
     }
 }
 
@@ -28,8 +28,8 @@ int contr_get_speed_value(){
     return ps_core->speed;
 }
 
-int contr_get_corner_value(){
-    return ps_core->corner;
+int contr_get_angle_value(){
+    return ps_core->angle;
 }
 
 bool contr_is_sim_ready(){
