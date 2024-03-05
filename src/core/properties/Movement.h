@@ -12,7 +12,13 @@ private:
 
 public:
     Movement(float speed, float angleDegrees, MyTransform* transform);
-    void Move();
+    float GetSpeed();
+    float GetAngle();
+    void SetSpeed(float newSpeed);
+    void SetAngle(float newAngleDegrees);
+    void RotateLeft();
+    void RotateRight();
+    void MoveForward();
 };
 
 #endif // MOVEMENT_H
