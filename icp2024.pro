@@ -3,6 +3,9 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+#OBJECTS_DIR += obj
+#MOC_DIR += moc
+#DESTDIR += bin
 CONFIG += c++17
 RESOURCES += res/icons.qrc
 # You can make your code fail to compile if it uses deprecated APIs.
@@ -10,7 +13,19 @@ RESOURCES += res/icons.qrc
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 #gui/
 SOURCES += \
+    src/gui/InfoNotification.cpp \
+    src/gui/AObjectGUI.cpp \
+    src/gui/RobotsGUI.cpp \
     src/main.cpp \
+    src/gui/MainWindow.cpp \
+    src/gui/SettingsWindow.cpp \
+    src/gui/SimulationWindow.cpp \
+    src/gui/SimulationBody.cpp \
+    src/core/core.cpp \
+    src/core/entities/SimObject.cpp \
+    src/core/properties/MyTransform.cpp \
+    src/controller/PseudoCore.cpp \
+    src/controller/controller.cpp
     src/core/core.cpp \
     src/core/entities/Robot.cpp \
     src/core/entities/SimObject.cpp \
@@ -23,6 +38,19 @@ SOURCES += \
     src/gui/simulationwindow.cpp
 
 HEADERS += \
+    src/gui/InfoNotification.h \
+    src/gui/AObjectGUI.h \
+    src/gui/MainWindow.h \
+    src/gui/RobotsGUI.h \
+    src/gui/SettingsWindow.h \
+    src/gui/SimulationBody.h \
+    src/gui/SimulationWindow.h \
+    src/core/icplib.h \
+    src/core/core.h \
+    src/core/entities/SimObject.h \
+    src/core/properties/MyTransform.h \
+    src/controller/PseudoCore.h \
+    src/controller/controller.h
     src/core/icplib.h \
     src/core/core.h \
     src/core/entities/Robot.h \
@@ -36,7 +64,7 @@ HEADERS += \
     src/gui/simulationwindow.h
 
 FORMS += \
-    src/gui/mainwindow.ui
+    src/gui/MainWindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
