@@ -58,4 +58,25 @@ void contr_run_sim_command();
  */
 void contr_stop_sim_command();
 
+
+/**
+ * @brief contr_forward_move_sig : inform core that users robot make forward moving
+ */
+void contr_forward_move_sig();
+
+/**
+ * @brief contr_left_turn_move_sig : inform core that users robot make left rotate moving
+ */
+void contr_left_rotate_move_sig();
+
+/**
+ * @brief contr_right_rotate_move_sig : inform core that users robot make right rotate moving
+ */
+void contr_right_rotate_move_sig();
+
+/**
+ * @brief contr_stop_move_sig : inform core that users robot make stop of moving
+ */
+void contr_stop_move_sig();
+
 #endif // CONTROLLER_H

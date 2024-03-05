@@ -30,8 +30,6 @@ void SimulationWindow::createSimulationsLayout(){
     highRobotsEngineLayout = new QHBoxLayout();
     highRobotsEngineLayout->addStretch();
     highRobotsEngineLayout->addWidget(forwardMoveButton);
-    //connect(forwardMoveButton, SIGNAL(clicked()), simBody, SLOT(moveSimRectDown()));
-    connect(forwardMoveButton, SIGNAL(clicked()), simBody, SLOT(repaint()));
     highRobotsEngineLayout->addStretch();
 
     lowRobotsEngineLayout = new QHBoxLayout();
@@ -67,8 +65,21 @@ void SimulationWindow::createSimulattionsButtons(){
     leftMoveButton = new QPushButton("left");
     stopMoveButton = new QPushButton("stop");
     rightMoveButton = new QPushButton("right");
+
+    setUnsetSimButtons(false);
+
+    connect(forwardMoveButton, &QPushButton::clicked, this, [=](){contr_forward_move_sig();});
+    connect(leftMoveButton, &QPushButton::clicked, this, [=](){contr_left_rotate_move_sig();});
+    connect(stopMoveButton, &QPushButton::clicked, this, [=](){contr_stop_move_sig();});
+    connect(rightMoveButton, &QPushButton::clicked, this, [=](){contr_right_rotate_move_sig();});
 }
 
+void SimulationWindow::setUnsetSimButtons(bool flagIsSet){
+    forwardMoveButton->setEnabled(flagIsSet);
+    leftMoveButton->setEnabled(flagIsSet);
+    stopMoveButton->setEnabled(flagIsSet);
+    rightMoveButton->setEnabled(flagIsSet);
+}
 void SimulationWindow::deleteSimulationsButtons(){
     delete forwardMoveButton;
     delete leftMoveButton;
@@ -83,10 +94,11 @@ void SimulationWindow::emitStoreGUISimSigFromSimWind(){
 void SimulationWindow::emitRunGUISimSigFromSimWind(){
     std::cout << "EMIT RUNING FROM SIM WIND!!!" << std::endl;
     simBody->emitRunGUISimSig();
-    //emit simBody->runGUISimSig();
+    setUnsetSimButtons(true);
 }
 
 void SimulationWindow::emitStopGUISimSigFromSimWind(){
     std::cout << "EMIT STOP FROM SIM WIND!!!" << std::endl;
+    setUnsetSimButtons(false);
     simBody->emitStopGUISimSig();
 }

@@ -8,6 +8,7 @@
 #include <QPalette>
 #include "SimulationBody.h"
 #include "../core/core.h"
+#include "../controller/controller.h"
 
 class SimulationWindow : public QWidget
 {
@@ -42,6 +43,8 @@ private:
     void createSimulationsLayout();
     void deleteSimulationsLayout();
     void setSimualtionEngineSignals();
+
+    void setUnsetSimButtons(bool flagIsSet);
 
 signals:
 private slots:

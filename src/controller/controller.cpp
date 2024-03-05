@@ -50,3 +50,20 @@ void contr_stop_sim_command(){
     std::cout << "STOP SIM IS READY " << ps_core->simIsRun << std::endl;
 }
 
+
+
+void contr_forward_move_sig(){
+
+}
+
+void contr_left_rotate_move_sig(){
+
+}
+
+void contr_right_rotate_move_sig(){
+
+}
+
+void contr_stop_move_sig(){
+
+}
