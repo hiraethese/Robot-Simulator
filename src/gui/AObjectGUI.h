@@ -8,6 +8,7 @@ class AObjectGUI
 {
 public:
     AObjectGUI(QPainter* localPainter, QColor objectColor, unsigned objectCount);
+    virtual ~AObjectGUI(){}
     QPainter* simPainter;
     QColor objectColor;
     unsigned objectCount;

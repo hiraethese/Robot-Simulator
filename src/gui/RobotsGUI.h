@@ -14,7 +14,7 @@ class RobotsGUI : public AObjectGUI
 {
 public:
     RobotsGUI(QPainter* localPainter, QColor objectColor, unsigned objectCount);
-    ~RobotsGUI();
+    ~RobotsGUI() override;
     QRectF* getTestRobot();
     void draw() override;
 private:
