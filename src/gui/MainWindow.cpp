@@ -6,7 +6,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    setAttribute(Qt::WA_DeleteOnClose);
     ui->setupUi(this);
     //QApplication::setApplicationDisplayName("ICP2024");
     setWindowTitle("");
