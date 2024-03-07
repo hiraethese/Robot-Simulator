@@ -70,9 +70,8 @@ CMakeLists.txt.user*
 *.exe
 
 # Otheer
+#**/.gitkeep
 .vscode/
-build/
-src/icp2024
 src/Makefile
 doc/html
 doc/latex

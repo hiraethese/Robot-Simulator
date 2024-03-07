@@ -3,9 +3,9 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-#OBJECTS_DIR += obj
-#MOC_DIR += moc
-#DESTDIR += bin
+OBJECTS_DIR += ../obj
+MOC_DIR += ../moc
+DESTDIR += ../bin
 CONFIG += c++17
 RESOURCES += res/icons.qrc
 # You can make your code fail to compile if it uses deprecated APIs.
