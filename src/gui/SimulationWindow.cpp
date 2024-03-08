@@ -4,15 +4,58 @@ SimulationWindow::SimulationWindow(QWidget *parent)
     : QWidget{parent}
 {
 
-    simBody = new SimulationBody();
+    //simBody = new SimulationBody();
+    createSimGUI();
     createSimulattionsButtons();
     createSimulationsLayout();
+
+    connect(&timerSimEmit, &QTimer::timeout, this, &SimulationWindow::updateSimGUI);
+    SimStart();
 }
 
 SimulationWindow::~SimulationWindow(){
-    delete simBody;
+    //delete simBody;
+    //for(QBrush* br: brashVector) delete br;
+    //for(QPen* pen: penVector) delete pen;
+    deleteSimGUI();
     deleteSimulationsButtons();
     deleteSimulationsLayout();
+}
+
+void SimulationWindow::createSimGUI(){
+    simGraphScene = new QGraphicsScene();
+    simGraphView = new QGraphicsView(simGraphScene);
+    simGraphView->setFixedSize(1800, 750);
+    redBrush = new QBrush(Qt::red);       // 0
+    yellowBrush = new QBrush(Qt::yellow); // 1
+    greanBrush = new QBrush(Qt::green);   // 2
+    blueBrush = new QBrush(Qt::blue);     // 3
+    blackBrush = new QBrush(Qt::black);   // 4
+    whiteBrush = new QBrush(Qt::white);   // 5
+    blackPen = new QPen(Qt::black);       // 0
+    whitePen = new QPen(Qt::white);       // 1
+    brashVector.push_back(redBrush);
+    brashVector.push_back(yellowBrush);
+    brashVector.push_back(greanBrush);
+    brashVector.push_back(greanBrush);
+    brashVector.push_back(blueBrush);
+    brashVector.push_back(blackBrush);
+    brashVector.push_back(whiteBrush);
+
+    penVector.push_back(blackPen);
+    penVector.push_back(whitePen);
+}
+
+void SimulationWindow::deleteSimGUI(){
+    simGraphScene->clear();
+    robotsVectorGUI.clear();
+    delete simGraphScene;
+    delete simGraphView;
+}
+
+unsigned SimulationWindow::getActualUserRobotPen(){
+    if(actualUserRobotColor != 4) return 0;
+    return 1;
 }
 
 void SimulationWindow::createSimulationsLayout(){
@@ -20,7 +63,7 @@ void SimulationWindow::createSimulationsLayout(){
 
     simBodyowBoxLayout = new QHBoxLayout();
     simBodyowBoxLayout->addStretch();
-    simBodyowBoxLayout->addWidget(simBody);
+    simBodyowBoxLayout->addWidget(simGraphView);
     simBodyowBoxLayout->addStretch();
 
     simulatyonEngineLayout = new QHBoxLayout();
@@ -87,18 +130,38 @@ void SimulationWindow::deleteSimulationsButtons(){
     delete rightMoveButton;
 }
 
-void SimulationWindow::emitStoreGUISimSigFromSimWind(){
-    std::cout << "EMIT STORING FROM SIM WIND!!!" << std::endl;
-    simBody->emitStoreGUISimSig();
+void SimulationWindow::updateSimGUI(){
+    std::cout << "EMIT UPDATING SIM GUI" << std::endl;
+    //Rectangle robotsFromController = controlledRobot->GetTransform()->GetRect();
+    for(auto robot: robotsVectorGUI){
+        actualPositionOfItem = robot->pos();
+        robot->setPos(actualPositionOfItem.x(), actualPositionOfItem.y()+1);
+    }
 }
-void SimulationWindow::emitRunGUISimSigFromSimWind(){
-    std::cout << "EMIT RUNING FROM SIM WIND!!!" << std::endl;
-    simBody->emitRunGUISimSig();
+
+void SimulationWindow::storeSimGUI(){
+    simGraphScene->setBackgroundBrush(QColor(Qt::blue));
+    std::cout << "EMIT STORING SIM GUI!!!" << std::endl;
+    Rectangle robotsFromController = controlledRobot->GetTransform()->GetRect();
+    for(unsigned robot = 0; robot < 1; robot++){
+        QGraphicsEllipseItem* newRobot = new QGraphicsEllipseItem(0,0,robotsFromController.w,robotsFromController.h);
+        //std::cout << "position " << robotsFromController.x << " " <<robotsFromController.y << std::endl;
+        newRobot->setPen(*penVector[getActualUserRobotPen()]);
+        newRobot->setBrush(*brashVector[actualUserRobotColor]);
+        simGraphScene->addItem(newRobot);
+        newRobot->setTransformOriginPoint(robotsFromController.x, robotsFromController.y);
+        robotsVectorGUI.push_back(newRobot);
+    }
+}
+
+void SimulationWindow::runSimGUI(){
+    std::cout << "EMIT RUNING SIM GUI !!!" << std::endl;
+    timerSimEmit.start(16);
     setUnsetSimButtons(true);
 }
 
-void SimulationWindow::emitStopGUISimSigFromSimWind(){
-    std::cout << "EMIT STOP FROM SIM WIND!!!" << std::endl;
+void SimulationWindow::stopSimGUI(){
+    std::cout << "EMIT STOP SIM GUI !!!" << std::endl;
+    timerSimEmit.stop();
     setUnsetSimButtons(false);
-    simBody->emitStopGUISimSig();
 }

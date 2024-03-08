@@ -120,12 +120,12 @@ void MainWindow::runSimulationActionSlot(){
 
     contr_run_sim_command();
 
-    simWind->emitRunGUISimSigFromSimWind();
+    simWind->runSimGUI();
 }
 void MainWindow::pauseSimulationActionSlot(){
 
     contr_stop_sim_command();
-    simWind->emitStopGUISimSigFromSimWind();
+    simWind->stopSimGUI();
     disconnect(runSimulationAction, 0, 0, 0);
     connect(runSimulationAction, &QAction::triggered, this, &MainWindow::runSimulationActionSlot);
     runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
@@ -162,7 +162,7 @@ void MainWindow::updateSettingsSlot(){
     //
     if(settings->isSetMapValue()){
         lineMapNameSimIdToolBar->setText(settings->getMapValue());
-        simWind->emitStoreGUISimSigFromSimWind();
+        simWind->storeSimGUI();
     }
     settings->close();
 }

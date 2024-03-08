@@ -75,3 +75,4 @@ CMakeLists.txt.user*
 src/Makefile
 doc/html
 doc/latex
+bin/*
