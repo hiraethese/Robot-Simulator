@@ -16,7 +16,6 @@
 #include <QPen>
 #include <QColor>
 #include <QPointF>
-#include "SimulationBody.h"
 #include "../core/core.h"
 #include "../controller/controller.h"
 
@@ -31,32 +30,45 @@ public:
     unsigned actualWallColor = 3;
     unsigned actualBotRobotColor = 4;
     unsigned actualMapColor = 5;
+
     void storeSimGUI();
     void runSimGUI();
     void stopSimGUI();
 private:
-    QPointF actualPositionOfItem;
-    unsigned actualUserRobotPen;
-    unsigned getActualUserRobotPen();
-    std::vector<QBrush*> brashVector;
-    std::vector<QPen*> penVector;
-    QBrush* redBrush;       // 0
-    QBrush* yellowBrush; // 1
-    QBrush* greanBrush;   // 2
-    QBrush* blueBrush;     // 3
-    QBrush* blackBrush;   // 4
-    QBrush* whiteBrush;   // 5
-    QPen* blackPen;       // 0
-    QPen* whitePen;       // 1
 
+    // -- SIMULATION GUI --
+    QTimer timerOneFrame;
 
-    QTimer timerSimEmit;
     QGraphicsView* simGraphView = nullptr;
     QGraphicsScene* simGraphScene = nullptr;
+
     std::vector<QGraphicsEllipseItem*> robotsVectorGUI;
     //QVector<QGraphicsRectItem*> wallsVectorGUI;
+    Rectangle robotsFromController;
 
-    //SimulationBody* simBody;
+    QPointF actualPositionOfItem;
+    unsigned actualUserRobotPen;
+
+    std::vector<QBrush*> brushVector;
+    QBrush* redBrush;       // 0 in brushVector
+    QBrush* yellowBrush;    // 1 in brushVector
+    QBrush* greanBrush;     // 2 in brushVector
+    QBrush* blueBrush;      // 3 in brushVector
+    QBrush* blackBrush;     // 4 in brushVector
+    QBrush* whiteBrush;     // 5 in brushVector
+
+    std::vector<QPen*> penVector;
+    unsigned getActualUserRobotPen();
+    QPen* blackPen;         // 0 in penVector
+    QPen* whitePen;         // 1 in penVector
+
+
+    void createSimGUI();
+    void deleteSimGUI();
+    void cleanSimGUI();
+
+
+    // -- FRONT --
 
     QVBoxLayout* simulationsLayot;
     QHBoxLayout* simBodyowBoxLayout;      // simulations window layout
@@ -73,10 +85,6 @@ private:
     QPushButton* stopMoveButton;
     QPushButton* rightMoveButton;
 
-    void createSimGUI();
-    void deleteSimGUI();
-    void cleanSimGUI();
-
     void createSimulattionsButtons();
     void deleteSimulationsButtons();
     void createSimulationsLayout();
@@ -88,7 +96,7 @@ private:
 signals:
 
 private slots:
-    void updateSimGUI();
+    void oneSimFrameGUI();
 };
 
 #endif // SIMULATIONWINDOW_H

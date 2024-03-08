@@ -25,9 +25,7 @@ SOURCES += \
     src/gui/AObjectGUI.cpp \
     src/gui/InfoNotification.cpp \
     src/gui/MainWindow.cpp \
-    src/gui/RobotsGUI.cpp \
     src/gui/SettingsWindow.cpp \
-    src/gui/SimulationBody.cpp \
     src/gui/SimulationWindow.cpp \
     src/main.cpp
 
@@ -44,9 +42,7 @@ HEADERS += \
     src/gui/AObjectGUI.h \
     src/gui/InfoNotification.h \
     src/gui/MainWindow.h \
-    src/gui/RobotsGUI.h \
     src/gui/SettingsWindow.h \
-    src/gui/SimulationBody.h \
     src/gui/SimulationWindow.h
 
 FORMS += \
