@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "PseudoCore.h"
+#include "../core/core.h"
 
 void contr_create_core();
 void contr_delete_core();
