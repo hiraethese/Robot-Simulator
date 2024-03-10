@@ -15,10 +15,9 @@ private:
     Robot* _controlledRobot;
 
 public:
-    ~Core();
     static Core* getInstance();
 
-    // Controller part
+// Controller part
 
     std::string GetMapValue();
     int GetSpeedValue();

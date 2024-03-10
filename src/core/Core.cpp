@@ -8,11 +8,6 @@ Core::Core()
     _controlledRobot = new Robot({50.0f, 50.0f}, {100.0f, 100.0f}, 10.0f, 180.0f);
 }
 
-Core::~Core()
-{
-    delete _controlledRobot;
-}
-
 Core *Core::getInstance()
 {
     if (!_core) {
