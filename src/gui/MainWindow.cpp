@@ -167,13 +167,27 @@ void MainWindow::updateSettingsSlot(){
     settings->close();
 }
 void MainWindow::settingsToolActionSlot(){
+/*
     if(contr_is_sim_run()) pauseSimulationActionSlot();
+    // START: OLD LOGIC
     // *** should be set by core ***
     settings->setMapValue(QString::fromStdString(contr_get_map_value()));
     settings->setSpeedValue(contr_get_speed_value());
     settings->setAngleValue(contr_get_angle_value());
     // *** *** *** *** *** *** *** ***
     settings->show();
+    // STOP: OLD LOGIC
+*/
+
+    if(stGUI != SETTING_MODE){
+        simWind->runSettingsMode();
+        stGUI = SETTING_MODE;
+    }
+    else{
+        simWind->stopSettingsMode();
+        stGUI = SILENCE_MODE;
+    }
+
 }
 // **************************************************************************************************************
 

@@ -26,6 +26,11 @@
 #include "../controller/PseudoCore.h"
 
 #include <iostream>
+enum stateGUI{
+    SILENCE_MODE,
+    SIM_RUN_MODE,
+    SETTING_MODE
+};
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -45,6 +50,7 @@ public:
 
 private:
 
+    stateGUI stGUI = SILENCE_MODE;
     // APPLICATION
     void createAppWindows();
     void deleteAppWindows();

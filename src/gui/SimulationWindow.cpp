@@ -25,8 +25,8 @@ void SimulationWindow::createSimGUI(){
     simGraphScene = new QGraphicsScene();
     simGraphView = new QGraphicsView(simGraphScene);
 
-    simGraphView->setFixedSize(1800, 750);
-    simGraphView->setSceneRect(0,0,simGraphView->width(), simGraphView->height());
+    simGraphView->setFixedSize(SIM_WIN_X, SIM_WIN_Y);
+    simGraphView->setSceneRect(0,0,SIM_WIN_X, SIM_WIN_Y);
     simGraphView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     simGraphView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -149,7 +149,8 @@ void SimulationWindow::oneSimFrameGUI(){
 
 void SimulationWindow::storeSimGUI(){
     cleanSimGUI();
-    simGraphScene->setBackgroundBrush(*whiteBrush);
+    //simGraphScene->setBackgroundBrush(*whiteBrush);
+    simGraphScene->setBackgroundBrush(*redBrush);
     std::cout << "EMIT STORING SIM GUI!!!" << std::endl;
     robotsFromController = controlledRobot->GetTransform()->GetRect();
     for(unsigned robot = 0; robot < 1; robot++){
@@ -172,4 +173,38 @@ void SimulationWindow::stopSimGUI(){
     std::cout << "EMIT STOP SIM GUI !!!" << std::endl;
     timerOneFrame.stop();
     setUnsetSimButtons(false);
+}
+
+
+void SimulationWindow::runSettingsMode(){
+    createSetNet();
+}
+
+void SimulationWindow::stopSettingsMode(){
+    deleteSetNet();
+}
+
+
+
+void SimulationWindow::createSetNet(){
+    for(unsigned row = 0; row < SIM_WIN_Y; row += NET_ITEM){
+        QGraphicsLineItem* newNetLine = new QGraphicsLineItem(0, row, SIM_WIN_X, row);
+        newNetLine->setPen(*blackPen);
+        setNetVectorGUI.push_back(newNetLine);
+        simGraphScene->addItem(newNetLine);
+    }
+    for(unsigned col = 0; col < SIM_WIN_X; col += NET_ITEM){
+        QGraphicsLineItem* newNetLine = new QGraphicsLineItem(col, 0, col, SIM_WIN_Y);
+        newNetLine->setPen(*blackPen);
+        setNetVectorGUI.push_back(newNetLine);
+        simGraphScene->addItem(newNetLine);
+    }
+}
+
+void SimulationWindow::deleteSetNet(){
+    for(auto setNetLine: setNetVectorGUI){
+        simGraphScene->removeItem(setNetLine);
+        delete setNetLine;
+    }
+    setNetVectorGUI.clear();
 }

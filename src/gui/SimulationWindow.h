@@ -5,6 +5,7 @@
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
 #include <QGraphicsEllipseItem>
+#include <QGraphicsLineItem>
 #include <vector>
 #include <QWidget>
 #include <QPushButton>
@@ -34,7 +35,16 @@ public:
     void storeSimGUI();
     void runSimGUI();
     void stopSimGUI();
+
+    void runSettingsMode();
+    void stopSettingsMode();
+    void createSetNet();
+    void deleteSetNet();
 private:
+    static const unsigned SIM_WIN_Y = 750;
+    static const unsigned SIM_WIN_X = 1800;
+    static const unsigned NET_ITEM = 30;
+    std::vector<QGraphicsLineItem*> setNetVectorGUI;
 
     // -- SIMULATION GUI --
     QTimer timerOneFrame;
