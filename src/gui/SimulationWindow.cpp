@@ -22,7 +22,7 @@ SimulationWindow::~SimulationWindow(){
 }
 
 void SimulationWindow::createSimGUI(){
-    simGraphScene = new QGraphicsScene();
+    simGraphScene = new SimulationScene();
     simGraphView = new QGraphicsView(simGraphScene);
 
     simGraphView->setFixedSize(SIM_WIN_X, SIM_WIN_Y);

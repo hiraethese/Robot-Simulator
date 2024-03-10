@@ -18,6 +18,7 @@
 #include <QColor>
 #include <QPointF>
 #include "../core/core.h"
+#include "SimulationScene.h"
 #include "../controller/controller.h"
 
 class SimulationWindow : public QWidget
@@ -50,7 +51,7 @@ private:
     QTimer timerOneFrame;
 
     QGraphicsView* simGraphView = nullptr;
-    QGraphicsScene* simGraphScene = nullptr;
+    SimulationScene* simGraphScene = nullptr;
 
     std::vector<QGraphicsEllipseItem*> robotsVectorGUI;
     //QVector<QGraphicsRectItem*> wallsVectorGUI;
