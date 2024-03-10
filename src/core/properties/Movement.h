@@ -3,6 +3,9 @@
 
 #include "MyTransform.h"
 
+#define SIMFIELD_W 1800
+#define SIMFIELD_H 750
+
 class Movement
 {
 private:
