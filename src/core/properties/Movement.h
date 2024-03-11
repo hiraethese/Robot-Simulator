@@ -2,7 +2,7 @@
 #define MOVEMENT_H
 
 #include "MyTransform.h"
-
+#include <iostream>
 #define SIMFIELD_W 1800
 #define SIMFIELD_H 750
 
@@ -11,6 +11,7 @@ class Movement
 private:
     float _speed;
     float _angleDegrees;
+    float _stepAngle;
     MyTransform* _transform;
 
 public:

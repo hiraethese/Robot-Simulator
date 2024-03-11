@@ -4,6 +4,7 @@ Movement::Movement(float speed, float angleDegrees, MyTransform *transform)
 {
     _speed = speed;
     _angleDegrees = angleDegrees;
+    _stepAngle = angleDegrees;
     _transform = transform;
 }
 
@@ -29,12 +30,14 @@ void Movement::SetAngle(float newAngleDegrees)
 
 void Movement::RotateLeft()
 {
-    _angleDegrees -= _angleDegrees;
+    _angleDegrees -= _stepAngle;
+    std::cout << "left rotate: " << _angleDegrees << std::endl;
 }
 
 void Movement::RotateRight()
 {
-    _angleDegrees += _angleDegrees;
+    _angleDegrees += _stepAngle;
+    std::cout << "right rotate: " << _angleDegrees << std::endl;
 }
 
 void Movement::MoveForward()
@@ -57,4 +60,5 @@ void Movement::MoveForward()
         position.y = SIMFIELD_H - 0.5f;
 
     _transform->SetPosition(position);
+    std::cout << "forward move " << "x = " << position.x << " " << "y = " << position.y << std::endl;
 }
