@@ -3,6 +3,9 @@
 
 #include "MyTransform.h"
 
+#define SIMFIELD_W 1800
+#define SIMFIELD_H 750
+
 class Movement
 {
 private:
@@ -12,7 +15,13 @@ private:
 
 public:
     Movement(float speed, float angleDegrees, MyTransform* transform);
-    void Move();
+    float GetSpeed();
+    float GetAngle();
+    void SetSpeed(float newSpeed);
+    void SetAngle(float newAngleDegrees);
+    void RotateLeft();
+    void RotateRight();
+    void MoveForward();
 };
 
 #endif // MOVEMENT_H
