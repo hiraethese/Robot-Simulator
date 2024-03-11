@@ -9,8 +9,3 @@ Robot::~Robot()
 {
     delete _movement;
 }
-
-Movement* Robot::GetMovement()
-{
-    return _movement;
-}

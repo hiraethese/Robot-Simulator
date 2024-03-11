@@ -11,7 +11,6 @@ private:
 public:
     Robot(Vector2d position, Vector2d size, float speed, float angle);
     ~Robot();
-    Movement* GetMovement();
 };
 
 #endif // ROBOT_H
