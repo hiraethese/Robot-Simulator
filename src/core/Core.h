@@ -3,7 +3,6 @@
 
 #include <string>
 #include "entities/Robot.h"
-
 class Core
 {
 private:
@@ -24,9 +23,11 @@ public:
     int GetAngleValue();
     bool IsSimReady();
     bool IsSimRun();
+    void SetRunSim(bool setter);
     void ForwardMoveSig();
     void LeftRotateMoveSig();
     void RightRotateMoveSig();
+    Rectangle RectFromCore();
 };
 
 #endif // CORE_H

@@ -16,8 +16,8 @@
 #include <QPen>
 #include <QColor>
 #include <QPointF>
-#include "../core/core.h"
-#include "../controller/controller.h"
+#include <iostream>
+#include "../core/Core.h"
 
 class SimulationWindow : public QWidget
 {
@@ -35,7 +35,7 @@ public:
     void runSimGUI();
     void stopSimGUI();
 private:
-
+    Core* _core;
     // -- SIMULATION GUI --
     QTimer timerOneFrame;
 

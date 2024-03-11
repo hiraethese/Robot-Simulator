@@ -22,8 +22,7 @@
 #include "SimulationWindow.h"
 #include "SettingsWindow.h"
 #include "InfoNotification.h"
-#include "../controller/controller.h"
-#include "../controller/PseudoCore.h"
+#include "../core/Core.h"
 
 #include <iostream>
 
@@ -44,7 +43,7 @@ public:
     ~MainWindow();
 
 private:
-
+    Core* _core;
     // APPLICATION
     void createAppWindows();
     void deleteAppWindows();

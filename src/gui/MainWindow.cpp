@@ -9,8 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     //QApplication::setApplicationDisplayName("ICP2024");
     setWindowTitle("");
-
-    contr_create_core(); // input point: init core
+    _core = Core::getInstance();
 
     createAppWindows();
 }
@@ -38,8 +37,6 @@ void MainWindow::deleteAppWindows(){
     deleteTools();
     delete settings;
     delete simWind;
-
-    contr_delete_core(); // input point: delete core
 }
 // **************************************************************************************************************
 
@@ -109,7 +106,7 @@ void MainWindow::helpTextToolActionSlot(){
 }
 
 void MainWindow::runSimulationActionSlot(){
-    if(!contr_is_sim_ready()){
+    if(!_core->IsSimReady()){
         warningMsgSimNotSet();
         return;
     }
@@ -118,13 +115,13 @@ void MainWindow::runSimulationActionSlot(){
     runSimulationAction->setIcon(QIcon(":/icons/pauseTool.png"));
     lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
 
-    contr_run_sim_command();
+    _core->SetRunSim(true);
 
     simWind->runSimGUI();
 }
 void MainWindow::pauseSimulationActionSlot(){
 
-    contr_stop_sim_command();
+    _core->SetRunSim(false);
     simWind->stopSimGUI();
     disconnect(runSimulationAction, 0, 0, 0);
     connect(runSimulationAction, &QAction::triggered, this, &MainWindow::runSimulationActionSlot);
@@ -135,7 +132,7 @@ void MainWindow::pauseSimulationActionSlot(){
 
 void MainWindow::restartSimulationActionSlot(){
     //runSimulationActionSlot();
-    if(contr_is_sim_ready()){
+    if(_core->IsSimReady()){
         warningMsgSimNotSet();
         return;
     }
@@ -158,8 +155,9 @@ void MainWindow::deleteSettings(){
 void MainWindow::updateSettingsSlot(){
 
     // !!! try catch filtering errors
-    contr_set_new_settings(settings->isSetMapValue(), settings->getMapValue().toStdString(), settings->isSetSpeedValue(), settings->getSpeedValue(), settings->isSetAngleValue(), settings->getAngleValue());
+    //contr_set_new_settings(settings->isSetMapValue(), settings->getMapValue().toStdString(), settings->isSetSpeedValue(), settings->getSpeedValue(), settings->isSetAngleValue(), settings->getAngleValue());
     //
+    
     if(settings->isSetMapValue()){
         lineMapNameSimIdToolBar->setText(settings->getMapValue());
         simWind->storeSimGUI();
@@ -167,11 +165,11 @@ void MainWindow::updateSettingsSlot(){
     settings->close();
 }
 void MainWindow::settingsToolActionSlot(){
-    if(contr_is_sim_run()) pauseSimulationActionSlot();
+    if(_core->IsSimRun()) pauseSimulationActionSlot();
     // *** should be set by core ***
-    settings->setMapValue(QString::fromStdString(contr_get_map_value()));
-    settings->setSpeedValue(contr_get_speed_value());
-    settings->setAngleValue(contr_get_angle_value());
+    settings->setMapValue(QString::fromStdString(_core->GetMapValue()));
+    settings->setSpeedValue(_core->GetSpeedValue());
+    settings->setAngleValue(_core->GetAngleValue());
     // *** *** *** *** *** *** *** ***
     settings->show();
 }

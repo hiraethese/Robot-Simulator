@@ -5,12 +5,12 @@ SimulationWindow::SimulationWindow(QWidget *parent)
 {
 
     //simBody = new SimulationBody();
+    _core = Core::getInstance();
     createSimGUI();
     createSimulattionsButtons();
     createSimulationsLayout();
 
     connect(&timerOneFrame, &QTimer::timeout, this, &SimulationWindow::oneSimFrameGUI);
-    SimStart();
 }
 
 SimulationWindow::~SimulationWindow(){
@@ -118,10 +118,10 @@ void SimulationWindow::createSimulattionsButtons(){
 
     setUnsetSimButtons(false);
 
-    connect(forwardMoveButton, &QPushButton::clicked, this, [=](){contr_forward_move_sig();});
-    connect(leftMoveButton, &QPushButton::clicked, this, [=](){contr_left_rotate_move_sig();});
-    connect(stopMoveButton, &QPushButton::clicked, this, [=](){contr_stop_move_sig();});
-    connect(rightMoveButton, &QPushButton::clicked, this, [=](){contr_right_rotate_move_sig();});
+    connect(forwardMoveButton, &QPushButton::clicked, this, [=](){_core->ForwardMoveSig();});
+    connect(leftMoveButton, &QPushButton::clicked, this, [=](){_core->LeftRotateMoveSig();});
+    //connect(stopMoveButton, &QPushButton::clicked, this, [=](){_core->ForwardMoveSig();});
+    connect(rightMoveButton, &QPushButton::clicked, this, [=](){_core->RightRotateMoveSig();});
 }
 
 void SimulationWindow::setUnsetSimButtons(bool flagIsSet){
@@ -139,11 +139,11 @@ void SimulationWindow::deleteSimulationsButtons(){
 }
 
 void SimulationWindow::oneSimFrameGUI(){
-    std::cout << "EMIT UPDATING SIM GUI" << std::endl;
-    //robotsFromController = controlledRobot->GetTransform()->GetRect();
+    //std::cout << "EMIT UPDATING SIM GUI" << std::endl;
+    robotsFromController = _core->RectFromCore();
     for(auto robot: robotsVectorGUI){
         actualPositionOfItem = robot->pos();
-        robot->setPos(actualPositionOfItem.x(), actualPositionOfItem.y()+1);
+        robot->setPos(robotsFromController.x,robotsFromController.y);
     }
 }
 
@@ -151,7 +151,7 @@ void SimulationWindow::storeSimGUI(){
     cleanSimGUI();
     simGraphScene->setBackgroundBrush(*whiteBrush);
     std::cout << "EMIT STORING SIM GUI!!!" << std::endl;
-    robotsFromController = controlledRobot->GetTransform()->GetRect();
+    robotsFromController = _core->RectFromCore();
     for(unsigned robot = 0; robot < 1; robot++){
         QGraphicsEllipseItem* newRobot = new QGraphicsEllipseItem(0,0,robotsFromController.w,robotsFromController.h);
         newRobot->setPen(*penVector[getActualUserRobotPen()]);
