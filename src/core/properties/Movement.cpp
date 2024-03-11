@@ -1,8 +1,5 @@
 #include "Movement.h"
 
-#include "../core.h"
-// Note: We need this to get simulation field width and height
-
 Movement::Movement(float speed, float angleDegrees, MyTransform *transform)
 {
     _speed = speed;
@@ -10,7 +7,37 @@ Movement::Movement(float speed, float angleDegrees, MyTransform *transform)
     _transform = transform;
 }
 
-void Movement::Move()
+float Movement::GetSpeed()
+{
+    return _speed;
+}
+
+float Movement::GetAngle()
+{
+    return _angleDegrees;
+}
+
+void Movement::SetSpeed(float newSpeed)
+{
+    _speed = newSpeed;
+}
+
+void Movement::SetAngle(float newAngleDegrees)
+{
+    _angleDegrees = newAngleDegrees;
+}
+
+void Movement::RotateLeft()
+{
+    _angleDegrees -= _angleDegrees;
+}
+
+void Movement::RotateRight()
+{
+    _angleDegrees += _angleDegrees;
+}
+
+void Movement::MoveForward()
 {
     float angleRadians = _angleDegrees * ( M_PI / 180.0f );
 
