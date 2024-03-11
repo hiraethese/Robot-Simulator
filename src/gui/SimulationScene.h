@@ -10,32 +10,43 @@
 #include <QGraphicsLineItem>
 #include <QBrush>
 #include <QPen>
+#include <QTimer>
 #include <vector>
+
+#include "style.h"
 
 class SimulationScene : public QGraphicsScene
 {
     Q_OBJECT
+    bool flagSettingMode = false;
 public:
     explicit SimulationScene(QObject *parent = nullptr);
-    void cleanedSimScene();
+    void deleteSimulationScene();
+
+    void storeSimGUI();
+    void runSimGUI();
+    void stopSimGUI();
+
+    void runSettingsMode();
+    void stopSettingsMode();
+    void cleanSettingsMode();
+    bool findSimObjGUI();
 private:
+    QGraphicsRectItem* pseudoSiObjGUI = nullptr;
+    QTimer timerSimGUI;
     std::vector<QGraphicsEllipseItem*>robotsVectorGUI;
     std::vector<QGraphicsRectItem*>wallsVectorGUI;
-    std::vector<QBrush*> brushVector;
-    QBrush* redBrush;       // 0 in brushVector
-    QBrush* yellowBrush;    // 1 in brushVector
-    QBrush* greanBrush;     // 2 in brushVector
-    QBrush* blueBrush;      // 3 in brushVector
-    QBrush* blackBrush;     // 4 in brushVector
-    QBrush* whiteBrush;     // 5 in brushVector
 
-    std::vector<QPen*> penVector;
-    unsigned getActualUserRobotPen();
-    QPen* blackPen;         // 0 in penVector
-    QPen* whitePen;         // 1 in penVector
+    void oneSimFrameGUI();
+
+    void createPseudoSimObj(unsigned w, unsigned h);
+    void deletePseudoSimObj();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
-
+private slots:
+    void createNewSimObj();
+    void deleteSimObj();
+    void updateSimObj();
 };
 
 #endif // SIMULATIONSCENE_H

@@ -79,4 +79,6 @@ void contr_right_rotate_move_sig();
  */
 void contr_stop_move_sig();
 
+void create_new_sim_obj(unsigned w, unsigned h, unsigned type_of_sim_obj);
+
 #endif // CONTROLLER_H

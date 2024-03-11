@@ -24,30 +24,8 @@ SimulationWindow::~SimulationWindow(){
 void SimulationWindow::createSimGUI(){
     simGraphScene = new SimulationScene();
     simGraphView = new QGraphicsView(simGraphScene);
-
-    simGraphView->setFixedSize(SIM_WIN_X, SIM_WIN_Y);
-    simGraphView->setSceneRect(0,0,SIM_WIN_X, SIM_WIN_Y);
-    simGraphView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    simGraphView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-    redBrush = new QBrush(Qt::red);
-    yellowBrush = new QBrush(Qt::yellow);
-    greanBrush = new QBrush(Qt::green);
-    blueBrush = new QBrush(Qt::blue);
-    blackBrush = new QBrush(Qt::black);
-    whiteBrush = new QBrush(Qt::white);
-    blackPen = new QPen(Qt::black);
-    whitePen = new QPen(Qt::white);
-    brushVector.push_back(redBrush);
-    brushVector.push_back(yellowBrush);
-    brushVector.push_back(greanBrush);
-    brushVector.push_back(greanBrush);
-    brushVector.push_back(blueBrush);
-    brushVector.push_back(blackBrush);
-    brushVector.push_back(whiteBrush);
-
-    penVector.push_back(blackPen);
-    penVector.push_back(whitePen);
+    simGraphView->setSceneRect(0, 0, SIM_WIN_X, SIM_WIN_Y);
+    simGraphView->setFixedSize(SIM_WIN_X+20, SIM_WIN_Y+20);
 }
 
 void SimulationWindow::cleanSimGUI(){
@@ -177,11 +155,11 @@ void SimulationWindow::stopSimGUI(){
 
 
 void SimulationWindow::runSettingsMode(){
-    createSetNet();
+    simGraphScene->runSettingsMode();
 }
 
 void SimulationWindow::stopSettingsMode(){
-    deleteSetNet();
+    simGraphScene->stopSettingsMode();
 }
 
 

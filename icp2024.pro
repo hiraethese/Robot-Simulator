@@ -22,12 +22,15 @@ SOURCES += \
     src/core/properties/Movement.cpp \
     src/core/properties/MyTransform.cpp \
     src/core/core.cpp \
-    src/gui/AObjectGUI.cpp \
+    src/gui/ASimulationObjectGUI.cpp \
     src/gui/InfoNotification.cpp \
     src/gui/MainWindow.cpp \
+    src/gui/RobotSimulationObjectGUI.cpp \
     src/gui/SettingsWindow.cpp \
+    src/gui/SimulationObjectGUI.cpp \
     src/gui/SimulationScene.cpp \
     src/gui/SimulationWindow.cpp \
+    src/gui/WallSimulationObjectGUI.cpp \
     src/main.cpp
 
 HEADERS += \
@@ -40,12 +43,16 @@ HEADERS += \
     src/core/properties/MyTransform.h \
     src/core/core.h \
     src/core/icplib.h \
-    src/gui/AObjectGUI.h \
+    src/gui/ASimulationObjectGUI.h \
     src/gui/InfoNotification.h \
     src/gui/MainWindow.h \
+    src/gui/RobotSimulationObjectGUI.h \
     src/gui/SettingsWindow.h \
+    src/gui/SimulationObjectGUI.h \
     src/gui/SimulationScene.h \
-    src/gui/SimulationWindow.h
+    src/gui/SimulationWindow.h \
+    src/gui/WallSimulationObjectGUI.h \
+    src/gui/style.h
 
 FORMS += \
     src/gui/MainWindow.ui
