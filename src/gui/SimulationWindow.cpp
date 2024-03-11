@@ -149,7 +149,7 @@ void SimulationWindow::oneSimFrameGUI(){
 
 void SimulationWindow::storeSimGUI(){
     cleanSimGUI();
-    simGraphScene->setBackgroundBrush(*whiteBrush);
+    simGraphScene->setBackgroundBrush(QColor(Qt::blue));
     std::cout << "EMIT STORING SIM GUI!!!" << std::endl;
     robotsFromController = controlledRobot->GetTransform()->GetRect();
     for(unsigned robot = 0; robot < 1; robot++){
@@ -158,6 +158,7 @@ void SimulationWindow::storeSimGUI(){
         newRobot->setBrush(*brushVector[actualUserRobotColor]);
         newRobot->setPos(robotsFromController.x,robotsFromController.y);
         simGraphScene->addItem(newRobot);
+        newRobot->setTransformOriginPoint(robotsFromController.x, robotsFromController.y);
         robotsVectorGUI.push_back(newRobot);
     }
 }
