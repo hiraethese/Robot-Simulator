@@ -25,10 +25,10 @@ void SimulationWindow::createSimGUI(){
     simGraphScene = new QGraphicsScene();
     simGraphView = new QGraphicsView(simGraphScene);
 
-    simGraphView->setFixedSize(1800, 750);
-    simGraphView->setSceneRect(0,0,simGraphView->width(), simGraphView->height());
-    simGraphView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    simGraphView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    simGraphView->setSceneRect(0,0,1800, 750);
+    simGraphView->setFixedSize(1800+20, 750+20);
+    //simGraphView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    //simGraphView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     redBrush = new QBrush(Qt::red);
     yellowBrush = new QBrush(Qt::yellow);
