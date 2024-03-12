@@ -140,6 +140,7 @@ void SimulationWindow::deleteSimulationsButtons(){
 
 void SimulationWindow::oneSimFrameGUI(){
     //std::cout << "EMIT UPDATING SIM GUI" << std::endl;
+    _core->ForwardMoveSig();
     robotsFromController = _core->RectFromCore();
     for(auto robot: robotsVectorGUI){
         actualPositionOfItem = robot->pos();
