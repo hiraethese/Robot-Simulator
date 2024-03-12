@@ -7,7 +7,7 @@ Core::Core()
     _map = "";
     _simIsRun = false;
     _simIsReady = true; // TODO: make setting arg from user by setting; now default true
-    _controlledRobot = new Robot({50.0f, 50.0f}, {100.0f, 100.0f}, 10.0f, 90.0f);
+    _controlledRobot = new Robot({15.0f, 15.0f}, {30.0f, 30.0f}, 5.0f, 45, 0);
 }
 
 Core *Core::getInstance()
@@ -32,7 +32,7 @@ int Core::GetSpeedValue()
 
 int Core::GetAngleValue()
 {
-    return (int)_controlledRobot->GetMovement()->GetAngle();
+    return _controlledRobot->GetMovement()->GetAngleStep();
 }
 
 bool Core::IsSimReady()
@@ -50,11 +50,6 @@ void Core::SetRunSim(bool setter)
     _simIsRun = setter;
 }
 
-void Core::ForwardMoveSig()
-{
-    _controlledRobot->GetMovement()->MoveForward();
-}
-
 void Core::LeftRotateMoveSig()
 {
     _controlledRobot->GetMovement()->RotateLeft();
@@ -65,9 +60,19 @@ void Core::RightRotateMoveSig()
     _controlledRobot->GetMovement()->RotateRight();
 }
 
+void Core::ForwardMoveSig()
+{
+    _controlledRobot->GetMovement()->EnableMovement();
+}
+
 void Core::StopMoveSig()
 {
-    _controlledRobot->GetMovement()->StopMoving();
+    _controlledRobot->GetMovement()->DisableMovement();
+}
+
+void Core::MoveAllObjects()
+{
+    _controlledRobot->GetMovement()->MoveForward();
 }
 
 Rectangle Core::RectFromCore()

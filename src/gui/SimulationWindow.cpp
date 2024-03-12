@@ -118,10 +118,10 @@ void SimulationWindow::createSimulattionsButtons(){
 
     setUnsetSimButtons(false);
 
-    connect(forwardMoveButton, &QPushButton::clicked, this, [=](){_core->ForwardMoveSig();});
     connect(leftMoveButton, &QPushButton::clicked, this, [=](){_core->LeftRotateMoveSig();});
-    connect(stopMoveButton, &QPushButton::clicked, this, [=](){_core->StopMoveSig();});
     connect(rightMoveButton, &QPushButton::clicked, this, [=](){_core->RightRotateMoveSig();});
+    connect(forwardMoveButton, &QPushButton::clicked, this, [=](){_core->ForwardMoveSig();});
+    connect(stopMoveButton, &QPushButton::clicked, this, [=](){_core->StopMoveSig();});
 }
 
 void SimulationWindow::setUnsetSimButtons(bool flagIsSet){
@@ -140,7 +140,7 @@ void SimulationWindow::deleteSimulationsButtons(){
 
 void SimulationWindow::oneSimFrameGUI(){
     //std::cout << "EMIT UPDATING SIM GUI" << std::endl;
-    _core->ForwardMoveSig();
+    _core->MoveAllObjects();
     robotsFromController = _core->RectFromCore();
     for(auto robot: robotsVectorGUI){
         actualPositionOfItem = robot->pos();

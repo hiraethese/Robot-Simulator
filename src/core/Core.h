@@ -19,14 +19,15 @@ public:
     // Controller part
     std::string GetMapValue();
     int GetSpeedValue();
-    int GetAngleValue();
+    int GetAngleValue(); // Note: get angle step value.
     bool IsSimReady();
     bool IsSimRun();
     void SetRunSim(bool setter);
-    void ForwardMoveSig();
     void LeftRotateMoveSig();
     void RightRotateMoveSig();
+    void ForwardMoveSig();
     void StopMoveSig();
+    void MoveAllObjects();
     Rectangle RectFromCore();
 };
 

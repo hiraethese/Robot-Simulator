@@ -10,22 +10,25 @@
 class Movement
 {
 private:
-    bool _isMoving;
+    bool _isEnabled;
     float _speed;
-    float _stepAngle;
-    float _angleDegrees;
+    int _angleStep;
+    int _angleDegrees;
     MyTransform* _transform;
 
 public:
-    Movement(float speed, float angleDegrees, MyTransform* transform);
+    Movement(float speed, int angleStep, int angleDegrees, MyTransform* transform);
     float GetSpeed();
-    float GetAngle(); // Note: Get step angle.
+    int GetAngleStep();
+    int GetAngleDegrees();
     void SetSpeed(float newSpeed);
-    void SetAngle(float newAngleDegrees);
+    void SetAngleStep(int newAngleStep);
+    void SetAngleDegrees(int newAngleDegrees);
+    void EnableMovement();
+    void DisableMovement();
     void RotateLeft();
     void RotateRight();
     void MoveForward();
-    void StopMoving();
 };
 
 #endif // MOVEMENT_H
