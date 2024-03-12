@@ -76,11 +76,11 @@ void Movement::MoveForward()
     if (position.x - size.x * 0.5f < 0)
         position.x = size.x * 0.5f;
     if (position.x + size.x * 0.5f > SIMFIELD_W)
-        position.x = SIMFIELD_W - 0.5f;
+        position.x = SIMFIELD_W - size.x * 0.5f;
     if (position.y - size.y * 0.5f < 0)
         position.y = size.y * 0.5f;
     if (position.y + size.y * 0.5f > SIMFIELD_H)
-        position.y = SIMFIELD_H - 0.5f;
+        position.y = SIMFIELD_H - size.y * 0.5f;
 
     _transform->SetPosition(position);
     std::cout << "forward move " << "x = " << position.x << " " << "y = " << position.y << std::endl; // Debug

@@ -7,7 +7,7 @@ Core::Core()
     _map = "";
     _simIsRun = false;
     _simIsReady = true; // TODO: make setting arg from user by setting; now default true
-    _controlledRobot = new Robot({15.0f, 15.0f}, {30.0f, 30.0f}, 5.0f, 45, 0);
+    _controlledRobot = new Robot({50.0f, 50.0f}, {100.0f, 100.0f}, 5.0f, 45, 0);
 }
 
 Core *Core::getInstance()
