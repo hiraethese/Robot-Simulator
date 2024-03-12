@@ -1,10 +1,12 @@
 #include "Core.h"
-Core* Core::_core= nullptr;
+
+Core* Core::_core = nullptr;
+
 Core::Core()
 {
     _map = "";
     _simIsRun = false;
-    _simIsReady = true;  //  TODO: make setting arg from user by setting; now default true
+    _simIsReady = true; // TODO: make setting arg from user by setting; now default true
     _controlledRobot = new Robot({50.0f, 50.0f}, {100.0f, 100.0f}, 10.0f, 90.0f);
 }
 
@@ -61,6 +63,11 @@ void Core::LeftRotateMoveSig()
 void Core::RightRotateMoveSig()
 {
     _controlledRobot->GetMovement()->RotateRight();
+}
+
+void Core::StopMoveSig()
+{
+    _controlledRobot->GetMovement()->StopMoving();
 }
 
 Rectangle Core::RectFromCore()

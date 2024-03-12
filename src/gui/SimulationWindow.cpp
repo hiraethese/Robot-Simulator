@@ -120,7 +120,7 @@ void SimulationWindow::createSimulattionsButtons(){
 
     connect(forwardMoveButton, &QPushButton::clicked, this, [=](){_core->ForwardMoveSig();});
     connect(leftMoveButton, &QPushButton::clicked, this, [=](){_core->LeftRotateMoveSig();});
-    //connect(stopMoveButton, &QPushButton::clicked, this, [=](){_core->ForwardMoveSig();});
+    connect(stopMoveButton, &QPushButton::clicked, this, [=](){_core->StopMoveSig();});
     connect(rightMoveButton, &QPushButton::clicked, this, [=](){_core->RightRotateMoveSig();});
 }
 

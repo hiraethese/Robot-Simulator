@@ -3,26 +3,29 @@
 
 #include "MyTransform.h"
 #include <iostream>
-#define SIMFIELD_W 1800
-#define SIMFIELD_H 750
+
+#define SIMFIELD_W 1800 // TO DO - Map class
+#define SIMFIELD_H 750  // TO DO - Map class
 
 class Movement
 {
 private:
+    bool _isMoving;
     float _speed;
-    float _angleDegrees;
     float _stepAngle;
+    float _angleDegrees;
     MyTransform* _transform;
 
 public:
     Movement(float speed, float angleDegrees, MyTransform* transform);
     float GetSpeed();
-    float GetAngle();
+    float GetAngle(); // Note: Get step angle.
     void SetSpeed(float newSpeed);
     void SetAngle(float newAngleDegrees);
     void RotateLeft();
     void RotateRight();
     void MoveForward();
+    void StopMoving();
 };
 
 #endif // MOVEMENT_H
