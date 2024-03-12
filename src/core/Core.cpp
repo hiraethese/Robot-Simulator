@@ -47,7 +47,7 @@ bool Core::IsSimRun()
 
 void Core::SetRunSim(bool setter)
 {
-    _simIsReady = setter;
+    _simIsRun = setter;
 }
 
 void Core::ForwardMoveSig()
