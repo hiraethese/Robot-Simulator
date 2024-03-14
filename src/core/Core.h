@@ -3,6 +3,7 @@
 
 #include <string>
 #include "entities/Robot.h"
+
 class Core
 {
 private:
@@ -15,18 +16,18 @@ private:
 
 public:
     static Core* getInstance();
-
-// Controller part
-
+    // Controller part
     std::string GetMapValue();
     int GetSpeedValue();
-    int GetAngleValue();
+    int GetAngleValue(); // Note: get angle step value.
     bool IsSimReady();
     bool IsSimRun();
     void SetRunSim(bool setter);
-    void ForwardMoveSig();
     void LeftRotateMoveSig();
     void RightRotateMoveSig();
+    void ForwardMoveSig();
+    void StopMoveSig();
+    void MoveAllObjects();
     Rectangle RectFromCore();
 };
 

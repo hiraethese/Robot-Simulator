@@ -1,8 +1,8 @@
 #include "Robot.h"
 
-Robot::Robot(Vector2d position, Vector2d size, float speed, float angle) : SimObject(position, size)
+Robot::Robot(Vector2d position, Vector2d size, float speed, int angleStep, int angleDegrees) : SimObject(position, size)
 {
-    _movement = new Movement(speed, angle, _transform);
+    _movement = new Movement(speed, angleStep, angleDegrees, _transform);
 }
 
 Robot::~Robot()
