@@ -22,8 +22,7 @@
 #include "SimulationWindow.h"
 #include "SettingsWindow.h"
 #include "InfoNotification.h"
-#include "../controller/controller.h"
-#include "../controller/PseudoCore.h"
+#include "../core/Core.h"
 
 #include <iostream>
 enum stateGUI{
@@ -49,8 +48,7 @@ public:
     ~MainWindow();
 
 private:
-
-    stateGUI stGUI = SILENCE_MODE;
+    Core* _core;
     // APPLICATION
     void createAppWindows();
     void deleteAppWindows();

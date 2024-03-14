@@ -17,9 +17,8 @@
 #include <QPen>
 #include <QColor>
 #include <QPointF>
-#include "../core/core.h"
-#include "SimulationScene.h"
-#include "../controller/controller.h"
+#include <iostream>
+#include "../core/Core.h"
 
 class SimulationWindow : public QWidget
 {
@@ -42,11 +41,7 @@ public:
     void createSetNet();
     void deleteSetNet();
 private:
-    static const unsigned SIM_WIN_Y = 750;
-    static const unsigned SIM_WIN_X = 1800;
-    static const unsigned NET_ITEM = 30;
-    std::vector<QGraphicsLineItem*> setNetVectorGUI;
-
+    Core* _core;
     // -- SIMULATION GUI --
     QTimer timerOneFrame;
 

@@ -14,15 +14,13 @@ RESOURCES += res/icons.qrc
 #gui/
 
 SOURCES += \
-    src/controller/controller.cpp \
-    src/controller/PseudoCore.cpp \
     src/core/entities/Robot.cpp \
     src/core/entities/SimObject.cpp \
     src/core/entities/Wall.cpp \
     src/core/properties/Movement.cpp \
     src/core/properties/MyTransform.cpp \
-    src/core/core.cpp \
-    src/gui/ASimulationObjectGUI.cpp \
+    src/core/Core.cpp \
+    src/gui/AObjectGUI.cpp \
     src/gui/InfoNotification.cpp \
     src/gui/MainWindow.cpp \
     src/gui/RobotSimulationObjectGUI.cpp \
@@ -34,14 +32,12 @@ SOURCES += \
     src/main.cpp
 
 HEADERS += \
-    src/controller/controller.h \
-    src/controller/PseudoCore.h \
     src/core/entities/Robot.h \
     src/core/entities/SimObject.h \
     src/core/entities/Wall.h \
     src/core/properties/Movement.h \
     src/core/properties/MyTransform.h \
-    src/core/core.h \
+    src/core/Core.h \
     src/core/icplib.h \
     src/gui/ASimulationObjectGUI.h \
     src/gui/InfoNotification.h \

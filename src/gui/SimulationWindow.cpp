@@ -5,12 +5,12 @@ SimulationWindow::SimulationWindow(QWidget *parent)
 {
 
     //simBody = new SimulationBody();
+    _core = Core::getInstance();
     createSimGUI();
     createSimulattionsButtons();
     createSimulationsLayout();
 
     connect(&timerOneFrame, &QTimer::timeout, this, &SimulationWindow::oneSimFrameGUI);
-    SimStart();
 }
 
 SimulationWindow::~SimulationWindow(){
@@ -24,8 +24,30 @@ SimulationWindow::~SimulationWindow(){
 void SimulationWindow::createSimGUI(){
     simGraphScene = new SimulationScene();
     simGraphView = new QGraphicsView(simGraphScene);
-    simGraphView->setSceneRect(0, 0, SIM_WIN_X, SIM_WIN_Y);
-    simGraphView->setFixedSize(SIM_WIN_X+20, SIM_WIN_Y+20);
+
+    simGraphView->setSceneRect(0,0,1800, 750);
+    simGraphView->setFixedSize(1800+20, 750+20);
+    //simGraphView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    //simGraphView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    redBrush = new QBrush(Qt::red);
+    yellowBrush = new QBrush(Qt::yellow);
+    greanBrush = new QBrush(Qt::green);
+    blueBrush = new QBrush(Qt::blue);
+    blackBrush = new QBrush(Qt::black);
+    whiteBrush = new QBrush(Qt::white);
+    blackPen = new QPen(Qt::black);
+    whitePen = new QPen(Qt::white);
+    brushVector.push_back(redBrush);
+    brushVector.push_back(yellowBrush);
+    brushVector.push_back(greanBrush);
+    brushVector.push_back(greanBrush);
+    brushVector.push_back(blueBrush);
+    brushVector.push_back(blackBrush);
+    brushVector.push_back(whiteBrush);
+
+    penVector.push_back(blackPen);
+    penVector.push_back(whitePen);
 }
 
 void SimulationWindow::cleanSimGUI(){
@@ -96,10 +118,10 @@ void SimulationWindow::createSimulattionsButtons(){
 
     setUnsetSimButtons(false);
 
-    connect(forwardMoveButton, &QPushButton::clicked, this, [=](){contr_forward_move_sig();});
-    connect(leftMoveButton, &QPushButton::clicked, this, [=](){contr_left_rotate_move_sig();});
-    connect(stopMoveButton, &QPushButton::clicked, this, [=](){contr_stop_move_sig();});
-    connect(rightMoveButton, &QPushButton::clicked, this, [=](){contr_right_rotate_move_sig();});
+    connect(leftMoveButton, &QPushButton::clicked, this, [=](){_core->LeftRotateMoveSig();});
+    connect(rightMoveButton, &QPushButton::clicked, this, [=](){_core->RightRotateMoveSig();});
+    connect(forwardMoveButton, &QPushButton::clicked, this, [=](){_core->ForwardMoveSig();});
+    connect(stopMoveButton, &QPushButton::clicked, this, [=](){_core->StopMoveSig();});
 }
 
 void SimulationWindow::setUnsetSimButtons(bool flagIsSet){
@@ -117,11 +139,12 @@ void SimulationWindow::deleteSimulationsButtons(){
 }
 
 void SimulationWindow::oneSimFrameGUI(){
-    std::cout << "EMIT UPDATING SIM GUI" << std::endl;
-    //robotsFromController = controlledRobot->GetTransform()->GetRect();
+    //std::cout << "EMIT UPDATING SIM GUI" << std::endl;
+    _core->MoveAllObjects();
+    robotsFromController = _core->RectFromCore();
     for(auto robot: robotsVectorGUI){
         actualPositionOfItem = robot->pos();
-        robot->setPos(actualPositionOfItem.x(), actualPositionOfItem.y()+1);
+        robot->setPos(robotsFromController.x,robotsFromController.y);
     }
 }
 
@@ -130,7 +153,7 @@ void SimulationWindow::storeSimGUI(){
     //simGraphScene->setBackgroundBrush(*whiteBrush);
     simGraphScene->setBackgroundBrush(*redBrush);
     std::cout << "EMIT STORING SIM GUI!!!" << std::endl;
-    robotsFromController = controlledRobot->GetTransform()->GetRect();
+    robotsFromController = _core->RectFromCore();
     for(unsigned robot = 0; robot < 1; robot++){
         QGraphicsEllipseItem* newRobot = new QGraphicsEllipseItem(0,0,robotsFromController.w,robotsFromController.h);
         newRobot->setPen(*penVector[getActualUserRobotPen()]);
