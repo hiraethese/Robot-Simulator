@@ -31,72 +31,72 @@ public:
     unsigned actualBotRobotColor = 4;
     unsigned actualMapColor = 5;
 
-    void storeSimGUI();
-    void runSimGUI();
-    void stopSimGUI();
+    void StoreSimGUI();
+    void RunSimGUI();
+    void StopSimGUI();
 private:
     Core* _core;
     // -- SIMULATION GUI --
-    QTimer timerOneFrame;
+    QTimer _timerOneFrame;
 
-    QGraphicsView* simGraphView = nullptr;
-    QGraphicsScene* simGraphScene = nullptr;
+    QGraphicsView* _simGraphView = nullptr;
+    QGraphicsScene* _simGraphScene = nullptr;
 
-    std::vector<QGraphicsEllipseItem*> robotsVectorGUI;
-    //QVector<QGraphicsRectItem*> wallsVectorGUI;
-    Rectangle robotsFromController;
+    std::vector<QGraphicsEllipseItem*> _robotsVectorGUI;
+    //QVector<QGraphicsRectItem*> _wallsVectorGUI;
+    Rectangle _robotsFromController;
 
-    QPointF actualPositionOfItem;
-    unsigned actualUserRobotPen;
+    QPointF _actualPositionOfItem;
+    unsigned _actualUserRobotPen;
 
-    std::vector<QBrush*> brushVector;
-    QBrush* redBrush;       // 0 in brushVector
-    QBrush* yellowBrush;    // 1 in brushVector
-    QBrush* greanBrush;     // 2 in brushVector
-    QBrush* blueBrush;      // 3 in brushVector
-    QBrush* blackBrush;     // 4 in brushVector
-    QBrush* whiteBrush;     // 5 in brushVector
+    std::vector<QBrush*> _brushVector;
+    QBrush* _redBrush;       // 0 in _brushVector
+    QBrush* _yellowBrush;    // 1 in _brushVector
+    QBrush* _greanBrush;     // 2 in _brushVector
+    QBrush* _blueBrush;      // 3 in _brushVector
+    QBrush* _blackBrush;     // 4 in _brushVector
+    QBrush* _whiteBrush;     // 5 in _brushVector
 
-    std::vector<QPen*> penVector;
-    unsigned getActualUserRobotPen();
-    QPen* blackPen;         // 0 in penVector
-    QPen* whitePen;         // 1 in penVector
+    std::vector<QPen*> _penVector;
+    unsigned _GetActualUserRobotPen();
+    QPen* _blackPen;         // 0 in _penVector
+    QPen* _whitePen;         // 1 in _penVector
 
 
-    void createSimGUI();
-    void deleteSimGUI();
-    void cleanSimGUI();
+    void _CreateSimGUI();
+    void _DeleteSimGUI();
+    void _CleanSimGUI();
 
 
     // -- FRONT --
 
-    QVBoxLayout* simulationsLayot;
-    QHBoxLayout* simBodyowBoxLayout;      // simulations window layout
-    QHBoxLayout* simulatyonEngineLayout;  // engine for simulation
-    QVBoxLayout* robotsEngineLayout;      // moves button layput
-    QHBoxLayout* highRobotsEngineLayout;  // forward move button layout
-    QHBoxLayout* lowRobotsEngineLayout;   // right/stop/left buttons layout
+    QVBoxLayout* _simulationsLayot;
+    QHBoxLayout* _simBodyowBoxLayout;      // simulations window layout
+    QHBoxLayout* _simulatyonEngineLayout;  // engine for simulation
+    QVBoxLayout* _robotsEngineLayout;      // moves button layput
+    QHBoxLayout* _highRobotsEngineLayout;  // forward move button layout
+    QHBoxLayout* _lowRobotsEngineLayout;   // right/stop/left buttons layout
 
-    QPushButton* startSimulationButton;
-    QPushButton* stopSimulatopnButton;
-    QPushButton* continueSimulationButton;
-    QPushButton* forwardMoveButton;
-    QPushButton* leftMoveButton;
-    QPushButton* stopMoveButton;
-    QPushButton* rightMoveButton;
+    QPushButton* _startSimulationButton;
+    QPushButton* _stopSimulatopnButton;
+    QPushButton* _continueSimulationButton;
+    QPushButton* _forwardMoveButton;
+    QPushButton* _leftMoveButton;
+    QPushButton* _stopMoveButton;
+    QPushButton* _rightMoveButton;
 
-    void createSimulattionsButtons();
-    void deleteSimulationsButtons();
-    void createSimulationsLayout();
-    void deleteSimulationsLayout();
-    void setSimualtionEngineSignals();
+    void _CreateSimulattionsButtons();
+    void _DeleteSimulationsButtons();
+    void _CreateSimulationsLayout();
+    void _DeleteSimulationsLayout();
+    void _SetSimualtionEngineSignals();
 
-    void setUnsetSimButtons(bool flagIsSet);
+    void _SetUnsetSimButtons(bool flagIsSet);
 
 signals:
 
 private slots:
-    void oneSimFrameGUI();
+    void _OneSimFrameGUI();
 };
 
 #endif // SIMULATIONWINDOW_H

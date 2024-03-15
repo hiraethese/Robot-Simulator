@@ -118,12 +118,12 @@ void MainWindow::_RunSimulationActionSlot(){
 
     _core->SetRunSim(true);
 
-    _simulationWind->runSimGUI();
+    _simulationWind->RunSimGUI();
 }
 void MainWindow::_PauseSimulationActionSlot(){
 
     _core->SetRunSim(false);
-    _simulationWind->stopSimGUI();
+    _simulationWind->StopSimGUI();
     disconnect(_runSimulationAction, 0, 0, 0);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
     _runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
@@ -158,7 +158,7 @@ void MainWindow::_UpdateSettingsSlot(){
     
     if(_settingsWind->isSetMapValue()){
         _lineMapNameSimIdToolBar->setText(_settingsWind->getMapValue());
-        _simulationWind->storeSimGUI();
+        _simulationWind->StoreSimGUI();
     }
     _settingsWind->close();
 }
