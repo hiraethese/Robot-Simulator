@@ -1,24 +1,26 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+
+#include <QAction>
 #include <QMainWindow>
-#include <QWidget>
 #include <QPushButton>
 #include <QLabel>
-#include <QVBoxLayout>
-#include <QToolBar>
-#include <QToolButton>
-#include <QAction>
 #include <iostream>
 #include <QIcon>
+#include <QLineEdit>
 #include <QMessageBox>
 #include <QMenu>
 #include <QString>
 #include <QInputDialog>
 #include <QPainter>
-#include <QLineEdit>
 #include <QScrollArea>
 #include <QString>
+#include <QTabBar>
+#include <QToolBar>
+#include <QToolButton>
+#include <QVBoxLayout>
+#include <QWidget>
 #include "SimulationWindow.h"
 #include "SettingsWindow.h"
 #include "InfoNotification.h"
@@ -44,68 +46,55 @@ public:
 
 private:
     Core* _core;
-    // APPLICATION
-    void createAppWindows();
-    void deleteAppWindows();
-    void createTools();
-    void createActions();
-    void deleteTools();
-    void deleteActions();
+    
+    void _CreateAppWindows();
+    void _DeleteAppWindows();
+    void _CreateTools();
+    void _CreateActions();
+    void _DeleteTools();
+    void _DeleteActions();
+    
+    QPushButton* _simulationMenuButton;
+    QPushButton* _settingsMenuButton;
+    QAction* _simulationMenuAction;
+    QAction* _settingsMenuAction;
+    
+    QToolBar* _simulationIdToolBar;
+    QLabel* _labelSimIdToolBar;
+    QLineEdit* _lineMapNameSimIdToolBar;
+    QToolBar* _helpToolBar;
+    QAction* _helpToolAction;
 
-    // BAR && ACTIONS
-    QToolBar* simulationIdToolBar;
-    QLabel* labelSimIdToolBar;
-    QLineEdit* lineMapNameSimIdToolBar;
-    QToolBar* helpToolBar;
-    QAction* helpToolAction;
+    QToolBar* _settingsToolBar;
+    QAction* _settingsToolAction;
 
-    QToolBar* settingsToolBar;
-    QAction* settingsToolAction;
+    QToolBar* _engineSimRunToolBar;
+    QAction* _runSimulationAction;
+    QAction* _restartSimulationAction;
 
-    QToolBar* engineSimRunToolBar;
-    QAction* runSimulationAction;
-    QAction* restartSimulationAction;
+    SettingsWindow* _settingsWind;
+    void _CreateSettings();
+    void _DeleteSettings();
 
-    // SETTINGS
-    SettingsWindow* settings;
-    void createSettings();
-    void deleteSettings();
+    SimulationWindow* _simulationWind;
 
-    // SIMULATION
-    QVBoxLayout* vbl;
-    SimulationWindow* simWind;
-
-    void createSimulationWindow();
-
-    // settings area
-
-    // inside attribute
-    QString absolutePathToTextMapFile = QString("");
-    // UI
+    void _CreateSimulationWindow();
+    
     Ui::MainWindow *ui;
 
 public slots:
-    // APPLICATION PUBLIC SLOTS
-
-    // BARS && ACTIONS PUBLIC SLOTS
-
-    // SETTINGS PUBLIC SLOTS
-
-    // SIMULATIONS PUBLIC SLOTS
 
 private slots:
-    // APPLICATION PRIVATE SLOTS
-    void helpTextToolActionSlot();
-    void settingsToolActionSlot();
+    void _HelpTextToolActionSlot();
+    void _SettingsToolActionSlot();
 
-    // BARS && ACTIONS PRIVATE SLOTS
+    void _SimulationMenuActionSlot();
+    void _SettingsMenuActionSlot();
 
-    // SETTINGS PRIVATE SLOTS
-    void updateSettingsSlot();
+    void _UpdateSettingsSlot();
 
-    // SIMULATIONS PRIVATE SLOTS
-    void runSimulationActionSlot();
-    void pauseSimulationActionSlot();
-    void restartSimulationActionSlot();
+    void _RunSimulationActionSlot();
+    void _PauseSimulationActionSlot();
+    void _RestartSimulationActionSlot();
 };
 #endif // MAINWINDOW_H

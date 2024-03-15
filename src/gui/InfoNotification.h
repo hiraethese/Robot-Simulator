@@ -6,7 +6,7 @@
 class InfoNotification
 {
 protected:
-    void warningMsgSimNotSet();
+    void _WarningMsgSimNotSet();
 };
 
 #endif // INFONOTIFICATION_H
