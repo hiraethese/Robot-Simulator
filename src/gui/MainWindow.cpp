@@ -12,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     _core = Core::getInstance();
 
     _CreateAppWindows();
-    _SimulationToolActionSlot();
 }
 
 
@@ -30,6 +29,10 @@ void MainWindow::_CreateAppWindows(){
     _CreateSettings();
     _CreateActions();
     _CreateTools();
+
+    setWindowTitle("Simulation");
+    _actualPage = SimulationPage;
+    _SetSimulationTool();
 }
 
 
@@ -42,17 +45,19 @@ void MainWindow::_DeleteAppWindows(){
 
 void MainWindow::_CreateTools(){
 
-    _settingsToolBar = addToolBar(tr("settings"));
+    _settingsToolBar = addToolBar("settings");
     _settingsToolBar->addAction(_settingsToolAction);
 
-    _simulationToolBar = addToolBar(tr("simulation"));
+    _simulationToolBar = addToolBar("simulation");
     _simulationToolBar->addAction(_simulationToolAction);
+}
 
-    _engineSimRunToolBar = addToolBar(tr("engineSimRun"));
+void MainWindow::_SetSimulationTool(){
+    _engineSimRunToolBar = addToolBar("engineSimRun");
     _engineSimRunToolBar->addAction(_runSimulationAction);
     _engineSimRunToolBar->addAction(_restartSimulationAction);
 
-    _simulationIdToolBar = addToolBar(tr("simulationId"));
+    _simulationIdToolBar = addToolBar("simulationId");
     _labelSimIdToolBar = new QLabel("Simulation: ");
     _simulationIdToolBar->addWidget(_labelSimIdToolBar);
     _lineMapNameSimIdToolBar = new QLineEdit();
@@ -60,20 +65,47 @@ void MainWindow::_CreateTools(){
     _lineMapNameSimIdToolBar->setFixedWidth(500);
     _simulationIdToolBar->addWidget(_lineMapNameSimIdToolBar);
 
-    _helpToolBar = addToolBar(tr("help"));
+    _helpToolBar = addToolBar("help");
     _helpToolBar->addAction(_helpToolAction);
 
 }
-
-
-void MainWindow::_DeleteTools(){
+void MainWindow::_UnsetSimulationTool(){
+    removeToolBar(_engineSimRunToolBar);
+    removeToolBar(_simulationIdToolBar);
+    removeToolBar(_helpToolBar);
     delete _labelSimIdToolBar;
     delete _lineMapNameSimIdToolBar;
-    delete _helpToolBar;
-    delete _settingsToolBar;
-    delete _simulationToolBar;
     delete _engineSimRunToolBar;
     delete _simulationIdToolBar;
+    delete _helpToolBar;
+}
+
+void MainWindow::_SetSettingsTool(){
+    _newSimulationIdToolBar = addToolBar("engineNewSimulation");;
+    _newLabelSimIdToolBar = new QLabel("New simulation: ");
+    _newSimulationIdToolBar->addWidget(_newLabelSimIdToolBar);
+    _newLineMapNameSimIdToolBar = new QLineEdit();
+    _newLineMapNameSimIdToolBar->setFixedWidth(500);
+    _newSimulationIdToolBar->addWidget(_newLineMapNameSimIdToolBar);
+    _newSimulationButton = new QPushButton("set");
+    _newSimulationIdToolBar->addWidget(_newSimulationButton);
+}
+
+void MainWindow::_UnsetSettingsTool(){
+    removeToolBar(_newSimulationIdToolBar);
+    delete _newLabelSimIdToolBar;
+    delete _newLineMapNameSimIdToolBar;
+    delete _newSimulationButton;
+}
+
+void MainWindow::_DeleteTools(){
+
+    delete _settingsToolBar;
+    delete _simulationToolBar;
+    if(_actualPage == SimulationPage)
+        _UnsetSimulationTool();
+    else
+        _UnsetSettingsTool();
 }
 
 void MainWindow::_CreateActions(){
@@ -173,15 +205,15 @@ void MainWindow::_SettingsToolActionSlot(){
     if(_actualPage != SettingsPage){
         _actualPage = SettingsPage;
         setWindowTitle("Settings");
-        if(_core->IsSimRun()) _PauseSimulationActionSlot();
-        // *** should be set by core ***
-        _settingsWind->SetMapValue(QString::fromStdString(_core->GetMapValue()));
+
+        if(_core->IsSimRun())
+            _PauseSimulationActionSlot();
+        /*_settingsWind->SetMapValue(QString::fromStdString(_core->GetMapValue()));
         _settingsWind->SetSpeedValue(_core->GetSpeedValue());
         _settingsWind->SetAngleValue(_core->GetAngleValue());
-        // *** *** *** *** *** *** *** ***
-        _settingsWind->show();
-        //_UnsetSimulationTool();// TODO
-        //_SetSettingsTool();// TODO
+        _settingsWind->show();*/
+        _UnsetSimulationTool();
+        _SetSettingsTool();
     }
 }
 
@@ -190,8 +222,8 @@ void MainWindow::_SimulationToolActionSlot(){
     if(_actualPage != SimulationPage){
         _actualPage = SimulationPage;
         setWindowTitle("Simulation");
-        //_UnsetSettingsTool();// TODO
-        //_SetSimulationTool();// TODO
+        _UnsetSettingsTool();
+        _SetSimulationTool();
     }
 }
 

@@ -32,7 +32,7 @@ enum Page{
     NotSetPage,
     SimulationPage,
     SettingsPage
-}
+};
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -55,11 +55,7 @@ private:
     Page _actualPage = NotSetPage;
     void _CreateAppWindows();
     void _DeleteAppWindows();
-    void _CreateTools();
-    void _CreateActions();
-    void _DeleteTools();
-    void _DeleteActions();
-    
+
     QToolBar* _simulationToolBar;
     QAction* _simulationToolAction;
 
@@ -76,14 +72,27 @@ private:
     QAction* _runSimulationAction;
     QAction* _restartSimulationAction;
 
+    QToolBar* _newSimulationIdToolBar;
+    QLabel* _newLabelSimIdToolBar;
+    QLineEdit* _newLineMapNameSimIdToolBar;
+    QPushButton* _newSimulationButton;
+
+    void _CreateTools();
+    void _SetSimulationTool();
+    void _UnsetSimulationTool();
+    void _SetSettingsTool();
+    void _UnsetSettingsTool();
+    void _CreateActions();
+    void _DeleteTools();
+    void _DeleteActions();
+
+    SimulationWindow* _simulationWind;
+    void _CreateSimulationWindow();
+
     SettingsWindow* _settingsWind;
     void _CreateSettings();
     void _DeleteSettings();
 
-    SimulationWindow* _simulationWind;
-
-    void _CreateSimulationWindow();
-    
     Ui::MainWindow *ui;
 
 public slots:
