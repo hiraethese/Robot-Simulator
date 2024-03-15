@@ -153,11 +153,11 @@ void MainWindow::_DeleteSettings(){
 void MainWindow::_UpdateSettingsSlot(){
 
     // !!! try catch filtering errors
-    //contr_set_new_settings(settings->isSetMapValue(), settings->getMapValue().toStdString(), settings->isSetSpeedValue(), settings->getSpeedValue(), settings->isSetAngleValue(), settings->getAngleValue());
+    //contr_set_new_settings(settings->IsSetMapValue(), settings->GetMapValue().toStdString(), settings->IsSetSpeedValue(), settings->GetSpeedValue(), settings->IsSetAngleValue(), settings->GetAngleValue());
     //
     
-    if(_settingsWind->isSetMapValue()){
-        _lineMapNameSimIdToolBar->setText(_settingsWind->getMapValue());
+    if(_settingsWind->IsSetMapValue()){
+        _lineMapNameSimIdToolBar->setText(_settingsWind->GetMapValue());
         _simulationWind->StoreSimGUI();
     }
     _settingsWind->close();
@@ -166,9 +166,9 @@ void MainWindow::_UpdateSettingsSlot(){
 void MainWindow::_SettingsToolActionSlot(){
     if(_core->IsSimRun()) _PauseSimulationActionSlot();
     // *** should be set by core ***
-    _settingsWind->setMapValue(QString::fromStdString(_core->GetMapValue()));
-    _settingsWind->setSpeedValue(_core->GetSpeedValue());
-    _settingsWind->setAngleValue(_core->GetAngleValue());
+    _settingsWind->SetMapValue(QString::fromStdString(_core->GetMapValue()));
+    _settingsWind->SetSpeedValue(_core->GetSpeedValue());
+    _settingsWind->SetAngleValue(_core->GetAngleValue());
     // *** *** *** *** *** *** *** ***
     _settingsWind->show();
 }

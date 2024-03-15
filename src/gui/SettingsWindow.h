@@ -20,39 +20,36 @@ public:
     QPushButton* setPushButton;
 
 
-    bool isSetMapValue();
-    QString getMapValue();
-    void setMapValue(QString map);
+    bool IsSetMapValue();
+    QString GetMapValue();
+    void SetMapValue(QString map);
 
-    bool isSetSpeedValue();
-    int getSpeedValue();
-    void setSpeedValue(int speed);
+    bool IsSetSpeedValue();
+    int GetSpeedValue();
+    void SetSpeedValue(int speed);
 
-    bool isSetAngleValue();
-    int getAngleValue();
-    void setAngleValue(int angle);
+    bool IsSetAngleValue();
+    int GetAngleValue();
+    void SetAngleValue(int angle);
 private:
-    QGridLayout* settingGridLayot;
+    QGridLayout* _settingGridLayot;
 
-    QLabel* newMapLabel;
-    QLineEdit* newMapLine;
-    QLabel mapValue;
-    QCheckBox* newMapCheckBox;
+    QLabel* _newMapLabel;
+    QLineEdit* _newMapLine;
+    QCheckBox* _newMapCheckBox;
 
-    QLabel* speedLabel;
-    QSpinBox* speedSpinBox;
-    QCheckBox* speedCheckBox;
-    int speedValue;
+    QLabel* _speedLabel;
+    QSpinBox* _speedSpinBox;
+    QCheckBox* _speedCheckBox;
 
-    QLabel* angleLabel;
-    QSpinBox* angleSpinBox;
-    QCheckBox* angleCheckBox;
-    int angleValue;
+    QLabel* _angleLabel;
+    QSpinBox* _angleSpinBox;
+    QCheckBox* _angleCheckBox;
 
 private slots:
-    void blockNewMapLineSlot();
-    void blockSpeedSpinBoxSlot();
-    void blockAngleSpinBoxSlot();
+    void _blockNewMapLineSlot();
+    void _blockSpeedSpinBoxSlot();
+    void _blockAngleSpinBoxSlot();
 };
 
 #endif // SETTINGSWINDOW_H

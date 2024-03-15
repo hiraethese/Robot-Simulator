@@ -3,111 +3,111 @@
 SettingsWindow::SettingsWindow() {
     this->setWindowTitle("Settings");
     setWindowFlags(Qt::WindowTitleHint);
-    settingGridLayot = new QGridLayout();
+    _settingGridLayot = new QGridLayout();
 
-    newMapLabel = new QLabel(tr("New map path: "));
-    newMapLine = new QLineEdit();
-    newMapLine->setEnabled(false);
-    newMapCheckBox = new QCheckBox();
-    connect(newMapCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::blockNewMapLineSlot);
-    settingGridLayot->addWidget(newMapLabel, 0, 0);
-    settingGridLayot->addWidget(newMapLine, 0, 1);
-    settingGridLayot->addWidget(newMapCheckBox, 0, 2);
+    _newMapLabel = new QLabel(tr("New map path: "));
+    _newMapLine = new QLineEdit();
+    _newMapLine->setEnabled(false);
+    _newMapCheckBox = new QCheckBox();
+    connect(_newMapCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::_blockNewMapLineSlot);
+    _settingGridLayot->addWidget(_newMapLabel, 0, 0);
+    _settingGridLayot->addWidget(_newMapLine, 0, 1);
+    _settingGridLayot->addWidget(_newMapCheckBox, 0, 2);
 
-    speedLabel = new QLabel(tr("Speed(%) : "));
-    speedSpinBox = new QSpinBox();
-    speedCheckBox = new QCheckBox();
-    speedSpinBox->setMinimum(1);
-    speedSpinBox->setMaximum(100);
-    speedSpinBox->setEnabled(false);
-    connect(speedCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::blockSpeedSpinBoxSlot);
-    settingGridLayot->addWidget(speedLabel, 1, 0);
-    settingGridLayot->addWidget(speedSpinBox, 1, 1);
-    settingGridLayot->addWidget(speedCheckBox, 1, 2);
+    _speedLabel = new QLabel(tr("Speed(%) : "));
+    _speedSpinBox = new QSpinBox();
+    _speedCheckBox = new QCheckBox();
+    _speedSpinBox->setMinimum(1);
+    _speedSpinBox->setMaximum(100);
+    _speedSpinBox->setEnabled(false);
+    connect(_speedCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::_blockSpeedSpinBoxSlot);
+    _settingGridLayot->addWidget(_speedLabel, 1, 0);
+    _settingGridLayot->addWidget(_speedSpinBox, 1, 1);
+    _settingGridLayot->addWidget(_speedCheckBox, 1, 2);
 
-    angleLabel = new QLabel(tr("Angle(degree) : "));
-    angleSpinBox = new QSpinBox();
-    angleCheckBox = new QCheckBox();
-    angleSpinBox->setMinimum(0);
-    angleSpinBox->setMaximum(360);
-    angleSpinBox->setEnabled(false);
-    connect(angleCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::blockAngleSpinBoxSlot);
-    settingGridLayot->addWidget(angleLabel, 2, 0);
-    settingGridLayot->addWidget(angleSpinBox, 2, 1);
-    settingGridLayot->addWidget(angleCheckBox, 2, 2);
+    _angleLabel = new QLabel(tr("Angle(degree) : "));
+    _angleSpinBox = new QSpinBox();
+    _angleCheckBox = new QCheckBox();
+    _angleSpinBox->setMinimum(0);
+    _angleSpinBox->setMaximum(360);
+    _angleSpinBox->setEnabled(false);
+    connect(_angleCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::_blockAngleSpinBoxSlott);
+    _settingGridLayot->addWidget(_angleLabel, 2, 0);
+    _settingGridLayot->addWidget(_angleSpinBox, 2, 1);
+    _settingGridLayot->addWidget(_angleCheckBox, 2, 2);
 
     setPushButton = new QPushButton(tr("set"));
-    settingGridLayot->addWidget(setPushButton, 3, 0);
-    setLayout(settingGridLayot);
+    _settingGridLayot->addWidget(setPushButton, 3, 0);
+    setLayout(_settingGridLayot);
 }
 
 SettingsWindow::~SettingsWindow(){
     std::cout << "YES I AM DELETED" << std::endl;
-    delete newMapLabel;
-    delete newMapLine;
-    disconnect(newMapCheckBox, 0, 0, 0);
-    delete newMapCheckBox;
+    delete _newMapLabel;
+    delete _newMapLine;
+    disconnect(_newMapCheckBox, 0, 0, 0);
+    delete _newMapCheckBox;
 
-    delete speedLabel;
-    delete speedSpinBox;
-    disconnect(speedCheckBox, 0, 0, 0);
-    delete speedCheckBox;
+    delete _speedLabel;
+    delete _speedSpinBox;
+    disconnect(_speedCheckBox, 0, 0, 0);
+    delete _speedCheckBox;
 
-    delete angleLabel;
-    delete angleSpinBox;
-    disconnect(angleCheckBox, 0, 0, 0);
-    delete angleCheckBox;
+    delete _angleLabel;
+    delete _angleSpinBox;
+    disconnect(_angleCheckBox, 0, 0, 0);
+    delete _angleCheckBox;
 
     disconnect(setPushButton, 0, 0, 0);
     delete setPushButton;
 
-    delete settingGridLayot;
+    delete _settingGridLayot;
 }
 
 
-bool SettingsWindow::isSetMapValue(){
-    return newMapCheckBox->isChecked();
+bool SettingsWindow::IsSetMapValue(){
+    return _newMapCheckBox->isChecked();
 }
-QString SettingsWindow::getMapValue(){
-    return this->newMapLine->text();
+QString SettingsWindow::GetMapValue(){
+    return _newMapLine->text();
 }
-void SettingsWindow::setMapValue(QString map){
-    this->newMapLine->setText(map);
-}
-
-
-bool SettingsWindow::isSetSpeedValue(){
-    return speedCheckBox->isChecked();
-}
-int SettingsWindow::getSpeedValue(){
-    return this->speedSpinBox->value();
-}
-void SettingsWindow::setSpeedValue(int speed){
-    this->speedSpinBox->setValue(speed);
+void SettingsWindow::SetMapValue(QString map){
+    _newMapLine->setText(map);
 }
 
 
-bool SettingsWindow::isSetAngleValue(){
-    return angleCheckBox->isChecked();
+bool SettingsWindow::IsSetSpeedValue(){
+    return _speedCheckBox->isChecked();
 }
-int SettingsWindow::getAngleValue(){
-    return this->angleSpinBox->value();
+int SettingsWindow::GetSpeedValue(){
+    return _speedSpinBox->value();
 }
-void SettingsWindow::setAngleValue(int angle){
-    this->angleSpinBox->setValue(angle);
+void SettingsWindow::SetSpeedValue(int speed){
+    _speedSpinBox->setValue(speed);
 }
 
 
-void SettingsWindow::blockNewMapLineSlot(){
-    if(isSetMapValue()) newMapLine->setEnabled(true);
-    else newMapLine->setEnabled(false);
+bool SettingsWindow::IsSetAngleValue(){
+    return _angleCheckBox->isChecked();
 }
-void SettingsWindow::blockSpeedSpinBoxSlot(){
-    if(isSetSpeedValue()) speedSpinBox->setEnabled(true);
-    else speedSpinBox->setEnabled(false);
+int SettingsWindow::GetAngleValue(){
+    return _angleSpinBox->value();
 }
-void SettingsWindow::blockAngleSpinBoxSlot(){
-    if(isSetSpeedValue()) angleSpinBox->setEnabled(true);
-    else angleSpinBox->setEnabled(false);
+void SettingsWindow::SetAngleValue(int angle){
+    angleSpinBox->setValue(angle);
+}
+
+
+void SettingsWindow::_blockNewMapLineSlot(){
+    if(IsSetMapValue()) _newMapLine->setEnabled(true);
+    else _newMapLine->setEnabled(false);
+}
+void SettingsWindow::_blockSpeedSpinBoxSlot(){
+    if(IsSetSpeedValue()) _speedSpinBox->setEnabled(true);
+    else _speedSpinBox->setEnabled(false);
+}
+void SettingsWindow::_blockAngleSpinBoxSlott(){
+    if(IsSetSpeedValue()) _angleSpinBox->setEnabled(true);
+    else _angleSpinBox->setEnabled(false);
 }
 
