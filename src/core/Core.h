@@ -2,6 +2,7 @@
 #define CORE_H
 
 #include <string>
+#include "SimMap.h"
 #include "entities/Robot.h"
 
 class Core
@@ -9,17 +10,22 @@ class Core
 private:
     Core();
     static Core* _core;
-    std::string _map;
+    int _FPS;
     bool _simIsRun;
     bool _simIsReady;
+    SimMap* _map;
     Robot* _controlledRobot;
 
 public:
     static Core* getInstance();
     // Controller part
+    int GetFPS();
+    void SetFPS(int FPS);
     std::string GetMapValue();
+    int GetMapWidth();
+    int GetMapHeight();
     int GetSpeedValue();
-    int GetAngleValue(); // Note: get angle step value.
+    int GetAngleValue(); // Note: get angle step value
     bool IsSimReady();
     bool IsSimRun();
     void SetRunSim(bool setter);

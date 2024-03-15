@@ -2,6 +2,7 @@
 #define ROBOT_H
 
 #include "SimObject.h"
+#include "../properties/Movement.h"
 
 class Robot : public SimObject
 {

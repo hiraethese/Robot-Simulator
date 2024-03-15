@@ -2,7 +2,6 @@
 #define SIMOBJECT_H
 
 #include "../properties/MyTransform.h"
-#include "../properties/Movement.h"
 
 class SimObject
 {

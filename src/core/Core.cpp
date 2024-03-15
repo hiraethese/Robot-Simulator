@@ -4,9 +4,10 @@ Core* Core::_core = nullptr;
 
 Core::Core()
 {
-    _map = "";
+    _FPS = 16; // Note: not actually "Frames Per Second", the name is for convenience
     _simIsRun = false;
     _simIsReady = true; // TODO: make setting arg from user by setting; now default true
+    _map = new SimMap("example.txt", 1800, 750);
     _controlledRobot = new Robot({50.0f, 50.0f}, {100.0f, 100.0f}, 5.0f, 45, 0);
 }
 
@@ -20,9 +21,29 @@ Core *Core::getInstance()
 
 // Controller part
 
+int Core::GetFPS()
+{
+    return _FPS;
+}
+
+void Core::SetFPS(int FPS)
+{
+    _FPS = FPS;
+}
+
 std::string Core::GetMapValue()
 {
-    return _map;
+    return _map->GetPath();
+}
+
+int Core::GetMapWidth()
+{
+    return _map->GetWidth();
+}
+
+int Core::GetMapHeight()
+{
+    return _map->GetHeight();
 }
 
 int Core::GetSpeedValue()
