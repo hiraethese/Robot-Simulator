@@ -28,6 +28,12 @@
 
 #include <iostream>
 
+enum Page{
+    NotSetPage,
+    SimulationPage,
+    SettingsPage
+}
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -46,7 +52,7 @@ public:
 
 private:
     Core* _core;
-    
+    Page _actualPage = NotSetPage;
     void _CreateAppWindows();
     void _DeleteAppWindows();
     void _CreateTools();
@@ -54,11 +60,9 @@ private:
     void _DeleteTools();
     void _DeleteActions();
     
-    QPushButton* _simulationMenuButton;
-    QPushButton* _settingsMenuButton;
-    QAction* _simulationMenuAction;
-    QAction* _settingsMenuAction;
-    
+    QToolBar* _simulationToolBar;
+    QAction* _simulationToolAction;
+
     QToolBar* _simulationIdToolBar;
     QLabel* _labelSimIdToolBar;
     QLineEdit* _lineMapNameSimIdToolBar;
@@ -87,9 +91,7 @@ public slots:
 private slots:
     void _HelpTextToolActionSlot();
     void _SettingsToolActionSlot();
-
-    void _SimulationMenuActionSlot();
-    void _SettingsMenuActionSlot();
+    void _SimulationToolActionSlot();
 
     void _UpdateSettingsSlot();
 

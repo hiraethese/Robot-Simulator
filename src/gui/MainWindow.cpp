@@ -7,11 +7,12 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    //QApplication::setApplicationDisplayName("ICP2024");
+    QApplication::setApplicationDisplayName("ICP2024");
     setWindowTitle("ICP2024");
     _core = Core::getInstance();
 
     _CreateAppWindows();
+    _SimulationToolActionSlot();
 }
 
 
@@ -44,6 +45,9 @@ void MainWindow::_CreateTools(){
     _settingsToolBar = addToolBar(tr("settings"));
     _settingsToolBar->addAction(_settingsToolAction);
 
+    _simulationToolBar = addToolBar(tr("simulation"));
+    _simulationToolBar->addAction(_simulationToolAction);
+
     _engineSimRunToolBar = addToolBar(tr("engineSimRun"));
     _engineSimRunToolBar->addAction(_runSimulationAction);
     _engineSimRunToolBar->addAction(_restartSimulationAction);
@@ -67,21 +71,21 @@ void MainWindow::_DeleteTools(){
     delete _lineMapNameSimIdToolBar;
     delete _helpToolBar;
     delete _settingsToolBar;
+    delete _simulationToolBar;
     delete _engineSimRunToolBar;
     delete _simulationIdToolBar;
 }
 
 void MainWindow::_CreateActions(){
-    _simulationMenuAction = new QAction();
-    _settingsMenuAction = new QAction();
-    connect(_simulationMenuAction, &QAction::triggered, this, &MainWindow::_SimulationMenuActionSlot);
-    connect(_settingsMenuAction, &QAction::triggered, this, &MainWindow::_SettingsMenuActionSlot);
-
     _helpToolAction = new QAction(QIcon(":/icons/helpTool.jpg"), "&Help", this);
     connect(_helpToolAction, &QAction::triggered, this, &MainWindow::_HelpTextToolActionSlot);
 
     _settingsToolAction = new QAction(QIcon(":/icons/settingsTool.png"), "&Settings", this);
     connect(_settingsToolAction, &QAction::triggered, this, &MainWindow::_SettingsToolActionSlot);
+
+    _simulationToolAction = new QAction(QIcon(":/icons/simulationTool.png"), "&Simulation", this);
+    connect(_simulationToolAction, &QAction::triggered, this, &MainWindow::_SimulationToolActionSlot);
+
 
     _runSimulationAction = new QAction(QIcon(":/icons/playTool.png"), "&Run", this);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
@@ -96,8 +100,10 @@ void MainWindow::_DeleteActions(){
     disconnect(_settingsToolAction, 0, 0, 0);
     disconnect(_runSimulationAction, 0, 0, 0);
     disconnect(_restartSimulationAction, 0, 0, 0);
+    disconnect(_simulationToolAction, 0, 0, 0);
     delete _helpToolAction;
     delete _settingsToolAction;
+    delete _simulationToolAction;
     delete _runSimulationAction;
     delete _restartSimulationAction;
 }
@@ -164,13 +170,29 @@ void MainWindow::_UpdateSettingsSlot(){
 }
 
 void MainWindow::_SettingsToolActionSlot(){
-    if(_core->IsSimRun()) _PauseSimulationActionSlot();
-    // *** should be set by core ***
-    _settingsWind->SetMapValue(QString::fromStdString(_core->GetMapValue()));
-    _settingsWind->SetSpeedValue(_core->GetSpeedValue());
-    _settingsWind->SetAngleValue(_core->GetAngleValue());
-    // *** *** *** *** *** *** *** ***
-    _settingsWind->show();
+    if(_actualPage != SettingsPage){
+        _actualPage = SettingsPage;
+        setWindowTitle("Settings");
+        if(_core->IsSimRun()) _PauseSimulationActionSlot();
+        // *** should be set by core ***
+        _settingsWind->SetMapValue(QString::fromStdString(_core->GetMapValue()));
+        _settingsWind->SetSpeedValue(_core->GetSpeedValue());
+        _settingsWind->SetAngleValue(_core->GetAngleValue());
+        // *** *** *** *** *** *** *** ***
+        _settingsWind->show();
+        //_UnsetSimulationTool();// TODO
+        //_SetSettingsTool();// TODO
+    }
+}
+
+
+void MainWindow::_SimulationToolActionSlot(){
+    if(_actualPage != SimulationPage){
+        _actualPage = SimulationPage;
+        setWindowTitle("Simulation");
+        //_UnsetSettingsTool();// TODO
+        //_SetSimulationTool();// TODO
+    }
 }
 
 void MainWindow::_CreateSimulationWindow(){
@@ -179,14 +201,6 @@ void MainWindow::_CreateSimulationWindow(){
     setCentralWidget(_simulationWind);
 }
 
-
-void MainWindow::_SimulationMenuActionSlot(){
-    std::cout << "SIM MENU !!!" << std::endl;
-}
-void MainWindow::_SettingsMenuActionSlot(){
-    std::cout << "SET MENU !!!" << std::endl;
-
-}
 
 
 

@@ -7,5 +7,6 @@
         <file>icons/playTool.png</file>
         <file>icons/pauseTool.png</file>
         <file>icons/restartTool.png</file>
+        <file>icons/simulationTool.png</file>
     </qresource>
 </RCC>
