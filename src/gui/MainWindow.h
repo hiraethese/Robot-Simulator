@@ -107,5 +107,7 @@ private slots:
     void _RunSimulationActionSlot();
     void _PauseSimulationActionSlot();
     void _RestartSimulationActionSlot();
+
+    void _GetNewSimToParserSlot();
 };
 #endif // MAINWINDOW_H

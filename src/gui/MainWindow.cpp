@@ -89,6 +89,7 @@ void MainWindow::_SetSettingsTool(){
     _newSimulationIdToolBar->addWidget(_newLineMapNameSimIdToolBar);
     _newSimulationButton = new QPushButton("set");
     _newSimulationIdToolBar->addWidget(_newSimulationButton);
+    connect(_newSimulationButton, &QPushButton::clicked, this, &MainWindow::_GetNewSimToParserSlot);
 }
 
 void MainWindow::_UnsetSettingsTool(){
@@ -225,6 +226,11 @@ void MainWindow::_SimulationToolActionSlot(){
         _UnsetSettingsTool();
         _SetSimulationTool();
     }
+}
+
+
+void MainWindow::_GetNewSimToParserSlot(){
+    std::cout << "NEW SIM: " << _newLineMapNameSimIdToolBar->text().toStdString() << std::endl;
 }
 
 void MainWindow::_CreateSimulationWindow(){
