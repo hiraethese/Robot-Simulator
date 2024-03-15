@@ -39,7 +39,8 @@ HEADERS += \
     src/gui/InfoNotification.h \
     src/gui/MainWindow.h \
     src/gui/SettingsWindow.h \
-    src/gui/SimulationWindow.h
+    src/gui/SimulationWindow.h \
+    src/gui/style.h
 
 FORMS += \
     src/gui/MainWindow.ui

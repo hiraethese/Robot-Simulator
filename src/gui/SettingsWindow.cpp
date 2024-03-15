@@ -9,7 +9,7 @@ SettingsWindow::SettingsWindow() {
     _newMapLine = new QLineEdit();
     _newMapLine->setEnabled(false);
     _newMapCheckBox = new QCheckBox();
-    connect(_newMapCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::_blockNewMapLineSlot);
+    connect(_newMapCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::_BlockNewMapLineSlot);
     _settingGridLayot->addWidget(_newMapLabel, 0, 0);
     _settingGridLayot->addWidget(_newMapLine, 0, 1);
     _settingGridLayot->addWidget(_newMapCheckBox, 0, 2);
@@ -20,7 +20,7 @@ SettingsWindow::SettingsWindow() {
     _speedSpinBox->setMinimum(1);
     _speedSpinBox->setMaximum(100);
     _speedSpinBox->setEnabled(false);
-    connect(_speedCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::_blockSpeedSpinBoxSlot);
+    connect(_speedCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::_BlockSpeedSpinBoxSlot);
     _settingGridLayot->addWidget(_speedLabel, 1, 0);
     _settingGridLayot->addWidget(_speedSpinBox, 1, 1);
     _settingGridLayot->addWidget(_speedCheckBox, 1, 2);
@@ -31,7 +31,7 @@ SettingsWindow::SettingsWindow() {
     _angleSpinBox->setMinimum(0);
     _angleSpinBox->setMaximum(360);
     _angleSpinBox->setEnabled(false);
-    connect(_angleCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::_blockAngleSpinBoxSlott);
+    connect(_angleCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::_BlockAngleSpinBoxSlot);
     _settingGridLayot->addWidget(_angleLabel, 2, 0);
     _settingGridLayot->addWidget(_angleSpinBox, 2, 1);
     _settingGridLayot->addWidget(_angleCheckBox, 2, 2);
@@ -94,19 +94,19 @@ int SettingsWindow::GetAngleValue(){
     return _angleSpinBox->value();
 }
 void SettingsWindow::SetAngleValue(int angle){
-    angleSpinBox->setValue(angle);
+    _angleSpinBox->setValue(angle);
 }
 
 
-void SettingsWindow::_blockNewMapLineSlot(){
+void SettingsWindow::_BlockNewMapLineSlot(){
     if(IsSetMapValue()) _newMapLine->setEnabled(true);
     else _newMapLine->setEnabled(false);
 }
-void SettingsWindow::_blockSpeedSpinBoxSlot(){
+void SettingsWindow::_BlockSpeedSpinBoxSlot(){
     if(IsSetSpeedValue()) _speedSpinBox->setEnabled(true);
     else _speedSpinBox->setEnabled(false);
 }
-void SettingsWindow::_blockAngleSpinBoxSlott(){
+void SettingsWindow::_BlockAngleSpinBoxSlot(){
     if(IsSetSpeedValue()) _angleSpinBox->setEnabled(true);
     else _angleSpinBox->setEnabled(false);
 }

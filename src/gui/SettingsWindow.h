@@ -47,9 +47,9 @@ private:
     QCheckBox* _angleCheckBox;
 
 private slots:
-    void _blockNewMapLineSlot();
-    void _blockSpeedSpinBoxSlot();
-    void _blockAngleSpinBoxSlot();
+    void _BlockNewMapLineSlot();
+    void _BlockSpeedSpinBoxSlot();
+    void _BlockAngleSpinBoxSlot();
 };
 
 #endif // SETTINGSWINDOW_H
