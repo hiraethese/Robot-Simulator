@@ -21,3 +21,8 @@ int SimMap::GetHeight()
 {
     return _height;
 }
+
+void SimMap::SetPath(std::string newPath)
+{
+    _path = newPath;
+}

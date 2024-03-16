@@ -15,6 +15,7 @@ public:
     std::string GetPath();
     int GetWidth();
     int GetHeight();
+    void SetPath(std::string newPath);
 };
 
 #endif // SIMMAP_H

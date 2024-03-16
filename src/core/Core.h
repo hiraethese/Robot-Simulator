@@ -5,6 +5,18 @@
 #include "SimMap.h"
 #include "entities/Robot.h"
 
+// Simulation settings structure with default values
+struct SimSettings
+{
+    bool flagNewMap = false;
+    std::string newMapValue = "example.txt";
+    bool flagNewSpeed = false;
+    int newSpeedValue = 5;
+    bool flagNewAngle = false;
+    int newAngleValue = 45;
+};
+
+// Core class with controller methods
 class Core
 {
 private:
@@ -18,16 +30,16 @@ private:
 
 public:
     static Core* getInstance();
-    // Controller part
-    int GetFPS();
-    void SetFPS(int FPS);
+    void SetNewSettings(const SimSettings& newSettings);
     std::string GetMapValue();
+    int GetFPS();
     int GetMapWidth();
     int GetMapHeight();
-    int GetSpeedValue();
+    int GetSpeedValue(); // TODO: speed in percent
     int GetAngleValue(); // Note: get angle step value
     bool IsSimReady();
     bool IsSimRun();
+    void SetFPS(int FPS); // TODO: implement this as part of the settings
     void SetRunSim(bool setter);
     void LeftRotateMoveSig();
     void RightRotateMoveSig();

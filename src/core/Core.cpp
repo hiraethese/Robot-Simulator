@@ -19,21 +19,33 @@ Core *Core::getInstance()
     return _core;
 }
 
-// Controller part
-
-int Core::GetFPS()
+void Core::SetNewSettings(const SimSettings &newSettings)
 {
-    return _FPS;
-}
+    if(newSettings.flagNewMap)
+    {
+        _map->SetPath(newSettings.newMapValue);
+        _simIsReady = true;
+    }
 
-void Core::SetFPS(int FPS)
-{
-    _FPS = FPS;
+    if(newSettings.flagNewSpeed)
+    {
+        _controlledRobot->GetMovement()->SetSpeed(newSettings.newSpeedValue);
+    }
+
+    if(newSettings.flagNewAngle)
+    {
+        _controlledRobot->GetMovement()->SetAngleStep(newSettings.newAngleValue);
+    }
 }
 
 std::string Core::GetMapValue()
 {
     return _map->GetPath();
+}
+
+int Core::GetFPS()
+{
+    return _FPS;
 }
 
 int Core::GetMapWidth()
@@ -64,6 +76,11 @@ bool Core::IsSimReady()
 bool Core::IsSimRun()
 {
     return _simIsRun;
+}
+
+void Core::SetFPS(int FPS)
+{
+    _FPS = FPS;
 }
 
 void Core::SetRunSim(bool setter)
