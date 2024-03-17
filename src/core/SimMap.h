@@ -2,6 +2,8 @@
 #define SIMMAP_H
 
 #include <string>
+#include <fstream>
+#include <sstream>
 #include "SimFactory.h"
 
 class SimMap
@@ -19,7 +21,7 @@ public:
     int GetHeight();
     SimFactory* GetFactory();
     void SetPath(std::string newPath);
-    void LoadObjects();
+    int LoadObjects();
 };
 
 #endif // SIMMAP_H

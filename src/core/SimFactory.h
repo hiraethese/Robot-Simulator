@@ -15,6 +15,7 @@ public:
     SimFactory();
     void DeleteAllObjects();
     void AddWall(Wall* wall);
+    void SetControlledRobot(Robot* controlledRobot);
     Robot* GetControlledRobot();
 };
 

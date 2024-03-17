@@ -3,6 +3,7 @@
 SimFactory::SimFactory()
 {
     _controlledRobot = new Robot({50.0f, 50.0f}, {100.0f, 100.0f}, 5.0f, 45, 0);
+    // _controlledRobot = nullptr;
 }
 
 void SimFactory::DeleteAllObjects()
@@ -26,6 +27,11 @@ void SimFactory::DeleteAllObjects()
 void SimFactory::AddWall(Wall* wall)
 {
     _walls.push_back(wall);
+}
+
+void SimFactory::SetControlledRobot(Robot *controlledRobot)
+{
+    _controlledRobot = controlledRobot;
 }
 
 Robot *SimFactory::GetControlledRobot()
