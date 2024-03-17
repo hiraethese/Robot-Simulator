@@ -13,6 +13,7 @@ private:
 
 public:
     SimFactory();
+    void DeleteAllObjects();
     void AddWall(Wall* wall);
     Robot* GetControlledRobot();
 };
