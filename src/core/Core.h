@@ -3,7 +3,7 @@
 
 #include <string>
 #include "SimMap.h"
-#include "entities/Robot.h"
+#include "SimFactory.h"
 
 // Simulation settings structure with default values
 struct SimSettings
@@ -25,8 +25,8 @@ private:
     int _FPS;
     bool _simIsRun;
     bool _simIsReady;
+    SimFactory* _factory;
     SimMap* _map;
-    Robot* _controlledRobot;
 
 public:
     static Core* getInstance();

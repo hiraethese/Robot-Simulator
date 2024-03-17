@@ -7,8 +7,8 @@ Core::Core()
     _FPS = 16; // Note: not actually "Frames Per Second", the name is for convenience
     _simIsRun = false;
     _simIsReady = true; // TODO: make setting arg from user by setting; now default true
+    _factory = new SimFactory();
     _map = new SimMap("example.txt", 1800, 750);
-    _controlledRobot = new Robot({50.0f, 50.0f}, {100.0f, 100.0f}, 5.0f, 45, 0);
 }
 
 Core *Core::getInstance()
@@ -29,12 +29,12 @@ void Core::SetNewSettings(const SimSettings &newSettings)
 
     if(newSettings.flagNewSpeed)
     {
-        _controlledRobot->GetMovement()->SetSpeed(newSettings.newSpeedValue);
+        _factory->GetControlledRobot()->GetMovement()->SetSpeed(newSettings.newSpeedValue);
     }
 
     if(newSettings.flagNewAngle)
     {
-        _controlledRobot->GetMovement()->SetAngleStep(newSettings.newAngleValue);
+        _factory->GetControlledRobot()->GetMovement()->SetAngleStep(newSettings.newAngleValue);
     }
 }
 
@@ -60,12 +60,12 @@ int Core::GetMapHeight()
 
 int Core::GetSpeedValue()
 {
-    return (int)_controlledRobot->GetMovement()->GetSpeed();
+    return (int)_factory->GetControlledRobot()->GetMovement()->GetSpeed();
 }
 
 int Core::GetAngleValue()
 {
-    return _controlledRobot->GetMovement()->GetAngleStep();
+    return _factory->GetControlledRobot()->GetMovement()->GetAngleStep();
 }
 
 bool Core::IsSimReady()
@@ -90,30 +90,30 @@ void Core::SetRunSim(bool setter)
 
 void Core::LeftRotateMoveSig()
 {
-    _controlledRobot->GetMovement()->RotateLeft();
+    _factory->GetControlledRobot()->GetMovement()->RotateLeft();
 }
 
 void Core::RightRotateMoveSig()
 {
-    _controlledRobot->GetMovement()->RotateRight();
+    _factory->GetControlledRobot()->GetMovement()->RotateRight();
 }
 
 void Core::ForwardMoveSig()
 {
-    _controlledRobot->GetMovement()->EnableMovement();
+    _factory->GetControlledRobot()->GetMovement()->EnableMovement();
 }
 
 void Core::StopMoveSig()
 {
-    _controlledRobot->GetMovement()->DisableMovement();
+    _factory->GetControlledRobot()->GetMovement()->DisableMovement();
 }
 
 void Core::MoveAllObjects()
 {
-    _controlledRobot->GetMovement()->MoveForward();
+    _factory->GetControlledRobot()->GetMovement()->MoveForward();
 }
 
 Rectangle Core::RectFromCore()
 {
-    return _controlledRobot->GetTransform()->GetRect();
+    return _factory->GetControlledRobot()->GetTransform()->GetRect();
 }
