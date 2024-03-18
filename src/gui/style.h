@@ -5,15 +5,15 @@
 #include <QColor>
 
 
-QBrush redBrush(Qt::red);
-QBrush yellowBrush(Qt::yellow);
-QBrush greanBrush(Qt::green);
-QBrush blueBrush(Qt::blue);
-QBrush whiteBrush(Qt::white);
-QBrush grayBrush(Qt::gray);
-QBrush blackBrush(Qt::black);
+extern QBrush redBrush;
+extern QBrush yellowBrush;
+extern QBrush greanBrush;
+extern QBrush blueBrush;
+extern QBrush whiteBrush;
+extern QBrush grayBrush;
+extern QBrush blackBrush;
 
-QPen blackPen(Qt::black);
-QPen whitePen(Qt::white);
+extern QPen blackPen;
+extern QPen whitePen;
 
 #endif // STYLE_H

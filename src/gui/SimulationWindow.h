@@ -18,6 +18,7 @@
 #include <QPointF>
 #include <iostream>
 #include "../core/Core.h"
+#include "SimulationScene.h"
 
 class SimulationWindow : public QWidget
 {
@@ -26,41 +27,19 @@ public:
     explicit SimulationWindow(QWidget *parent = nullptr);
     ~SimulationWindow();
 
-    unsigned actualUserRobotColor = 0;
-    unsigned actualWallColor = 3;
-    unsigned actualBotRobotColor = 4;
-    unsigned actualMapColor = 5;
+    void SetSettingsEngine();
+    void UnsetSettingsEngine();
+    void SetSimulationEngine();
+    void UnsetSimulationEngine();
 
-    void StoreSimGUI();
-    void RunSimGUI();
-    void StopSimGUI();
+    void RunSimScene();
+    void StopSimScene();
+    void StoreSimScene();
 private:
     Core* _core;
-    // -- SIMULATION GUI --
-    QTimer _timerOneFrame;
 
-    QGraphicsView* _simGraphView = nullptr;
-    QGraphicsScene* _simGraphScene = nullptr;
-
-    std::vector<QGraphicsEllipseItem*> _robotsVectorGUI;
-    //QVector<QGraphicsRectItem*> _wallsVectorGUI;
-    Rectangle _robotsFromController;
-
-    QPointF _actualPositionOfItem;
-    unsigned _actualUserRobotPen;
-
-    std::vector<QBrush*> _brushVector;
-    QBrush* _redBrush;       // 0 in _brushVector
-    QBrush* _yellowBrush;    // 1 in _brushVector
-    QBrush* _greanBrush;     // 2 in _brushVector
-    QBrush* _blueBrush;      // 3 in _brushVector
-    QBrush* _blackBrush;     // 4 in _brushVector
-    QBrush* _whiteBrush;     // 5 in _brushVector
-
-    std::vector<QPen*> _penVector;
-    unsigned _GetActualUserRobotPen();
-    QPen* _blackPen;         // 0 in _penVector
-    QPen* _whitePen;         // 1 in _penVector
+    QGraphicsView* _simulationView = nullptr;
+    SimulationScene* _simulationScene = nullptr;
 
 
     void _CreateSimGUI();
@@ -76,6 +55,7 @@ private:
     QVBoxLayout* _robotsEngineLayout;      // moves button layput
     QHBoxLayout* _highRobotsEngineLayout;  // forward move button layout
     QHBoxLayout* _lowRobotsEngineLayout;   // right/stop/left buttons layout
+    QGridLayout* _settingsInfoLayout;
 
     QPushButton* _startSimulationButton;
     QPushButton* _stopSimulatopnButton;
@@ -85,18 +65,19 @@ private:
     QPushButton* _stopMoveButton;
     QPushButton* _rightMoveButton;
 
+    QPushButton* _setSettingsButton;
+
     void _CreateSimulattionsButtons();
     void _DeleteSimulationsButtons();
     void _CreateSimulationsLayout();
+    void _CreateSimulationEngineLayout();
+    void _CreateSettingsEngineLayout();
     void _DeleteSimulationsLayout();
+    void _DeleteSimulationEngineLayout();
+    void _DeleteSettingsEngineLayout();
     void _SetSimualtionEngineSignals();
-
     void _SetUnsetSimButtons(bool flagIsSet);
 
-signals:
-
-private slots:
-    void _OneSimFrameGUI();
 };
 
 #endif // SIMULATIONWINDOW_H

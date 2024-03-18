@@ -33,8 +33,14 @@ void MainWindow::_CreateAppWindows(){
     setWindowTitle("Simulation");
     _actualPage = SimulationPage;
     _SetSimulationTool();
+    _SetPallet();
 }
 
+void MainWindow::_SetPallet(){
+    //palMainWindow = QPalette();
+    //palMainWindow.setColor(QPalette::Window, Qt::lightGray);//lightGray);
+    //setPalette(palMainWindow);
+}
 
 void MainWindow::_DeleteAppWindows(){
     _DeleteActions();
@@ -157,12 +163,12 @@ void MainWindow::_RunSimulationActionSlot(){
 
     _core->SetRunSim(true);
 
-    _simulationWind->RunSimGUI();
+    _simulationWind->RunSimScene();
 }
 void MainWindow::_PauseSimulationActionSlot(){
 
     _core->SetRunSim(false);
-    _simulationWind->StopSimGUI();
+    _simulationWind->StopSimScene();
     disconnect(_runSimulationAction, 0, 0, 0);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
     _runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
@@ -197,7 +203,7 @@ void MainWindow::_UpdateSettingsSlot(){
     
     if(_settingsWind->IsSetMapValue()){
         _lineMapNameSimIdToolBar->setText(_settingsWind->GetMapValue());
-        _simulationWind->StoreSimGUI();
+        _simulationWind->StoreSimScene();
     }
     _settingsWind->close();
 }
@@ -215,6 +221,7 @@ void MainWindow::_SettingsToolActionSlot(){
         _settingsWind->show();*/
         _UnsetSimulationTool();
         _SetSettingsTool();
+        _simulationWind->UnsetSimulationEngine();
     }
 }
 
@@ -225,6 +232,7 @@ void MainWindow::_SimulationToolActionSlot(){
         setWindowTitle("Simulation");
         _UnsetSettingsTool();
         _SetSimulationTool();
+        _simulationWind->SetSimulationEngine();
     }
 }
 

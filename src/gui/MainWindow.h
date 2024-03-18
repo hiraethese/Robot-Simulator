@@ -14,6 +14,7 @@
 #include <QString>
 #include <QInputDialog>
 #include <QPainter>
+#include <QPalette>
 #include <QScrollArea>
 #include <QString>
 #include <QTabBar>
@@ -25,8 +26,9 @@
 #include "SettingsWindow.h"
 #include "InfoNotification.h"
 #include "../core/Core.h"
-
+//#include "style.h"
 #include <iostream>
+
 
 enum Page{
     NotSetPage,
@@ -55,7 +57,8 @@ private:
     Page _actualPage = NotSetPage;
     void _CreateAppWindows();
     void _DeleteAppWindows();
-
+    void _SetPallet();
+    QPalette palMainWindow;
     QToolBar* _simulationToolBar;
     QAction* _simulationToolAction;
 
