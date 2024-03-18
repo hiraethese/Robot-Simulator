@@ -108,6 +108,8 @@ private:
 
     Ui::MainWindow *ui;
 
+    void _CreateSimModeTools();
+    void _DeleteSimModeTools();
 public slots:
 
 private slots:
