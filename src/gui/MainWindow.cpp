@@ -23,7 +23,7 @@ MainWindow::~MainWindow()
 
 
 
-// ************************************  APPLICATION    *********************************************************
+// ************************************  PART APPLICATION    *********************************************************
 void MainWindow::_CreateAppWindows(){
     _CreateSimulationWindow();
     _CreateMenu();
@@ -38,29 +38,40 @@ void MainWindow::_SetPallet(){
 }
 
 void MainWindow::_DeleteAppWindows(){
+
     _DeleteTools();
     _DeleteMenu();
-    if(!_newMapWind)
+    if(_newMapWind != nullptr)
         delete _newMapWind;
     //delete _settingsWind;
     delete _simulationWind;
+
 }
 
 
 void MainWindow::_DeleteTools(){
+
     if(_actualPage == SimulationPage){
         _DeleteSimModeTools();
     }
+
 }
 
+// ************************************  PART MENU    *********************************************************
+
 void MainWindow::_CreateMenu(){
+
     appMenu = menuBar()->addMenu("Menu");
+
     simulationModeAction = appMenu->addAction("Simulation");
     connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimModeSlot);
+
     downloadNewModeMapAction = appMenu->addAction("Download map");
     connect(downloadNewModeMapAction, &QAction::triggered, this, &MainWindow::_CreateNewMapModeSlot);
+
     buildMapModeAction = appMenu->addAction("Build map");
     connect(buildMapModeAction, &QAction::triggered, this, &MainWindow::_CreateBuildMapModeSlot);
+
 }
 
 void MainWindow::_DeleteMenu(){
@@ -70,6 +81,7 @@ void MainWindow::_DeleteMenu(){
     delete appMenu;
 }
 
+// ************************************  PART NEW MAP MODE    *********************************************************
 
 void MainWindow::_CreateNewMapModeSlot(){
     if(_newMapWind != nullptr){
@@ -86,6 +98,12 @@ void MainWindow::_CreateBuildMapModeSlot(){
     // TODO: create settings tools
     // TODO: create settings buttons
 
+    setWindowTitle("Build map");
+    if(_actualPage != BuildPage){
+        _DeleteSimModeTools();
+        _CreateBuildModeTools();
+        _actualPage = BuildPage;
+    }
 }
 void MainWindow::_CreateSimModeSlot(){
     // TODO: clean sim tools
@@ -94,12 +112,22 @@ void MainWindow::_CreateSimModeSlot(){
 
     setWindowTitle("Simulation");
     if(_actualPage != SimulationPage){
-        //_DeleteBuildButtonsMode();
-        _actualPage = SimulationPage;
+        _DeleteBuildModeTools();
         _CreateSimModeTools();
+        //_simulationWind->_DeleteSimModeButtons();
+        _actualPage = SimulationPage;
     }
     //_simWind->_CreateSimButtons();
 }
+
+void MainWindow::_StoreNewMap(){
+    // TODO: stop sim run
+    std::cout << "STORE NEW MAP: " << _newMapWind->GetNewMapPath() << std::endl;
+    delete _newMapWind;
+    _newMapWind = nullptr;
+}
+
+// ************************************  PART SIM MODE    *********************************************************
 
 void MainWindow::_CreateSimModeTools(){
 
@@ -139,7 +167,6 @@ void MainWindow::_CreateSimModeTools(){
 void MainWindow::_DeleteSimModeTools(){
 
     disconnect(_helpToolAction, 0, 0, 0);
-    disconnect(_settingsToolAction, 0, 0, 0);
     disconnect(_runSimulationAction, 0, 0, 0);
     disconnect(_restartSimulationAction, 0, 0, 0);
     disconnect(_simulationToolAction, 0, 0, 0);
@@ -158,13 +185,6 @@ void MainWindow::_DeleteSimModeTools(){
     delete _helpToolBar;
     delete _simulationToolBar;
 
-}
-
-void MainWindow::_StoreNewMap(){
-    // TODO: stop sim run
-    std::cout << "STORE NEW MAP: " << _newMapWind->GetNewMapPath() << std::endl;
-    delete _newMapWind;
-    _newMapWind = nullptr;
 }
 
 
@@ -220,6 +240,11 @@ void MainWindow::_DeleteSettings(){
 
 
 
+
+
+// ************************************  PART SIM WIND    *********************************************************
+
+
 void MainWindow::_CreateSimulationWindow(){
 
     _simulationWind = new SimulationWindow(this);
@@ -227,10 +252,47 @@ void MainWindow::_CreateSimulationWindow(){
 }
 
 
+// ************************************  PART BUILD MODE    *********************************************************
+void MainWindow::_CreateBuildModeTools(){
+    _cursorAction = new QAction(QIcon(":/icons/cursorTool.png"), "Cursor", this);
+    connect(_cursorAction, &QAction::triggered, this, &MainWindow::_CursorActionSlot);
 
+    _buildUserRobotAction = new QAction(QIcon(":/icons/userRobotTool.jpg"), "User robot", this);
+    connect(_buildUserRobotAction, &QAction::triggered, this, &MainWindow::_BuildUserRobotActionSlot);
 
+    _buildBotRobotAction = new QAction(QIcon(":/icons/simulationTool.png"), "Bot robot", this);
+    connect(_buildBotRobotAction, &QAction::triggered, this, &MainWindow::_BuildBotRobotActionSlot);
 
+    _buildWallAction = new QAction(QIcon(":/icons/wallTool.png"), "Wall", this);
+    connect(_buildWallAction, &QAction::triggered, this, &MainWindow::_BuildWallActionSlot);
 
+    _engineBuildToolBar = addToolBar("engineBuil");
+    _engineBuildToolBar->addAction(_cursorAction);
+    _engineBuildToolBar->addAction(_buildUserRobotAction);
+    _engineBuildToolBar->addAction(_buildBotRobotAction);
+    _engineBuildToolBar->addAction(_cursorAction);
+}
+
+void MainWindow::_DeleteBuildModeTools(){
+    if(_actualPage != NotSetPage){
+        disconnect(_cursorAction, 0, 0, 0);
+        disconnect(_buildUserRobotAction, 0, 0, 0);
+        disconnect(_buildBotRobotAction, 0, 0, 0);
+        disconnect(_buildWallAction, 0, 0, 0);
+        delete _cursorAction;
+        delete _buildUserRobotAction;
+        delete _buildBotRobotAction;
+        delete _buildWallAction;
+        removeToolBar(_engineBuildToolBar);
+        delete _engineBuildToolBar;
+    }
+
+}
+
+void MainWindow::_CursorActionSlot(){}
+void MainWindow::_BuildUserRobotActionSlot(){}
+void MainWindow::_BuildBotRobotActionSlot(){}
+void MainWindow::_BuildWallActionSlot(){}
 
 //###########################################
 //###########################################
@@ -360,8 +422,8 @@ void MainWindow::_UpdateSettingsSlot(){
 }
 
 void MainWindow::_SettingsToolActionSlot(){
-    if(_actualPage != SettingsPage){
-        _actualPage = SettingsPage;
+    if(_actualPage != BuildPage){
+        _actualPage = BuildPage;
         setWindowTitle("Settings");
 
         if(_core->IsSimRun())

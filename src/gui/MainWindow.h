@@ -34,7 +34,7 @@
 enum Page{
     NotSetPage,
     SimulationPage,
-    SettingsPage
+    BuildPage
 };
 
 QT_BEGIN_NAMESPACE
@@ -110,6 +110,15 @@ private:
 
     void _CreateSimModeTools();
     void _DeleteSimModeTools();
+
+
+    QAction* _cursorAction;
+    QAction* _buildUserRobotAction;
+    QAction* _buildBotRobotAction;
+    QAction* _buildWallAction;
+    QToolBar* _engineBuildToolBar;
+    void _CreateBuildModeTools();
+    void _DeleteBuildModeTools();
 public slots:
 
 private slots:
@@ -129,5 +138,10 @@ private slots:
     void _CreateNewMapModeSlot();
     void _CreateBuildMapModeSlot();
     void _CreateSimModeSlot();
+
+    void _CursorActionSlot();
+    void _BuildUserRobotActionSlot();
+    void _BuildBotRobotActionSlot();
+    void _BuildWallActionSlot();
 };
 #endif // MAINWINDOW_H
