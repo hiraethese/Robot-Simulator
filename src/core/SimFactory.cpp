@@ -2,8 +2,7 @@
 
 SimFactory::SimFactory()
 {
-    _controlledRobot = new Robot({50.0f, 50.0f}, {100.0f, 100.0f}, 5.0f, 45, 0);
-    // _controlledRobot = nullptr;
+    _controlledRobot = nullptr;
 }
 
 void SimFactory::DeleteAllObjects()

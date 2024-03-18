@@ -8,7 +8,7 @@
 struct SimSettings
 {
     bool flagNewMap = false;
-    std::string newMapValue = "example.txt";
+    std::string newMapValue = "examples/example.txt";
     bool flagNewSpeed = false;
     int newSpeedValue = 5;
     bool flagNewAngle = false;

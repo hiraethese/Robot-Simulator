@@ -1,1 +1,0 @@
-[ControlledRobot] x=50.0f, y=50.0f, w=100.0f, h=100.0f, speed=5.0f, angleStep=45, angleDegrees=0

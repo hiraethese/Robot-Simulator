@@ -21,7 +21,9 @@ public:
     int GetHeight();
     SimFactory* GetFactory();
     void SetPath(std::string newPath);
-    int LoadObjects();
+    int LoadObjectsFromFile();
+    bool ProcessControlledRobotLine(std::istringstream& iss);
+    bool ProcessWallLine(std::istringstream& iss);
 };
 
 #endif // SIMMAP_H

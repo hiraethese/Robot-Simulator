@@ -7,7 +7,8 @@ Core::Core()
     _FPS = 16; // Note: not actually "Frames Per Second", the name is for convenience
     _simIsRun = false;
     _simIsReady = true; // TODO: make setting arg from user by setting; now default true
-    _map = new SimMap("example.txt", 1800, 750);
+    _map = new SimMap("examples/example.txt", 1800, 750);
+    _map->LoadObjectsFromFile(); // TODO: call load objects from file from the gui
 }
 
 Core *Core::getInstance()
