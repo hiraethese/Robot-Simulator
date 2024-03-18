@@ -34,6 +34,7 @@ void MainWindow::_CreateAppWindows(){
     setWindowTitle("Simulation");
     _actualPage = SimulationPage;
     _SetSimulationTool();
+    _CreateSimModeSlot();
     _SetPallet();
 }
 
@@ -254,11 +255,11 @@ void MainWindow::_CreateSimulationWindow(){
 void MainWindow::_CreateMenu(){
     appMenu = menuBar()->addMenu("Menu");
     simulationModeAction = appMenu->addAction("Simulation");
-    connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimWindSlot);
+    connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimModeSlot);
     downloadNewModeMapAction = appMenu->addAction("Download map");
-    connect(downloadNewModeMapAction, &QAction::triggered, this, &MainWindow::_CreateNewMapWindSlot);
+    connect(downloadNewModeMapAction, &QAction::triggered, this, &MainWindow::_CreateNewMapModeSlot);
     buildMapModeAction = appMenu->addAction("Build map");
-    connect(buildMapModeAction, &QAction::triggered, this, &MainWindow::_CreateBuildMapWindSlot);
+    connect(buildMapModeAction, &QAction::triggered, this, &MainWindow::_CreateBuildMapModeSlot);
 }
 
 void MainWindow::_DeleteMenu(){
@@ -268,7 +269,7 @@ void MainWindow::_DeleteMenu(){
     delete appMenu;
 }
 
-void MainWindow::_CreateNewMapWindSlot(){
+void MainWindow::_CreateNewMapModeSlot(){
     if(_newMapWind != nullptr){
         delete _newMapWind;
     }
@@ -277,10 +278,21 @@ void MainWindow::_CreateNewMapWindSlot(){
     _newMapWind->show();
 }
 
-void MainWindow::_CreateBuildMapWindSlot(){}
-void MainWindow::_CreateSimWindSlot(){}
+void MainWindow::_CreateBuildMapModeSlot(){
+    // TODO: stop sim run
+    // TODO: clean set tools
+    // TODO: create settings tools
+    // TODO: create settings buttons
+
+}
+void MainWindow::_CreateSimModeSlot(){
+    // TODO: clean sim tools
+    // TODO: clean sim buttons
+    // TODO: create build tools
+}
 
 void MainWindow::_StoreNewMap(){
+    // TODO: stop sim run
     std::cout << "STORE NEW MAP: " << _newMapWind->GetNewMapPath() << std::endl;
     delete _newMapWind;
     _newMapWind = nullptr;

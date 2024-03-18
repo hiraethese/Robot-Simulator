@@ -124,8 +124,8 @@ private slots:
 
     void _GetNewSimToParserSlot();
 
-    void _CreateNewMapWindSlot();
-    void _CreateBuildMapWindSlot();
-    void _CreateSimWindSlot();
+    void _CreateNewMapModeSlot();
+    void _CreateBuildMapModeSlot();
+    void _CreateSimModeSlot();
 };
 #endif // MAINWINDOW_H
