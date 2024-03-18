@@ -22,6 +22,7 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QWidget>
+#include "NewMapWindow.h"
 #include "SimulationWindow.h"
 #include "SettingsWindow.h"
 #include "InfoNotification.h"
@@ -89,6 +90,15 @@ private:
     void _DeleteTools();
     void _DeleteActions();
 
+    QMenu* appMenu;
+    QAction* simulationModeAction;
+    QAction* downloadNewModeMapAction;
+    QAction* buildMapModeAction;
+    void _CreateMenu();
+    void _DeleteMenu();
+
+    NewMapWindow* _newMapWind = nullptr;
+
     SimulationWindow* _simulationWind;
     void _CreateSimulationWindow();
 
@@ -101,6 +111,7 @@ private:
 public slots:
 
 private slots:
+    void _StoreNewMap();
     void _HelpTextToolActionSlot();
     void _SettingsToolActionSlot();
     void _SimulationToolActionSlot();
@@ -112,5 +123,9 @@ private slots:
     void _RestartSimulationActionSlot();
 
     void _GetNewSimToParserSlot();
+
+    void _CreateNewMapWindSlot();
+    void _CreateBuildMapWindSlot();
+    void _CreateSimWindSlot();
 };
 #endif // MAINWINDOW_H

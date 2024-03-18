@@ -29,6 +29,7 @@ void MainWindow::_CreateAppWindows(){
     _CreateSettings();
     _CreateActions();
     _CreateTools();
+    _CreateMenu();
 
     setWindowTitle("Simulation");
     _actualPage = SimulationPage;
@@ -45,6 +46,8 @@ void MainWindow::_SetPallet(){
 void MainWindow::_DeleteAppWindows(){
     _DeleteActions();
     _DeleteTools();
+    _DeleteMenu();
+    delete _newMapWind;
     delete _settingsWind;
     delete _simulationWind;
 }
@@ -248,9 +251,40 @@ void MainWindow::_CreateSimulationWindow(){
 }
 
 
+void MainWindow::_CreateMenu(){
+    appMenu = menuBar()->addMenu("Menu");
+    simulationModeAction = appMenu->addAction("Simulation");
+    connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimWindSlot);
+    downloadNewModeMapAction = appMenu->addAction("Download map");
+    connect(downloadNewModeMapAction, &QAction::triggered, this, &MainWindow::_CreateNewMapWindSlot);
+    buildMapModeAction = appMenu->addAction("Build map");
+    connect(buildMapModeAction, &QAction::triggered, this, &MainWindow::_CreateBuildMapWindSlot);
+}
 
+void MainWindow::_DeleteMenu(){
+    delete simulationModeAction;
+    delete downloadNewModeMapAction;
+    delete buildMapModeAction;
+    delete appMenu;
+}
 
+void MainWindow::_CreateNewMapWindSlot(){
+    if(_newMapWind != nullptr){
+        delete _newMapWind;
+    }
+    _newMapWind = new NewMapWindow();
+    connect(_newMapWind->downloadButton, &QPushButton::clicked, this, &MainWindow::_StoreNewMap);
+    _newMapWind->show();
+}
 
+void MainWindow::_CreateBuildMapWindSlot(){}
+void MainWindow::_CreateSimWindSlot(){}
+
+void MainWindow::_StoreNewMap(){
+    std::cout << "STORE NEW MAP: " << _newMapWind->GetNewMapPath() << std::endl;
+    delete _newMapWind;
+    _newMapWind = nullptr;
+}
 
 
 

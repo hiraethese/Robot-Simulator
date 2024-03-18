@@ -5,7 +5,7 @@ SettingsWindow::SettingsWindow() {
     setWindowFlags(Qt::WindowTitleHint);
     _settingGridLayot = new QGridLayout();
 
-    _newMapLabel = new QLabel(tr("New map path: "));
+    _newMapLabel = new QLabel("New map path: ");
     _newMapLine = new QLineEdit();
     _newMapLine->setEnabled(false);
     _newMapCheckBox = new QCheckBox();
@@ -14,7 +14,7 @@ SettingsWindow::SettingsWindow() {
     _settingGridLayot->addWidget(_newMapLine, 0, 1);
     _settingGridLayot->addWidget(_newMapCheckBox, 0, 2);
 
-    _speedLabel = new QLabel(tr("Speed(%) : "));
+    _speedLabel = new QLabel("Speed(%) : ");
     _speedSpinBox = new QSpinBox();
     _speedCheckBox = new QCheckBox();
     _speedSpinBox->setMinimum(1);
@@ -25,7 +25,7 @@ SettingsWindow::SettingsWindow() {
     _settingGridLayot->addWidget(_speedSpinBox, 1, 1);
     _settingGridLayot->addWidget(_speedCheckBox, 1, 2);
 
-    _angleLabel = new QLabel(tr("Angle(degree) : "));
+    _angleLabel = new QLabel("Angle(degree) : ");
     _angleSpinBox = new QSpinBox();
     _angleCheckBox = new QCheckBox();
     _angleSpinBox->setMinimum(0);
@@ -36,13 +36,12 @@ SettingsWindow::SettingsWindow() {
     _settingGridLayot->addWidget(_angleSpinBox, 2, 1);
     _settingGridLayot->addWidget(_angleCheckBox, 2, 2);
 
-    setPushButton = new QPushButton(tr("set"));
+    setPushButton = new QPushButton("set");
     _settingGridLayot->addWidget(setPushButton, 3, 0);
     setLayout(_settingGridLayot);
 }
 
 SettingsWindow::~SettingsWindow(){
-    std::cout << "YES I AM DELETED" << std::endl;
     delete _newMapLabel;
     delete _newMapLine;
     disconnect(_newMapCheckBox, 0, 0, 0);
