@@ -43,9 +43,8 @@ private:
     QGraphicsScene* simGraphScene = nullptr;
 
     std::vector<QGraphicsEllipseItem*> robotsVectorGUI;
-    //QVector<QGraphicsRectItem*> wallsVectorGUI;
+    std::vector<QGraphicsRectItem*> wallsVectorGUI;
     Rectangle robotsFromController;
-
     QPointF actualPositionOfItem;
     unsigned actualUserRobotPen;
 

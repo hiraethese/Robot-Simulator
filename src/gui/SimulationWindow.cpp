@@ -53,6 +53,7 @@ void SimulationWindow::createSimGUI(){
 void SimulationWindow::cleanSimGUI(){
     simGraphScene->clear();
     robotsVectorGUI.clear();
+    wallsVectorGUI.clear();
 }
 
 void SimulationWindow::deleteSimGUI(){
@@ -153,6 +154,8 @@ void SimulationWindow::storeSimGUI(){
     simGraphScene->setBackgroundBrush(*whiteBrush);
     std::cout << "EMIT STORING SIM GUI!!!" << std::endl;
     robotsFromController = _core->RectFromCore();
+    const std::vector<Wall *> &wallsFromCore = _core->GetVectorWalls();
+
     for(unsigned robot = 0; robot < 1; robot++){
         QGraphicsEllipseItem* newRobot = new QGraphicsEllipseItem(0,0,robotsFromController.w,robotsFromController.h);
         newRobot->setPen(*penVector[getActualUserRobotPen()]);
@@ -160,6 +163,14 @@ void SimulationWindow::storeSimGUI(){
         newRobot->setPos(robotsFromController.x,robotsFromController.y);
         simGraphScene->addItem(newRobot);
         robotsVectorGUI.push_back(newRobot);
+    }
+    for(Wall* wall:wallsFromCore){
+        QGraphicsRectItem* newWall = new QGraphicsRectItem(0,0,wall->GetTransform()->GetRect().w, wall->GetTransform()->GetRect().h);
+        newWall->setPen(*blackPen);
+        newWall->setBrush(*blackBrush);
+        newWall->setPos(wall->GetTransform()->GetRect().x,wall->GetTransform()->GetRect().y);
+        simGraphScene->addItem(newWall);
+        wallsVectorGUI.push_back(newWall);
     }
 }
 
