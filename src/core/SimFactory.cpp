@@ -37,3 +37,8 @@ Robot *SimFactory::GetControlledRobot()
 {
     return _controlledRobot;
 }
+
+const std::vector<Wall *> &SimFactory::GetWalls() const
+{
+    return _walls;
+}

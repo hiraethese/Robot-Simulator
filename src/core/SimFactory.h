@@ -17,6 +17,7 @@ public:
     void AddWall(Wall* wall);
     void SetControlledRobot(Robot* controlledRobot);
     Robot* GetControlledRobot();
+    const std::vector<Wall*>& GetWalls() const;
 };
 
 #endif // SIMFACTORY_H
