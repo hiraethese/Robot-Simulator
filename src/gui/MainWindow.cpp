@@ -41,10 +41,14 @@ void MainWindow::_DeleteAppWindows(){
 
     _DeleteTools();
     _DeleteMenu();
-    if(_newMapWind)
+    if(_newMapWind){
         delete _newMapWind;
+    }
     if(_settingsWind){ // TODO: close settings wind if close main wind
         delete _settingsWind;
+    }
+    if(_wallSettingsWindow){
+        delete _wallSettingsWindow;
     }
     delete _simulationWind;
 
@@ -105,7 +109,6 @@ void MainWindow::_BuildUserRobotLayoutSlot(){
         delete _settingsWind;
     }
     _settingsWind = new SettingsWindow();
-    _settingsWind->RobotSettings();
     _settingsWind->show();
 
 }
@@ -116,7 +119,6 @@ void MainWindow::_BuildBotRobotLayoutSlot(){
         delete _settingsWind;
     }
     _settingsWind = new SettingsWindow();
-    _settingsWind->RobotSettings();
     _settingsWind->show();
 
 
@@ -124,12 +126,11 @@ void MainWindow::_BuildBotRobotLayoutSlot(){
 
 void MainWindow::_BuildWallLayoutSlot(){
 
-    if(_settingsWind){
-        delete _settingsWind;
+    if(_wallSettingsWindow){
+        delete _wallSettingsWindow;
     }
-    _settingsWind = new SettingsWindow();
-    _settingsWind->RobotSettings();
-    _settingsWind->show();
+    _wallSettingsWindow = new WallSettingsWindow();
+    _wallSettingsWindow->show();
 
 
 }

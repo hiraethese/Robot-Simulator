@@ -1,7 +1,7 @@
 #include "WallSettingsWindow.h"
 
 WallSettingsWindow::WallSettingsWindow() {
-    this->setWindowTitle("Settings");
+    this->setWindowTitle("Wall");
     setWindowFlags(Qt::WindowTitleHint);
     _settingGridLayot = new QGridLayout();
 
@@ -9,7 +9,7 @@ WallSettingsWindow::WallSettingsWindow() {
     _newMapLine = new QLineEdit();
     _newMapLine->setEnabled(false);
     _newMapCheckBox = new QCheckBox();
-    connect(_newMapCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::_BlockNewMapLineSlot);
+    connect(_newMapCheckBox, &QCheckBox::stateChanged, this, &WallSettingsWindow::_BlockNewMapLineSlot);
     _settingGridLayot->addWidget(_newMapLabel, 0, 0);
     _settingGridLayot->addWidget(_newMapLine, 0, 1);
     _settingGridLayot->addWidget(_newMapCheckBox, 0, 2);
@@ -20,7 +20,7 @@ WallSettingsWindow::WallSettingsWindow() {
     _speedSpinBox->setMinimum(1);
     _speedSpinBox->setMaximum(100);
     _speedSpinBox->setEnabled(false);
-    connect(_speedCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::_BlockSpeedSpinBoxSlot);
+    connect(_speedCheckBox, &QCheckBox::stateChanged, this, &WallSettingsWindow::_BlockSpeedSpinBoxSlot);
     _settingGridLayot->addWidget(_speedLabel, 1, 0);
     _settingGridLayot->addWidget(_speedSpinBox, 1, 1);
     _settingGridLayot->addWidget(_speedCheckBox, 1, 2);
@@ -31,7 +31,7 @@ WallSettingsWindow::WallSettingsWindow() {
     _angleSpinBox->setMinimum(0);
     _angleSpinBox->setMaximum(360);
     _angleSpinBox->setEnabled(false);
-    connect(_angleCheckBox, &QCheckBox::stateChanged, this, &SettingsWindow::_BlockAngleSpinBoxSlot);
+    connect(_angleCheckBox, &QCheckBox::stateChanged, this, &WallSettingsWindow::_BlockAngleSpinBoxSlot);
     _settingGridLayot->addWidget(_angleLabel, 2, 0);
     _settingGridLayot->addWidget(_angleSpinBox, 2, 1);
     _settingGridLayot->addWidget(_angleCheckBox, 2, 2);

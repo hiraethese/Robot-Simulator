@@ -1,7 +1,7 @@
 #include "SettingsWindow.h"
 
 SettingsWindow::SettingsWindow() {
-    this->setWindowTitle("Settings");
+    this->setWindowTitle("Robot");
     setWindowFlags(Qt::WindowTitleHint);
     _settingGridLayot = new QGridLayout();
 
