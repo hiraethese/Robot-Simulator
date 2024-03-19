@@ -7,9 +7,10 @@
         <file>icons/playTool.png</file>
         <file>icons/pauseTool.png</file>
         <file>icons/restartTool.png</file>
-        <file>icons/simulationTool.png</file>
-        <file>icons/UserRobotTool.png</file>
+        <file>icons/botRobotTool.png</file>
+        <file>icons/userRobotTool.png</file>
         <file>icons/cursorTool.png</file>
         <file>icons/wallTool.png</file>
+        <file>icons/hummerTool.png</file>
     </qresource>
 </RCC>

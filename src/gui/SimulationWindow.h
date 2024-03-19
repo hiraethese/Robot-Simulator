@@ -35,9 +35,12 @@ public:
     void RunSimScene();
     void StopSimScene();
     void StoreSimScene();
+
+    void CreateSimulationEngineLayout();
+    void DeleteSimulationEngineLayout();
 private:
     Core* _core;
-
+    bool flagSimEngineLayout = false;
     QGraphicsView* _simulationView = nullptr;
     SimulationScene* _simulationScene = nullptr;
 
@@ -46,8 +49,6 @@ private:
     void _DeleteSimGUI();
     void _CleanSimGUI();
 
-
-    // -- FRONT --
 
     QVBoxLayout* _simulationsLayot;
     QHBoxLayout* _simBodyowBoxLayout;      // simulations window layout
@@ -67,15 +68,8 @@ private:
 
     QPushButton* _setSettingsButton;
 
-    void _CreateSimulattionsButtons();
-    void _DeleteSimulationsButtons();
     void _CreateSimulationsLayout();
-    void _CreateSimulationEngineLayout();
-    void _CreateSettingsEngineLayout();
     void _DeleteSimulationsLayout();
-    void _DeleteSimulationEngineLayout();
-    void _DeleteSettingsEngineLayout();
-    void _SetSimualtionEngineSignals();
     void _SetUnsetSimButtons(bool flagIsSet);
 
 };

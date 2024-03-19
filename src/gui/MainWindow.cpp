@@ -41,9 +41,11 @@ void MainWindow::_DeleteAppWindows(){
 
     _DeleteTools();
     _DeleteMenu();
-    if(_newMapWind != nullptr)
+    if(_newMapWind)
         delete _newMapWind;
-    //delete _settingsWind;
+    if(_settingsWind){ // TODO: close settings wind if close main wind
+        delete _settingsWind;
+    }
     delete _simulationWind;
 
 }
@@ -66,11 +68,23 @@ void MainWindow::_CreateMenu(){
     simulationModeAction = appMenu->addAction("Simulation");
     connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimModeSlot);
 
+    buildSubMenu = appMenu->addMenu("Build");
+
+    buildMapModeAction = buildSubMenu->addAction("Build map");
+    connect(buildMapModeAction, &QAction::triggered, this, &MainWindow::_CreateBuildMapModeSlot);
+
+    buildUserRobotLayout = buildSubMenu->addAction("User robot layout");
+    connect(buildUserRobotLayout, &QAction::triggered, this, &MainWindow::_BuildUserRobotLayoutSlot);
+
+    buildBotRobotLayout = buildSubMenu->addAction("Bot robot layout");
+    connect(buildBotRobotLayout, &QAction::triggered, this, &MainWindow::_BuildBotRobotLayoutSlot);
+
+    buildWallLayout = buildSubMenu->addAction("Wall layout");
+    connect(buildWallLayout, &QAction::triggered, this, &MainWindow::_BuildWallLayoutSlot);
+
+
     downloadNewModeMapAction = appMenu->addAction("Download map");
     connect(downloadNewModeMapAction, &QAction::triggered, this, &MainWindow::_CreateNewMapModeSlot);
-
-    buildMapModeAction = appMenu->addAction("Build map");
-    connect(buildMapModeAction, &QAction::triggered, this, &MainWindow::_CreateBuildMapModeSlot);
 
 }
 
@@ -78,9 +92,47 @@ void MainWindow::_DeleteMenu(){
     delete simulationModeAction;
     delete downloadNewModeMapAction;
     delete buildMapModeAction;
+    delete buildUserRobotLayout;
+    delete buildBotRobotLayout;
+    delete buildWallLayout;
+    delete buildSubMenu;
     delete appMenu;
 }
 
+void MainWindow::_BuildUserRobotLayoutSlot(){
+
+    if(_settingsWind){
+        delete _settingsWind;
+    }
+    _settingsWind = new SettingsWindow();
+    _settingsWind->RobotSettings();
+    _settingsWind->show();
+
+}
+
+void MainWindow::_BuildBotRobotLayoutSlot(){
+
+    if(_settingsWind){
+        delete _settingsWind;
+    }
+    _settingsWind = new SettingsWindow();
+    _settingsWind->RobotSettings();
+    _settingsWind->show();
+
+
+}
+
+void MainWindow::_BuildWallLayoutSlot(){
+
+    if(_settingsWind){
+        delete _settingsWind;
+    }
+    _settingsWind = new SettingsWindow();
+    _settingsWind->RobotSettings();
+    _settingsWind->show();
+
+
+}
 // ************************************  PART NEW MAP MODE    *********************************************************
 
 void MainWindow::_CreateNewMapModeSlot(){
@@ -101,6 +153,7 @@ void MainWindow::_CreateBuildMapModeSlot(){
     setWindowTitle("Build map");
     if(_actualPage != BuildPage){
         _DeleteSimModeTools();
+        _simulationWind->DeleteSimulationEngineLayout();
         _CreateBuildModeTools();
         _actualPage = BuildPage;
     }
@@ -114,10 +167,9 @@ void MainWindow::_CreateSimModeSlot(){
     if(_actualPage != SimulationPage){
         _DeleteBuildModeTools();
         _CreateSimModeTools();
-        //_simulationWind->_DeleteSimModeButtons();
+        _simulationWind->CreateSimulationEngineLayout();
         _actualPage = SimulationPage;
     }
-    //_simWind->_CreateSimButtons();
 }
 
 void MainWindow::_StoreNewMap(){
@@ -134,19 +186,11 @@ void MainWindow::_CreateSimModeTools(){
     _helpToolAction = new QAction(QIcon(":/icons/helpTool.jpg"), "&Help", this);
     connect(_helpToolAction, &QAction::triggered, this, &MainWindow::_HelpTextToolActionSlot);
 
-    _simulationToolAction = new QAction(QIcon(":/icons/simulationTool.png"), "&Simulation", this);
-    connect(_simulationToolAction, &QAction::triggered, this, &MainWindow::_SimulationToolActionSlot);
-
-
     _runSimulationAction = new QAction(QIcon(":/icons/playTool.png"), "&Run", this);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
 
     _restartSimulationAction = new QAction(QIcon(":/icons/restartTool.png"), "&Continue", this);
     connect(_restartSimulationAction, &QAction::triggered, this, &MainWindow::_RestartSimulationActionSlot);
-
-
-    _simulationToolBar = addToolBar("simulation");
-    _simulationToolBar->addAction(_simulationToolAction);
 
     _engineSimRunToolBar = addToolBar("engineSimRun");
     _engineSimRunToolBar->addAction(_runSimulationAction);
@@ -169,10 +213,7 @@ void MainWindow::_DeleteSimModeTools(){
     disconnect(_helpToolAction, 0, 0, 0);
     disconnect(_runSimulationAction, 0, 0, 0);
     disconnect(_restartSimulationAction, 0, 0, 0);
-    disconnect(_simulationToolAction, 0, 0, 0);
     delete _helpToolAction;
-    delete _settingsToolAction;
-    delete _simulationToolAction;
     delete _runSimulationAction;
     delete _restartSimulationAction;
     removeToolBar(_engineSimRunToolBar);
@@ -183,7 +224,6 @@ void MainWindow::_DeleteSimModeTools(){
     delete _engineSimRunToolBar;
     delete _simulationIdToolBar;
     delete _helpToolBar;
-    delete _simulationToolBar;
 
 }
 
@@ -227,20 +267,6 @@ void MainWindow::_RestartSimulationActionSlot(){
     }
 }
 
-void MainWindow::_CreateSettings(){
-    _settingsWind = new SettingsWindow();
-    connect(_settingsWind->setPushButton, &QPushButton::clicked, this, &MainWindow::_UpdateSettingsSlot);
-    _settingsWind->hide();
-}
-
-void MainWindow::_DeleteSettings(){
-    disconnect(_settingsWind, 0, 0, 0);
-    delete _settingsWind;
-}
-
-
-
-
 
 // ************************************  PART SIM WIND    *********************************************************
 
@@ -254,22 +280,27 @@ void MainWindow::_CreateSimulationWindow(){
 
 // ************************************  PART BUILD MODE    *********************************************************
 void MainWindow::_CreateBuildModeTools(){
+
     _cursorAction = new QAction(QIcon(":/icons/cursorTool.png"), "Cursor", this);
     connect(_cursorAction, &QAction::triggered, this, &MainWindow::_CursorActionSlot);
 
-    _buildUserRobotAction = new QAction(QIcon(":/icons/userRobotTool.jpg"), "User robot", this);
+    _buildUserRobotAction = new QAction(QIcon(":/icons/userRobotTool.png"), "User robot", this);
     connect(_buildUserRobotAction, &QAction::triggered, this, &MainWindow::_BuildUserRobotActionSlot);
 
-    _buildBotRobotAction = new QAction(QIcon(":/icons/simulationTool.png"), "Bot robot", this);
+    _buildBotRobotAction = new QAction(QIcon(":/icons/botRobotTool.png"), "Bot robot", this);
     connect(_buildBotRobotAction, &QAction::triggered, this, &MainWindow::_BuildBotRobotActionSlot);
 
     _buildWallAction = new QAction(QIcon(":/icons/wallTool.png"), "Wall", this);
     connect(_buildWallAction, &QAction::triggered, this, &MainWindow::_BuildWallActionSlot);
 
-    _engineBuildToolBar = addToolBar("engineBuil");
-    _engineBuildToolBar->addAction(_cursorAction);
+    _hummerAction = new QAction(QIcon(":/icons/hummerTool.png"), "Object settings", this);
+    connect(_hummerAction, &QAction::triggered, this, &MainWindow::_HummerActionSlot);
+
+    _engineBuildToolBar = addToolBar("engineBuild");
+    _engineBuildToolBar->addAction(_hummerAction);
     _engineBuildToolBar->addAction(_buildUserRobotAction);
     _engineBuildToolBar->addAction(_buildBotRobotAction);
+    _engineBuildToolBar->addAction(_buildWallAction);
     _engineBuildToolBar->addAction(_cursorAction);
 }
 
@@ -293,168 +324,4 @@ void MainWindow::_CursorActionSlot(){}
 void MainWindow::_BuildUserRobotActionSlot(){}
 void MainWindow::_BuildBotRobotActionSlot(){}
 void MainWindow::_BuildWallActionSlot(){}
-
-//###########################################
-//###########################################
-//###########################################
-//###########################################
-//###########################################
-//###########################################
-//###########################################
-//###########################################
-//###########################################
-
-
-
-
-
-
-
-
-
-
-
-void MainWindow::_CreateTools(){
-
-    _settingsToolBar = addToolBar("settings");
-    _settingsToolBar->addAction(_settingsToolAction);
-
-    _simulationToolBar = addToolBar("simulation");
-    _simulationToolBar->addAction(_simulationToolAction);
-}
-
-void MainWindow::_SetSimulationTool(){
-    _engineSimRunToolBar = addToolBar("engineSimRun");
-    _engineSimRunToolBar->addAction(_runSimulationAction);
-    _engineSimRunToolBar->addAction(_restartSimulationAction);
-
-    _simulationIdToolBar = addToolBar("simulationId");
-    _labelSimIdToolBar = new QLabel("Simulation: ");
-    _simulationIdToolBar->addWidget(_labelSimIdToolBar);
-    _lineMapNameSimIdToolBar = new QLineEdit();
-    _lineMapNameSimIdToolBar->setReadOnly(true);
-    _lineMapNameSimIdToolBar->setFixedWidth(500);
-    _simulationIdToolBar->addWidget(_lineMapNameSimIdToolBar);
-
-    _helpToolBar = addToolBar("help");
-    _helpToolBar->addAction(_helpToolAction);
-
-}
-void MainWindow::_UnsetSimulationTool(){
-    removeToolBar(_engineSimRunToolBar);
-    removeToolBar(_simulationIdToolBar);
-    removeToolBar(_helpToolBar);
-    delete _labelSimIdToolBar;
-    delete _lineMapNameSimIdToolBar;
-    delete _engineSimRunToolBar;
-    delete _simulationIdToolBar;
-    delete _helpToolBar;
-}
-
-void MainWindow::_SetSettingsTool(){
-    _newSimulationIdToolBar = addToolBar("engineNewSimulation");;
-    _newLabelSimIdToolBar = new QLabel("New simulation: ");
-    _newSimulationIdToolBar->addWidget(_newLabelSimIdToolBar);
-    _newLineMapNameSimIdToolBar = new QLineEdit();
-    _newLineMapNameSimIdToolBar->setFixedWidth(500);
-    _newSimulationIdToolBar->addWidget(_newLineMapNameSimIdToolBar);
-    _newSimulationButton = new QPushButton("set");
-    _newSimulationIdToolBar->addWidget(_newSimulationButton);
-    connect(_newSimulationButton, &QPushButton::clicked, this, &MainWindow::_GetNewSimToParserSlot);
-}
-
-void MainWindow::_UnsetSettingsTool(){
-    removeToolBar(_newSimulationIdToolBar);
-    delete _newLabelSimIdToolBar;
-    delete _newLineMapNameSimIdToolBar;
-    delete _newSimulationButton;
-}
-
-
-
-
-
-
-void MainWindow::_CreateActions(){
-    _helpToolAction = new QAction(QIcon(":/icons/helpTool.jpg"), "&Help", this);
-    connect(_helpToolAction, &QAction::triggered, this, &MainWindow::_HelpTextToolActionSlot);
-
-    _settingsToolAction = new QAction(QIcon(":/icons/settingsTool.png"), "&Settings", this);
-    connect(_settingsToolAction, &QAction::triggered, this, &MainWindow::_SettingsToolActionSlot);
-
-    _simulationToolAction = new QAction(QIcon(":/icons/simulationTool.png"), "&Simulation", this);
-    connect(_simulationToolAction, &QAction::triggered, this, &MainWindow::_SimulationToolActionSlot);
-
-
-    _runSimulationAction = new QAction(QIcon(":/icons/playTool.png"), "&Run", this);
-    connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
-
-    _restartSimulationAction = new QAction(QIcon(":/icons/restartTool.png"), "&Continue", this);
-    connect(_restartSimulationAction, &QAction::triggered, this, &MainWindow::_RestartSimulationActionSlot);
-}
-
-
-void MainWindow::_DeleteActions(){
-    disconnect(_helpToolAction, 0, 0, 0);
-    disconnect(_settingsToolAction, 0, 0, 0);
-    disconnect(_runSimulationAction, 0, 0, 0);
-    disconnect(_restartSimulationAction, 0, 0, 0);
-    disconnect(_simulationToolAction, 0, 0, 0);
-    delete _helpToolAction;
-    delete _settingsToolAction;
-    delete _simulationToolAction;
-    delete _runSimulationAction;
-    delete _restartSimulationAction;
-}
-
-
-void MainWindow::_UpdateSettingsSlot(){
-
-    // !!! try catch filtering errors
-    //contr_set_new_settings(settings->IsSetMapValue(), settings->GetMapValue().toStdString(), settings->IsSetSpeedValue(), settings->GetSpeedValue(), settings->IsSetAngleValue(), settings->GetAngleValue());
-    //
-
-    if(_settingsWind->IsSetMapValue()){
-        _lineMapNameSimIdToolBar->setText(_settingsWind->GetMapValue());
-        _simulationWind->StoreSimScene();
-    }
-    _settingsWind->close();
-}
-
-void MainWindow::_SettingsToolActionSlot(){
-    if(_actualPage != BuildPage){
-        _actualPage = BuildPage;
-        setWindowTitle("Settings");
-
-        if(_core->IsSimRun())
-            _PauseSimulationActionSlot();
-        /*_settingsWind->SetMapValue(QString::fromStdString(_core->GetMapValue()));
-        _settingsWind->SetSpeedValue(_core->GetSpeedValue());
-        _settingsWind->SetAngleValue(_core->GetAngleValue());
-        _settingsWind->show();*/
-        _UnsetSimulationTool();
-        _SetSettingsTool();
-        _simulationWind->UnsetSimulationEngine();
-    }
-}
-
-
-void MainWindow::_SimulationToolActionSlot(){
-    if(_actualPage != SimulationPage){
-        _actualPage = SimulationPage;
-        setWindowTitle("Simulation");
-        _UnsetSettingsTool();
-        _SetSimulationTool();
-        _simulationWind->SetSimulationEngine();
-    }
-}
-
-
-void MainWindow::_GetNewSimToParserSlot(){
-    std::cout << "NEW SIM: " << _newLineMapNameSimIdToolBar->text().toStdString() << std::endl;
-}
-
-
-
-
-
+void MainWindow::_HummerActionSlot(){}

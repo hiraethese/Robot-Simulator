@@ -25,6 +25,7 @@
 #include "NewMapWindow.h"
 #include "SimulationWindow.h"
 #include "SettingsWindow.h"
+#include "WallSettingsWindow.h"
 #include "InfoNotification.h"
 #include "../core/Core.h"
 //#include "style.h"
@@ -91,9 +92,13 @@ private:
     void _DeleteActions();
 
     QMenu* appMenu;
+    QMenu* buildSubMenu;
     QAction* simulationModeAction;
     QAction* downloadNewModeMapAction;
     QAction* buildMapModeAction;
+    QAction* buildUserRobotLayout;
+    QAction* buildBotRobotLayout;
+    QAction* buildWallLayout;
     void _CreateMenu();
     void _DeleteMenu();
 
@@ -102,9 +107,10 @@ private:
     SimulationWindow* _simulationWind;
     void _CreateSimulationWindow();
 
-    SettingsWindow* _settingsWind;
-    void _CreateSettings();
-    void _DeleteSettings();
+    SettingsWindow* _settingsWind = nullptr;
+    WallSettingsWindow* _wallSettingsWindow = nullptr;
+    //void _CreateSettings();
+    //void _DeleteSettings();
 
     Ui::MainWindow *ui;
 
@@ -116,6 +122,7 @@ private:
     QAction* _buildUserRobotAction;
     QAction* _buildBotRobotAction;
     QAction* _buildWallAction;
+    QAction* _hummerAction;
     QToolBar* _engineBuildToolBar;
     void _CreateBuildModeTools();
     void _DeleteBuildModeTools();
@@ -124,16 +131,20 @@ public slots:
 private slots:
     void _StoreNewMap();
     void _HelpTextToolActionSlot();
-    void _SettingsToolActionSlot();
-    void _SimulationToolActionSlot();
+    //void _SettingsToolActionSlot();
+    //void _SimulationToolActionSlot();
 
-    void _UpdateSettingsSlot();
+    //void _UpdateSettingsSlot();
+
+    void _BuildUserRobotLayoutSlot();
+    void _BuildBotRobotLayoutSlot();
+    void _BuildWallLayoutSlot();
 
     void _RunSimulationActionSlot();
     void _PauseSimulationActionSlot();
     void _RestartSimulationActionSlot();
 
-    void _GetNewSimToParserSlot();
+    //void _GetNewSimToParserSlot();
 
     void _CreateNewMapModeSlot();
     void _CreateBuildMapModeSlot();
@@ -143,5 +154,6 @@ private slots:
     void _BuildUserRobotActionSlot();
     void _BuildBotRobotActionSlot();
     void _BuildWallActionSlot();
+    void _HummerActionSlot();
 };
 #endif // MAINWINDOW_H

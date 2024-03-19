@@ -27,6 +27,7 @@ SOURCES += \
     src/gui/SettingsWindow.cpp \
     src/gui/SimulationScene.cpp \
     src/gui/SimulationWindow.cpp \
+    src/gui/WallSettingsWindow.cpp \
     src/gui/style.cpp \
     src/main.cpp
 
@@ -45,6 +46,7 @@ HEADERS += \
     src/gui/SettingsWindow.h \
     src/gui/SimulationScene.h \
     src/gui/SimulationWindow.h \
+    src/gui/WallSettingsWindow.h \
     src/gui/style.h
 
 FORMS += \

@@ -7,15 +7,15 @@ SimulationWindow::SimulationWindow(QWidget *parent)
     //simBody = new SimulationBody();
     _core = Core::getInstance();
     _CreateSimGUI();
-    _CreateSimulattionsButtons();
     _CreateSimulationsLayout();
-    _CreateSimulationEngineLayout();
-
 }
 
 SimulationWindow::~SimulationWindow(){
     _DeleteSimGUI();
-    _DeleteSimulationsButtons();
+
+    if(flagSimEngineLayout)
+        DeleteSimulationEngineLayout();
+
     _DeleteSimulationsLayout();
 }
 
@@ -51,13 +51,21 @@ void SimulationWindow::_CreateSimulationsLayout(){
 }
 void SimulationWindow::_DeleteSimulationsLayout(){
     delete _simBodyowBoxLayout;
-    delete _highRobotsEngineLayout;
-    delete _lowRobotsEngineLayout;
-    delete _robotsEngineLayout;
-    delete _simulatyonEngineLayout;
     delete _simulationsLayot;
 }
-void SimulationWindow::_CreateSimulationEngineLayout(){
+void SimulationWindow::CreateSimulationEngineLayout(){
+    flagSimEngineLayout = true;
+    _forwardMoveButton = new QPushButton("forward");
+    _leftMoveButton = new QPushButton("left");
+    _stopMoveButton = new QPushButton("stop");
+    _rightMoveButton = new QPushButton("right");
+
+    _SetUnsetSimButtons(true); // default should be false
+
+    connect(_leftMoveButton, &QPushButton::clicked, this, [=](){_core->LeftRotateMoveSig();});
+    connect(_rightMoveButton, &QPushButton::clicked, this, [=](){_core->RightRotateMoveSig();});
+    connect(_forwardMoveButton, &QPushButton::clicked, this, [=](){_core->ForwardMoveSig();});
+    connect(_stopMoveButton, &QPushButton::clicked, this, [=](){_core->StopMoveSig();});
 
     _simulatyonEngineLayout = new QHBoxLayout();
     _robotsEngineLayout = new QVBoxLayout();
@@ -84,31 +92,25 @@ void SimulationWindow::_CreateSimulationEngineLayout(){
     _simulationsLayot->addLayout(_simulatyonEngineLayout);
 }
 
-void SimulationWindow::_CreateSettingsEngineLayout(){
+void SimulationWindow::DeleteSimulationEngineLayout(){
+    flagSimEngineLayout = false;
+    _simulationsLayot->removeItem(_simulatyonEngineLayout);
 
-}
+    disconnect(_forwardMoveButton, 0, 0, 0);
+    disconnect(_leftMoveButton, 0, 0, 0);
+    disconnect(_stopMoveButton, 0, 0, 0);
+    disconnect(_rightMoveButton, 0, 0, 0);
 
-void _DeleteSimulationEngineLayout(){
+    delete _forwardMoveButton;
+    delete _leftMoveButton;
+    delete _stopMoveButton;
+    delete _rightMoveButton;
 
-}
+    delete _highRobotsEngineLayout;
+    delete _lowRobotsEngineLayout;
+    delete _robotsEngineLayout;
+    delete _simulatyonEngineLayout;
 
-void _DeleteSettingsEngineLayout(){
-
-}
-
-void SimulationWindow::_CreateSimulattionsButtons(){
-
-    _forwardMoveButton = new QPushButton("forward");
-    _leftMoveButton = new QPushButton("left");
-    _stopMoveButton = new QPushButton("stop");
-    _rightMoveButton = new QPushButton("right");
-
-    _SetUnsetSimButtons(true); // default should be false
-
-    connect(_leftMoveButton, &QPushButton::clicked, this, [=](){_core->LeftRotateMoveSig();});
-    connect(_rightMoveButton, &QPushButton::clicked, this, [=](){_core->RightRotateMoveSig();});
-    connect(_forwardMoveButton, &QPushButton::clicked, this, [=](){_core->ForwardMoveSig();});
-    connect(_stopMoveButton, &QPushButton::clicked, this, [=](){_core->StopMoveSig();});
 }
 
 void SimulationWindow::_SetUnsetSimButtons(bool flagIsSet){
@@ -116,22 +118,6 @@ void SimulationWindow::_SetUnsetSimButtons(bool flagIsSet){
     _leftMoveButton->setEnabled(flagIsSet);
     _stopMoveButton->setEnabled(flagIsSet);
     _rightMoveButton->setEnabled(flagIsSet);
-}
-
-void SimulationWindow::_DeleteSimulationsButtons(){
-    delete _forwardMoveButton;
-    delete _leftMoveButton;
-    delete _stopMoveButton;
-    delete _rightMoveButton;
-}
-
-
-void SimulationWindow::SetSimulationEngine(){
-    _simulationsLayot->addLayout(_simulatyonEngineLayout);
-}
-
-void SimulationWindow::UnsetSimulationEngine(){
-    _simulationsLayot->removeItem(_simulatyonEngineLayout);
 }
 
 
