@@ -55,16 +55,17 @@ void SimulationWindow::_DeleteSimulationsLayout(){
 }
 void SimulationWindow::CreateSimulationEngineLayout(){
     flagSimEngineLayout = true;
+
     _forwardMoveButton = new QPushButton("forward");
     _leftMoveButton = new QPushButton("left");
-    _stopMoveButton = new QPushButton("stop");
     _rightMoveButton = new QPushButton("right");
+    _stopMoveButton = new QPushButton("stop");
 
     _SetUnsetSimButtons(true); // default should be false
 
+    connect(_forwardMoveButton, &QPushButton::clicked, this, [=](){_core->ForwardMoveSig();});
     connect(_leftMoveButton, &QPushButton::clicked, this, [=](){_core->LeftRotateMoveSig();});
     connect(_rightMoveButton, &QPushButton::clicked, this, [=](){_core->RightRotateMoveSig();});
-    connect(_forwardMoveButton, &QPushButton::clicked, this, [=](){_core->ForwardMoveSig();});
     connect(_stopMoveButton, &QPushButton::clicked, this, [=](){_core->StopMoveSig();});
 
     _simulatyonEngineLayout = new QHBoxLayout();
@@ -102,9 +103,13 @@ void SimulationWindow::DeleteSimulationEngineLayout(){
     disconnect(_rightMoveButton, 0, 0, 0);
 
     delete _forwardMoveButton;
+    _forwardMoveButton = nullptr;
     delete _leftMoveButton;
+    _leftMoveButton = nullptr;
     delete _stopMoveButton;
+    _stopMoveButton = nullptr;
     delete _rightMoveButton;
+    _rightMoveButton = nullptr;
 
     delete _highRobotsEngineLayout;
     delete _lowRobotsEngineLayout;
@@ -129,4 +134,27 @@ void SimulationWindow::StopSimScene(){
 }
 void SimulationWindow::StoreSimScene(){
     _simulationScene->StoreSimObj();
+}
+
+void SimulationWindow::keyPressEvent(QKeyEvent *event){
+    if(event->key() == Qt::Key_W){
+        if(_forwardMoveButton){
+           _forwardMoveButton->clicked();
+        }
+    }
+    else if(event->key() == Qt::Key_A){
+        if(_leftMoveButton){
+            _leftMoveButton->clicked();
+        }
+    }
+    else if(event->key() == Qt::Key_D){
+        if(_rightMoveButton){
+            _rightMoveButton->clicked();
+        }
+    }
+    else if(event->key() == Qt::Key_S){
+        if(_stopMoveButton){
+            _stopMoveButton->clicked();
+        }
+    }
 }

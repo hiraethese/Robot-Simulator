@@ -17,6 +17,8 @@
 #include <QColor>
 #include <QPointF>
 #include <iostream>
+#include <QKeyEvent>
+
 #include "../core/Core.h"
 #include "SimulationScene.h"
 
@@ -38,6 +40,8 @@ public:
 
     void CreateSimulationEngineLayout();
     void DeleteSimulationEngineLayout();
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
 private:
     Core* _core;
     bool flagSimEngineLayout = false;
@@ -61,10 +65,10 @@ private:
     QPushButton* _startSimulationButton;
     QPushButton* _stopSimulatopnButton;
     QPushButton* _continueSimulationButton;
-    QPushButton* _forwardMoveButton;
-    QPushButton* _leftMoveButton;
-    QPushButton* _stopMoveButton;
-    QPushButton* _rightMoveButton;
+    QPushButton* _forwardMoveButton = nullptr;
+    QPushButton* _leftMoveButton = nullptr;
+    QPushButton* _stopMoveButton = nullptr;
+    QPushButton* _rightMoveButton = nullptr;
 
     QPushButton* _setSettingsButton;
 
