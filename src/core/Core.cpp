@@ -117,3 +117,8 @@ Rectangle Core::RectFromCore()
 {
     return _map->GetFactory()->GetControlledRobot()->GetTransform()->GetRect();
 }
+
+const std::vector<Wall *> &Core::GetVectorWalls() const
+{
+    return _map->GetFactory()->GetWalls();
+}

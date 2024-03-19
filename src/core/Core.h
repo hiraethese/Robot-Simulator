@@ -45,6 +45,7 @@ public:
     void StopMoveSig();
     void MoveAllObjects();
     Rectangle RectFromCore();
+    const std::vector<Wall*>& GetVectorWalls() const;
 };
 
 #endif // CORE_H
