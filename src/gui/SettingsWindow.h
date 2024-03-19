@@ -8,7 +8,7 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QSpinBox>
-#include <QCheckBox>
+#include <QComboBox>
 #include <iostream>
 class SettingsWindow : public QWidget
 {
@@ -19,32 +19,25 @@ public:
     ~SettingsWindow();
     QPushButton* setPushButton;
 
-
-    bool IsSetMapValue();
-    QString GetMapValue();
-    void SetMapValue(QString map);
-
-    bool IsSetSpeedValue();
     int GetSpeedValue();
     void SetSpeedValue(int speed);
 
-    bool IsSetAngleValue();
     int GetAngleValue();
     void SetAngleValue(int angle);
 private:
     QGridLayout* _settingGridLayot;
 
-    QLabel* _newMapLabel;
-    QLineEdit* _newMapLine;
-    QCheckBox* _newMapCheckBox;
-
     QLabel* _speedLabel;
     QSpinBox* _speedSpinBox;
-    QCheckBox* _speedCheckBox;
 
     QLabel* _angleLabel;
     QSpinBox* _angleSpinBox;
-    QCheckBox* _angleCheckBox;
+
+    QLabel* _directionLable;
+    QSpinBox* _directionSpinBox;
+
+    QLabel* _colorLable;
+    QComboBox* _colorComboBox;
 
 private slots:
     void _BlockNewMapLineSlot();
