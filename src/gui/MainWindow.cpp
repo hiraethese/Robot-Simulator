@@ -108,7 +108,7 @@ void MainWindow::_BuildUserRobotLayoutSlot(){
     if(_settingsWind){
         delete _settingsWind;
     }
-    _settingsWind = new SettingsWindow();
+    _settingsWind = new SettingsWindow(true);
     _settingsWind->show();
 
 }
@@ -118,7 +118,7 @@ void MainWindow::_BuildBotRobotLayoutSlot(){
     if(_settingsWind){
         delete _settingsWind;
     }
-    _settingsWind = new SettingsWindow();
+    _settingsWind = new SettingsWindow(false);
     _settingsWind->show();
 
 

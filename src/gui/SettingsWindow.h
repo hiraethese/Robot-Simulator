@@ -15,17 +15,16 @@ class SettingsWindow : public QWidget
     Q_OBJECT
 public:
 
-    SettingsWindow();
+    SettingsWindow(bool isUserRobot);
     ~SettingsWindow();
     QPushButton* setPushButton;
 
-    int GetSpeedValue();
-    void SetSpeedValue(int speed);
-
-    int GetAngleValue();
-    void SetAngleValue(int angle);
 private:
+    bool flagIsUserRobot;
     QGridLayout* _settingGridLayot;
+
+    QLabel* _diameterLabel;
+    QSpinBox* _diameterSpinBox;
 
     QLabel* _speedLabel;
     QSpinBox* _speedSpinBox;
@@ -33,16 +32,13 @@ private:
     QLabel* _angleLabel;
     QSpinBox* _angleSpinBox;
 
-    QLabel* _directionLable;
-    QSpinBox* _directionSpinBox;
+    QLabel* _wayLable;
+    QSpinBox* _waySpinBox;
 
     QLabel* _colorLable;
     QComboBox* _colorComboBox;
 
 private slots:
-    void _BlockNewMapLineSlot();
-    void _BlockSpeedSpinBoxSlot();
-    void _BlockAngleSpinBoxSlot();
 };
 
 #endif // SETTINGSWINDOW_H
