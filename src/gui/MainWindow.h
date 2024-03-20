@@ -96,8 +96,8 @@ private:
     QAction* simulationModeAction;
     QAction* downloadNewModeMapAction;
     QAction* buildMapModeAction;
-    QAction* buildUserRobotLayout;
-    QAction* buildBotRobotLayout;
+    QAction* buildUserRobotTemplate;
+    QAction* buildBotRobotTemplate;
     QAction* buildWallLayout;
     void _CreateMenu();
     void _DeleteMenu();
@@ -136,8 +136,8 @@ private slots:
 
     //void _UpdateSettingsSlot();
 
-    void _BuildUserRobotLayoutSlot();
-    void _BuildBotRobotLayoutSlot();
+    void _BuildUserRobotTemplateSlot();
+    void _BuildBotRobotTemplateSlot();
     void _BuildWallLayoutSlot();
 
     void _RunSimulationActionSlot();

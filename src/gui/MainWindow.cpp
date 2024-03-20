@@ -77,11 +77,11 @@ void MainWindow::_CreateMenu(){
     buildMapModeAction = buildSubMenu->addAction("Build map");
     connect(buildMapModeAction, &QAction::triggered, this, &MainWindow::_CreateBuildMapModeSlot);
 
-    buildUserRobotLayout = buildSubMenu->addAction("User robot layout");
-    connect(buildUserRobotLayout, &QAction::triggered, this, &MainWindow::_BuildUserRobotLayoutSlot);
+    buildUserRobotTemplate = buildSubMenu->addAction("User robot template");
+    connect(buildUserRobotTemplate, &QAction::triggered, this, &MainWindow::_BuildUserRobotTemplateSlot);
 
-    buildBotRobotLayout = buildSubMenu->addAction("Bot robot layout");
-    connect(buildBotRobotLayout, &QAction::triggered, this, &MainWindow::_BuildBotRobotLayoutSlot);
+    buildBotRobotTemplate = buildSubMenu->addAction("Bot robot template");
+    connect(buildBotRobotTemplate, &QAction::triggered, this, &MainWindow::_BuildBotRobotTemplateSlot);
 
     buildWallLayout = buildSubMenu->addAction("Wall layout");
     connect(buildWallLayout, &QAction::triggered, this, &MainWindow::_BuildWallLayoutSlot);
@@ -96,14 +96,14 @@ void MainWindow::_DeleteMenu(){
     delete simulationModeAction;
     delete downloadNewModeMapAction;
     delete buildMapModeAction;
-    delete buildUserRobotLayout;
-    delete buildBotRobotLayout;
+    delete buildUserRobotTemplate;
+    delete buildBotRobotTemplate;
     delete buildWallLayout;
     delete buildSubMenu;
     delete appMenu;
 }
 
-void MainWindow::_BuildUserRobotLayoutSlot(){
+void MainWindow::_BuildUserRobotTemplateSlot(){
 
     if(_settingsWind){
         delete _settingsWind;
@@ -113,7 +113,7 @@ void MainWindow::_BuildUserRobotLayoutSlot(){
 
 }
 
-void MainWindow::_BuildBotRobotLayoutSlot(){
+void MainWindow::_BuildBotRobotTemplateSlot(){
 
     if(_settingsWind){
         delete _settingsWind;
