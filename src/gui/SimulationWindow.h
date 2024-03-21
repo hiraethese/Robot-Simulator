@@ -22,6 +22,14 @@
 #include "../core/Core.h"
 #include "SimulationScene.h"
 
+enum BuildModeStatus{
+    NotSetStatus,
+    CursorStatus,
+    UserRobotStatus,
+    BotRobotStatus,
+    WallStatus
+};
+
 class SimulationWindow : public QWidget
 {
     Q_OBJECT
@@ -40,6 +48,8 @@ public:
 
     void CreateSimulationEngineLayout();
     void DeleteSimulationEngineLayout();
+    bool flagIsSimMode = false;
+    BuildModeStatus buildModeStatus = NotSetStatus;
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 private:

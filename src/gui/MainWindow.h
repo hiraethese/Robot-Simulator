@@ -123,7 +123,11 @@ private:
     QAction* _buildBotRobotAction;
     QAction* _buildWallAction;
     QAction* _hummerAction;
+    QLabel* _statusModeLabel;
+    QLineEdit* _statusModeLine;
+    QToolBar* _settingsBuildToolBar;
     QToolBar* _engineBuildToolBar;
+    QToolBar* _statusModeBuildToolBar;
     void _CreateBuildModeTools();
     void _DeleteBuildModeTools();
 public slots:

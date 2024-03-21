@@ -282,6 +282,9 @@ void MainWindow::_CreateSimulationWindow(){
 // ************************************  PART BUILD MODE    *********************************************************
 void MainWindow::_CreateBuildModeTools(){
 
+    _helpToolAction = new QAction(QIcon(":/icons/helpTool.jpg"), "&Help", this);
+    connect(_helpToolAction, &QAction::triggered, this, &MainWindow::_HelpTextToolActionSlot);
+
     _cursorAction = new QAction(QIcon(":/icons/cursorTool.png"), "Cursor", this);
     connect(_cursorAction, &QAction::triggered, this, &MainWindow::_CursorActionSlot);
 
@@ -297,12 +300,28 @@ void MainWindow::_CreateBuildModeTools(){
     _hummerAction = new QAction(QIcon(":/icons/hummerTool.png"), "Object settings", this);
     connect(_hummerAction, &QAction::triggered, this, &MainWindow::_HummerActionSlot);
 
+
+    _settingsBuildToolBar = addToolBar("settingsBuild");
+    _settingsBuildToolBar->addAction(_hummerAction);
+
     _engineBuildToolBar = addToolBar("engineBuild");
-    _engineBuildToolBar->addAction(_hummerAction);
     _engineBuildToolBar->addAction(_buildUserRobotAction);
     _engineBuildToolBar->addAction(_buildBotRobotAction);
     _engineBuildToolBar->addAction(_buildWallAction);
     _engineBuildToolBar->addAction(_cursorAction);
+
+    _statusModeBuildToolBar = addToolBar("statusModeBuild");
+    _statusModeLabel = new QLabel("Build mode: ");
+    _statusModeBuildToolBar->addWidget(_statusModeLabel);
+    _statusModeLine = new QLineEdit();
+    _statusModeLine->setReadOnly(true);
+    _statusModeLine->setFixedWidth(150);
+    _statusModeBuildToolBar->addWidget(_statusModeLine);
+
+
+    _helpToolBar = addToolBar("help");
+    _helpToolBar->addAction(_helpToolAction);
+
 }
 
 void MainWindow::_DeleteBuildModeTools(){
@@ -311,18 +330,47 @@ void MainWindow::_DeleteBuildModeTools(){
         disconnect(_buildUserRobotAction, 0, 0, 0);
         disconnect(_buildBotRobotAction, 0, 0, 0);
         disconnect(_buildWallAction, 0, 0, 0);
+        disconnect(_helpToolAction, 0, 0, 0);
         delete _cursorAction;
         delete _buildUserRobotAction;
         delete _buildBotRobotAction;
         delete _buildWallAction;
+        delete _statusModeLabel;
+        delete _statusModeLine;
+        removeToolBar(_settingsBuildToolBar);
         removeToolBar(_engineBuildToolBar);
+        removeToolBar(_statusModeBuildToolBar);
+        delete _settingsBuildToolBar;
         delete _engineBuildToolBar;
+        delete _statusModeBuildToolBar;
     }
 
 }
 
-void MainWindow::_CursorActionSlot(){}
-void MainWindow::_BuildUserRobotActionSlot(){}
-void MainWindow::_BuildBotRobotActionSlot(){}
-void MainWindow::_BuildWallActionSlot(){}
-void MainWindow::_HummerActionSlot(){}
+void MainWindow::_CursorActionSlot(){
+
+    _statusModeLine->setText("Interaction");
+
+}
+
+void MainWindow::_BuildUserRobotActionSlot(){
+
+    _statusModeLine->setText("Build users robot");
+
+}
+
+void MainWindow::_BuildBotRobotActionSlot(){
+
+    _statusModeLine->setText("Build bot robots");
+
+}
+
+
+void MainWindow::_BuildWallActionSlot(){
+
+    _statusModeLine->setText("Build walls");
+
+}
+void MainWindow::_HummerActionSlot(){
+
+}
