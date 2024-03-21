@@ -22,7 +22,7 @@ SimulationWindow::~SimulationWindow(){
 void SimulationWindow::_CreateSimGUI(){
     _simulationScene = new SimulationScene();
     _simulationView = new QGraphicsView(_simulationScene);
-
+    //_simulationView->setInteractive(false);
     _simulationView->setStyleSheet("background-color: black;");
     _simulationView->setSceneRect(0,0,1800, 750);  // TODO: size from core
     _simulationView->setFixedSize(1800+20, 750+20);  // TODO size from core

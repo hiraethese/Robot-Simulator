@@ -19,7 +19,7 @@ void SimulationScene::DeleteSimulationScene(){
 
 void SimulationScene::mousePressEvent(QGraphicsSceneMouseEvent* event){
     event->ignore();
-    if(flagSettingMode){
+    if(true){//flagSettingMode
         std::cout << "Run settings mode!" << std::endl;
         /*cleanSettingsMode();
         QPointF choosePos = event->scenePos();
