@@ -40,7 +40,6 @@ void SimulationScene::mousePressEvent(QGraphicsSceneMouseEvent* event){
 
 
 void SimulationScene::InitSimRun(){
-    std::cout << "TEST1" << std::endl;
     _simTimer.start(16);
 }
 
@@ -50,6 +49,7 @@ void SimulationScene::StopSimRun(){
 
 void SimulationScene::StoreSimObj(){
     _robotsFromCore = _core->RectFromCore();
+    const std::vector<Wall *> &wallsFromCore = _core->GetVectorWalls();
     for(int robot = 0; robot < 1; robot++){
         QGraphicsEllipseItem* newRobot = new QGraphicsEllipseItem(0,0,_robotsFromCore.w,_robotsFromCore.h);
         newRobot->setPen(blackPen);
@@ -58,10 +58,18 @@ void SimulationScene::StoreSimObj(){
         addItem(newRobot);
         _robotsGUIVector.push_back(newRobot);
     }
+
+    for(Wall* wall:wallsFromCore){
+        QGraphicsRectItem* newWall = new QGraphicsRectItem(0,0,wall->GetTransform()->GetRect().w, wall->GetTransform()->GetRect().h);
+        newWall->setPen(blackPen);
+        newWall->setBrush(blueBrush);
+        newWall->setPos(wall->GetTransform()->GetRect().x,wall->GetTransform()->GetRect().y);
+        addItem(newWall);
+        _wallsGUIVector.push_back(newWall);
+    }
 }
 
 void SimulationScene::_OneSimFrame(){
-    std::cout << "TEST2" << std::endl;
     _core->MoveAllObjects();
     _robotsFromCore = _core->RectFromCore();
     for(auto robot: _robotsGUIVector){
