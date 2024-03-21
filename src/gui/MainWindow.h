@@ -22,6 +22,7 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QWidget>
+
 #include "NewMapWindow.h"
 #include "SimulationWindow.h"
 #include "SettingsWindow.h"
@@ -53,7 +54,6 @@ class MainWindow : public QMainWindow, public InfoNotification
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
 private:
     Core* _core;
     Page _actualPage = NotSetPage;
@@ -74,7 +74,7 @@ private:
     QAction* _settingsToolAction;
 
     QToolBar* _engineSimRunToolBar;
-    QAction* _runSimulationAction;
+    QAction* _runSimulationAction = nullptr;
     QAction* _restartSimulationAction;
 
     QToolBar* _newSimulationIdToolBar;

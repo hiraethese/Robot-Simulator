@@ -139,22 +139,22 @@ void SimulationWindow::StoreSimScene(){
 void SimulationWindow::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_W){
         if(_forwardMoveButton){
-           _forwardMoveButton->clicked();
+           emit _forwardMoveButton->clicked();
         }
     }
     else if(event->key() == Qt::Key_A){
         if(_leftMoveButton){
-            _leftMoveButton->clicked();
+            emit _leftMoveButton->clicked();
         }
     }
     else if(event->key() == Qt::Key_D){
         if(_rightMoveButton){
-            _rightMoveButton->clicked();
+            emit _rightMoveButton->clicked();
         }
     }
     else if(event->key() == Qt::Key_S){
         if(_stopMoveButton){
-            _stopMoveButton->clicked();
+            emit _stopMoveButton->clicked();
         }
     }
 }

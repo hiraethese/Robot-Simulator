@@ -216,6 +216,7 @@ void MainWindow::_DeleteSimModeTools(){
     disconnect(_restartSimulationAction, 0, 0, 0);
     delete _helpToolAction;
     delete _runSimulationAction;
+    _runSimulationAction = nullptr;
     delete _restartSimulationAction;
     removeToolBar(_engineSimRunToolBar);
     removeToolBar(_simulationIdToolBar);
@@ -242,6 +243,7 @@ void MainWindow::_RunSimulationActionSlot(){
     disconnect(_runSimulationAction, 0, 0, 0);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_PauseSimulationActionSlot);
     _runSimulationAction->setIcon(QIcon(":/icons/pauseTool.png"));
+    _runSimulationAction->setText("Pause");
     _lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
 
     _core->SetRunSim(true);
@@ -256,7 +258,7 @@ void MainWindow::_PauseSimulationActionSlot(){
     disconnect(_runSimulationAction, 0, 0, 0);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
     _runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
-    _runSimulationAction->setText(tr("Run"));
+    _runSimulationAction->setText("Run");
     _lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
 }
 
