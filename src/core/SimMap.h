@@ -4,6 +4,8 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <QFileInfo>
+#include <QString>
 #include "SimFactory.h"
 
 class SimMap

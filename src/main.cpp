@@ -14,3 +14,4 @@ int main(int argc, char *argv[])
     w.show();
     return a.exec();
 }
+// /mnt/c/Users/user/icp2024/examples/example.txt
