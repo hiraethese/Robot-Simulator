@@ -1,8 +1,8 @@
 #include "SimMap.h"
 
-SimMap::SimMap(std::string path, int width, int height)
+SimMap::SimMap(int width, int height)
 {
-    _path = path;
+    //_path = path;
     _width = width;
     _height = height;
     _factory = new SimFactory();
@@ -33,9 +33,10 @@ void SimMap::SetPath(std::string newPath)
     _path = newPath;
 }
 
-int SimMap::LoadObjectsFromFile()
+int SimMap::LoadObjectsFromFile(std::string path)
 {
-    // Restart all objects
+    _path = path;
+    // Restart all objects    
     _factory->DeleteAllObjects();
     // Open the file
     std::ifstream file(_path);

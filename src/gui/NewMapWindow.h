@@ -15,6 +15,7 @@
 #include <QCheckBox>
 #include <iostream>
 #include <string>
+
 class NewMapWindow : public QWidget
 {
     Q_OBJECT

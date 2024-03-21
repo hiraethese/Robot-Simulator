@@ -5,10 +5,10 @@ Core* Core::_core = nullptr;
 Core::Core()
 {
     _FPS = 16; // Note: not actually "Frames Per Second", the name is for convenience
-    _simIsRun = false;
-    _simIsReady = true; // TODO: make setting arg from user by setting; now default true
-    _map = new SimMap("examples/example.txt", 1800, 750);
-    _map->LoadObjectsFromFile(); // TODO: call load objects from file from the gui
+    //_simIsRun = false;
+    //_simIsReady = true; // TODO: make setting arg from user by setting; now default true
+    _map = new SimMap(1800, 750);
+    //_map->LoadObjectsFromFile(); // TODO: call load objects from file from the gui
 }
 
 Core *Core::getInstance()
@@ -24,7 +24,7 @@ void Core::SetNewSettings(const SimSettings &newSettings)
     if(newSettings.flagNewMap)
     {
         _map->SetPath(newSettings.newMapValue);
-        _simIsReady = true;
+        //_simIsReady = true;
     }
 
     if(newSettings.flagNewSpeed)
@@ -121,4 +121,22 @@ Rectangle Core::RectFromCore()
 const std::vector<Wall *> &Core::GetVectorWalls() const
 {
     return _map->GetFactory()->GetWalls();
+}
+
+int Core::LoadingMap(std::string path)
+{
+    int result = _map->LoadObjectsFromFile(path); // TODO: call load objects from file from the gui
+
+    if(!result){
+
+        _core->_simIsReady = true;
+
+    }
+    else{
+
+        _core->_simIsReady = false;
+
+    }
+
+    return result;
 }

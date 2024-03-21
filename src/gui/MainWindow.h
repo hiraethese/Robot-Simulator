@@ -22,6 +22,7 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <string>
 
 #include "NewMapWindow.h"
 #include "SimulationWindow.h"
@@ -102,15 +103,16 @@ private:
     void _CreateMenu();
     void _DeleteMenu();
 
-    NewMapWindow* _newMapWind = nullptr;
+    NewMapWindow* _newMapWind;
 
     SimulationWindow* _simulationWind;
     void _CreateSimulationWindow();
 
-    SettingsWindow* _settingsWind = nullptr;
-    WallSettingsWindow* _wallSettingsWindow = nullptr;
-    //void _CreateSettings();
-    //void _DeleteSettings();
+    SettingsWindow* _botRobotSettingsWind;
+    SettingsWindow* _userRobotSettingsWind;
+    WallSettingsWindow* _wallSettingsWindow;
+    void _CreateSettings();
+    void _DeleteSettings();
 
     Ui::MainWindow *ui;
 
@@ -133,16 +135,11 @@ private:
 public slots:
 
 private slots:
-    void _StoreNewMap();
     void _HelpTextToolActionSlot();
     //void _SettingsToolActionSlot();
     //void _SimulationToolActionSlot();
 
     //void _UpdateSettingsSlot();
-
-    void _BuildUserRobotTemplateSlot();
-    void _BuildBotRobotTemplateSlot();
-    void _BuildWallLayoutSlot();
 
     void _RunSimulationActionSlot();
     void _PauseSimulationActionSlot();
@@ -150,7 +147,6 @@ private slots:
 
     //void _GetNewSimToParserSlot();
 
-    void _CreateNewMapModeSlot();
     void _CreateBuildMapModeSlot();
     void _CreateSimModeSlot();
 
@@ -159,5 +155,7 @@ private slots:
     void _BuildBotRobotActionSlot();
     void _BuildWallActionSlot();
     void _HummerActionSlot();
+
+    void _PushNewMapToCoreSlot();
 };
 #endif // MAINWINDOW_H

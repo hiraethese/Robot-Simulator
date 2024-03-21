@@ -37,18 +37,15 @@ public:
     explicit SimulationWindow(QWidget *parent = nullptr);
     ~SimulationWindow();
 
-    void SetSettingsEngine();
-    void UnsetSettingsEngine();
-    void SetSimulationEngine();
-    void UnsetSimulationEngine();
+    void SwitchBetweenSimAndBuild(bool flagIsBuild);
 
     void RunSimScene();
     void StopSimScene();
-    void StoreSimScene();
+    void LoadSimScene();
 
-    void CreateSimulationEngineLayout();
-    void DeleteSimulationEngineLayout();
+
     bool flagIsSimMode = false;
+
     BuildModeStatus buildModeStatus = NotSetStatus;
 protected:
     void keyPressEvent(QKeyEvent *event) override;
@@ -61,9 +58,8 @@ private:
 
     void _CreateSimGUI();
     void _DeleteSimGUI();
-    void _CleanSimGUI();
-
-
+    
+    
     QVBoxLayout* _simulationsLayot;
     QHBoxLayout* _simBodyowBoxLayout;      // simulations window layout
     QHBoxLayout* _simulatyonEngineLayout;  // engine for simulation
@@ -85,6 +81,9 @@ private:
     void _CreateSimulationsLayout();
     void _DeleteSimulationsLayout();
     void _SetUnsetSimButtons(bool flagIsSet);
+
+    void _CreateSimulationEngineLayout();
+    void _DeleteSimulationEngineLayout();
 
 };
 

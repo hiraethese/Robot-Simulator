@@ -8,20 +8,21 @@
 
 class SimMap
 {
+    // TODO: return 0 if i give path "/mnt"
 private:
-    std::string _path;
+    std::string _path {};
     int _width;
     int _height;
     SimFactory* _factory;
 
 public:
-    SimMap(std::string path, int width, int height);
+    SimMap(int width, int height);
     std::string GetPath();
     int GetWidth();
     int GetHeight();
     SimFactory* GetFactory();
     void SetPath(std::string newPath);
-    int LoadObjectsFromFile();
+    int LoadObjectsFromFile(std::string path);
     bool ProcessControlledRobotLine(std::istringstream& iss);
     bool ProcessWallLine(std::istringstream& iss);
 };

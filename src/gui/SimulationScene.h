@@ -22,9 +22,9 @@ class SimulationScene : public QGraphicsScene
     Q_OBJECT
 public:
     explicit SimulationScene(QObject *parent = nullptr);
-    void DeleteSimulationScene();
+    void CleareSimulationScene();
     bool flagSettingMode = false;
-    void StoreSimObj();
+    void LoadSimObj();
     void InitSimRun();
     void StopSimRun();
 protected:
