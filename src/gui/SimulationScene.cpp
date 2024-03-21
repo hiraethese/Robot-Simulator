@@ -43,9 +43,11 @@ void SimulationScene::InitSimRun(){
     std::cout << "TEST1" << std::endl;
     _simTimer.start(16);
 }
+
 void SimulationScene::StopSimRun(){
     _simTimer.stop();
 }
+
 void SimulationScene::StoreSimObj(){
     _robotsFromCore = _core->RectFromCore();
     for(int robot = 0; robot < 1; robot++){
