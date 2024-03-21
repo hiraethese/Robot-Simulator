@@ -1,11 +1,8 @@
 #ifndef MOVEMENT_H
 #define MOVEMENT_H
 
-#include "MyTransform.h"
 #include <iostream>
-
-#define SIMFIELD_W 1800 // TO DO - Map class
-#define SIMFIELD_H 750  // TO DO - Map class
+#include "MyTransform.h"
 
 class Movement
 {

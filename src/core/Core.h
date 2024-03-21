@@ -2,26 +2,42 @@
 #define CORE_H
 
 #include <string>
-#include "entities/Robot.h"
+#include "SimMap.h"
 
+// Simulation settings structure with default values
+struct SimSettings
+{
+    bool flagNewMap = false;
+    std::string newMapValue = "examples/example.txt";
+    bool flagNewSpeed = false;
+    int newSpeedValue = 5;
+    bool flagNewAngle = false;
+    int newAngleValue = 45;
+};
+
+// Core class with controller methods
 class Core
 {
 private:
     Core();
     static Core* _core;
-    std::string _map;
+    int _FPS;
     bool _simIsRun;
     bool _simIsReady;
-    Robot* _controlledRobot;
+    SimMap* _map;
 
 public:
     static Core* getInstance();
-    // Controller part
+    void SetNewSettings(const SimSettings& newSettings);
     std::string GetMapValue();
-    int GetSpeedValue();
-    int GetAngleValue(); // Note: get angle step value.
+    int GetFPS();
+    int GetMapWidth();
+    int GetMapHeight();
+    int GetSpeedValue(); // TODO: speed in percent
+    int GetAngleValue(); // Note: get angle step value
     bool IsSimReady();
     bool IsSimRun();
+    void SetFPS(int FPS); // TODO: implement this as part of the settings
     void SetRunSim(bool setter);
     void LeftRotateMoveSig();
     void RightRotateMoveSig();
@@ -29,6 +45,7 @@ public:
     void StopMoveSig();
     void MoveAllObjects();
     Rectangle RectFromCore();
+    const std::vector<Wall*>& GetVectorWalls() const;
 };
 
 #endif // CORE_H

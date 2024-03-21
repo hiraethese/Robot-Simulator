@@ -4,10 +4,11 @@ Core* Core::_core = nullptr;
 
 Core::Core()
 {
-    _map = "";
+    _FPS = 16; // Note: not actually "Frames Per Second", the name is for convenience
     _simIsRun = false;
     _simIsReady = true; // TODO: make setting arg from user by setting; now default true
-    _controlledRobot = new Robot({50.0f, 50.0f}, {100.0f, 100.0f}, 5.0f, 45, 0);
+    _map = new SimMap("examples/example.txt", 1800, 750);
+    _map->LoadObjectsFromFile(); // TODO: call load objects from file from the gui
 }
 
 Core *Core::getInstance()
@@ -18,21 +19,53 @@ Core *Core::getInstance()
     return _core;
 }
 
-// Controller part
+void Core::SetNewSettings(const SimSettings &newSettings)
+{
+    if(newSettings.flagNewMap)
+    {
+        _map->SetPath(newSettings.newMapValue);
+        _simIsReady = true;
+    }
+
+    if(newSettings.flagNewSpeed)
+    {
+        _map->GetFactory()->GetControlledRobot()->GetMovement()->SetSpeed(newSettings.newSpeedValue);
+    }
+
+    if(newSettings.flagNewAngle)
+    {
+        _map->GetFactory()->GetControlledRobot()->GetMovement()->SetAngleStep(newSettings.newAngleValue);
+    }
+}
 
 std::string Core::GetMapValue()
 {
-    return _map;
+    return _map->GetPath();
+}
+
+int Core::GetFPS()
+{
+    return _FPS;
+}
+
+int Core::GetMapWidth()
+{
+    return _map->GetWidth();
+}
+
+int Core::GetMapHeight()
+{
+    return _map->GetHeight();
 }
 
 int Core::GetSpeedValue()
 {
-    return (int)_controlledRobot->GetMovement()->GetSpeed();
+    return (int)_map->GetFactory()->GetControlledRobot()->GetMovement()->GetSpeed();
 }
 
 int Core::GetAngleValue()
 {
-    return _controlledRobot->GetMovement()->GetAngleStep();
+    return _map->GetFactory()->GetControlledRobot()->GetMovement()->GetAngleStep();
 }
 
 bool Core::IsSimReady()
@@ -45,6 +78,11 @@ bool Core::IsSimRun()
     return _simIsRun;
 }
 
+void Core::SetFPS(int FPS)
+{
+    _FPS = FPS;
+}
+
 void Core::SetRunSim(bool setter)
 {
     _simIsRun = setter;
@@ -52,30 +90,35 @@ void Core::SetRunSim(bool setter)
 
 void Core::LeftRotateMoveSig()
 {
-    _controlledRobot->GetMovement()->RotateLeft();
+    _map->GetFactory()->GetControlledRobot()->GetMovement()->RotateLeft();
 }
 
 void Core::RightRotateMoveSig()
 {
-    _controlledRobot->GetMovement()->RotateRight();
+    _map->GetFactory()->GetControlledRobot()->GetMovement()->RotateRight();
 }
 
 void Core::ForwardMoveSig()
 {
-    _controlledRobot->GetMovement()->EnableMovement();
+    _map->GetFactory()->GetControlledRobot()->GetMovement()->EnableMovement();
 }
 
 void Core::StopMoveSig()
 {
-    _controlledRobot->GetMovement()->DisableMovement();
+    _map->GetFactory()->GetControlledRobot()->GetMovement()->DisableMovement();
 }
 
 void Core::MoveAllObjects()
 {
-    _controlledRobot->GetMovement()->MoveForward();
+    _map->GetFactory()->GetControlledRobot()->GetMovement()->MoveForward();
 }
 
 Rectangle Core::RectFromCore()
 {
-    return _controlledRobot->GetTransform()->GetRect();
+    return _map->GetFactory()->GetControlledRobot()->GetTransform()->GetRect();
+}
+
+const std::vector<Wall *> &Core::GetVectorWalls() const
+{
+    return _map->GetFactory()->GetWalls();
 }
