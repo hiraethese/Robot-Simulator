@@ -23,15 +23,16 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <string>
-
-#include "NewMapWindow.h"
-#include "SimulationWindow.h"
-#include "SettingsWindow.h"
-#include "WallSettingsWindow.h"
-#include "InfoNotification.h"
-#include "../core/Core.h"
-//#include "style.h"
+#include <QDialog>
 #include <iostream>
+
+#include "SimulationWindow.h"
+#include "InfoNotification.h"
+#include "RobotSetting.h"
+#include "WallSetting.h"
+#include "NewMapSetting.h"
+#include "../core/Core.h"
+#include "style.h"
 
 
 enum Page{
@@ -55,12 +56,18 @@ class MainWindow : public QMainWindow, public InfoNotification
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    QDialog* modalDialog;
 private:
+
     Core* _core;
     Page _actualPage = NotSetPage;
+
     void _CreateAppWindows();
     void _DeleteAppWindows();
     void _SetPallet();
+
+
     QPalette palMainWindow;
     QToolBar* _simulationToolBar;
     QAction* _simulationToolAction;
@@ -92,6 +99,7 @@ private:
     void _DeleteTools();
     void _DeleteActions();
 
+
     QMenu* appMenu;
     QMenu* buildSubMenu;
     QAction* simulationModeAction;
@@ -100,21 +108,19 @@ private:
     QAction* buildUserRobotTemplate;
     QAction* buildBotRobotTemplate;
     QAction* buildWallLayout;
+
     void _CreateMenu();
     void _DeleteMenu();
 
-    NewMapWindow* _newMapWind;
 
     SimulationWindow* _simulationWind;
     void _CreateSimulationWindow();
 
-    SettingsWindow* _botRobotSettingsWind;
-    SettingsWindow* _userRobotSettingsWind;
-    WallSettingsWindow* _wallSettingsWindow;
-    void _CreateSettings();
-    void _DeleteSettings();
+    RobotSetting* _robotSetWind;
+    WallSetting* _wallSetWind;
+    NewMapSetting* _newMapWind;
 
-    Ui::MainWindow *ui;
+    void _CreateSettings();
 
     void _CreateSimModeTools();
     void _DeleteSimModeTools();
@@ -130,22 +136,26 @@ private:
     QToolBar* _settingsBuildToolBar;
     QToolBar* _engineBuildToolBar;
     QToolBar* _statusModeBuildToolBar;
+
     void _CreateBuildModeTools();
     void _DeleteBuildModeTools();
+
+
+    Ui::MainWindow *ui;
+
 public slots:
 
 private slots:
-    void _HelpTextToolActionSlot();
-    //void _SettingsToolActionSlot();
-    //void _SimulationToolActionSlot();
+    void _ControllRobotTempSlot(){}
+    void _BotRobotTempSlot(){}
+    void _WallTemplateSlot(){}
+    void _SettingSlot(){}
 
-    //void _UpdateSettingsSlot();
+    void _HelpTextToolActionSlot();
 
     void _RunSimulationActionSlot();
     void _PauseSimulationActionSlot();
     void _RestartSimulationActionSlot();
-
-    //void _GetNewSimToParserSlot();
 
     void _CreateBuildMapModeSlot();
     void _CreateSimModeSlot();

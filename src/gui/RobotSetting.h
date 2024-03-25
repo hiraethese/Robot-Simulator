@@ -1,23 +1,21 @@
-#ifndef SETTINGSWINDOW_H
-#define SETTINGSWINDOW_H
+#ifndef ROBOTSETTING_H
+#define ROBOTSETTING_H
 
-#include <QScrollArea>
-#include <QLabel>
 #include <QDialog>
-#include <QLineEdit>
+#include <QWidget>
 #include <QGridLayout>
-#include <QPushButton>
+#include <QLabel>
 #include <QSpinBox>
 #include <QComboBox>
+#include <QPushButton>
 #include <iostream>
-class SettingsWindow : public QWidget
+class RobotSetting : public QDialog
 {
     Q_OBJECT
 public:
-
-    SettingsWindow(bool isUserRobot);
-    ~SettingsWindow();
+    RobotSetting(QWidget* parent, bool isControlRobot);
     QPushButton* setPushButton;
+    QPushButton* deletePushButton;
 
 private:
     bool flagIsUserRobot;
@@ -38,7 +36,6 @@ private:
     QLabel* _colorLable;
     QComboBox* _colorComboBox;
 
-private slots:
 };
 
-#endif // SETTINGSWINDOW_H
+#endif // ROBOTSETTING_H

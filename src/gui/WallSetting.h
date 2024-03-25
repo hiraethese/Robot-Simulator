@@ -1,25 +1,26 @@
-#ifndef WALLSETTINGSWINDOW_H
-#define WALLSETTINGSWINDOW_H
+#ifndef WALLSETTING_H
+#define WALLSETTING_H
 
-#include <QScrollArea>
-#include <QLabel>
+#include <QWidget>
 #include <QDialog>
-#include <QLineEdit>
-#include <QGridLayout>
 #include <QPushButton>
+#include <QGridLayout>
+#include <QLabel>
 #include <QSpinBox>
-#include <QCheckBox>
 #include <QComboBox>
-#include <iostream>
-class WallSettingsWindow : public QWidget
+
+class WallSetting : public QDialog
 {
     Q_OBJECT
+
 public:
 
-    WallSettingsWindow();
-    ~WallSettingsWindow();
+    WallSetting(QWidget* parent);
     QPushButton* setPushButton;
+    QPushButton* deletePushButton;
+
 private:
+
     QGridLayout* _settingGridLayot;
 
 
@@ -37,7 +38,7 @@ private:
     QLabel* _colorLable;
     QComboBox* _colorComboBox;
 
-private slots:
+
 };
 
-#endif // WALLSETTINGSWINDOW_H
+#endif // WALLSETTING_H

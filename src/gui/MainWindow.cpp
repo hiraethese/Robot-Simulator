@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
     _core = Core::getInstance();
 
     _CreateAppWindows();
-
 }
 
 
@@ -52,7 +51,6 @@ void MainWindow::_DeleteAppWindows(){
 
     _DeleteTools();
     _DeleteMenu();
-    _DeleteSettings();
 
     delete _simulationWind;
 
@@ -84,13 +82,13 @@ void MainWindow::_CreateMenu(){
     connect(buildMapModeAction, &QAction::triggered, this, &MainWindow::_CreateBuildMapModeSlot);
 
     buildUserRobotTemplate = buildSubMenu->addAction("User robot template");
-    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_simulationWind->StopSimScene(); _userRobotSettingsWind->show();});
+    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->exec();});
 
     buildBotRobotTemplate = buildSubMenu->addAction("Bot robot template");
-    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_simulationWind->StopSimScene();_botRobotSettingsWind->show();});
+    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->exec();});
 
     buildWallLayout = buildSubMenu->addAction("Wall layout");
-    connect(buildWallLayout, &QAction::triggered, this, [=](){_simulationWind->StopSimScene();_wallSettingsWindow->show();});
+    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->exec();});
 
 
     downloadNewModeMapAction = appMenu->addAction("Download map");
@@ -243,7 +241,6 @@ void MainWindow::_PauseSimulationActionSlot(){
 
 void MainWindow::_RestartSimulationActionSlot(){
 
-    //runSimulationActionSlot();
     if(_core->IsSimReady()){
 
         _WarningMsgSimNotSet();
@@ -368,21 +365,10 @@ void MainWindow::_HummerActionSlot(){
 
 void MainWindow::_CreateSettings(){
 
-    _newMapWind = new NewMapWindow();
+    _newMapWind = new NewMapSetting(this);
     connect(_newMapWind->downloadButton, &QPushButton::clicked, this, &MainWindow::_PushNewMapToCoreSlot);
-    _userRobotSettingsWind = new SettingsWindow(true);
-    _botRobotSettingsWind = new SettingsWindow(false);
-    _wallSettingsWindow = new WallSettingsWindow();
-
-}
-
-void MainWindow::_DeleteSettings(){
-
-    delete _newMapWind;
-    delete _userRobotSettingsWind;
-    delete _botRobotSettingsWind;
-    delete _wallSettingsWindow;
-
+    _robotSetWind = new RobotSetting(this, true);
+    _wallSetWind = new WallSetting(this);
 }
 
 
