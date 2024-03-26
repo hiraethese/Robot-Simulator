@@ -65,9 +65,14 @@ void Movement::DisableMovement()
 
 void Movement::MoveForward()
 {
-    if (!_isEnabled) return;
+    // Check if movement is enabled
+    if (!_isEnabled)
+    {
+        return;
+    }
 
     Core* core = Core::getInstance();
+    const std::vector<Wall*>& walls = core->GetVectorWalls();
 
     int map_width = core->GetMapWidth();
     int map_height = core->GetMapHeight();
@@ -76,19 +81,70 @@ void Movement::MoveForward()
     Vector2d size = _transform->GetSize();
 
     float angleRadians = _angleDegrees * ( M_PI / 180.0f );
+    float radius = std::max(size.x, size.y) / 2;
 
-    position.x += _speed * cos(angleRadians);
-    position.y += _speed * sin(angleRadians);
+    // Calculate new estimated position
+    Vector2d newPosition;
+    newPosition.x = position.x + _speed * cos(angleRadians);
+    newPosition.y = position.y + _speed * sin(angleRadians);
 
-    if (position.x - size.x * 0.5f < 0)
-        position.x = size.x * 0.5f;
-    if (position.x + size.x * 0.5f > map_width)
-        position.x = map_width - size.x * 0.5f;
-    if (position.y - size.y * 0.5f < 0)
-        position.y = size.y * 0.5f;
-    if (position.y + size.y * 0.5f > map_height)
-        position.y = map_height - size.y * 0.5f;
+    // Check for collision with walls - TODO: check if robot will be inside the wall (?)
+    for (Wall* wall : walls)
+    {
+        Vector2d wallPosition = wall->GetTransform()->GetPosition();
+        Vector2d wallSize = wall->GetTransform()->GetSize();
 
-    _transform->SetPosition(position);
+        float testX = newPosition.x;
+        float testY = newPosition.y;
+
+        if (newPosition.x < wallPosition.x - wallSize.x * 0.5f + radius)
+        {
+            testX = wallPosition.x - wallSize.x * 0.5f;
+        }
+        else if (newPosition.x > wallPosition.x + wallSize.x * 0.5f - radius)
+        {
+            testX = wallPosition.x + wallSize.x * 0.5f;
+        }
+
+        if (newPosition.y < wallPosition.y - wallSize.y * 0.5f + radius)
+        {
+            testY = wallPosition.y - wallSize.y * 0.5f;
+        }
+        else if (newPosition.y > wallPosition.y + wallSize.y * 0.5f - radius)
+        {
+            testY = wallPosition.y + wallSize.y * 0.5f;
+        }
+
+        float distX = newPosition.x - testX;
+        float distY = newPosition.y - testY;
+        float distance = sqrt(distX * distX + distY * distY);
+
+        if (distance < radius)
+        {
+            float overlap = radius - distance;
+            newPosition.x += distX / distance * overlap;
+            newPosition.y += distY / distance * overlap;
+        }
+    }
+
+    // Check map boundaries
+    if (newPosition.x - radius < 0)
+    {
+        newPosition.x = radius;
+    }
+    if (newPosition.x + radius > map_width)
+    {
+        newPosition.x = map_width - radius;
+    }
+    if (newPosition.y - radius < 0)
+    {
+        newPosition.y = radius;
+    }
+    if (newPosition.y + radius > map_height)
+    {
+        newPosition.y = map_height - radius;
+    }
+
+    _transform->SetPosition(newPosition);
     // std::cout << "forward move " << "x = " << position.x << " " << "y = " << position.y << std::endl;
 }
