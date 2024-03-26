@@ -81,11 +81,11 @@ void MainWindow::_CreateMenu(){
     buildMapModeAction = buildSubMenu->addAction("Build map");
     connect(buildMapModeAction, &QAction::triggered, this, &MainWindow::_CreateBuildMapModeSlot);
 
-    buildUserRobotTemplate = buildSubMenu->addAction("User robot template");
-    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->exec();});
+    buildUserRobotTemplate = buildSubMenu->addAction("Controlled robot template");
+    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp()); _robotSetWind->exec();});
 
     buildBotRobotTemplate = buildSubMenu->addAction("Bot robot template");
-    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->exec();});
+    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetBotRobotTemp());_robotSetWind->exec();});
 
     buildWallLayout = buildSubMenu->addAction("Wall layout");
     connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->exec();});
@@ -108,6 +108,7 @@ void MainWindow::_DeleteMenu(){
     delete appMenu;
 
 }
+
 
 // ************************************  PART NEW MAP MODE    *********************************************************
 
@@ -174,6 +175,7 @@ void MainWindow::_CreateSimModeTools(){
 
     _helpToolBar = addToolBar("help");
     _helpToolBar->addAction(_helpToolAction);
+
 }
 
 

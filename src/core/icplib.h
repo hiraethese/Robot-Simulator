@@ -2,7 +2,18 @@
 #define ICPLIB_H
 
 #include <math.h>
+#include <string>
 // Note: I was planning to use cmath instead, but VS Code has problems with it
+
+enum colors{
+    WHITE,
+    BLACK,
+    BLUE,
+    RED,
+    GREEN,
+    YELLOW,
+    GRAY
+};
 
 // 2D vector
 typedef struct Vector2d {
@@ -17,5 +28,14 @@ typedef struct Rectangle {
     float w; // Rectangle width component
     float h; // Rectangle height component
 } Rectangle;
+
+typedef struct RobotView{
+    Rectangle rect;
+    int speed;
+    int angle;
+    int way;
+    colors color;
+    bool isControlled;
+} RobotView;
 
 #endif // ICPLIB_H

@@ -146,9 +146,6 @@ private:
 public slots:
 
 private slots:
-    void _ControllRobotTempSlot(){}
-    void _BotRobotTempSlot(){}
-    void _WallTemplateSlot(){}
     void _SettingSlot(){}
 
     void _HelpTextToolActionSlot();

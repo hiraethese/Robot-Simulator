@@ -10,13 +10,17 @@ class SimFactory
 private:
     Robot* _controlledRobot;
     std::vector<Wall*> _walls;
-
+    RobotView _controlledRobotTemplate;
+    RobotView _botRobotTemplate;
+    //Wall* _wallTemplate;
 public:
     SimFactory();
     void DeleteAllObjects();
     void AddWall(Wall* wall);
     void SetControlledRobot(Robot* controlledRobot);
     Robot* GetControlledRobot();
+    RobotView GetControlledRobotTemp();
+    RobotView GetBotRobotTemp();
     const std::vector<Wall*>& GetWalls() const;
 };
 

@@ -140,3 +140,13 @@ int Core::LoadingMap(std::string path)
 
     return result;
 }
+
+RobotView Core::GetControlledRobotTemp()
+{
+    return _map->GetFactory()->GetControlledRobotTemp();
+}
+
+RobotView Core::GetBotRobotTemp()
+{
+    return _map->GetFactory()->GetBotRobotTemp();
+}

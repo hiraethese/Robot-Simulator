@@ -7,9 +7,10 @@ class SimObject
 {
 protected:
     MyTransform* _transform;
+    colors _color;
 
 public:
-    SimObject(Vector2d position, Vector2d size);
+    SimObject(Vector2d position, Vector2d size, colors color);
     ~SimObject();
     MyTransform* GetTransform();
 };

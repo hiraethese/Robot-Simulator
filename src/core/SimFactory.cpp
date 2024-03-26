@@ -3,6 +3,9 @@
 SimFactory::SimFactory()
 {
     _controlledRobot = nullptr;
+    _botRobotTemplate  = {{0.0, 0.0, 30.0, 30.0}, 30, 30, 30, GREEN, false};  // default value (now random)
+    _controlledRobotTemplate = {{0.0, 0.0, 30.0, 30.0}, 30, 30, 30, RED, true};  // default value (now random)
+    //_wallTemplate = new Wall({0.0, 0.0},{30.0, 30.0});   // default value (now random)
 }
 
 void SimFactory::DeleteAllObjects()
@@ -42,3 +45,14 @@ const std::vector<Wall *> &SimFactory::GetWalls() const
 {
     return _walls;
 }
+
+RobotView SimFactory::GetControlledRobotTemp()
+{
+    return _controlledRobotTemplate;
+}
+
+RobotView SimFactory::GetBotRobotTemp()
+{
+    return _botRobotTemplate;
+}
+
