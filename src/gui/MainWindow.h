@@ -15,6 +15,7 @@
 #include <QInputDialog>
 #include <QPainter>
 #include <QPalette>
+#include <QPointF>
 #include <QScrollArea>
 #include <QString>
 #include <QTabBar>
@@ -164,5 +165,7 @@ private slots:
     void _HummerActionSlot();
 
     void _PushNewMapToCoreSlot();
+
+    void _UserClickSimSceneLogicSlot();
 };
 #endif // MAINWINDOW_H

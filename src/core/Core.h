@@ -47,9 +47,9 @@ public:
     int LoadingMap(std::string path);
     Rectangle RectFromCore();
     const std::vector<Wall*>& GetVectorWalls() const;
-    RobotView GetControlledRobotTemp();
-    RobotView GetBotRobotTemp();
-    WallView GetWallTemplate();
+    SimObjView GetControlledRobotTemp();
+    SimObjView GetBotRobotTemp();
+    SimObjView GetWallTemplate();
 };
 
 #endif // CORE_H

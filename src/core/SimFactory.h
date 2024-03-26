@@ -10,18 +10,18 @@ class SimFactory
 private:
     Robot* _controlledRobot;
     std::vector<Wall*> _walls;
-    RobotView _controlledRobotTemplate;
-    RobotView _botRobotTemplate;
-    WallView _wallTemplate;
+    SimObjView _controlledRobotTemplate;
+    SimObjView _botRobotTemplate;
+    SimObjView _wallTemplate;
 public:
     SimFactory();
     void DeleteAllObjects();
     void AddWall(Wall* wall);
     void SetControlledRobot(Robot* controlledRobot);
     Robot* GetControlledRobot();
-    RobotView GetControlledRobotTemp();
-    RobotView GetBotRobotTemp();
-    WallView GetWallTemp();
+    SimObjView GetControlledRobotTemp();
+    SimObjView GetBotRobotTemp();
+    SimObjView GetWallTemp();
     const std::vector<Wall*>& GetWalls() const;
 };
 

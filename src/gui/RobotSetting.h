@@ -6,6 +6,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QGraphicsLineItem>
 #include <QSpinBox>
 #include <QComboBox>
 #include <QPushButton>
@@ -13,22 +14,21 @@
 #include <QString>
 #include "../core/icplib.h"
 #include "style.h"
-class RobotSetting : public QDialog
+#include "ASettings.h"
+
+class RobotSetting : public ASettings
 {
-    Q_OBJECT
 
 public:
-    RobotSetting(QWidget* parent, bool isControlledRobot);
-    QPushButton* setPushButton;
-    QPushButton* deletePushButton;
-    void DownloadDataFromView(RobotView robot);
+    RobotSetting(QWidget* parent);
+    void DownloadDataFromView(SimObjView view) override;
+
 private:
     bool flagIsUserRobot;
-    QGridLayout* _settingGridLayot;
 
 
     QLabel* _typeRobotLabel;
-    QLineEdit* _typeRobotLineEdit;
+    QLabel* _typeRobotLineEdit;
 
     QLabel* _diameterLabel;
     QSpinBox* _diameterSpinBox;

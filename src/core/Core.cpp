@@ -141,17 +141,17 @@ int Core::LoadingMap(std::string path)
     return result;
 }
 
-RobotView Core::GetControlledRobotTemp()
+SimObjView Core::GetControlledRobotTemp()
 {
     return _map->GetFactory()->GetControlledRobotTemp();
 }
 
-RobotView Core::GetBotRobotTemp()
+SimObjView Core::GetBotRobotTemp()
 {
     return _map->GetFactory()->GetBotRobotTemp();
 }
 
 
-WallView Core::GetWallTemplate(){
+SimObjView Core::GetWallTemplate(){
     return _map->GetFactory()->GetWallTemp();
 }

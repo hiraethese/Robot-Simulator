@@ -16,6 +16,6 @@ Movement* Robot::GetMovement()
     return _movement;
 }
 
-RobotView Robot::GetRobotView(){
-    return {GetTransform()->GetRect(), int(_movement->GetSpeed()), int(_movement->GetAngleDegrees()), 0, _color, _isControlled};
+SimObjView Robot::GetSimObjView(){
+    return {GetTransform()->GetRect().h,GetTransform()->GetRect().w, _color, true, _isControlled, int(_movement->GetSpeed()), _movement->GetAngleDegrees(), 0};
 }

@@ -3,12 +3,22 @@
 SimFactory::SimFactory()
 {
     _controlledRobot = nullptr;
-    _botRobotTemplate  = {{0.0, 0.0, 30.0, 30.0}, 30, 30, 30, GREEN, false};  // default value (now random)
-    _controlledRobotTemplate = {{0.0, 0.0, 30.0, 30.0}, 30, 30, 30, RED, true};  // default value (now random)
-    _wallTemplate = {{0.0, 0.0, 30.0, 30.0}, BLUE};
-    //_wallTemplate = new Wall({0.0, 0.0},{30.0, 30.0});   // default value (now random)
+    _botRobotTemplate  = {0.0, 0.0, GREEN, true, false, 0, 0, 0};  // default value (now random)
+    _controlledRobotTemplate = {0.0, 0.0, RED, true, true, 0, 0, 0};  // default value (now random)
+    _wallTemplate = {0.0, 0.0, BLUE, true, false, 0, 0, 0};;
 }
-
+/*
+typedef struct SimObjView {
+    float h;
+    float w;
+    colors color;
+    bool isRobot;
+    bool isControlled;
+    int speed;
+    int angle;
+    int way;
+} SimObjView;
+*/
 void SimFactory::DeleteAllObjects()
 {
     if (_controlledRobot != nullptr)
@@ -47,17 +57,17 @@ const std::vector<Wall *> &SimFactory::GetWalls() const
     return _walls;
 }
 
-RobotView SimFactory::GetControlledRobotTemp()
+SimObjView SimFactory::GetControlledRobotTemp()
 {
     return _controlledRobotTemplate;
 }
 
-RobotView SimFactory::GetBotRobotTemp()
+SimObjView SimFactory::GetBotRobotTemp()
 {
     return _botRobotTemplate;
 }
 
-WallView SimFactory::GetWallTemp()
+SimObjView SimFactory::GetWallTemp()
 {
     return _wallTemplate;
 }

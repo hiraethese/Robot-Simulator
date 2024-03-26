@@ -20,11 +20,11 @@ void SimulationScene::CleareSimulationScene(){
 
 void SimulationScene::mousePressEvent(QGraphicsSceneMouseEvent* event){
 
-    event->ignore();
-
+    _actualUserClick = event->scenePos();
+    //std::cout << "WTF" << " " << event->pos().x()<< " " << event->pos().y()<< " " << _actualUserClick.x()<< " " << _actualUserClick.y();
     std::cout << "Run settings mode!" << std::endl;
 
-
+    emit clickSig();
 }
 
 
@@ -84,4 +84,8 @@ void SimulationScene::_OneSimFrame(){
 
     }
 
+}
+
+QPointF* SimulationScene::GetUserClick(){
+    return &_actualUserClick;
 }

@@ -81,7 +81,7 @@ void MainWindow::_CreateMenu(){
     buildMapModeAction = buildSubMenu->addAction("Build map");
     connect(buildMapModeAction, &QAction::triggered, this, &MainWindow::_CreateBuildMapModeSlot);
 
-    buildUserRobotTemplate = buildSubMenu->addAction("Controlled robot template");
+    buildUserRobotTemplate = buildSubMenu->addAction("Controlled robot template");  // upd lambda with dependecy injection
     connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp()); _robotSetWind->exec();});
 
     buildBotRobotTemplate = buildSubMenu->addAction("Bot robot template");
@@ -260,9 +260,13 @@ void MainWindow::_CreateSimulationWindow(){
 
     _simulationWind = new SimulationWindow(this);
     setCentralWidget(_simulationWind);
+    connect(_simulationWind, &SimulationWindow::UperClickSig, this, &MainWindow::_UserClickSimSceneLogicSlot);
 }
 
-
+void MainWindow::_UserClickSimSceneLogicSlot(){
+    QPointF* test = _simulationWind->GetUserClick();
+    std::cout << "User click on x=" << test->x() << " y=" << test->y() << std::endl;
+}
 // ************************************  PART BUILD MODE    *********************************************************
 void MainWindow::_CreateBuildModeTools(){
 
@@ -369,7 +373,7 @@ void MainWindow::_CreateSettings(){
 
     _newMapWind = new NewMapSetting(this);
     connect(_newMapWind->downloadButton, &QPushButton::clicked, this, &MainWindow::_PushNewMapToCoreSlot);
-    _robotSetWind = new RobotSetting(this, true);
+    _robotSetWind = new RobotSetting(this);
     _wallSetWind = new WallSetting(this);
 }
 

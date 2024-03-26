@@ -29,18 +29,16 @@ typedef struct Rectangle {
     float h; // Rectangle height component
 } Rectangle;
 
-typedef struct RobotView {
-    Rectangle rect;
+typedef struct SimObjView {
+    float h;
+    float w;
+    colors color;
+    bool isRobot;
+    bool isControlled;
     int speed;
     int angle;
     int way;
-    colors color;
-    bool isControlled;
-} RobotView;
+} SimObjView;
 
-typedef struct WallView {
-    Rectangle rect;
-    colors color;
-} WallView;
 
 #endif // ICPLIB_H

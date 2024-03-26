@@ -22,7 +22,7 @@ SOURCES += \
     src/core/Core.cpp \
     src/core/SimFactory.cpp \
     src/core/SimMap.cpp \
-    src/gui/AObjectGUI.cpp \
+    src/gui/ASettings.cpp \
     src/gui/InfoNotification.cpp \
     src/gui/MainWindow.cpp \
     src/gui/NewMapSetting.cpp \
@@ -44,7 +44,7 @@ HEADERS += \
     src/core/SimFactory.h \
     src/core/SimMap.h \
     src/core/icplib.h \
-    src/gui/AObjectGUI.h \
+    src/gui/ASettings.h \
     src/gui/InfoNotification.h \
     src/gui/MainWindow.h \
     src/gui/NewMapSetting.h \

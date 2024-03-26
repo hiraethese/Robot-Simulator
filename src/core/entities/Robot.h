@@ -3,7 +3,7 @@
 
 #include "SimObject.h"
 #include "../properties/Movement.h"
-
+#include <iostream>
 class Robot : public SimObject
 {
 private:
@@ -19,7 +19,7 @@ public:
             bool isControlled = true);
     ~Robot();
     Movement* GetMovement();
-    RobotView GetRobotView();
+    SimObjView GetSimObjView() override;
 };
 
 #endif // ROBOT_H

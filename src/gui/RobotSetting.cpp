@@ -1,28 +1,13 @@
 #include "RobotSetting.h"
 
-RobotSetting::RobotSetting(QWidget* parent, bool isControlRobot) : QDialog(parent){
+RobotSetting::RobotSetting(QWidget* parent) : ASettings(parent){
 
     this->setWindowTitle("Template");
 
-    _settingGridLayot = new QGridLayout(this);
-
-
     _typeRobotLabel = new QLabel("Type : ", this);
-    _typeRobotLineEdit = new QLineEdit(this);
-    _typeRobotLineEdit->setEnabled(false);
+    _typeRobotLineEdit = new QLabel(this);
     _settingGridLayot->addWidget(_typeRobotLabel, 0, 0);
     _settingGridLayot->addWidget(_typeRobotLineEdit, 0, 1);
-
-    if(isControlRobot){
-
-        _typeRobotLineEdit->setText("Controll");
-
-    }else{
-
-        _typeRobotLineEdit->setText("Bot");
-
-    }
-
 
     _diameterLabel = new QLabel("Radius : ", this);
     _diameterSpinBox = new QSpinBox(this);
@@ -46,7 +31,7 @@ RobotSetting::RobotSetting(QWidget* parent, bool isControlRobot) : QDialog(paren
     _settingGridLayot->addWidget(_angleLabel, 3, 0);
     _settingGridLayot->addWidget(_angleSpinBox, 3, 1);
 
-    _wayLable = new QLabel("Direction(degree) : ", this);
+    _wayLable = new QLabel("Way(degree) : ", this);
     _waySpinBox = new QSpinBox(this);  // combox
     _waySpinBox->setMinimum(0);
     _waySpinBox->setMaximum(360);
@@ -67,25 +52,20 @@ RobotSetting::RobotSetting(QWidget* parent, bool isControlRobot) : QDialog(paren
 
 
 
-    setPushButton = new QPushButton("set", this);
     _settingGridLayot->addWidget(setPushButton, 6, 0);
-    setLayout(_settingGridLayot);
 
-
-    deletePushButton = new QPushButton("delete", this);
-    deletePushButton->setEnabled(false);
     _settingGridLayot->addWidget(deletePushButton, 7, 0);
 }
 
 
-void RobotSetting::DownloadDataFromView(RobotView robot){
-    _diameterSpinBox->setValue(int(robot.rect.h)*2);
-    _speedSpinBox->setValue(int(robot.speed));
-    _colorComboBox->setCurrentText(QString::fromStdString(getColorString(robot.color)));
-    _angleSpinBox->setValue(robot.angle);
-    _waySpinBox->setValue(robot.way);
+void RobotSetting::DownloadDataFromView(SimObjView view){
+    _diameterSpinBox->setValue(int(view.h)*2);
+    _speedSpinBox->setValue(int(view.speed));
+    _colorComboBox->setCurrentText(QString::fromStdString(getColorString(view.color)));
+    _angleSpinBox->setValue(view.angle);
+    _waySpinBox->setValue(view.way);
 
-    if(robot.isControlled){
+    if(view.isControlled){
 
         _typeRobotLineEdit->setText("controlled");
 

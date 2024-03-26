@@ -11,22 +11,16 @@
 #include <QString>
 #include "../core/icplib.h"
 #include "style.h"
+#include "ASettings.h"
 
 
-class WallSetting : public QDialog
+class WallSetting : public ASettings
 {
-    Q_OBJECT
-
 public:
 
     WallSetting(QWidget* parent);
-    QPushButton* setPushButton;
-    QPushButton* deletePushButton;
-    void DownloadDataFromView(WallView wall);
+    void DownloadDataFromView(SimObjView view) override;
 private:
-
-    QGridLayout* _settingGridLayot;
-
 
     QLabel* _heightLabel;
     QSpinBox* _heightSpinBox;

@@ -14,6 +14,7 @@
 #include <QTimer>
 #include <QBrush>
 #include <QPen>
+#include <QPointF>
 #include <QColor>
 #include <QPointF>
 #include <iostream>
@@ -47,6 +48,7 @@ public:
     bool flagIsSimMode = false;
 
     BuildModeStatus buildModeStatus = NotSetStatus;
+    QPointF* GetUserClick();
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 private:
@@ -84,6 +86,9 @@ private:
 
     void _CreateSimulationEngineLayout();
     void _DeleteSimulationEngineLayout();
+
+signals:
+    void UperClickSig();
 
 };
 

@@ -36,6 +36,7 @@ void SimulationWindow::_CreateSimGUI(){
     _simulationView->setSceneRect(0,0,1800, 750);  // TODO: size from core
     _simulationView->setFixedSize(1800+20, 750+20);  // TODO size from core
 
+    connect(_simulationScene, &SimulationScene::clickSig, this, [=](){emit UperClickSig();});
 }
 
 void SimulationWindow::_DeleteSimGUI(){
@@ -225,3 +226,8 @@ void SimulationWindow::keyPressEvent(QKeyEvent *event){
 
     }
 }
+
+QPointF* SimulationWindow::GetUserClick(){
+    return _simulationScene->GetUserClick();
+}
+

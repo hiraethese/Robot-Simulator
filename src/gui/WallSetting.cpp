@@ -1,9 +1,6 @@
 #include "WallSetting.h"
 
-WallSetting::WallSetting(QWidget* parent):QDialog(parent) {
-
-    _settingGridLayot = new QGridLayout(this);
-
+WallSetting::WallSetting(QWidget* parent):ASettings(parent) {
 
     _heightLabel = new QLabel("Height : ", this);
     _heightSpinBox = new QSpinBox(this);
@@ -30,18 +27,15 @@ WallSetting::WallSetting(QWidget* parent):QDialog(parent) {
     _settingGridLayot->addWidget(_colorLable, 2, 0);
     _settingGridLayot->addWidget(_colorComboBox, 2, 1);
 
-    setPushButton = new QPushButton("set", this);
     _settingGridLayot->addWidget(setPushButton, 3, 0);
 
-    deletePushButton = new QPushButton("delete", this);
-    deletePushButton->setEnabled(false);
     _settingGridLayot->addWidget(deletePushButton, 4, 0);
 
 }
 
 
-void WallSetting::DownloadDataFromView(WallView wall){
-    _heightSpinBox->setValue(wall.rect.h);
-    _widthSpinBox->setValue(wall.rect.w);
-    _colorComboBox->setCurrentText(QString::fromStdString(getColorString(wall.color)));
+void WallSetting::DownloadDataFromView(SimObjView view){
+    _heightSpinBox->setValue(view.h);
+    _widthSpinBox->setValue(view.w);
+    _colorComboBox->setCurrentText(QString::fromStdString(getColorString(view.color)));
 }

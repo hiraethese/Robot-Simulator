@@ -2,6 +2,7 @@
 #define SIMOBJECT_H
 
 #include "../properties/MyTransform.h"
+#include <iostream>
 
 class SimObject
 {
@@ -11,8 +12,9 @@ protected:
 
 public:
     SimObject(Vector2d position, Vector2d size, colors color);
-    ~SimObject();
+    virtual ~SimObject();
     MyTransform* GetTransform();
+    virtual SimObjView GetSimObjView() = 0;
 };
 
 #endif // SIMOBJECT_H
