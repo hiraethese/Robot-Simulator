@@ -5,6 +5,7 @@ SimFactory::SimFactory()
     _controlledRobot = nullptr;
     _botRobotTemplate  = {{0.0, 0.0, 30.0, 30.0}, 30, 30, 30, GREEN, false};  // default value (now random)
     _controlledRobotTemplate = {{0.0, 0.0, 30.0, 30.0}, 30, 30, 30, RED, true};  // default value (now random)
+    _wallTemplate = {{0.0, 0.0, 30.0, 30.0}, BLUE};
     //_wallTemplate = new Wall({0.0, 0.0},{30.0, 30.0});   // default value (now random)
 }
 
@@ -56,3 +57,7 @@ RobotView SimFactory::GetBotRobotTemp()
     return _botRobotTemplate;
 }
 
+WallView SimFactory::GetWallTemp()
+{
+    return _wallTemplate;
+}

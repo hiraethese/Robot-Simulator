@@ -12,7 +12,7 @@ private:
     std::vector<Wall*> _walls;
     RobotView _controlledRobotTemplate;
     RobotView _botRobotTemplate;
-    //Wall* _wallTemplate;
+    WallView _wallTemplate;
 public:
     SimFactory();
     void DeleteAllObjects();
@@ -21,6 +21,7 @@ public:
     Robot* GetControlledRobot();
     RobotView GetControlledRobotTemp();
     RobotView GetBotRobotTemp();
+    WallView GetWallTemp();
     const std::vector<Wall*>& GetWalls() const;
 };
 

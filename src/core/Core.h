@@ -49,6 +49,7 @@ public:
     const std::vector<Wall*>& GetVectorWalls() const;
     RobotView GetControlledRobotTemp();
     RobotView GetBotRobotTemp();
+    WallView GetWallTemplate();
 };
 
 #endif // CORE_H

@@ -150,3 +150,8 @@ RobotView Core::GetBotRobotTemp()
 {
     return _map->GetFactory()->GetBotRobotTemp();
 }
+
+
+WallView Core::GetWallTemplate(){
+    return _map->GetFactory()->GetWallTemp();
+}

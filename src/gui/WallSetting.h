@@ -8,6 +8,10 @@
 #include <QLabel>
 #include <QSpinBox>
 #include <QComboBox>
+#include <QString>
+#include "../core/icplib.h"
+#include "style.h"
+
 
 class WallSetting : public QDialog
 {
@@ -18,7 +22,7 @@ public:
     WallSetting(QWidget* parent);
     QPushButton* setPushButton;
     QPushButton* deletePushButton;
-
+    void DownloadDataFromView(WallView wall);
 private:
 
     QGridLayout* _settingGridLayot;

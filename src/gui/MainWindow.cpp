@@ -88,7 +88,7 @@ void MainWindow::_CreateMenu(){
     connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetBotRobotTemp());_robotSetWind->exec();});
 
     buildWallLayout = buildSubMenu->addAction("Wall layout");
-    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->exec();});
+    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemplate());_wallSetWind->exec();});
 
 
     downloadNewModeMapAction = appMenu->addAction("Download map");

@@ -38,3 +38,10 @@ WallSetting::WallSetting(QWidget* parent):QDialog(parent) {
     _settingGridLayot->addWidget(deletePushButton, 4, 0);
 
 }
+
+
+void WallSetting::DownloadDataFromView(WallView wall){
+    _heightSpinBox->setValue(wall.rect.h);
+    _widthSpinBox->setValue(wall.rect.w);
+    _colorComboBox->setCurrentText(QString::fromStdString(getColorString(wall.color)));
+}
