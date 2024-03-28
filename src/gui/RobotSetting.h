@@ -8,7 +8,6 @@
 #include <QLineEdit>
 #include <QGraphicsLineItem>
 #include <QSpinBox>
-#include <QComboBox>
 #include <QPushButton>
 #include <iostream>
 #include <QString>
@@ -20,7 +19,7 @@ class RobotSetting : public ASettings
 {
 
 public:
-    RobotSetting(QWidget* parent);
+    RobotSetting(QWidget* parent, QString title);
     void DownloadDataFromView(SimObjView view) override;
 
 private:
@@ -41,9 +40,6 @@ private:
 
     QLabel* _wayLable;
     QSpinBox* _waySpinBox;
-
-    QLabel* _colorLable;
-    QComboBox* _colorComboBox;
 
 };
 

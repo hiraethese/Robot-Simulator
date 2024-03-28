@@ -1,8 +1,6 @@
 #include "RobotSetting.h"
 
-RobotSetting::RobotSetting(QWidget* parent) : ASettings(parent){
-
-    this->setWindowTitle("Template");
+RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, title){
 
     _typeRobotLabel = new QLabel("Type : ", this);
     _typeRobotLineEdit = new QLabel(this);
@@ -38,23 +36,8 @@ RobotSetting::RobotSetting(QWidget* parent) : ASettings(parent){
     _settingGridLayot->addWidget(_wayLable, 4, 0);
     _settingGridLayot->addWidget(_waySpinBox, 4, 1);
 
-    _colorLable = new QLabel("Color : ");
-    _colorComboBox = new QComboBox(this);
-    _colorComboBox->addItem("red");
-    _colorComboBox->addItem("blue");
-    _colorComboBox->addItem("green");
-    _colorComboBox->addItem("gray");
-    _colorComboBox->addItem("black");
-    _colorComboBox->addItem("yellow");
-    _colorComboBox->addItem("gray");
-    _settingGridLayot->addWidget(_colorLable, 5, 0);
-    _settingGridLayot->addWidget(_colorComboBox, 5, 1);
-
-
-
-    _settingGridLayot->addWidget(setPushButton, 6, 0);
-
-    _settingGridLayot->addWidget(deletePushButton, 7, 0);
+    _CreateColorsSettings(5);
+    _CreateButtonsSettings(6);
 }
 
 

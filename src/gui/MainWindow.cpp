@@ -113,10 +113,6 @@ void MainWindow::_DeleteMenu(){
 // ************************************  PART NEW MAP MODE    *********************************************************
 
 void MainWindow::_CreateBuildMapModeSlot(){
-    // TODO: stop sim run
-    // TODO: clean set tools
-    // TODO: create settings tools
-    // TODO: create settings buttons
 
     setWindowTitle("Build map");
 
@@ -131,9 +127,6 @@ void MainWindow::_CreateBuildMapModeSlot(){
 
 }
 void MainWindow::_CreateSimModeSlot(){
-    // TODO: clean sim tools
-    // TODO: clean sim buttons
-    // TODO: create build tools
 
     setWindowTitle("Simulation");
 
@@ -373,9 +366,15 @@ void MainWindow::_CreateSettings(){
 
     _newMapWind = new NewMapSetting(this);
     connect(_newMapWind->downloadButton, &QPushButton::clicked, this, &MainWindow::_PushNewMapToCoreSlot);
-    _robotSetWind = new RobotSetting(this);
-    _wallSetWind = new WallSetting(this);
+
+    _robotSetWind = new RobotSetting(this, "Robot settings");
+    connect(_robotSetWind, &RobotSetting::setSig, this, [=](){std::cout << "CLICK SET ROBOT SETTINGS" << std::endl;});  // TODO : create slot with prototype function for all settings with setting new data
+
+    _wallSetWind = new WallSetting(this, "Wall settings");
+    connect(_wallSetWind, &WallSetting::setSig, this, [=](){std::cout << "CLICK SET WALL SETTINGS" << std::endl;});  // TODO : create slot with prototype function for all settings with setting new data
+
 }
+
 
 
 void MainWindow::_PushNewMapToCoreSlot(){
@@ -389,4 +388,9 @@ void MainWindow::_PushNewMapToCoreSlot(){
 
     }
 
+}
+
+
+void MainWindow::test(){
+    std::cout << "TEST" << std::endl;
 }

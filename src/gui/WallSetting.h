@@ -7,7 +7,6 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QSpinBox>
-#include <QComboBox>
 #include <QString>
 #include "../core/icplib.h"
 #include "style.h"
@@ -18,7 +17,7 @@ class WallSetting : public ASettings
 {
 public:
 
-    WallSetting(QWidget* parent);
+    WallSetting(QWidget* parent, QString title);
     void DownloadDataFromView(SimObjView view) override;
 private:
 
@@ -27,14 +26,6 @@ private:
 
     QLabel* _widthLabel;
     QSpinBox* _widthSpinBox;
-
-
-    QLabel* _diameterLabel;
-    QSpinBox* _diameterSpinBox;
-
-
-    QLabel* _colorLable;
-    QComboBox* _colorComboBox;
 
 
 };

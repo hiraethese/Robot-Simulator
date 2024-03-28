@@ -167,5 +167,7 @@ private slots:
     void _PushNewMapToCoreSlot();
 
     void _UserClickSimSceneLogicSlot();
+
+    void test();
 };
 #endif // MAINWINDOW_H

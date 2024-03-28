@@ -1,6 +1,6 @@
 #include "WallSetting.h"
 
-WallSetting::WallSetting(QWidget* parent):ASettings(parent) {
+WallSetting::WallSetting(QWidget* parent, QString title):ASettings(parent, title) {
 
     _heightLabel = new QLabel("Height : ", this);
     _heightSpinBox = new QSpinBox(this);
@@ -16,20 +16,9 @@ WallSetting::WallSetting(QWidget* parent):ASettings(parent) {
     _settingGridLayot->addWidget(_widthLabel, 1, 0);
     _settingGridLayot->addWidget(_widthSpinBox, 1, 1);
 
+    _CreateColorsSettings(2);
 
-    _colorLable = new QLabel("Color : ", this);
-    _colorComboBox = new QComboBox(this);
-    _colorComboBox->addItem("red");
-    _colorComboBox->addItem("blue");
-    _colorComboBox->addItem("green");
-    _colorComboBox->addItem("gray");
-    _colorComboBox->addItem("black");
-    _settingGridLayot->addWidget(_colorLable, 2, 0);
-    _settingGridLayot->addWidget(_colorComboBox, 2, 1);
-
-    _settingGridLayot->addWidget(setPushButton, 3, 0);
-
-    _settingGridLayot->addWidget(deletePushButton, 4, 0);
+    _CreateButtonsSettings(3);
 
 }
 
