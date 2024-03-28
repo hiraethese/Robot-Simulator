@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/helpTool.jpg</file>
+        <file>icons/helpTool.png</file>
         <file>icons/newMapTool.png</file>
         <file>icons/listOfMapTool.png</file>
         <file>icons/settingsTool.png</file>

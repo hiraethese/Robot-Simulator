@@ -207,7 +207,7 @@ void MainWindow::_HelpTextToolActionSlot(){
 
 void MainWindow::_RunSimulationActionSlot(){
 
-    if(!_core->IsSimReady()){
+    if(!_core->IsSimReady()){  // check is prepared simulation map to running
 
         _WarningMsgSimNotSet();
         return;
@@ -267,7 +267,7 @@ void MainWindow::_UserClickSimSceneLogicSlot(){
 // ************************************  PART BUILD MODE    *********************************************************
 void MainWindow::_CreateBuildModeTools(){
 
-    _helpToolAction = new QAction(QIcon(":/icons/helpTool.jpg"), "&Help", this);
+    _helpToolAction = new QAction(QIcon(":/icons/helpTool.png"), "&Help", this);
     connect(_helpToolAction, &QAction::triggered, this, &MainWindow::_HelpTextToolActionSlot);
 
     _cursorAction = new QAction(QIcon(":/icons/cursorTool.png"), "Cursor", this);

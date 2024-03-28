@@ -171,13 +171,17 @@ void SimulationWindow::_SetUnsetSimButtons(bool flagIsSet){
 
 void SimulationWindow::RunSimScene(){
 
+    _SetUnsetSimButtons(true);
+
     _simulationScene->InitSimRun();
+
 
 }
 void SimulationWindow::StopSimScene(){
 
     _simulationScene->StopSimRun();
 
+    _SetUnsetSimButtons(false);
 }
 
 void SimulationWindow::LoadSimScene(){
