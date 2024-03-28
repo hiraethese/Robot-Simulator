@@ -15,3 +15,4 @@ int main(int argc, char *argv[])
     return a.exec();
 }
 // /mnt/c/Users/user/icp2024/examples/example.txt
+// C:\Users\user\icp2024\examples\example.txt

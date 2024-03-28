@@ -160,10 +160,14 @@ void MainWindow::_CreateSimModeTools(){
 
     _simulationIdToolBar = addToolBar("simulationId");
     _labelSimIdToolBar = new QLabel("Simulation: ");
+
     _simulationIdToolBar->addWidget(_labelSimIdToolBar);
+
     _lineMapNameSimIdToolBar = new QLineEdit();
     _lineMapNameSimIdToolBar->setReadOnly(true);
     _lineMapNameSimIdToolBar->setFixedWidth(500);
+    _lineMapNameSimIdToolBar->setText(QString::fromStdString(_core->GetMapValue()));
+
     _simulationIdToolBar->addWidget(_lineMapNameSimIdToolBar);
 
     _helpToolBar = addToolBar("help");
@@ -385,7 +389,6 @@ void MainWindow::_PushNewMapToCoreSlot(){
 
     if(!code){
 
-        _lineMapNameSimIdToolBar->setText(QString::fromStdString(_core->GetMapValue()));
         _simulationWind->LoadSimScene();
 
     }
