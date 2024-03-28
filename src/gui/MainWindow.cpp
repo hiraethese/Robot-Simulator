@@ -369,10 +369,11 @@ void MainWindow::_CreateSettings(){
 
     _robotSetWind = new RobotSetting(this, "Robot settings");
     connect(_robotSetWind, &RobotSetting::setSig, this, [=](){std::cout << "CLICK SET ROBOT SETTINGS" << std::endl;});  // TODO : create slot with prototype function for all settings with setting new data
+    connect(_robotSetWind, &RobotSetting::deleteSig, this, [=](){std::cout << "CLICK DELETE ROBOT SETTINGS" << std::endl;});
 
     _wallSetWind = new WallSetting(this, "Wall settings");
     connect(_wallSetWind, &WallSetting::setSig, this, [=](){std::cout << "CLICK SET WALL SETTINGS" << std::endl;});  // TODO : create slot with prototype function for all settings with setting new data
-
+    connect(_wallSetWind, &WallSetting::deleteSig, this, [=](){std::cout << "CLICK DELETE WALL SETTINGS" << std::endl;});
 }
 
 
@@ -383,6 +384,7 @@ void MainWindow::_PushNewMapToCoreSlot(){
     std::cout << "code: " << code <<std::endl;
 
     if(!code){
+
         _lineMapNameSimIdToolBar->setText(QString::fromStdString(_core->GetMapValue()));
         _simulationWind->LoadSimScene();
 
