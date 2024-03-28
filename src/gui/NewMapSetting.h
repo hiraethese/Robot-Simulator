@@ -12,16 +12,24 @@
 class NewMapSetting : public QDialog
 {
     Q_OBJECT
+
 public:
+
     NewMapSetting(QWidget* parent);
     std::string GetNewMapPath();
 
-    QPushButton* downloadButton;
 private:
+
     QGridLayout* _newMapGridLayot;
 
     QLabel* _newMapLabel;
     QLineEdit* _newMapLine;
+
+    QPushButton* _downloadButton;
+
+signals:
+
+    void downloadSig();
 
 };
 

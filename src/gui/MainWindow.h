@@ -168,6 +168,5 @@ private slots:
 
     void _UserClickSimSceneLogicSlot();
 
-    void test();
 };
 #endif // MAINWINDOW_H

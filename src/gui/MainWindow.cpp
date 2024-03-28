@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     QApplication::setApplicationDisplayName("ICP2024");
     setWindowTitle("ICP2024");
-
+    setStyleSheet("background-color: lightgray;");
     _core = Core::getInstance();
 
     _CreateAppWindows();
@@ -365,7 +365,7 @@ void MainWindow::_HummerActionSlot(){
 void MainWindow::_CreateSettings(){
 
     _newMapWind = new NewMapSetting(this);
-    connect(_newMapWind->downloadButton, &QPushButton::clicked, this, &MainWindow::_PushNewMapToCoreSlot);
+    connect(_newMapWind, &NewMapSetting::downloadSig, this, &MainWindow::_PushNewMapToCoreSlot);
 
     _robotSetWind = new RobotSetting(this, "Robot settings");
     connect(_robotSetWind, &RobotSetting::setSig, this, [=](){std::cout << "CLICK SET ROBOT SETTINGS" << std::endl;});  // TODO : create slot with prototype function for all settings with setting new data
@@ -388,9 +388,4 @@ void MainWindow::_PushNewMapToCoreSlot(){
 
     }
 
-}
-
-
-void MainWindow::test(){
-    std::cout << "TEST" << std::endl;
 }
