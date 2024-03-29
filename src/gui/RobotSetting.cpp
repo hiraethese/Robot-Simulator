@@ -42,7 +42,7 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
 
 
 void RobotSetting::DownloadDataFromView(SimObjView view){
-    _diameterSpinBox->setValue(int(view.h)*2);
+    _diameterSpinBox->setValue(int(view.h));
     _speedSpinBox->setValue(int(view.speed));
     _colorComboBox->setCurrentText(QString::fromStdString(getColorString(view.color)));
     _angleSpinBox->setValue(view.angle);

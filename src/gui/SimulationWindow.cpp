@@ -14,13 +14,6 @@ SimulationWindow::SimulationWindow(QWidget *parent)
 SimulationWindow::~SimulationWindow(){
 
     _DeleteSimGUI();
-
-    if(flagSimEngineLayout){
-
-        _DeleteSimulationEngineLayout();
-
-    }
-
     _DeleteSimulationsLayout();
 
 }
@@ -59,20 +52,6 @@ void SimulationWindow::_CreateSimulationsLayout(){
 
 
     _simulationsLayot->addLayout(_simBodyowBoxLayout);
-    setLayout(_simulationsLayot);
-
-}
-
-void SimulationWindow::_DeleteSimulationsLayout(){
-
-    delete _simBodyowBoxLayout;
-    delete _simulationsLayot;
-
-}
-
-void SimulationWindow::_CreateSimulationEngineLayout(){
-
-    flagSimEngineLayout = true;
 
     _forwardMoveButton = new QPushButton("forward");
     _leftMoveButton = new QPushButton("left");
@@ -110,11 +89,14 @@ void SimulationWindow::_CreateSimulationEngineLayout(){
 
     _simulationsLayot->addLayout(_simulatyonEngineLayout);
 
+    setLayout(_simulationsLayot);
+
+    _SetUnsetSimButtons(false);
+
 }
 
-void SimulationWindow::_DeleteSimulationEngineLayout(){
+void SimulationWindow::_DeleteSimulationsLayout(){
 
-    flagSimEngineLayout = false;
     _simulationsLayot->removeItem(_simulatyonEngineLayout);
 
     disconnect(_forwardMoveButton, 0, 0, 0);
@@ -123,36 +105,30 @@ void SimulationWindow::_DeleteSimulationEngineLayout(){
     disconnect(_rightMoveButton, 0, 0, 0);
 
     delete _forwardMoveButton;
-    _forwardMoveButton = nullptr;
     delete _leftMoveButton;
-    _leftMoveButton = nullptr;
     delete _stopMoveButton;
-    _stopMoveButton = nullptr;
     delete _rightMoveButton;
-    _rightMoveButton = nullptr;
 
     delete _highRobotsEngineLayout;
     delete _lowRobotsEngineLayout;
     delete _robotsEngineLayout;
     delete _simulatyonEngineLayout;
 
-}
 
+    delete _simBodyowBoxLayout;
+    delete _simulationsLayot;
+
+}
 
 void SimulationWindow::SwitchBetweenSimAndBuild(bool flagIsBuild){
 
     _simulationView->setInteractive(flagIsBuild);
 
+    _SetUnsetSimButtons(false);
+
     if(flagIsBuild){
 
-        _simulationView->setInteractive(true);
-        _DeleteSimulationEngineLayout();
-
-    }
-    else{
-
-        _simulationView->setInteractive(false);
-        _CreateSimulationEngineLayout();
+        StopSimScene();
 
     }
 
@@ -182,6 +158,7 @@ void SimulationWindow::StopSimScene(){
     _simulationScene->StopSimRun();
 
     _SetUnsetSimButtons(false);
+
 }
 
 void SimulationWindow::LoadSimScene(){

@@ -42,6 +42,14 @@ enum Page{
     BuildPage
 };
 
+enum BuildState{
+    NotSet,
+    ControllRobotBuild,
+    BotRobotBuild,
+    WallBuild,
+    Cursor
+};
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -63,6 +71,7 @@ private:
 
     Core* _core;
     Page _actualPage = NotSetPage;
+    BuildState _buildState = NotSet;
 
     void _CreateAppWindows();
     void _DeleteAppWindows();
@@ -136,6 +145,11 @@ private:
     QLineEdit* _statusModeLine;
     QToolBar* _settingsBuildToolBar;
     QToolBar* _engineBuildToolBar;
+    QToolBar* _engineCursorToolBar;
+    QLabel* _xCursorTouchLab;
+    QLabel* _yCursorTouchLab;
+    QLineEdit* _xCursorTouchLine;
+    QLineEdit* _yCursorTouchLine;
     QToolBar* _statusModeBuildToolBar;
 
     void _CreateBuildModeTools();

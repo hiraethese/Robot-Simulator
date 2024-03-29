@@ -92,7 +92,7 @@ void MainWindow::_CreateMenu(){
 
 
     downloadNewModeMapAction = appMenu->addAction("Download map");
-    connect(downloadNewModeMapAction, &QAction::triggered, this, [=](){_simulationWind->StopSimScene();_newMapWind->show();});
+    connect(downloadNewModeMapAction, &QAction::triggered, this, [=](){_simulationWind->StopSimScene();_newMapWind->exec();});
 
 }
 
@@ -124,6 +124,8 @@ void MainWindow::_CreateBuildMapModeSlot(){
         _actualPage = BuildPage;
 
     }
+
+    emit _cursorAction->triggered();  // default on cursor
 
 }
 void MainWindow::_CreateSimModeSlot(){
@@ -261,9 +263,14 @@ void MainWindow::_CreateSimulationWindow(){
 }
 
 void MainWindow::_UserClickSimSceneLogicSlot(){
+
     QPointF* test = _simulationWind->GetUserClick();
-    std::cout << "User click on x=" << test->x() << " y=" << test->y() << std::endl;
+
+    _xCursorTouchLine->setText(QString("%1").arg(test->x()));
+    _yCursorTouchLine->setText(QString("%1").arg(test->y()));
+
 }
+
 // ************************************  PART BUILD MODE    *********************************************************
 void MainWindow::_CreateBuildModeTools(){
 
@@ -293,7 +300,21 @@ void MainWindow::_CreateBuildModeTools(){
     _engineBuildToolBar->addAction(_buildUserRobotAction);
     _engineBuildToolBar->addAction(_buildBotRobotAction);
     _engineBuildToolBar->addAction(_buildWallAction);
-    _engineBuildToolBar->addAction(_cursorAction);
+
+    _engineCursorToolBar = addToolBar("engineCursor");
+    _engineCursorToolBar->addAction(_cursorAction);
+    _xCursorTouchLab = new QLabel("X");
+    _xCursorTouchLine = new QLineEdit();
+    _xCursorTouchLine->setReadOnly(true);
+    _xCursorTouchLine->setFixedWidth(35);
+    _yCursorTouchLab = new QLabel("Y");
+    _yCursorTouchLine = new QLineEdit();
+    _yCursorTouchLine->setReadOnly(true);
+    _yCursorTouchLine->setFixedWidth(35);
+    _engineCursorToolBar->addWidget(_xCursorTouchLab);
+    _engineCursorToolBar->addWidget(_xCursorTouchLine);
+    _engineCursorToolBar->addWidget(_yCursorTouchLab);
+    _engineCursorToolBar->addWidget(_yCursorTouchLine);
 
     _statusModeBuildToolBar = addToolBar("statusModeBuild");
     _statusModeLabel = new QLabel("Build mode: ");
@@ -324,11 +345,17 @@ void MainWindow::_DeleteBuildModeTools(){
         delete _buildWallAction;
         delete _statusModeLabel;
         delete _statusModeLine;
+        delete _xCursorTouchLab;
+        delete _xCursorTouchLine;
+        delete _yCursorTouchLab;
+        delete _yCursorTouchLine;
         removeToolBar(_settingsBuildToolBar);
         removeToolBar(_engineBuildToolBar);
+        removeToolBar(_engineCursorToolBar);
         removeToolBar(_statusModeBuildToolBar);
         delete _settingsBuildToolBar;
         delete _engineBuildToolBar;
+        delete _engineCursorToolBar;
         delete _statusModeBuildToolBar;
 
     }
@@ -337,18 +364,21 @@ void MainWindow::_DeleteBuildModeTools(){
 
 void MainWindow::_CursorActionSlot(){
 
+    _buildState = Cursor;
     _statusModeLine->setText("Interaction");
 
 }
 
 void MainWindow::_BuildUserRobotActionSlot(){
 
+    _buildState = ControllRobotBuild;
     _statusModeLine->setText("Build users robot");
 
 }
 
 void MainWindow::_BuildBotRobotActionSlot(){
 
+    _buildState = BotRobotBuild;
     _statusModeLine->setText("Build bot robots");
 
 }
@@ -356,6 +386,7 @@ void MainWindow::_BuildBotRobotActionSlot(){
 
 void MainWindow::_BuildWallActionSlot(){
 
+    _buildState = WallBuild;
     _statusModeLine->setText("Build walls");
 
 }

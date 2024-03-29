@@ -44,16 +44,12 @@ public:
     void StopSimScene();
     void LoadSimScene();
 
-
-    bool flagIsSimMode = false;
-
     BuildModeStatus buildModeStatus = NotSetStatus;
     QPointF* GetUserClick();
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 private:
     Core* _core;
-    bool flagSimEngineLayout = false;
     QGraphicsView* _simulationView = nullptr;
     SimulationScene* _simulationScene = nullptr;
 
@@ -83,9 +79,6 @@ private:
     void _CreateSimulationsLayout();
     void _DeleteSimulationsLayout();
     void _SetUnsetSimButtons(bool flagIsSet);
-
-    void _CreateSimulationEngineLayout();
-    void _DeleteSimulationEngineLayout();
 
 signals:
     void UperClickSig();
