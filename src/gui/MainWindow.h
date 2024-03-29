@@ -75,8 +75,6 @@ private:
 
     void _CreateAppWindows();
     void _DeleteAppWindows();
-    void _SetPallet();
-
 
     QPalette palMainWindow;
     QToolBar* _simulationToolBar;

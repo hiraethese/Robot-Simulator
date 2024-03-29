@@ -32,30 +32,37 @@ MainWindow::~MainWindow()
 void MainWindow::_CreateAppWindows(){
 
     _CreateSimulationWindow();
+
     _CreateSettings();
+
     _CreateMenu();
+
+    _CreateTools();
+
     _CreateSimModeSlot();
-    _SetPallet();
-
-}
-
-void MainWindow::_SetPallet(){
-
-    //palMainWindow = QPalette();
-    //palMainWindow.setColor(QPalette::Window, Qt::lightGray);//lightGray);
-    //setPalette(palMainWindow);
 
 }
 
 void MainWindow::_DeleteAppWindows(){
 
     _DeleteTools();
+
     _DeleteMenu();
 
     delete _simulationWind;
 
 }
 
+
+void MainWindow::_CreateTools(){
+
+    _helpToolAction = new QAction(QIcon(":/icons/helpTool.png"), "&Help", this);
+    connect(_helpToolAction, &QAction::triggered, this, &MainWindow::_HelpTextToolActionSlot);
+
+    _helpToolBar = addToolBar("help");
+    _helpToolBar->addAction(_helpToolAction);
+
+}
 
 void MainWindow::_DeleteTools(){
 
@@ -64,6 +71,17 @@ void MainWindow::_DeleteTools(){
         _DeleteSimModeTools();
 
     }
+    else{
+
+        _DeleteBuildModeTools();
+
+    }
+
+
+    disconnect(_helpToolAction, 0, 0, 0);
+    delete _helpToolAction;
+    removeToolBar(_helpToolBar);
+    delete _helpToolBar;
 
 }
 
@@ -110,24 +128,8 @@ void MainWindow::_DeleteMenu(){
 }
 
 
-// ************************************  PART NEW MAP MODE    *********************************************************
+// ************************************  PART SIM MODE    *********************************************************
 
-void MainWindow::_CreateBuildMapModeSlot(){
-
-    setWindowTitle("Build map");
-
-    if(_actualPage != BuildPage){
-
-        _DeleteSimModeTools();
-        _CreateBuildModeTools();
-        _simulationWind->SwitchBetweenSimAndBuild(true);
-        _actualPage = BuildPage;
-
-    }
-
-    emit _cursorAction->triggered();  // default on cursor
-
-}
 void MainWindow::_CreateSimModeSlot(){
 
     setWindowTitle("Simulation");
@@ -143,12 +145,7 @@ void MainWindow::_CreateSimModeSlot(){
 
 }
 
-// ************************************  PART SIM MODE    *********************************************************
-
 void MainWindow::_CreateSimModeTools(){
-
-    _helpToolAction = new QAction(QIcon(":/icons/helpTool.jpg"), "&Help", this);
-    connect(_helpToolAction, &QAction::triggered, this, &MainWindow::_HelpTextToolActionSlot);
 
     _runSimulationAction = new QAction(QIcon(":/icons/playTool.png"), "&Run", this);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
@@ -172,19 +169,14 @@ void MainWindow::_CreateSimModeTools(){
 
     _simulationIdToolBar->addWidget(_lineMapNameSimIdToolBar);
 
-    _helpToolBar = addToolBar("help");
-    _helpToolBar->addAction(_helpToolAction);
-
 }
 
 
 void MainWindow::_DeleteSimModeTools(){
 
-    disconnect(_helpToolAction, 0, 0, 0);
     disconnect(_runSimulationAction, 0, 0, 0);
     disconnect(_restartSimulationAction, 0, 0, 0);
 
-    delete _helpToolAction;
     delete _runSimulationAction;
 
     _runSimulationAction = nullptr;
@@ -192,12 +184,10 @@ void MainWindow::_DeleteSimModeTools(){
 
     removeToolBar(_engineSimRunToolBar);
     removeToolBar(_simulationIdToolBar);
-    removeToolBar(_helpToolBar);
     delete _labelSimIdToolBar;
     delete _lineMapNameSimIdToolBar;
     delete _engineSimRunToolBar;
     delete _simulationIdToolBar;
-    delete _helpToolBar;
 
 }
 
@@ -272,10 +262,25 @@ void MainWindow::_UserClickSimSceneLogicSlot(){
 }
 
 // ************************************  PART BUILD MODE    *********************************************************
-void MainWindow::_CreateBuildModeTools(){
 
-    _helpToolAction = new QAction(QIcon(":/icons/helpTool.png"), "&Help", this);
-    connect(_helpToolAction, &QAction::triggered, this, &MainWindow::_HelpTextToolActionSlot);
+void MainWindow::_CreateBuildMapModeSlot(){
+
+    setWindowTitle("Build map");
+
+    if(_actualPage != BuildPage){
+
+        _DeleteSimModeTools();
+        _CreateBuildModeTools();
+        _simulationWind->SwitchBetweenSimAndBuild(true);
+        _actualPage = BuildPage;
+
+    }
+
+    emit _cursorAction->triggered();  // default on cursor
+
+}
+
+void MainWindow::_CreateBuildModeTools(){
 
     _cursorAction = new QAction(QIcon(":/icons/cursorTool.png"), "Cursor", this);
     connect(_cursorAction, &QAction::triggered, this, &MainWindow::_CursorActionSlot);
@@ -324,10 +329,6 @@ void MainWindow::_CreateBuildModeTools(){
     _statusModeLine->setFixedWidth(150);
     _statusModeBuildToolBar->addWidget(_statusModeLine);
 
-
-    _helpToolBar = addToolBar("help");
-    _helpToolBar->addAction(_helpToolAction);
-
 }
 
 void MainWindow::_DeleteBuildModeTools(){
@@ -338,7 +339,6 @@ void MainWindow::_DeleteBuildModeTools(){
         disconnect(_buildUserRobotAction, 0, 0, 0);
         disconnect(_buildBotRobotAction, 0, 0, 0);
         disconnect(_buildWallAction, 0, 0, 0);
-        disconnect(_helpToolAction, 0, 0, 0);
         delete _cursorAction;
         delete _buildUserRobotAction;
         delete _buildBotRobotAction;
