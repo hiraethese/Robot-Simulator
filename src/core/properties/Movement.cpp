@@ -44,22 +44,22 @@ void Movement::SetAngleDegrees(int newAngleDegrees)
 void Movement::RotateLeft()
 {
     _angleDegrees = (_angleDegrees - _angleStep) % 360;
-    // std::cout << "left rotate: " << _angleDegrees << std::endl;
 }
 
 void Movement::RotateRight()
 {
     _angleDegrees = (_angleDegrees + _angleStep) % 360;
-    // std::cout << "right rotate: " << _angleDegrees << std::endl;
 }
 
 void Movement::EnableMovement()
 {
+    std::cout << "set on true" << std::endl;
     _isEnabled = true;
 }
 
 void Movement::DisableMovement()
 {
+    std::cout << "set on false" << std::endl;
     _isEnabled = false;
 }
 
@@ -70,7 +70,7 @@ void Movement::MoveForward()
     {
         return;
     }
-
+    
     Vector2d direction1 = {0.0f, 0.0f};
     Vector2d direction2 = {0.0f, 0.0f};
 
@@ -156,5 +156,4 @@ void Movement::MoveWithDirection(Vector2d direction)
     }
 
     _transform->SetPosition(newPosition);
-    // std::cout << "forward move " << "x = " << position.x << " " << "y = " << position.y << std::endl;
 }

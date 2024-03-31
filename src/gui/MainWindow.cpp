@@ -214,6 +214,8 @@ void MainWindow::_RunSimulationActionSlot(){
 
     _core->SetRunSim(true);
 
+    _simulationWind->setFocus();
+
     _simulationWind->RunSimScene();
 
 }

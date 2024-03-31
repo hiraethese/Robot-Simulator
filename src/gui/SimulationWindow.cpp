@@ -91,8 +91,6 @@ void SimulationWindow::_CreateSimulationsLayout(){
 
     setLayout(_simulationsLayot);
 
-    _SetUnsetSimButtons(false);
-
 }
 
 void SimulationWindow::_DeleteSimulationsLayout(){
@@ -124,13 +122,12 @@ void SimulationWindow::SwitchBetweenSimAndBuild(bool flagIsBuild){
 
     _simulationView->setInteractive(flagIsBuild);
 
-    _SetUnsetSimButtons(false);
+    //_SetUnsetSimButtons(false);
 
-    if(flagIsBuild){
-
-        StopSimScene();
-
-    }
+    //if(flagIsBuild){
+    //StopSimScene();
+    //}
+    StopSimScene();
 
 }
 
@@ -151,13 +148,20 @@ void SimulationWindow::RunSimScene(){
 
     _simulationScene->InitSimRun();
 
-
 }
 void SimulationWindow::StopSimScene(){
 
-    _simulationScene->StopSimRun();
+    if(_core->IsSimReady()){
+
+        _core->StopMoveSig();
+
+    }
+
 
     _SetUnsetSimButtons(false);
+
+    _simulationScene->StopSimRun();
+
 
 }
 
@@ -169,41 +173,24 @@ void SimulationWindow::LoadSimScene(){
 
 
 void SimulationWindow::keyPressEvent(QKeyEvent *event){
-
     if(event->key() == Qt::Key_W){
 
-        if(_forwardMoveButton){
-
-            emit _forwardMoveButton->clicked();
-
-        }
+        emit _forwardMoveButton->clicked();
 
     }
     else if(event->key() == Qt::Key_A){
 
-        if(_leftMoveButton){
-
-            emit _leftMoveButton->clicked();
-
-        }
+        emit _leftMoveButton->clicked();
 
     }
     else if(event->key() == Qt::Key_D){
 
-        if(_rightMoveButton){
-
-            emit _rightMoveButton->clicked();
-
-        }
+        emit _rightMoveButton->clicked();
 
     }
     else if(event->key() == Qt::Key_S){
 
-        if(_stopMoveButton){
-
-            emit _stopMoveButton->clicked();
-
-        }
+        emit _stopMoveButton->clicked();
 
     }
 }
