@@ -147,11 +147,17 @@ void Movement::Move(Vector2d direction)
 
 void Movement::MoveForward()
 {
-    Vector2d direction = {0.0f, 0.0f};
+    // Check if movement is enabled
+    if (!_isEnabled)
+    {
+        return;
+    }
+    Vector2d direction1, direction2 = {0.0f, 0.0f};
     float angleRadians = _angleDegrees * ( M_PI / 180.0f );
 
-    direction.x = _speed * cos(angleRadians);
-    direction.y = _speed * sin(angleRadians);
+    direction1.x = _speed * cos(angleRadians);
+    direction2.y = _speed * sin(angleRadians);
 
-    Move(direction);
+    Move(direction1);
+    Move(direction2);
 }
