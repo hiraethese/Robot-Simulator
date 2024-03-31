@@ -63,7 +63,7 @@ void Movement::DisableMovement()
     _isEnabled = false;
 }
 
-void Movement::MoveForward()
+void Movement::Move(Vector2d direction)
 {
     // Check if movement is enabled
     if (!_isEnabled)
@@ -80,50 +80,46 @@ void Movement::MoveForward()
     Vector2d position = _transform->GetPosition();
     Vector2d size = _transform->GetSize();
 
-    float angleRadians = _angleDegrees * ( M_PI / 180.0f );
-    float radius = std::max(size.x, size.y) / 2;
+    float radius = std::max(size.x, size.y) * 0.5f;
 
     // Calculate new estimated position
-    Vector2d newPosition;
-    newPosition.x = position.x + _speed * cos(angleRadians);
-    newPosition.y = position.y + _speed * sin(angleRadians);
+    Vector2d newPosition = position + direction;
 
-    // Check for collision with walls - TODO: check if robot will be inside the wall (?)
+    // Check for collision with walls
     for (Wall* wall : walls)
     {
         Vector2d wallPosition = wall->GetTransform()->GetPosition();
         Vector2d wallSize = wall->GetTransform()->GetSize();
 
-        float testX = newPosition.x;
-        float testY = newPosition.y;
-
-        if (newPosition.x < wallPosition.x - wallSize.x * 0.5f + radius)
+        if (newPosition.x + radius >= wallPosition.x - wallSize.x * 0.5f &&
+            newPosition.x - radius <= wallPosition.x + wallSize.x * 0.5f &&
+            newPosition.y + radius >= wallPosition.y - wallSize.y * 0.5f &&
+            newPosition.y - radius <= wallPosition.y + wallSize.y * 0.5f)
         {
-            testX = wallPosition.x - wallSize.x * 0.5f;
-        }
-        else if (newPosition.x > wallPosition.x + wallSize.x * 0.5f - radius)
-        {
-            testX = wallPosition.x + wallSize.x * 0.5f;
-        }
-
-        if (newPosition.y < wallPosition.y - wallSize.y * 0.5f + radius)
-        {
-            testY = wallPosition.y - wallSize.y * 0.5f;
-        }
-        else if (newPosition.y > wallPosition.y + wallSize.y * 0.5f - radius)
-        {
-            testY = wallPosition.y + wallSize.y * 0.5f;
-        }
-
-        float distX = newPosition.x - testX;
-        float distY = newPosition.y - testY;
-        float distance = sqrt(distX * distX + distY * distY);
-
-        if (distance < radius)
-        {
-            float overlap = radius - distance;
-            newPosition.x += distX / distance * overlap;
-            newPosition.y += distY / distance * overlap;
+            if         (newPosition.x < wallPosition.x &&
+                        newPosition.y < wallPosition.y + wallSize.y * 0.5f &&
+                        newPosition.y > wallPosition.y - wallSize.y * 0.5f)
+            {
+                newPosition.x = wallPosition.x - wallSize.x * 0.5f - radius;
+            }
+            else if    (newPosition.x > wallPosition.x &&
+                        newPosition.y < wallPosition.y + wallSize.y * 0.5f &&
+                        newPosition.y > wallPosition.y - wallSize.y * 0.5f)
+            {
+                newPosition.x = wallPosition.x + wallSize.x * 0.5f + radius;
+            }
+            else if    (newPosition.y < wallPosition.y &&
+                        newPosition.x < wallPosition.x + wallSize.x * 0.5f &&
+                        newPosition.x > wallPosition.x - wallSize.x * 0.5f)
+            {
+                newPosition.y = wallPosition.x - wallSize.x * 0.5f - radius;
+            }
+            else if    (newPosition.y > wallPosition.y &&
+                        newPosition.x < wallPosition.x + wallSize.x * 0.5f &&
+                        newPosition.x > wallPosition.x - wallSize.x * 0.5f)
+            {
+                newPosition.y = wallPosition.y + wallSize.y * 0.5f + radius;
+            }
         }
     }
 
@@ -147,4 +143,16 @@ void Movement::MoveForward()
 
     _transform->SetPosition(newPosition);
     // std::cout << "forward move " << "x = " << position.x << " " << "y = " << position.y << std::endl;
+}
+
+void Movement::MoveForward()
+{
+    Vector2d direction1, direction2 = {0.0f, 0.0f};
+    float angleRadians = _angleDegrees * ( M_PI / 180.0f );
+
+    direction1.x = _speed * cos(angleRadians);
+    direction2.y = _speed * sin(angleRadians);
+
+    Move(direction1);
+    Move(direction2);
 }

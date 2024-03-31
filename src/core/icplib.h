@@ -8,6 +8,39 @@
 typedef struct Vector2d {
     float x; // Vector x component
     float y; // Vector y component
+
+    Vector2d operator-(const Vector2d& other) const {
+        return {x - other.x, y - other.y};
+    }
+    
+    Vector2d operator+(const Vector2d& other) const {
+        return {x + other.x, y + other.y};
+    }
+
+    Vector2d operator*(float scalar) const {
+        return {x * scalar, y * scalar};
+    }
+
+    Vector2d operator/(float scalar) const {
+        return {x / scalar, y / scalar};
+    }
+
+    float getLength() {
+        return sqrt(x*x + y*y);
+    }
+
+    Vector2d Normalize() {
+        Vector2d result;
+        float length = result.getLength();
+
+        if (length > 0) {
+            float ilength = 1.0f/length;
+            result.x = x*ilength;
+            result.y = y*ilength;
+        }
+
+        return result;
+    }
 } Vector2d;
 
 // Rectangle structure
