@@ -112,7 +112,7 @@ void Movement::Move(Vector2d direction)
                         newPosition.x < wallPosition.x + wallSize.x * 0.5f &&
                         newPosition.x > wallPosition.x - wallSize.x * 0.5f)
             {
-                newPosition.y = wallPosition.x - wallSize.x * 0.5f - radius;
+                newPosition.y = wallPosition.y - wallSize.y * 0.5f - radius;
             }
             else if    (newPosition.y > wallPosition.y &&
                         newPosition.x < wallPosition.x + wallSize.x * 0.5f &&
