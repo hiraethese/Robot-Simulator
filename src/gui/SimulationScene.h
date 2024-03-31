@@ -11,6 +11,7 @@
 #include <QGraphicsLineItem>
 #include <QBrush>
 #include <QPen>
+#include <QPointF>
 #include <QTimer>
 #include <vector>
 
@@ -22,20 +23,23 @@ class SimulationScene : public QGraphicsScene
     Q_OBJECT
 public:
     explicit SimulationScene(QObject *parent = nullptr);
-    void DeleteSimulationScene();
+    void CleareSimulationScene();
     bool flagSettingMode = false;
-    void StoreSimObj();
+    void LoadSimObj();
     void InitSimRun();
     void StopSimRun();
+    QPointF* GetUserClick();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 private:
     Core* _core;
     QTimer _simTimer;
-    QPointF _actualPositionOfItem;
+    QPointF _actualUserClick;
     std::vector<QGraphicsEllipseItem*>_robotsGUIVector;
     std::vector<QGraphicsRectItem*>_wallsGUIVector;
     Rectangle _robotsFromCore;
+signals:
+    void clickSig();
 private slots:
 
     void _OneSimFrame();

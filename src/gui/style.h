@@ -1,10 +1,11 @@
 #ifndef STYLE_H
 #define STYLE_H
+#include "../core/icplib.h"
 #include <QBrush>
 #include <QPen>
 #include <QColor>
-
-
+#include <string>
+/*
 extern QBrush redBrush;
 extern QBrush yellowBrush;
 extern QBrush greanBrush;
@@ -15,5 +16,8 @@ extern QBrush blackBrush;
 
 extern QPen blackPen;
 extern QPen whitePen;
-
+*/
+QBrush getBrushByCode(colors colorCode);
+QPen getPen();
+std::string getColorString(colors colorsCode);
 #endif // STYLE_H

@@ -1,8 +1,9 @@
 #include "Robot.h"
 
-Robot::Robot(Vector2d position, Vector2d size, float speed, int angleStep, int angleDegrees) : SimObject(position, size)
+Robot::Robot(Vector2d position, Vector2d size, float speed, int angleStep, int angleDegrees, colors color, bool isControlled) : SimObject(position, size, color)
 {
     _movement = new Movement(speed, angleStep, angleDegrees, _transform);
+    _isControlled = isControlled;
 }
 
 Robot::~Robot()
@@ -13,4 +14,8 @@ Robot::~Robot()
 Movement* Robot::GetMovement()
 {
     return _movement;
+}
+
+SimObjView Robot::GetSimObjView(){
+    return {GetTransform()->GetRect().h,GetTransform()->GetRect().w, _color, true, _isControlled, int(_movement->GetSpeed()), _movement->GetAngleDegrees(), 0};
 }

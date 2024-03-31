@@ -2,8 +2,8 @@
 #define CORE_H
 
 #include <string>
+#include <iostream>
 #include "SimMap.h"
-
 // Simulation settings structure with default values
 struct SimSettings
 {
@@ -22,9 +22,9 @@ private:
     Core();
     static Core* _core;
     int _FPS;
-    bool _simIsRun;
-    bool _simIsReady;
-    SimMap* _map;
+    bool _simIsRun = false;
+    bool _simIsReady = false;
+    SimMap* _map = nullptr;  // TODO: make method for recreating value
 
 public:
     static Core* getInstance();
@@ -44,8 +44,12 @@ public:
     void ForwardMoveSig();
     void StopMoveSig();
     void MoveAllObjects();
+    int LoadingMap(std::string path);
     Rectangle RectFromCore();
     const std::vector<Wall*>& GetVectorWalls() const;
+    SimObjView GetControlledRobotTemp();
+    SimObjView GetBotRobotTemp();
+    SimObjView GetWallTemplate();
 };
 
 #endif // CORE_H

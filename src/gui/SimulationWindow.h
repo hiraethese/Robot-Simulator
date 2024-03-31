@@ -14,6 +14,7 @@
 #include <QTimer>
 #include <QBrush>
 #include <QPen>
+#include <QPointF>
 #include <QColor>
 #include <QPointF>
 #include <iostream>
@@ -37,33 +38,26 @@ public:
     explicit SimulationWindow(QWidget *parent = nullptr);
     ~SimulationWindow();
 
-    void SetSettingsEngine();
-    void UnsetSettingsEngine();
-    void SetSimulationEngine();
-    void UnsetSimulationEngine();
+    void SwitchBetweenSimAndBuild(bool flagIsBuild);
 
     void RunSimScene();
     void StopSimScene();
-    void StoreSimScene();
+    void LoadSimScene();
 
-    void CreateSimulationEngineLayout();
-    void DeleteSimulationEngineLayout();
-    bool flagIsSimMode = false;
     BuildModeStatus buildModeStatus = NotSetStatus;
+    QPointF* GetUserClick();
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 private:
     Core* _core;
-    bool flagSimEngineLayout = false;
     QGraphicsView* _simulationView = nullptr;
     SimulationScene* _simulationScene = nullptr;
 
 
     void _CreateSimGUI();
     void _DeleteSimGUI();
-    void _CleanSimGUI();
-
-
+    
+    
     QVBoxLayout* _simulationsLayot;
     QHBoxLayout* _simBodyowBoxLayout;      // simulations window layout
     QHBoxLayout* _simulatyonEngineLayout;  // engine for simulation
@@ -85,6 +79,9 @@ private:
     void _CreateSimulationsLayout();
     void _DeleteSimulationsLayout();
     void _SetUnsetSimButtons(bool flagIsSet);
+
+signals:
+    void UperClickSig();
 
 };
 

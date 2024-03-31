@@ -22,14 +22,14 @@ SOURCES += \
     src/core/Core.cpp \
     src/core/SimFactory.cpp \
     src/core/SimMap.cpp \
-    src/gui/AObjectGUI.cpp \
+    src/gui/ASettings.cpp \
     src/gui/InfoNotification.cpp \
     src/gui/MainWindow.cpp \
-    src/gui/NewMapWindow.cpp \
-    src/gui/SettingsWindow.cpp \
+    src/gui/NewMapSetting.cpp \
+    src/gui/RobotSetting.cpp \
     src/gui/SimulationScene.cpp \
     src/gui/SimulationWindow.cpp \
-    src/gui/WallSettingsWindow.cpp \
+    src/gui/WallSetting.cpp \
     src/gui/style.cpp \
     src/main.cpp
 
@@ -44,14 +44,14 @@ HEADERS += \
     src/core/SimFactory.h \
     src/core/SimMap.h \
     src/core/icplib.h \
-    src/gui/AObjectGUI.h \
+    src/gui/ASettings.h \
     src/gui/InfoNotification.h \
     src/gui/MainWindow.h \
-    src/gui/NewMapWindow.h \
-    src/gui/SettingsWindow.h \
+    src/gui/NewMapSetting.h \
+    src/gui/RobotSetting.h \
     src/gui/SimulationScene.h \
     src/gui/SimulationWindow.h \
-    src/gui/WallSettingsWindow.h \
+    src/gui/WallSetting.h \
     src/gui/style.h
 
 FORMS += \

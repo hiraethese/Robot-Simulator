@@ -1,8 +1,8 @@
 #include "SimMap.h"
 
-SimMap::SimMap(std::string path, int width, int height)
+SimMap::SimMap(int width, int height)
 {
-    _path = path;
+    //_path = path;
     _width = width;
     _height = height;
     _factory = new SimFactory();
@@ -33,11 +33,26 @@ void SimMap::SetPath(std::string newPath)
     _path = newPath;
 }
 
-int SimMap::LoadObjectsFromFile()
+int SimMap::LoadObjectsFromFile(std::string path)
 {
-    // Restart all objects
+    _path = path;
+    // Restart all objects    
     _factory->DeleteAllObjects();
     // Open the file
+
+    QFileInfo infoAboutPath(QString::fromStdString(path));
+
+    if(!infoAboutPath.exists()){
+
+        std::cout << "file not exist" << std::endl;
+        return 6;
+    }
+
+    if(!infoAboutPath.isFile()){
+        std::cout << "it is not file" << std::endl;
+        return 7;
+    }
+
     std::ifstream file(_path);
     // Check if the file is opened
     if (!file.is_open())

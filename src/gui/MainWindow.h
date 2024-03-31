@@ -15,6 +15,7 @@
 #include <QInputDialog>
 #include <QPainter>
 #include <QPalette>
+#include <QPointF>
 #include <QScrollArea>
 #include <QString>
 #include <QTabBar>
@@ -22,21 +23,31 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 #include <QWidget>
-
-#include "NewMapWindow.h"
-#include "SimulationWindow.h"
-#include "SettingsWindow.h"
-#include "WallSettingsWindow.h"
-#include "InfoNotification.h"
-#include "../core/Core.h"
-//#include "style.h"
+#include <string>
+#include <QDialog>
 #include <iostream>
+
+#include "SimulationWindow.h"
+#include "InfoNotification.h"
+#include "RobotSetting.h"
+#include "WallSetting.h"
+#include "NewMapSetting.h"
+#include "../core/Core.h"
+#include "style.h"
 
 
 enum Page{
     NotSetPage,
     SimulationPage,
     BuildPage
+};
+
+enum BuildState{
+    NotSet,
+    ControllRobotBuild,
+    BotRobotBuild,
+    WallBuild,
+    Cursor
 };
 
 QT_BEGIN_NAMESPACE
@@ -54,12 +65,17 @@ class MainWindow : public QMainWindow, public InfoNotification
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    QDialog* modalDialog;
 private:
+
     Core* _core;
     Page _actualPage = NotSetPage;
+    BuildState _buildState = NotSet;
+
     void _CreateAppWindows();
     void _DeleteAppWindows();
-    void _SetPallet();
+
     QPalette palMainWindow;
     QToolBar* _simulationToolBar;
     QAction* _simulationToolAction;
@@ -91,6 +107,7 @@ private:
     void _DeleteTools();
     void _DeleteActions();
 
+
     QMenu* appMenu;
     QMenu* buildSubMenu;
     QAction* simulationModeAction;
@@ -99,20 +116,19 @@ private:
     QAction* buildUserRobotTemplate;
     QAction* buildBotRobotTemplate;
     QAction* buildWallLayout;
+
     void _CreateMenu();
     void _DeleteMenu();
 
-    NewMapWindow* _newMapWind = nullptr;
 
     SimulationWindow* _simulationWind;
     void _CreateSimulationWindow();
 
-    SettingsWindow* _settingsWind = nullptr;
-    WallSettingsWindow* _wallSettingsWindow = nullptr;
-    //void _CreateSettings();
-    //void _DeleteSettings();
+    RobotSetting* _robotSetWind;
+    WallSetting* _wallSetWind;
+    NewMapSetting* _newMapWind;
 
-    Ui::MainWindow *ui;
+    void _CreateSettings();
 
     void _CreateSimModeTools();
     void _DeleteSimModeTools();
@@ -127,30 +143,30 @@ private:
     QLineEdit* _statusModeLine;
     QToolBar* _settingsBuildToolBar;
     QToolBar* _engineBuildToolBar;
+    QToolBar* _engineCursorToolBar;
+    QLabel* _xCursorTouchLab;
+    QLabel* _yCursorTouchLab;
+    QLineEdit* _xCursorTouchLine;
+    QLineEdit* _yCursorTouchLine;
     QToolBar* _statusModeBuildToolBar;
+
     void _CreateBuildModeTools();
     void _DeleteBuildModeTools();
+
+
+    Ui::MainWindow *ui;
+
 public slots:
 
 private slots:
-    void _StoreNewMap();
+    void _SettingSlot(){}
+
     void _HelpTextToolActionSlot();
-    //void _SettingsToolActionSlot();
-    //void _SimulationToolActionSlot();
-
-    //void _UpdateSettingsSlot();
-
-    void _BuildUserRobotTemplateSlot();
-    void _BuildBotRobotTemplateSlot();
-    void _BuildWallLayoutSlot();
 
     void _RunSimulationActionSlot();
     void _PauseSimulationActionSlot();
     void _RestartSimulationActionSlot();
 
-    //void _GetNewSimToParserSlot();
-
-    void _CreateNewMapModeSlot();
     void _CreateBuildMapModeSlot();
     void _CreateSimModeSlot();
 
@@ -159,5 +175,10 @@ private slots:
     void _BuildBotRobotActionSlot();
     void _BuildWallActionSlot();
     void _HummerActionSlot();
+
+    void _PushNewMapToCoreSlot();
+
+    void _UserClickSimSceneLogicSlot();
+
 };
 #endif // MAINWINDOW_H
