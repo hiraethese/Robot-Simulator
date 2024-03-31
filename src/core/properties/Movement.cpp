@@ -63,7 +63,7 @@ void Movement::DisableMovement()
     _isEnabled = false;
 }
 
-void Movement::Move(Vector2d direction)
+void Movement::MoveForward()
 {
     // Check if movement is enabled
     if (!_isEnabled)
@@ -71,6 +71,20 @@ void Movement::Move(Vector2d direction)
         return;
     }
 
+    Vector2d direction1 = {0.0f, 0.0f};
+    Vector2d direction2 = {0.0f, 0.0f};
+
+    float angleRadians = _angleDegrees * ( M_PI / 180.0f );
+
+    direction1.x = _speed * cos(angleRadians);
+    direction2.y = _speed * sin(angleRadians);
+
+    MoveWithDirection(direction1);
+    MoveWithDirection(direction2);
+}
+
+void Movement::MoveWithDirection(Vector2d direction)
+{
     Core* core = Core::getInstance();
     const std::vector<Wall*>& walls = core->GetVectorWalls();
 
@@ -143,16 +157,4 @@ void Movement::Move(Vector2d direction)
 
     _transform->SetPosition(newPosition);
     // std::cout << "forward move " << "x = " << position.x << " " << "y = " << position.y << std::endl;
-}
-
-void Movement::MoveForward()
-{
-    Vector2d direction1, direction2 = {0.0f, 0.0f};
-    float angleRadians = _angleDegrees * ( M_PI / 180.0f );
-
-    direction1.x = _speed * cos(angleRadians);
-    direction2.y = _speed * sin(angleRadians);
-
-    Move(direction1);
-    Move(direction2);
 }

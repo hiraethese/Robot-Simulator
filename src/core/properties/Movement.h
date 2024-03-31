@@ -25,8 +25,8 @@ public:
     void DisableMovement();
     void RotateLeft();
     void RotateRight();
-    void Move(Vector2d direction);
     void MoveForward();
+    void MoveWithDirection(Vector2d direction);
 };
 
 #endif // MOVEMENT_H
