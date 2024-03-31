@@ -16,3 +16,6 @@ int main(int argc, char *argv[])
 }
 // /mnt/c/Users/user/icp2024/examples/example.txt
 // C:\Users\user\icp2024\examples\example.txt
+
+// For Illia:
+// /home/illia/Desktop/Programming/ICP/icp2024/examples/example.txt
