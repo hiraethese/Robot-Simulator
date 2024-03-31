@@ -5,3 +5,9 @@
 5) check diff input states of app;
 6) wrote error windows with expr err code;
 x) ... =)
+
+
+
+angle degrees -- start
+angle step  -- rotate
+hummer delete with RMCLCk
