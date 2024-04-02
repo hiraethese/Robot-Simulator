@@ -58,3 +58,9 @@ std::string getColorString(colors colorsCode){
     }
 
 }
+
+QPalette getTextPalette(){
+    QPalette palette;
+    palette.setColor(QPalette::WindowText, Qt::blue);
+    return palette;
+}

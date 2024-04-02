@@ -4,7 +4,7 @@ SimulationWindow::SimulationWindow(QWidget *parent)
     : QWidget{parent}
 {
 
-    //simBody = new SimulationBody();
+    setPalette(getTextPalette());
     _core = Core::getInstance();
     _CreateSimGUI();
     _CreateSimulationsLayout();
@@ -151,11 +151,11 @@ void SimulationWindow::RunSimScene(){
 }
 void SimulationWindow::StopSimScene(){
 
-    if(_core->IsSimReady()){
+    /*if(_core->IsSimReady()){
 
         _core->StopMoveSig();
 
-    }
+    }*/
 
 
     _SetUnsetSimButtons(false);

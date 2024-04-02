@@ -2,6 +2,9 @@
 
 NewMapSetting::NewMapSetting(QWidget* parent): QDialog(parent) {
 
+    setStyleSheet("background-color: lightgray;");
+    setPalette(getTextPalette());
+
     _newMapGridLayot = new QGridLayout(this);
 
     _newMapLabel = new QLabel("New map path: ", this);

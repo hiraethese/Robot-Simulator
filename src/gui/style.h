@@ -5,6 +5,7 @@
 #include <QPen>
 #include <QColor>
 #include <string>
+#include <QPalette>
 /*
 extern QBrush redBrush;
 extern QBrush yellowBrush;
@@ -20,4 +21,5 @@ extern QPen whitePen;
 QBrush getBrushByCode(colors colorCode);
 QPen getPen();
 std::string getColorString(colors colorsCode);
+QPalette getTextPalette();
 #endif // STYLE_H

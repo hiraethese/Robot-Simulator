@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     QApplication::setApplicationDisplayName("ICP2024");
     setWindowTitle("ICP2024");
     setStyleSheet("background-color: lightgray;");
+    setPalette(getTextPalette());
     _core = Core::getInstance();
 
     _CreateAppWindows();

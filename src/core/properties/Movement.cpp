@@ -53,13 +53,11 @@ void Movement::RotateRight()
 
 void Movement::EnableMovement()
 {
-    std::cout << "set on true" << std::endl;
     _isEnabled = true;
 }
 
 void Movement::DisableMovement()
 {
-    std::cout << "set on false" << std::endl;
     _isEnabled = false;
 }
 
