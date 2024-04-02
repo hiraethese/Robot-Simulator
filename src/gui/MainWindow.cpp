@@ -398,7 +398,7 @@ void MainWindow::_HummerActionSlot(){
 }
 
 
-// ************************************  PART BUILD MODE    *********************************************************
+// ************************************  PART SETTINGS MODE    *********************************************************
 
 void MainWindow::_CreateSettings(){
 
@@ -424,6 +424,7 @@ void MainWindow::_PushNewMapToCoreSlot(){
     if(!code){
 
         _simulationWind->LoadSimScene();
+        _lineMapNameSimIdToolBar->setText(QString::fromStdString(_core->GetMapValue()));
 
     }
 
