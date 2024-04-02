@@ -3,7 +3,6 @@
 NewMapSetting::NewMapSetting(QWidget* parent): QDialog(parent) {
 
     setStyleSheet("background-color: lightgray;");
-    setPalette(getTextPalette());
 
     _newMapGridLayot = new QGridLayout(this);
 

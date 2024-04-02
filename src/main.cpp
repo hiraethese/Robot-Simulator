@@ -3,12 +3,16 @@
 #include <QApplication>
 #include <QPushButton>
 #include <QWidget>
+#include <QString>
 #include <iostream>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     a.setApplicationName("ICP2024");
+    QString stylesSting = "QAction, QMenu, QPushButton, QLabel {color: black;}"
+                     "QMenu::item::selected {color: white;}";
+    a.setStyleSheet(stylesSting);
     MainWindow w;
     w.showMaximized();
     w.show();

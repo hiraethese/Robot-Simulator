@@ -4,7 +4,6 @@ SimulationWindow::SimulationWindow(QWidget *parent)
     : QWidget{parent}
 {
 
-    setPalette(getTextPalette());
     _core = Core::getInstance();
     _CreateSimGUI();
     _CreateSimulationsLayout();

@@ -21,5 +21,4 @@ extern QPen whitePen;
 QBrush getBrushByCode(colors colorCode);
 QPen getPen();
 std::string getColorString(colors colorsCode);
-QPalette getTextPalette();
 #endif // STYLE_H

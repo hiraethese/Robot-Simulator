@@ -2,7 +2,6 @@
 
 ASettings::ASettings(QWidget* parent, QString title): QDialog(parent) {
     setStyleSheet("background-color: lightgray;");
-    setPalette(getTextPalette());
     _settingGridLayot = new QGridLayout(this);
     setLayout(_settingGridLayot);
     setWindowTitle(title);
