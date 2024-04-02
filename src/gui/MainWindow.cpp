@@ -208,7 +208,7 @@ void MainWindow::_RunSimulationActionSlot(){
 
     disconnect(_runSimulationAction, 0, 0, 0);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_PauseSimulationActionSlot);
-    _runSimulationAction->setIcon(QIcon(":/icons/pauseTool.png"));
+    _runSimulationAction->setIcon(QIcon(":/icons/pauseTool.svg"));
     _runSimulationAction->setText("Pause");
     _lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
 

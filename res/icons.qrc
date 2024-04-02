@@ -5,7 +5,7 @@
         <file>icons/listOfMapTool.png</file>
         <file>icons/settingsTool.png</file>
         <file>icons/playTool.png</file>
-        <file>icons/pauseTool.png</file>
+        <file>icons/pauseTool.svg</file>
         <file>icons/restartTool.png</file>
         <file>icons/botRobotTool.png</file>
         <file>icons/userRobotTool.png</file>
