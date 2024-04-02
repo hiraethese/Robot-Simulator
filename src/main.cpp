@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     a.setApplicationName("ICP2024");
-    QString stylesSting = "QAction, QMenu, QPushButton, QLabel {color: black;}"
+    QString stylesSting = "QAction, QMenu, QMenuBar, QPushButton, QLabel {color: black;}"
                      "QMenu::item::selected {color: white;}";
     a.setStyleSheet(stylesSting);
     MainWindow w;
