@@ -20,9 +20,11 @@ void SimulationScene::CleareSimulationScene(){
 
 void SimulationScene::mousePressEvent(QGraphicsSceneMouseEvent* event){
 
-    _actualUserClick = event->scenePos();
-    
-    emit clickSig();
+    if(event->button() == Qt::LeftButton){
+        _actualUserClick = event->scenePos();
+
+        emit clickSig();
+    }
 }
 
 
@@ -47,7 +49,7 @@ void SimulationScene::LoadSimObj(){
 
     for(int robot = 0; robot < 1; robot++){
 
-        QGraphicsEllipseItem* newRobot = new QGraphicsEllipseItem(0,0,_robotsFromCore.w,_robotsFromCore.h);
+        RobotGUI* newRobot = new RobotGUI(0,0,_robotsFromCore.w,_robotsFromCore.h);
         newRobot->setPen(getPen());
         newRobot->setBrush(getBrushByCode(RED));
         newRobot->setPos(_robotsFromCore.x,_robotsFromCore.y);
@@ -58,7 +60,7 @@ void SimulationScene::LoadSimObj(){
 
     for(Wall* wall:wallsFromCore){
 
-        QGraphicsRectItem* newWall = new QGraphicsRectItem(0,0,wall->GetTransform()->GetRect().w, wall->GetTransform()->GetRect().h);
+        WallGUI* newWall = new WallGUI(0,0,wall->GetTransform()->GetRect().w, wall->GetTransform()->GetRect().h);
         newWall->setPen(getPen());
         newWall->setBrush(getBrushByCode(BLUE));
         newWall->setPos(wall->GetTransform()->GetRect().x,wall->GetTransform()->GetRect().y);
