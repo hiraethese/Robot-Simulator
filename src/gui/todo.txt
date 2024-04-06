@@ -1,6 +1,5 @@
 1) improve parser;
 2) clean code, check delete;
-3) check stop buttons (e:white background);
 4) improve API with sim obj;
 5) check diff input states of app;
 6) wrote error windows with expr err code;
