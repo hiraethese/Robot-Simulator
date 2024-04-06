@@ -3,6 +3,8 @@
 
 #include <QGraphicsRectItem>
 #include <QObject>
+#include <QGraphicsSceneMouseEvent>
+#include <iostream>
 
 class RobotGUI : public QGraphicsEllipseItem
 {
