@@ -55,7 +55,7 @@ void SimulationScene::LoadSimObj(){
         newRobot->setPos(_robotsFromCore.x,_robotsFromCore.y);
         addItem(newRobot);
         _robotsGUIVector.push_back(newRobot);
-
+        connect(newRobot, &RobotGUI::getActualOrderIndex, this, &SimulationScene::_requestSimObj);
     }
 
     for(Wall* wall:wallsFromCore){
@@ -88,4 +88,8 @@ void SimulationScene::_OneSimFrame(){
 
 QPointF* SimulationScene::GetUserClick(){
     return &_actualUserClick;
+}
+
+void SimulationScene::_requestSimObj(int orderIndex){
+    std::cout << "Index: " << orderIndex << std::endl;
 }

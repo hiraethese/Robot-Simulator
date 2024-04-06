@@ -46,6 +46,7 @@ signals:
 private slots:
 
     void _OneSimFrame();
+    void _requestSimObj(int orderIndex);
 };
 
 #endif // SIMULATIONSCENE_H
