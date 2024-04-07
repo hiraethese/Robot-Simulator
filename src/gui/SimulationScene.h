@@ -18,9 +18,7 @@
 #include "style.h"
 
 #include "../core/Core.h"
-#include "RobotGUI.h"
-#include "WallGUI.h"
-#include "ConnectorGUI.h"
+#include "SimObjGUI.h"
 
 class SimulationScene : public QGraphicsScene
 {

@@ -47,26 +47,27 @@ void SimulationScene::LoadSimObj(){
 
     _robotsFromCore = _core->RectFromCore();
     const std::vector<Wall *> &wallsFromCore = _core->GetVectorWalls();
-
+    int oi = 1;
     for(int robot = 0; robot < 1; robot++){
 
-        RobotGUI* newRobot = new RobotGUI(0,0,_robotsFromCore.w,_robotsFromCore.h, &_conn);
+        RobotGUI* newRobot = new RobotGUI(0,0,_robotsFromCore.w,_robotsFromCore.h, &_conn, oi);
         newRobot->setPen(getPen());
         newRobot->setBrush(getBrushByCode(RED));
         newRobot->setPos(_robotsFromCore.x,_robotsFromCore.y);
         addItem(newRobot);
         _robotsGUIVector.push_back(newRobot);
+        ++oi;
     }
 
     for(Wall* wall:wallsFromCore){
 
-        WallGUI* newWall = new WallGUI(0,0,wall->GetTransform()->GetRect().w, wall->GetTransform()->GetRect().h);
+        WallGUI* newWall = new WallGUI(0,0,wall->GetTransform()->GetRect().w, wall->GetTransform()->GetRect().h, &_conn, oi);
         newWall->setPen(getPen());
         newWall->setBrush(getBrushByCode(BLUE));
         newWall->setPos(wall->GetTransform()->GetRect().x,wall->GetTransform()->GetRect().y);
         addItem(newWall);
         _wallsGUIVector.push_back(newWall);
-
+        ++oi;
     }
 
 }
@@ -92,5 +93,5 @@ QPointF* SimulationScene::GetUserClick(){
 
 void SimulationScene::requestSimObj(int orderIndex){
     std::cout << "Index: " << orderIndex << std::endl;
-    clear();
+    //clear();
 }
