@@ -22,19 +22,19 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
     _settingGridLayot->addWidget(_speedLabel, 2, 0);
     _settingGridLayot->addWidget(_speedSpinBox, 2, 1);
 
-    _angleLabel = new QLabel("Angle(degree) : ", this);
-    _angleSpinBox = new QSpinBox(this);
-    _angleSpinBox->setMinimum(0);
-    _angleSpinBox->setMaximum(360);
-    _settingGridLayot->addWidget(_angleLabel, 3, 0);
-    _settingGridLayot->addWidget(_angleSpinBox, 3, 1);
+    _angleStepLabel = new QLabel("Angle step (degree) : ", this);
+    _angleStepSpinBox = new QSpinBox(this);
+    _angleStepSpinBox->setMinimum(0);
+    _angleStepSpinBox->setMaximum(360);
+    _settingGridLayot->addWidget(_angleStepLabel, 3, 0);
+    _settingGridLayot->addWidget(_angleStepSpinBox, 3, 1);
 
-    _wayLable = new QLabel("Way(degree) : ", this);
-    _waySpinBox = new QSpinBox(this);  // combox
-    _waySpinBox->setMinimum(0);
-    _waySpinBox->setMaximum(360);
-    _settingGridLayot->addWidget(_wayLable, 4, 0);
-    _settingGridLayot->addWidget(_waySpinBox, 4, 1);
+    _angleDirectionLable = new QLabel("Angle direction (degree) : ", this);
+    _angleDirectionSpinBox = new QSpinBox(this);  // combox
+    _angleDirectionSpinBox->setMinimum(0);
+    _angleDirectionSpinBox->setMaximum(360);
+    _settingGridLayot->addWidget(_angleDirectionLable, 4, 0);
+    _settingGridLayot->addWidget(_angleDirectionSpinBox, 4, 1);
 
     _CreateColorsSettings(5);
     _CreateButtonsSettings(6);
@@ -45,8 +45,8 @@ void RobotSetting::DownloadDataFromView(SimObjView view){
     _diameterSpinBox->setValue(int(view.h));
     _speedSpinBox->setValue(int(view.speed));
     _colorComboBox->setCurrentText(QString::fromStdString(getColorString(view.color)));
-    _angleSpinBox->setValue(view.angle);
-    _waySpinBox->setValue(view.way);
+    _angleStepSpinBox->setValue(view.angle);
+    _angleDirectionSpinBox->setValue(view.way);
 
     if(view.isControlled){
 

@@ -93,13 +93,13 @@ void MainWindow::_CreateMenu(){
 
     templatesSubMenu = appMenu->addMenu("Templates");
 
-    buildUserRobotTemplate = templatesSubMenu->addAction("Controlled robot template");  // upd lambda with dependecy injection
+    buildUserRobotTemplate = templatesSubMenu->addAction("Controlled robot");  // upd lambda with dependecy injection
     connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp()); _robotSetWind->exec();});
 
-    buildBotRobotTemplate = templatesSubMenu->addAction("Bot robot template");
+    buildBotRobotTemplate = templatesSubMenu->addAction("Bot robot");
     connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetBotRobotTemp());_robotSetWind->exec();});
 
-    buildWallLayout = templatesSubMenu->addAction("Wall layout");
+    buildWallLayout = templatesSubMenu->addAction("Wall");
     connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemplate());_wallSetWind->exec();});
 
     simulationModeAction = appMenu->addAction("Simulation");

@@ -35,11 +35,11 @@ private:
     QLabel* _speedLabel;
     QSpinBox* _speedSpinBox;
 
-    QLabel* _angleLabel;
-    QSpinBox* _angleSpinBox;
+    QLabel* _angleStepLabel;
+    QSpinBox* _angleStepSpinBox;
 
-    QLabel* _wayLable;
-    QSpinBox* _waySpinBox;
+    QLabel* _angleDirectionLable;
+    QSpinBox* _angleDirectionSpinBox;
 
 };
 
