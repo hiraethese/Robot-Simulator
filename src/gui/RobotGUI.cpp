@@ -1,14 +1,14 @@
 #include "RobotGUI.h"
 
-RobotGUI::RobotGUI(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent)
-    : QGraphicsEllipseItem(x, y, w, h, parent),
-      QObject(parent)
+RobotGUI::RobotGUI(qreal x, qreal y, qreal w, qreal h, ConnectorGUI* conn)
+    : QGraphicsEllipseItem(x, y, w, h, nullptr)
 {
+    this->conn = conn;
 }
 
 void RobotGUI::mousePressEvent(QGraphicsSceneMouseEvent *event){
     if(event->button() == Qt::RightButton){
         std::cout << "Test" << std::endl;
-        emit getActualOrderIndex(_orderIndex);
+        emit conn->connectSig(_orderIndex);
     }
 }

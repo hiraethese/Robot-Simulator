@@ -20,6 +20,7 @@
 #include "../core/Core.h"
 #include "RobotGUI.h"
 #include "WallGUI.h"
+#include "ConnectorGUI.h"
 
 class SimulationScene : public QGraphicsScene
 {
@@ -35,18 +36,25 @@ public:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 private:
+    ConnectorGUI _conn;
     Core* _core;
     QTimer _simTimer;
     QPointF _actualUserClick;
     std::vector<RobotGUI*>_robotsGUIVector;
     std::vector<WallGUI*>_wallsGUIVector;
     Rectangle _robotsFromCore;
+
 signals:
+
     void clickSig();
+
+public slots:
+
+    void requestSimObj(int orderIndex);
+
 private slots:
 
     void _OneSimFrame();
-    void _requestSimObj(int orderIndex);
 };
 
 #endif // SIMULATIONSCENE_H

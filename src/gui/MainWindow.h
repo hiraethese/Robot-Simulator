@@ -109,7 +109,7 @@ private:
 
 
     QMenu* appMenu;
-    QMenu* buildSubMenu;
+    QMenu* templatesSubMenu;
     QAction* simulationModeAction;
     QAction* downloadNewModeMapAction;
     QAction* buildMapModeAction;
@@ -138,10 +138,10 @@ private:
     QAction* _buildUserRobotAction;
     QAction* _buildBotRobotAction;
     QAction* _buildWallAction;
-    QAction* _hummerAction;
+    //QAction* _hummerAction;
     QLabel* _statusModeLabel;
     QLineEdit* _statusModeLine;
-    QToolBar* _settingsBuildToolBar;
+    //QToolBar* _settingsBuildToolBar;
     QToolBar* _engineBuildToolBar;
     QToolBar* _engineCursorToolBar;
     QLabel* _xCursorTouchLab;
@@ -174,7 +174,7 @@ private slots:
     void _BuildUserRobotActionSlot();
     void _BuildBotRobotActionSlot();
     void _BuildWallActionSlot();
-    void _HummerActionSlot();
+    //void _HummerActionSlot();
 
     void _PushNewMapToCoreSlot();
 

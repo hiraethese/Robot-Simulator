@@ -6,6 +6,7 @@ SimulationScene::SimulationScene(QObject *parent)
     _core = Core::getInstance();
     connect(&_simTimer, &QTimer::timeout, this, &SimulationScene::_OneSimFrame);
     setBackgroundBrush(getBrushByCode(WHITE));
+    connect(&_conn, &ConnectorGUI::connectSig, this, &SimulationScene::requestSimObj);
 }
 
 void SimulationScene::CleareSimulationScene(){
@@ -49,13 +50,12 @@ void SimulationScene::LoadSimObj(){
 
     for(int robot = 0; robot < 1; robot++){
 
-        RobotGUI* newRobot = new RobotGUI(0,0,_robotsFromCore.w,_robotsFromCore.h);
+        RobotGUI* newRobot = new RobotGUI(0,0,_robotsFromCore.w,_robotsFromCore.h, &_conn);
         newRobot->setPen(getPen());
         newRobot->setBrush(getBrushByCode(RED));
         newRobot->setPos(_robotsFromCore.x,_robotsFromCore.y);
         addItem(newRobot);
         _robotsGUIVector.push_back(newRobot);
-        connect(newRobot, &RobotGUI::getActualOrderIndex, this, &SimulationScene::_requestSimObj);
     }
 
     for(Wall* wall:wallsFromCore){
@@ -90,6 +90,7 @@ QPointF* SimulationScene::GetUserClick(){
     return &_actualUserClick;
 }
 
-void SimulationScene::_requestSimObj(int orderIndex){
+void SimulationScene::requestSimObj(int orderIndex){
     std::cout << "Index: " << orderIndex << std::endl;
+    clear();
 }

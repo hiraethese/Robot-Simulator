@@ -5,19 +5,16 @@
 #include <QObject>
 #include <QGraphicsSceneMouseEvent>
 #include <iostream>
+#include "ConnectorGUI.h"
 class RobotGUI : public QGraphicsEllipseItem
 {
-    Q_OBJECT
 public:
-    explicit RobotGUI(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent = nullptr);
+    explicit RobotGUI(qreal x, qreal y, qreal w, qreal h, ConnectorGUI* con);
+    ConnectorGUI* conn;
 private:
     int _orderIndex = 100;
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
-
-signals:
-    void getActualOrderIndex(int orderIndex);
-
 };
 
 #endif // ROBOTGUI_H

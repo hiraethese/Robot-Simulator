@@ -91,23 +91,22 @@ void MainWindow::_CreateMenu(){
 
     appMenu = menuBar()->addMenu("Menu");
 
+    templatesSubMenu = appMenu->addMenu("Templates");
+
+    buildUserRobotTemplate = templatesSubMenu->addAction("Controlled robot template");  // upd lambda with dependecy injection
+    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp()); _robotSetWind->exec();});
+
+    buildBotRobotTemplate = templatesSubMenu->addAction("Bot robot template");
+    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetBotRobotTemp());_robotSetWind->exec();});
+
+    buildWallLayout = templatesSubMenu->addAction("Wall layout");
+    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemplate());_wallSetWind->exec();});
+
     simulationModeAction = appMenu->addAction("Simulation");
     connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimModeSlot);
 
-    buildSubMenu = appMenu->addMenu("Build");
-
-    buildMapModeAction = buildSubMenu->addAction("Build map");
+    buildMapModeAction = appMenu->addAction("Build map");
     connect(buildMapModeAction, &QAction::triggered, this, &MainWindow::_CreateBuildMapModeSlot);
-
-    buildUserRobotTemplate = buildSubMenu->addAction("Controlled robot template");  // upd lambda with dependecy injection
-    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp()); _robotSetWind->exec();});
-
-    buildBotRobotTemplate = buildSubMenu->addAction("Bot robot template");
-    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetBotRobotTemp());_robotSetWind->exec();});
-
-    buildWallLayout = buildSubMenu->addAction("Wall layout");
-    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemplate());_wallSetWind->exec();});
-
 
     downloadNewModeMapAction = appMenu->addAction("Download map");
     connect(downloadNewModeMapAction, &QAction::triggered, this, [=](){_simulationWind->StopSimScene();_newMapWind->exec();});
@@ -122,7 +121,7 @@ void MainWindow::_DeleteMenu(){
     delete buildUserRobotTemplate;
     delete buildBotRobotTemplate;
     delete buildWallLayout;
-    delete buildSubMenu;
+    delete templatesSubMenu;
     delete appMenu;
 
 }
@@ -296,12 +295,12 @@ void MainWindow::_CreateBuildModeTools(){
     _buildWallAction = new QAction(QIcon(":/icons/wallTool.png"), "Wall", this);
     connect(_buildWallAction, &QAction::triggered, this, &MainWindow::_BuildWallActionSlot);
 
-    _hummerAction = new QAction(QIcon(":/icons/hummerTool.png"), "Object settings", this);
-    connect(_hummerAction, &QAction::triggered, this, &MainWindow::_HummerActionSlot);
+    //_hummerAction = new QAction(QIcon(":/icons/hummerTool.png"), "Object settings", this);
+    //connect(_hummerAction, &QAction::triggered, this, &MainWindow::_HummerActionSlot);
 
 
-    _settingsBuildToolBar = addToolBar("settingsBuild");
-    _settingsBuildToolBar->addAction(_hummerAction);
+    //_settingsBuildToolBar = addToolBar("settingsBuild");
+    //_settingsBuildToolBar->addAction(_hummerAction);
 
     _engineBuildToolBar = addToolBar("engineBuild");
     _engineBuildToolBar->addAction(_buildUserRobotAction);
@@ -351,11 +350,11 @@ void MainWindow::_DeleteBuildModeTools(){
         delete _xCursorTouchLine;
         delete _yCursorTouchLab;
         delete _yCursorTouchLine;
-        removeToolBar(_settingsBuildToolBar);
+        //removeToolBar(_settingsBuildToolBar);
         removeToolBar(_engineBuildToolBar);
         removeToolBar(_engineCursorToolBar);
         removeToolBar(_statusModeBuildToolBar);
-        delete _settingsBuildToolBar;
+        //delete _settingsBuildToolBar;
         delete _engineBuildToolBar;
         delete _engineCursorToolBar;
         delete _statusModeBuildToolBar;
@@ -392,9 +391,10 @@ void MainWindow::_BuildWallActionSlot(){
     _statusModeLine->setText("Build walls");
 
 }
-void MainWindow::_HummerActionSlot(){
 
-}
+/*void MainWindow::_HummerActionSlot(){
+
+}*/
 
 
 // ************************************  PART SETTINGS MODE    *********************************************************
