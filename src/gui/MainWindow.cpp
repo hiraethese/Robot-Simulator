@@ -254,12 +254,24 @@ void MainWindow::_CreateSimulationWindow(){
     connect(_simulationWind, &SimulationWindow::RequestSimObjSig, this, &MainWindow::_RequestSimObjSlot);
 }
 
-void MainWindow::_UserClickSimSceneLogicSlot(){
+void MainWindow::_UserClickSimSceneLogicSlot(QPointF clickPoint){
 
-    QPointF* test = _simulationWind->GetUserClick();
+    _xCursorTouchLine->setText(QString("%1").arg(clickPoint.x()));
+    _yCursorTouchLine->setText(QString("%1").arg(clickPoint.y()));
 
-    _xCursorTouchLine->setText(QString("%1").arg(test->x()));
-    _yCursorTouchLine->setText(QString("%1").arg(test->y()));
+    switch(_simulationWind->buildModeStatus){
+    case ControllRobotStatus:
+        std::cout << "Create Controlled Robot" << std::endl;
+        break;
+    case BotRobotStatus:
+        std::cout << "Create Bot Robot" << std::endl;
+        break;
+    case WallStatus:
+        std::cout << "Create Wall" << std::endl;
+        break;
+    default:
+        break;
+    }
 
 }
 
@@ -385,22 +397,21 @@ void MainWindow::_DeleteBuildModeTools(){
 }
 
 void MainWindow::_CursorActionSlot(){
-
-    _buildState = Cursor;
+    _simulationWind->buildModeStatus = CursorStatus;
     _statusModeLine->setText("Interaction");
 
 }
 
 void MainWindow::_BuildUserRobotActionSlot(){
 
-    _buildState = ControllRobotBuild;
+    _simulationWind->buildModeStatus = ControllRobotStatus;
     _statusModeLine->setText("Build users robot");
 
 }
 
 void MainWindow::_BuildBotRobotActionSlot(){
 
-    _buildState = BotRobotBuild;
+    _simulationWind->buildModeStatus = BotRobotStatus;
     _statusModeLine->setText("Build bot robots");
 
 }
@@ -408,7 +419,7 @@ void MainWindow::_BuildBotRobotActionSlot(){
 
 void MainWindow::_BuildWallActionSlot(){
 
-    _buildState = WallBuild;
+    _simulationWind->buildModeStatus = WallStatus;
     _statusModeLine->setText("Build walls");
 
 }

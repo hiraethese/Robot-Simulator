@@ -26,7 +26,7 @@
 enum BuildModeStatus{
     NotSetStatus,
     CursorStatus,
-    UserRobotStatus,
+    ControllRobotStatus,
     BotRobotStatus,
     WallStatus
 };
@@ -45,7 +45,6 @@ public:
     void LoadSimScene();
 
     BuildModeStatus buildModeStatus = NotSetStatus;
-    QPointF* GetUserClick();
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 private:
@@ -81,7 +80,8 @@ private:
     void _SetUnsetSimButtons(bool flagIsSet);
 
 signals:
-    void UperClickSig();
+
+    void UperClickSig(QPointF clickPoint);
     void RequestSimObjSig(int orderIndex);
 
 };

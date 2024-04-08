@@ -28,8 +28,8 @@ void SimulationWindow::_CreateSimGUI(){
     _simulationView->setSceneRect(0,0,1800, 750);  // TODO: size from core
     _simulationView->setFixedSize(1800+20, 750+20);  // TODO size from core
 
-    connect(_simulationScene, &SimulationScene::ClickSig, this, [=](){emit UperClickSig();});
-    connect(_simulationScene, &SimulationScene::RequestSimObjSig, this, [=](int orderIndex){emit RequestSimObjSig(orderIndex);});
+    connect(_simulationScene, &SimulationScene::ClickSig, this, [=](QPointF clickPoint){emit UperClickSig(clickPoint);});
+    connect(_simulationScene, &SimulationScene::RequestSimObjSig, this, [=](int orderIndex){if(buildModeStatus == CursorStatus){emit RequestSimObjSig(orderIndex);}});
 }
 
 void SimulationWindow::_DeleteSimGUI(){
@@ -195,7 +195,4 @@ void SimulationWindow::keyPressEvent(QKeyEvent *event){
     }
 }
 
-QPointF* SimulationWindow::GetUserClick(){
-    return _simulationScene->GetUserClick();
-}
 

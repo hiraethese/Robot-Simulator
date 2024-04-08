@@ -42,13 +42,6 @@ enum Page{
     BuildPage
 };
 
-enum BuildState{
-    NotSet,
-    ControllRobotBuild,
-    BotRobotBuild,
-    WallBuild,
-    Cursor
-};
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -71,7 +64,6 @@ private:
 
     Core* _core;
     Page _actualPage = NotSetPage;
-    BuildState _buildState = NotSet;
 
     void _CreateAppWindows();
     void _DeleteAppWindows();
@@ -178,7 +170,7 @@ private slots:
 
     void _PushNewMapToCoreSlot();
 
-    void _UserClickSimSceneLogicSlot();
+    void _UserClickSimSceneLogicSlot(QPointF clickPoint);
 
     void _RequestSimObjSlot(int orderIndex);
 };

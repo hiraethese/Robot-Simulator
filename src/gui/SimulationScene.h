@@ -30,21 +30,19 @@ public:
     void LoadSimObj();
     void InitSimRun();
     void StopSimRun();
-    QPointF* GetUserClick();
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 private:
     ConnectorGUI _conn;
     Core* _core;
     QTimer _simTimer;
-    QPointF _actualUserClick;
     std::vector<RobotGUI*>_robotsGUIVector;
     std::vector<WallGUI*>_wallsGUIVector;
     Rectangle _robotsFromCore;
 
 signals:
 
-    void ClickSig();
+    void ClickSig(QPointF clickPoint);
     void RequestSimObjSig(int orderIndex);
 
 private slots:

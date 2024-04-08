@@ -22,9 +22,8 @@ void SimulationScene::CleareSimulationScene(){
 void SimulationScene::mousePressEvent(QGraphicsSceneMouseEvent* event){
 
     if(event->button() == Qt::LeftButton){
-        _actualUserClick = event->scenePos();
 
-        emit ClickSig();
+        emit ClickSig(event->scenePos());
     }
 }
 
@@ -85,9 +84,5 @@ void SimulationScene::_OneSimFrameSlot(){
 
     }
 
-}
-
-QPointF* SimulationScene::GetUserClick(){
-    return &_actualUserClick;
 }
 
