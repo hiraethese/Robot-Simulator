@@ -180,5 +180,6 @@ private slots:
 
     void _UserClickSimSceneLogicSlot();
 
+    void _RequestSimObjSlot(int orderIndex);
 };
 #endif // MAINWINDOW_H

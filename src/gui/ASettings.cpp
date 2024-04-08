@@ -34,5 +34,11 @@ void ASettings::_CreateButtonsSettings(int row){
 
     _settingGridLayot->addWidget(_deletePushButton, ++row, 0);
 
-    connect(_setPushButton, &QPushButton::clicked, this, [=](){emit setSig();});
+    connect(_setPushButton, &QPushButton::clicked, this, [=](){close(); emit SetSig();});
+    connect(_deletePushButton, &QPushButton::clicked, this, [=](){close(); emit DeleteSig();});
+
+}
+
+void ASettings::SetUnsetDeleteButton(bool flag){
+    _deletePushButton->setEnabled(flag);
 }

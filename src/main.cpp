@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     a.setStyleSheet(stylesSting);
     MainWindow w;
     w.showMaximized();
-    w.show();
+    //w.show();
     return a.exec();
 }
 // /mnt/c/Users/user/icp2024/examples/example.txt

@@ -251,6 +251,7 @@ void MainWindow::_CreateSimulationWindow(){
     _simulationWind = new SimulationWindow(this);
     setCentralWidget(_simulationWind);
     connect(_simulationWind, &SimulationWindow::UperClickSig, this, &MainWindow::_UserClickSimSceneLogicSlot);
+    connect(_simulationWind, &SimulationWindow::RequestSimObjSig, this, &MainWindow::_RequestSimObjSlot);
 }
 
 void MainWindow::_UserClickSimSceneLogicSlot(){
@@ -260,6 +261,26 @@ void MainWindow::_UserClickSimSceneLogicSlot(){
     _xCursorTouchLine->setText(QString("%1").arg(test->x()));
     _yCursorTouchLine->setText(QString("%1").arg(test->y()));
 
+}
+
+void MainWindow::_RequestSimObjSlot(int orderIndex){
+    std::cout << "Order index: " << orderIndex << std::endl;
+/*
+    TODO:
+        -- request by core view about simobj
+        -- show settings window about it
+    after simulation of working
+*/
+    if(orderIndex == 1){
+        _robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp());
+        _robotSetWind->SetUnsetDeleteButton(true);
+        _robotSetWind->exec();
+    }
+    else{
+        _wallSetWind->DownloadDataFromView(_core->GetControlledRobotTemp());
+        _wallSetWind->SetUnsetDeleteButton(true);
+        _wallSetWind->exec();
+    }
 }
 
 // ************************************  PART BUILD MODE    *********************************************************
@@ -405,12 +426,13 @@ void MainWindow::_CreateSettings(){
     connect(_newMapWind, &NewMapSetting::downloadSig, this, &MainWindow::_PushNewMapToCoreSlot);
 
     _robotSetWind = new RobotSetting(this, "Robot settings");
-    connect(_robotSetWind, &RobotSetting::setSig, this, [=](){std::cout << "CLICK SET ROBOT SETTINGS" << std::endl;});  // TODO : create slot with prototype function for all settings with setting new data
-    connect(_robotSetWind, &RobotSetting::deleteSig, this, [=](){std::cout << "CLICK DELETE ROBOT SETTINGS" << std::endl;});
+    connect(_robotSetWind, &RobotSetting::SetSig, this, [=](){std::cout << "CLICK SET ROBOT SETTINGS" << std::endl;});  // TODO : create slot with prototype function for all settings with setting new data
+    connect(_robotSetWind, &RobotSetting::DeleteSig, this, [=](){std::cout << "CLICK DELETE ROBOT SETTINGS" << std::endl;});
 
     _wallSetWind = new WallSetting(this, "Wall settings");
-    connect(_wallSetWind, &WallSetting::setSig, this, [=](){std::cout << "CLICK SET WALL SETTINGS" << std::endl;});  // TODO : create slot with prototype function for all settings with setting new data
-    connect(_wallSetWind, &WallSetting::deleteSig, this, [=](){std::cout << "CLICK DELETE WALL SETTINGS" << std::endl;});
+    connect(_wallSetWind, &WallSetting::SetSig, this, [=](){std::cout << "CLICK SET WALL SETTINGS" << std::endl;});  // TODO : create slot with prototype function for all settings with setting new data
+    connect(_wallSetWind, &WallSetting::DeleteSig, this, [=](){std::cout << "CLICK DELETE WALL SETTINGS" << std::endl;});
+
 }
 
 

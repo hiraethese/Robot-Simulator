@@ -44,15 +44,12 @@ private:
 
 signals:
 
-    void clickSig();
-
-public slots:
-
-    void requestSimObj(int orderIndex);
+    void ClickSig();
+    void RequestSimObjSig(int orderIndex);
 
 private slots:
 
-    void _OneSimFrame();
+    void _OneSimFrameSlot();
 };
 
 #endif // SIMULATIONSCENE_H

@@ -61,5 +61,3 @@ void RobotSetting::DownloadDataFromView(SimObjView view){
 }
 
 
-
-

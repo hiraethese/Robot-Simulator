@@ -15,10 +15,12 @@
 
 class WallSetting : public ASettings
 {
+
 public:
 
     WallSetting(QWidget* parent, QString title);
     void DownloadDataFromView(SimObjView view) override;
+
 private:
 
     QLabel* _heightLabel;
@@ -26,7 +28,6 @@ private:
 
     QLabel* _widthLabel;
     QSpinBox* _widthSpinBox;
-
 
 };
 

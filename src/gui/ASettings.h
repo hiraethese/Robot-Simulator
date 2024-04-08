@@ -33,8 +33,9 @@ protected:
     void _CreateButtonsSettings(int row);
 
 signals:
-    void setSig();
-    void deleteSig();
+    void SetSig();
+    void DeleteSig();
+
 };
 
 #endif // ASETTINGS_H

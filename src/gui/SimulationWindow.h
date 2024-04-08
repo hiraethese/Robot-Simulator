@@ -82,6 +82,7 @@ private:
 
 signals:
     void UperClickSig();
+    void RequestSimObjSig(int orderIndex);
 
 };
 

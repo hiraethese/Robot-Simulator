@@ -4,9 +4,9 @@ SimulationScene::SimulationScene(QObject *parent)
     : QGraphicsScene{parent}
 {
     _core = Core::getInstance();
-    connect(&_simTimer, &QTimer::timeout, this, &SimulationScene::_OneSimFrame);
+    connect(&_simTimer, &QTimer::timeout, this, &SimulationScene::_OneSimFrameSlot);
     setBackgroundBrush(getBrushByCode(WHITE));
-    connect(&_conn, &ConnectorGUI::connectSig, this, &SimulationScene::requestSimObj);
+    connect(&_conn, &ConnectorGUI::connectSig, this, [=](int orderIndex){emit RequestSimObjSig(orderIndex);});
 }
 
 void SimulationScene::CleareSimulationScene(){
@@ -24,7 +24,7 @@ void SimulationScene::mousePressEvent(QGraphicsSceneMouseEvent* event){
     if(event->button() == Qt::LeftButton){
         _actualUserClick = event->scenePos();
 
-        emit clickSig();
+        emit ClickSig();
     }
 }
 
@@ -72,7 +72,7 @@ void SimulationScene::LoadSimObj(){
 
 }
 
-void SimulationScene::_OneSimFrame(){
+void SimulationScene::_OneSimFrameSlot(){
 
     _core->MoveAllObjects();
     _robotsFromCore = _core->RectFromCore();
@@ -91,7 +91,3 @@ QPointF* SimulationScene::GetUserClick(){
     return &_actualUserClick;
 }
 
-void SimulationScene::requestSimObj(int orderIndex){
-    std::cout << "Index: " << orderIndex << std::endl;
-    //clear();
-}
