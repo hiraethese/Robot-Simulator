@@ -42,13 +42,19 @@ public:
 
     void RunSimScene();
     void StopSimScene();
-    void LoadSimScene();
 
     BuildModeStatus buildModeStatus = NotSetStatus;
+
+    void RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot);
+
 protected:
+
     void keyPressEvent(QKeyEvent *event) override;
+
 private:
+
     Core* _core;
+
     QGraphicsView* _simulationView = nullptr;
     SimulationScene* _simulationScene = nullptr;
 
@@ -82,7 +88,9 @@ private:
 signals:
 
     void UperClickSig(QPointF clickPoint);
-    void RequestSimObjSig(int orderIndex);
+    void RequestSimObjSig(int orderIndex, bool isRobot);
+    void LoadSimSceneSig();
+    void CreateNewSimObjSig(SimObjView view, float x, float y);
 
 };
 

@@ -3,9 +3,9 @@
 SimFactory::SimFactory()
 {
     _controlledRobot = nullptr;
-    _botRobotTemplate  = {0.0, 0.0, GREEN, true, false, 0, 0, 0};  // default value (now random)
-    _controlledRobotTemplate = {0.0, 0.0, RED, true, true, 0, 0, 0};  // default value (now random)
-    _wallTemplate = {0.0, 0.0, BLUE, true, false, 0, 0, 0};;
+    _botRobotTemplate  = {30.0, 30.0, GREEN, true, false, 0, 0, 0};  // default value (now random)
+    _controlledRobotTemplate = {30.0, 30.0, RED, true, true, 0, 0, 0};  // default value (now random)
+    _wallTemplate = {30.0, 30.0, BLUE, false, false, 0, 0, 0};;
 }
 /*
 typedef struct SimObjView {

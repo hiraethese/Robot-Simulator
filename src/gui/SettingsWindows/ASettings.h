@@ -10,17 +10,21 @@
 #include <QSpinBox>
 #include <QComboBox>
 
-#include "../core/icplib.h"
-#include "style.h"
+#include "../../core/icplib.h"
+#include "../style.h"
 class ASettings : public QDialog
 {
     Q_OBJECT
 public:
     ASettings(QWidget* parent, QString title);
-    virtual void DownloadDataFromView(SimObjView view) = 0;
+    virtual void DownloadDataFromView(SimObjView view, int orderIndex) = 0;
     void SetUnsetDeleteButton(bool flag);
-
+    void SetIndex(int orderIndex);  // after deleted; order index moved to view
+    int GetOrderIndex();
+    bool GetType();
 protected:
+    bool _isRobot;
+    int _orderIndex; // after deleted; order index moved to view
     QPushButton* _setPushButton;
     QPushButton* _deletePushButton;
 
@@ -33,8 +37,8 @@ protected:
     void _CreateButtonsSettings(int row);
 
 signals:
-    void SetSig();
-    void DeleteSig();
+    void SetSig(int orderIndex, bool isRobot);
+    void DeleteSig(int orderIndex, bool isRobot);
 
 };
 

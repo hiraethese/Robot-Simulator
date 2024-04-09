@@ -11,8 +11,8 @@
 #include <QPushButton>
 #include <iostream>
 #include <QString>
-#include "../core/icplib.h"
-#include "style.h"
+#include "../../core/icplib.h"
+#include "../style.h"
 #include "ASettings.h"
 
 class RobotSetting : public ASettings
@@ -20,7 +20,7 @@ class RobotSetting : public ASettings
 
 public:
     RobotSetting(QWidget* parent, QString title);
-    void DownloadDataFromView(SimObjView view) override;
+    void DownloadDataFromView(SimObjView view, int orderIndex) override;
 
 private:
     bool flagIsUserRobot;

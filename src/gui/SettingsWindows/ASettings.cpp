@@ -34,11 +34,23 @@ void ASettings::_CreateButtonsSettings(int row){
 
     _settingGridLayot->addWidget(_deletePushButton, ++row, 0);
 
-    connect(_setPushButton, &QPushButton::clicked, this, [=](){close(); emit SetSig();});
-    connect(_deletePushButton, &QPushButton::clicked, this, [=](){close(); emit DeleteSig();});
+    connect(_setPushButton, &QPushButton::clicked, this, [=](){close(); emit SetSig(GetOrderIndex(), GetType());});
+    connect(_deletePushButton, &QPushButton::clicked, this, [=](){close(); emit DeleteSig(GetOrderIndex(), GetType());});
 
 }
 
 void ASettings::SetUnsetDeleteButton(bool flag){
     _deletePushButton->setEnabled(flag);
+}
+
+void ASettings::SetIndex(int orderIndex){
+    _orderIndex = orderIndex;
+}
+
+int ASettings::GetOrderIndex(){
+    return _orderIndex;
+}
+
+bool ASettings::GetType(){
+    return _isRobot;
 }

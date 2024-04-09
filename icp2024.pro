@@ -22,14 +22,14 @@ SOURCES += \
     src/core/Core.cpp \
     src/core/SimFactory.cpp \
     src/core/SimMap.cpp \
-    src/gui/ASettings.cpp \
-    src/gui/InfoNotification.cpp \
+    src/gui/SettingsWindows/ASettings.cpp \
+    src/gui/Notifications/InfoNotification.cpp \
     src/gui/MainWindow.cpp \
-    src/gui/NewMapSetting.cpp \
-    src/gui/RobotSetting.cpp \
+    src/gui/SettingsWindows/NewMapSetting.cpp \
+    src/gui/SettingsWindows/RobotSetting.cpp \
     src/gui/SimulationScene.cpp \
     src/gui/SimulationWindow.cpp \
-    src/gui/WallSetting.cpp \
+    src/gui/SettingsWindows/WallSetting.cpp \
     src/gui/style.cpp \
     src/main.cpp
 
@@ -44,15 +44,17 @@ HEADERS += \
     src/core/SimFactory.h \
     src/core/SimMap.h \
     src/core/icplib.h \
-    src/gui/ASettings.h \
-    src/gui/InfoNotification.h \
+    src/gui/SettingsWindows/ASettings.h \
+    src/gui/SimObjGUI/ConnectorGUI.h \
+    src/gui/Notifications/InfoNotification.h \
     src/gui/MainWindow.h \
-    src/gui/NewMapSetting.h \
-    src/gui/RobotSetting.h \
-    src/gui/SimObjGUI.h \
+    src/gui/SettingsWindows/NewMapSetting.h \
+    src/gui/SimObjGUI/RobotGUI.h \
+    src/gui/SettingsWindows/RobotSetting.h \
     src/gui/SimulationScene.h \
     src/gui/SimulationWindow.h \
-    src/gui/WallSetting.h \
+    src/gui/SimObjGUI/WallGUI.h \
+    src/gui/SettingsWindows/WallSetting.h \
     src/gui/style.h
 
 FORMS += \

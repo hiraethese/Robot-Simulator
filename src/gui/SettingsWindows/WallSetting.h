@@ -8,8 +8,8 @@
 #include <QLabel>
 #include <QSpinBox>
 #include <QString>
-#include "../core/icplib.h"
-#include "style.h"
+#include "../../core/icplib.h"
+#include "../style.h"
 #include "ASettings.h"
 
 
@@ -19,7 +19,7 @@ class WallSetting : public ASettings
 public:
 
     WallSetting(QWidget* parent, QString title);
-    void DownloadDataFromView(SimObjView view) override;
+    void DownloadDataFromView(SimObjView view, int orderIndex) override;
 
 private:
 

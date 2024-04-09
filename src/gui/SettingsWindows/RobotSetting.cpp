@@ -2,6 +2,8 @@
 
 RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, title){
 
+    _isRobot = true;  // after deleted
+
     _typeRobotLabel = new QLabel("Type : ", this);
     _typeRobotLineEdit = new QLabel(this);
     _settingGridLayot->addWidget(_typeRobotLabel, 0, 0);
@@ -41,7 +43,8 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
 }
 
 
-void RobotSetting::DownloadDataFromView(SimObjView view){
+void RobotSetting::DownloadDataFromView(SimObjView view, int orderIndex){
+    _orderIndex = orderIndex;
     _diameterSpinBox->setValue(int(view.h));
     _speedSpinBox->setValue(int(view.speed));
     _colorComboBox->setCurrentText(QString::fromStdString(getColorString(view.color)));

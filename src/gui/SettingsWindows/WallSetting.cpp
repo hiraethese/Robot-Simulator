@@ -2,6 +2,8 @@
 
 WallSetting::WallSetting(QWidget* parent, QString title):ASettings(parent, title) {
 
+    _isRobot = false;  // after deleted
+
     _heightLabel = new QLabel("Height : ", this);
     _heightSpinBox = new QSpinBox(this);
     _heightSpinBox->setMinimum(10);   // value ???
@@ -23,7 +25,8 @@ WallSetting::WallSetting(QWidget* parent, QString title):ASettings(parent, title
 }
 
 
-void WallSetting::DownloadDataFromView(SimObjView view){
+void WallSetting::DownloadDataFromView(SimObjView view, int orderIndex){
+    _orderIndex = orderIndex;
     _heightSpinBox->setValue(view.h);
     _widthSpinBox->setValue(view.w);
     _colorComboBox->setCurrentText(QString::fromStdString(getColorString(view.color)));

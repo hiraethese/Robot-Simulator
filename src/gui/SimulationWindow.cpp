@@ -28,8 +28,29 @@ void SimulationWindow::_CreateSimGUI(){
     _simulationView->setSceneRect(0,0,1800, 750);  // TODO: size from core
     _simulationView->setFixedSize(1800+20, 750+20);  // TODO size from core
 
-    connect(_simulationScene, &SimulationScene::ClickSig, this, [=](QPointF clickPoint){emit UperClickSig(clickPoint);});
-    connect(_simulationScene, &SimulationScene::RequestSimObjSig, this, [=](int orderIndex){if(buildModeStatus == CursorStatus){emit RequestSimObjSig(orderIndex);}});
+    connect(_simulationScene, &SimulationScene::ClickSig, this,
+    [=](QPointF clickPoint){
+        emit UperClickSig(clickPoint);
+    });
+
+    connect(_simulationScene, &SimulationScene::RequestSimObjSig, this,
+    [=](int orderIndex, bool isRobot){
+        if(buildModeStatus == CursorStatus){
+            emit RequestSimObjSig(orderIndex, isRobot);
+        }
+    });
+
+    connect(this, &SimulationWindow::CreateNewSimObjSig, this,
+    [=](SimObjView view, float x, float y){
+        if(view.isRobot){
+            _simulationScene->CreateNewRobot(view, x, y);
+        }
+        else{
+            _simulationScene->CreateNewWall(view, x, y);
+        }
+    });
+
+    connect(this, &SimulationWindow::LoadSimSceneSig, _simulationScene, &SimulationScene::LoadSimObj);
 }
 
 void SimulationWindow::_DeleteSimGUI(){
@@ -165,12 +186,6 @@ void SimulationWindow::StopSimScene(){
 
 }
 
-void SimulationWindow::LoadSimScene(){
-
-    _simulationScene->LoadSimObj();
-
-}
-
 
 void SimulationWindow::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_W){
@@ -195,4 +210,19 @@ void SimulationWindow::keyPressEvent(QKeyEvent *event){
     }
 }
 
+
+void SimulationWindow::RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot){
+
+    if(isRobot){
+
+        _simulationScene->RemoveRobotByOrderIndex(orderIndex);
+
+    }
+    else{
+
+        _simulationScene->RemoveWallByOrderIndex(orderIndex);
+
+    }
+
+}
 

@@ -28,10 +28,10 @@
 #include <iostream>
 
 #include "SimulationWindow.h"
-#include "InfoNotification.h"
-#include "RobotSetting.h"
-#include "WallSetting.h"
-#include "NewMapSetting.h"
+#include "Notifications/InfoNotification.h"
+#include "SettingsWindows/RobotSetting.h"
+#include "SettingsWindows/WallSetting.h"
+#include "SettingsWindows/NewMapSetting.h"
 #include "../core/Core.h"
 #include "style.h"
 
@@ -172,6 +172,9 @@ private slots:
 
     void _UserClickSimSceneLogicSlot(QPointF clickPoint);
 
-    void _RequestSimObjSlot(int orderIndex);
+    void _RequestSimObjSlot(int orderIndex, bool isRobot);
+
+    void _UpdateSimObjSlot(int orderIndex, bool isRobot);
+    void _DeleteSimObjSlot(int orderIndex, bool isRobot);
 };
 #endif // MAINWINDOW_H

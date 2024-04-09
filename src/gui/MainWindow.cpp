@@ -94,13 +94,13 @@ void MainWindow::_CreateMenu(){
     templatesSubMenu = appMenu->addMenu("Templates");
 
     buildUserRobotTemplate = templatesSubMenu->addAction("Controlled robot");  // upd lambda with dependecy injection
-    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp()); _robotSetWind->exec();});
+    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), 0); _robotSetWind->exec();});
 
     buildBotRobotTemplate = templatesSubMenu->addAction("Bot robot");
-    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetBotRobotTemp());_robotSetWind->exec();});
+    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetBotRobotTemp(), 0);_robotSetWind->exec();});
 
     buildWallLayout = templatesSubMenu->addAction("Wall");
-    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemplate());_wallSetWind->exec();});
+    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemplate(), 0);_wallSetWind->exec();});
 
     simulationModeAction = appMenu->addAction("Simulation");
     connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimModeSlot);
@@ -262,12 +262,35 @@ void MainWindow::_UserClickSimSceneLogicSlot(QPointF clickPoint){
     switch(_simulationWind->buildModeStatus){
     case ControllRobotStatus:
         std::cout << "Create Controlled Robot" << std::endl;
+        /* TODO:
+        *   request by _core creating new robot
+        *   if ok
+        *   create
+        */
+        emit _simulationWind->CreateNewSimObjSig(_core->GetControlledRobotTemp(), clickPoint.x(), clickPoint.y());
+
         break;
     case BotRobotStatus:
         std::cout << "Create Bot Robot" << std::endl;
+        /* TODO:
+        *   request by _core creating new robot
+        *   if ok
+        *   create
+        */
+
+        emit _simulationWind->CreateNewSimObjSig(_core->GetBotRobotTemp(), clickPoint.x(), clickPoint.y());
+
         break;
     case WallStatus:
         std::cout << "Create Wall" << std::endl;
+        /* TODO:
+        *   request by _core creating new wall
+        *   if ok
+        *   create
+        */
+
+        emit _simulationWind->CreateNewSimObjSig(_core->GetWallTemplate(), clickPoint.x(), clickPoint.y());
+
         break;
     default:
         break;
@@ -275,24 +298,46 @@ void MainWindow::_UserClickSimSceneLogicSlot(QPointF clickPoint){
 
 }
 
-void MainWindow::_RequestSimObjSlot(int orderIndex){
-    std::cout << "Order index: " << orderIndex << std::endl;
+void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
+    std::cout << "Order index: " << orderIndex << "; is Robot: " << isRobot << std::endl;
 /*
     TODO:
         -- request by core view about simobj
         -- show settings window about it
     after simulation of working
 */
-    if(orderIndex == 1){
-        _robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp());
+    if(isRobot){
+        _robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);
         _robotSetWind->SetUnsetDeleteButton(true);
         _robotSetWind->exec();
+        std::cout << "After"<< std::endl;
     }
     else{
-        _wallSetWind->DownloadDataFromView(_core->GetControlledRobotTemp());
+        _wallSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);
         _wallSetWind->SetUnsetDeleteButton(true);
         _wallSetWind->exec();
+        std::cout << "After"<< std::endl;
     }
+}
+
+void MainWindow::_UpdateSimObjSlot(int orderIndex, bool isRobot){
+
+    /* TODO:
+    *  send view by sett wind to core
+    *  wait confirm by core
+    *  update
+    */
+    std::cout << "User request updating for sim obj with #" << orderIndex << " " <<" and type " << isRobot << std::endl;
+}
+void MainWindow::_DeleteSimObjSlot(int orderIndex, bool isRobot){
+
+    /* TODO
+    * send request to deleting
+    * wait confirm by core
+    * delete
+    */
+
+    _simulationWind->RemoveSimObjByOrderIndexSlot(orderIndex, isRobot);
 }
 
 // ************************************  PART BUILD MODE    *********************************************************
@@ -437,12 +482,12 @@ void MainWindow::_CreateSettings(){
     connect(_newMapWind, &NewMapSetting::downloadSig, this, &MainWindow::_PushNewMapToCoreSlot);
 
     _robotSetWind = new RobotSetting(this, "Robot settings");
-    connect(_robotSetWind, &RobotSetting::SetSig, this, [=](){std::cout << "CLICK SET ROBOT SETTINGS" << std::endl;});  // TODO : create slot with prototype function for all settings with setting new data
-    connect(_robotSetWind, &RobotSetting::DeleteSig, this, [=](){std::cout << "CLICK DELETE ROBOT SETTINGS" << std::endl;});
+    connect(_robotSetWind, &RobotSetting::SetSig, this, &MainWindow::_UpdateSimObjSlot);
+    connect(_robotSetWind, &RobotSetting::DeleteSig, this, &MainWindow::_DeleteSimObjSlot);
 
     _wallSetWind = new WallSetting(this, "Wall settings");
-    connect(_wallSetWind, &WallSetting::SetSig, this, [=](){std::cout << "CLICK SET WALL SETTINGS" << std::endl;});  // TODO : create slot with prototype function for all settings with setting new data
-    connect(_wallSetWind, &WallSetting::DeleteSig, this, [=](){std::cout << "CLICK DELETE WALL SETTINGS" << std::endl;});
+    connect(_wallSetWind, &WallSetting::SetSig, this, &MainWindow::_UpdateSimObjSlot);
+    connect(_wallSetWind, &WallSetting::DeleteSig, this, &MainWindow::_DeleteSimObjSlot);
 
 }
 
@@ -455,8 +500,9 @@ void MainWindow::_PushNewMapToCoreSlot(){
 
     if(!code){
 
-        _simulationWind->LoadSimScene();
-        _lineMapNameSimIdToolBar->setText(QString::fromStdString(_core->GetMapValue()));
+        //_simulationWind->LoadSimScene();
+        emit _simulationWind->LoadSimSceneSig();
+        //_lineMapNameSimIdToolBar->setText(QString::fromStdString(_core->GetMapValue())); TODO: wihtout map name
 
     }
 
