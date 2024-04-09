@@ -163,7 +163,7 @@ void MainWindow::_CreateSimModeTools(){
 
     _lineMapNameSimIdToolBar = new QLineEdit();
     _lineMapNameSimIdToolBar->setReadOnly(true);
-    _lineMapNameSimIdToolBar->setFixedWidth(500);
+    _lineMapNameSimIdToolBar->setFixedWidth(100);
     _lineMapNameSimIdToolBar->setText(QString::fromStdString(_core->GetMapValue()));
 
     _simulationIdToolBar->addWidget(_lineMapNameSimIdToolBar);
@@ -209,6 +209,7 @@ void MainWindow::_RunSimulationActionSlot(){
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_PauseSimulationActionSlot);
     _runSimulationAction->setIcon(QIcon(":/icons/pauseTool.svg"));
     _runSimulationAction->setText("Pause");
+    _lineMapNameSimIdToolBar->setText("Run");
     _lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
 
     _core->SetRunSim(true);
@@ -227,6 +228,7 @@ void MainWindow::_PauseSimulationActionSlot(){
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
     _runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
     _runSimulationAction->setText("Run");
+    _lineMapNameSimIdToolBar->setText("Pause");
     _lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
 
 }
