@@ -11,10 +11,21 @@ SimulationScene::SimulationScene(QObject *parent)
 
 void SimulationScene::CleareSimulationScene(){
 
-    clear();
+
+    for(auto robot: _robotsGUIVector){
+
+        removeItem(robot);
+        delete robot;
+    }
+
+
+    for(auto wall: _wallsGUIVector){
+
+        removeItem(wall);
+        delete wall;
+    }
 
     _robotsGUIVector.clear();
-
     _wallsGUIVector.clear();
 
 }
@@ -75,6 +86,7 @@ void SimulationScene::_OneSimFrameSlot(){
 }
 
 void SimulationScene::CreateNewRobot(SimObjView view, float x, float y){
+
     RobotGUI* newRobot = new RobotGUI(0,0,view.w,view.h, &_conn, _index);
     newRobot->setPen(getPen());
     newRobot->setBrush(getBrushByCode(RED));
@@ -82,19 +94,21 @@ void SimulationScene::CreateNewRobot(SimObjView view, float x, float y){
     addItem(newRobot);
     _robotsGUIVector.push_back(newRobot);
     ++_index;
+
 }
 
 
 void SimulationScene::CreateNewWall(SimObjView view, float x, float y){
-    std::cout << "ppp " << x << " " << y << std::endl;
+
     WallGUI* newWall = new WallGUI(0,0,view.w, view.h, &_conn, _index);
-    newWall->setPos(x,y);  //wall->GetTransform()->GetRect().x
+    newWall->setPos(x,y);
     newWall->setPen(getPen());
     newWall->setBrush(getBrushByCode(BLUE));
     addItem(newWall);
     newWall->show();
     _wallsGUIVector.push_back(newWall);
     ++_index;
+
 }
 
 std::vector<RobotGUI*>::iterator SimulationScene::_GetRobotByOrderIndex(int orderIndex){

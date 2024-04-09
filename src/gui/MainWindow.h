@@ -130,10 +130,8 @@ private:
     QAction* _buildUserRobotAction;
     QAction* _buildBotRobotAction;
     QAction* _buildWallAction;
-    //QAction* _hummerAction;
     QLabel* _statusModeLabel;
     QLineEdit* _statusModeLine;
-    //QToolBar* _settingsBuildToolBar;
     QToolBar* _engineBuildToolBar;
     QToolBar* _engineCursorToolBar;
     QLabel* _xCursorTouchLab;
@@ -166,7 +164,6 @@ private slots:
     void _BuildUserRobotActionSlot();
     void _BuildBotRobotActionSlot();
     void _BuildWallActionSlot();
-    //void _HummerActionSlot();
 
     void _PushNewMapToCoreSlot();
 

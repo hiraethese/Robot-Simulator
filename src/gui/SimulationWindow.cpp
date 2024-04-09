@@ -143,11 +143,6 @@ void SimulationWindow::SwitchBetweenSimAndBuild(bool flagIsBuild){
 
     _simulationView->setInteractive(flagIsBuild);
 
-    //_SetUnsetSimButtons(false);
-
-    //if(flagIsBuild){
-    //StopSimScene();
-    //}
     StopSimScene();
 
 }
@@ -170,13 +165,8 @@ void SimulationWindow::RunSimScene(){
     _simulationScene->InitSimRun();
 
 }
+
 void SimulationWindow::StopSimScene(){
-
-    /*if(_core->IsSimReady()){
-
-        _core->StopMoveSig();
-
-    }*/
 
 
     _SetUnsetSimButtons(false);

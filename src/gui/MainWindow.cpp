@@ -93,7 +93,7 @@ void MainWindow::_CreateMenu(){
 
     templatesSubMenu = appMenu->addMenu("Templates");
 
-    buildUserRobotTemplate = templatesSubMenu->addAction("Controlled robot");  // upd lambda with dependecy injection
+    buildUserRobotTemplate = templatesSubMenu->addAction("Controlled robot");
     connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), 0); _robotSetWind->exec();});
 
     buildBotRobotTemplate = templatesSubMenu->addAction("Bot robot");
@@ -373,13 +373,6 @@ void MainWindow::_CreateBuildModeTools(){
     _buildWallAction = new QAction(QIcon(":/icons/wallTool.png"), "Wall", this);
     connect(_buildWallAction, &QAction::triggered, this, &MainWindow::_BuildWallActionSlot);
 
-    //_hummerAction = new QAction(QIcon(":/icons/hummerTool.png"), "Object settings", this);
-    //connect(_hummerAction, &QAction::triggered, this, &MainWindow::_HummerActionSlot);
-
-
-    //_settingsBuildToolBar = addToolBar("settingsBuild");
-    //_settingsBuildToolBar->addAction(_hummerAction);
-
     _engineBuildToolBar = addToolBar("engineBuild");
     _engineBuildToolBar->addAction(_buildUserRobotAction);
     _engineBuildToolBar->addAction(_buildBotRobotAction);
@@ -428,11 +421,9 @@ void MainWindow::_DeleteBuildModeTools(){
         delete _xCursorTouchLine;
         delete _yCursorTouchLab;
         delete _yCursorTouchLine;
-        //removeToolBar(_settingsBuildToolBar);
         removeToolBar(_engineBuildToolBar);
         removeToolBar(_engineCursorToolBar);
         removeToolBar(_statusModeBuildToolBar);
-        //delete _settingsBuildToolBar;
         delete _engineBuildToolBar;
         delete _engineCursorToolBar;
         delete _statusModeBuildToolBar;
@@ -469,10 +460,6 @@ void MainWindow::_BuildWallActionSlot(){
 
 }
 
-/*void MainWindow::_HummerActionSlot(){
-
-}*/
-
 
 // ************************************  PART SETTINGS MODE    *********************************************************
 
@@ -500,7 +487,6 @@ void MainWindow::_PushNewMapToCoreSlot(){
 
     if(!code){
 
-        //_simulationWind->LoadSimScene();
         emit _simulationWind->LoadSimSceneSig();
         //_lineMapNameSimIdToolBar->setText(QString::fromStdString(_core->GetMapValue())); TODO: wihtout map name
 

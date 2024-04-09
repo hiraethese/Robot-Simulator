@@ -7,18 +7,6 @@ SimFactory::SimFactory()
     _controlledRobotTemplate = {30.0, 30.0, RED, true, true, 0, 0, 0};  // default value (now random)
     _wallTemplate = {30.0, 30.0, BLUE, false, false, 0, 0, 0};;
 }
-/*
-typedef struct SimObjView {
-    float h;
-    float w;
-    colors color;
-    bool isRobot;
-    bool isControlled;
-    int speed;
-    int angle;
-    int way;
-} SimObjView;
-*/
 void SimFactory::DeleteAllObjects()
 {
     if (_controlledRobot != nullptr)
