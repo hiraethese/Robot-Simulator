@@ -48,14 +48,49 @@ void Movement::SetAngleDegrees(int newAngleDegrees)
     _angleDegrees = newAngleDegrees % 360;
 }
 
-void Movement::RotateLeft()
+void Movement::Rotate()
 {
-    _angleDegrees = (_angleDegrees - _angleStep) % 360;
+    // Check if movement is enabled
+    if (!_isEnabled)
+    {
+        return;
+    }
+
+    switch (_rotateClockwise)
+    {
+        case 1:
+            _angleDegrees = (_angleDegrees + _angleStep) % 360;
+            break;
+        case -1:
+            _angleDegrees = (_angleDegrees - _angleStep) % 360;
+            break;
+        case 0:
+            break;
+        default:
+            break;
+    }
 }
 
 void Movement::RotateRight()
 {
+    // Check if movement is enabled
+    if (!_isEnabled)
+    {
+        return;
+    }
+
     _angleDegrees = (_angleDegrees + _angleStep) % 360;
+}
+
+void Movement::RotateLeft()
+{
+    // Check if movement is enabled
+    if (!_isEnabled)
+    {
+        return;
+    }
+
+    _angleDegrees = (_angleDegrees - _angleStep) % 360;
 }
 
 void Movement::EnableMovement()
@@ -75,7 +110,7 @@ void Movement::MoveForward()
     {
         return;
     }
-    
+
     Vector2d direction1 = {0.0f, 0.0f};
     Vector2d direction2 = {0.0f, 0.0f};
 

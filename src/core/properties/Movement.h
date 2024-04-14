@@ -30,8 +30,9 @@ public:
     void SetAngleDegrees(int newAngleDegrees);
     void EnableMovement();
     void DisableMovement();
-    void RotateLeft();
+    void Rotate();
     void RotateRight();
+    void RotateLeft();
     void MoveForward();
     void MoveWithDirection(Vector2d direction);
 };
