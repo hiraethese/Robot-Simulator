@@ -12,9 +12,11 @@ private:
 public:
     Robot(  Vector2d position,
             Vector2d size,
-            float speed, 
+            float speed,
+            float collisionDistance,
             int angleStep,
             int angleDegrees,
+            int rotateClockwise,
             colors color = RED,
             bool isControlled = true);
     ~Robot();

@@ -2,12 +2,19 @@
 
 #include "../Core.h" // Note: include errors
 
-Movement::Movement(float speed, int angleStep, int angleDegrees, MyTransform *transform)
+Movement::Movement(float speed,
+                    float collisionDistance,
+                    int angleStep,
+                    int angleDegrees,
+                    int rotateClockwise,
+                    MyTransform* transform)
 {
     _isEnabled = false;
     _speed = speed;
+    _collisionDistance = collisionDistance;
     _angleStep = angleStep % 360;
     _angleDegrees = angleDegrees % 360;
+    _rotateClockwise = rotateClockwise;
     _transform = transform;
 }
 

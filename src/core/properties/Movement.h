@@ -9,12 +9,19 @@ class Movement
 private:
     bool _isEnabled;
     float _speed;
+    float _collisionDistance;
     int _angleStep;
     int _angleDegrees;
+    int _rotateClockwise;
     MyTransform* _transform;
 
 public:
-    Movement(float speed, int angleStep, int angleDegrees, MyTransform* transform);
+    Movement(float speed,
+            float collisionDistance,
+            int angleStep,
+            int angleDegrees,
+            int rotateClockwise,
+            MyTransform* transform);
     float GetSpeed();
     int GetAngleStep();
     int GetAngleDegrees();
