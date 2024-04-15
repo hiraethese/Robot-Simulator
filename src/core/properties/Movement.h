@@ -33,8 +33,8 @@ public:
     void Rotate();
     void RotateRight();
     void RotateLeft();
-    void MoveForward();
-    void MoveWithDirection(Vector2d direction);
+    void MoveControlledRobot();
+    void MoveAutomatedRobot();
 };
 
 #endif // MOVEMENT_H
