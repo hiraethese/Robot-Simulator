@@ -226,36 +226,31 @@ void Movement::MoveAutomatedRobot()
     Vector2d newPosition = position + direction;
 
     // Track whether rotation function has been called for each wall
-    std::unordered_map<Wall*, bool> wallRotationCalled;
+    std::unordered_map<Wall*, bool> zoneRotationCalled;
 
-    // Check for collision distance
-    for (Wall* wall : walls)
-    {
-        Vector2d wallPosition = wall->GetTransform()->GetPosition();
-        float distanceToWall = (position - wallPosition).getLength();
-        if (distanceToWall <= _collisionDistance)
-        {
-            // If rotation hasn't been called for this wall, call it
-            if (!wallRotationCalled[wall])
-            {
-                // Call rotation function
-                Rotate();
-                // Mark rotation as called for this wall
-                wallRotationCalled[wall] = true;
-            }
-        }
-        else
-        {
-            // Reset rotation flag for this wall since it's no longer within collision distance
-            wallRotationCalled[wall] = false;
-        }
-    }
-
-    // Check for collision with walls
+    // Check for collisions
     for (Wall* wall : walls)
     {
         Vector2d wallPosition = wall->GetTransform()->GetPosition();
         Vector2d wallSize = wall->GetTransform()->GetSize();
+        Vector2d collisionZone = {wallSize.x + _collisionDistance * 2, wallSize.y + _collisionDistance * 2};
+
+        // 3) Check for collision zone
+
+        if (CircRectCollision(newPosition, radius, wallPosition, collisionZone))
+        {
+            if (!zoneRotationCalled[wall])
+            {
+                Rotate();
+                zoneRotationCalled[wall] = true;
+            }
+        }
+        else
+        {
+            zoneRotationCalled[wall] = false;
+        }
+
+        // 4) Check for collision with walls
 
         if (newPosition.x + radius >= wallPosition.x - wallSize.x * 0.5f &&
             newPosition.x - radius <= wallPosition.x + wallSize.x * 0.5f &&

@@ -110,7 +110,7 @@ void Core::StopMoveSig()
 
 void Core::MoveAllObjects()
 {
-    _map->GetFactory()->GetControlledRobot()->GetMovement()->MoveControlledRobot();
+    _map->GetFactory()->GetControlledRobot()->GetMovement()->MoveAutomatedRobot();
 }
 
 Rectangle Core::RectFromCore()
