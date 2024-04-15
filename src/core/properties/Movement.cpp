@@ -192,7 +192,7 @@ void Movement::MoveControlledRobot()
     _transform->SetPosition(newPosition);
 }
 
-void Movement::MoveAutomatedRobot() // TO DO
+void Movement::MoveAutomatedRobot()
 {
     // 1) Calculate direction
 
@@ -224,6 +224,32 @@ void Movement::MoveAutomatedRobot() // TO DO
 
     // Calculate new estimated position
     Vector2d newPosition = position + direction;
+
+    // Track whether rotation function has been called for each wall
+    std::unordered_map<Wall*, bool> wallRotationCalled;
+
+    // Check for collision distance
+    for (Wall* wall : walls)
+    {
+        Vector2d wallPosition = wall->GetTransform()->GetPosition();
+        float distanceToWall = (position - wallPosition).getLength();
+        if (distanceToWall <= _collisionDistance)
+        {
+            // If rotation hasn't been called for this wall, call it
+            if (!wallRotationCalled[wall])
+            {
+                // Call rotation function
+                Rotate();
+                // Mark rotation as called for this wall
+                wallRotationCalled[wall] = true;
+            }
+        }
+        else
+        {
+            // Reset rotation flag for this wall since it's no longer within collision distance
+            wallRotationCalled[wall] = false;
+        }
+    }
 
     // Check for collision with walls
     for (Wall* wall : walls)
