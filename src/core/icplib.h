@@ -73,5 +73,6 @@ typedef struct SimObjView {
     int way;
 } SimObjView;
 
+bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);
 
 #endif // ICPLIB_H
