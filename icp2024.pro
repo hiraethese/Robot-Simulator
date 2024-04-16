@@ -20,6 +20,7 @@ SOURCES += \
     src/core/properties/Movement.cpp \
     src/core/properties/MyTransform.cpp \
     src/core/Core.cpp \
+    src/core/icplib.cpp \
     src/core/SimFactory.cpp \
     src/core/SimMap.cpp \
     src/gui/SettingsWindows/ASettings.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     src/core/properties/Movement.h \
     src/core/properties/MyTransform.h \
     src/core/Core.h \
+    src/core/icplib.h \
     src/core/SimFactory.h \
     src/core/SimMap.h \
     src/core/icplib.h \

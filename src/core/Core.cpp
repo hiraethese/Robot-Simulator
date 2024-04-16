@@ -21,6 +21,8 @@ Core *Core::getInstance()
 
 void Core::SetNewSettings(const SimSettings &newSettings)
 {
+    
+
     if(newSettings.flagNewMap)
     {
         _map->SetPath(newSettings.newMapValue);
@@ -29,12 +31,22 @@ void Core::SetNewSettings(const SimSettings &newSettings)
 
     if(newSettings.flagNewSpeed)
     {
-        _map->GetFactory()->GetControlledRobot()->GetMovement()->SetSpeed(newSettings.newSpeedValue);
+        // _map->GetFactory()->GetControlledRobot()->GetMovement()->SetSpeed(newSettings.newSpeedValue);
+        for (Robot* robot : GetVectorRobots()) {
+            if (robot->IsControlled()) {
+                robot->GetMovement()->SetSpeed(newSettings.newSpeedValue);
+            }
+        }
     }
 
     if(newSettings.flagNewAngle)
     {
-        _map->GetFactory()->GetControlledRobot()->GetMovement()->SetAngleStep(newSettings.newAngleValue);
+        // _map->GetFactory()->GetControlledRobot()->GetMovement()->SetAngleStep(newSettings.newAngleValue);
+        for (Robot* robot : GetVectorRobots()) {
+            if (robot->IsControlled()) {
+                robot->GetMovement()->SetAngleStep(newSettings.newAngleValue);
+            }
+        }
     }
 }
 
@@ -60,12 +72,12 @@ int Core::GetMapHeight()
 
 int Core::GetSpeedValue()
 {
-    return (int)_map->GetFactory()->GetControlledRobot()->GetMovement()->GetSpeed();
+    return (int)_map->GetFactory()->GetFirstControlledRobot()->GetMovement()->GetSpeed();
 }
 
 int Core::GetAngleValue()
 {
-    return _map->GetFactory()->GetControlledRobot()->GetMovement()->GetAngleStep();
+    return _map->GetFactory()->GetFirstControlledRobot()->GetMovement()->GetAngleStep();
 }
 
 bool Core::IsSimReady()
@@ -90,37 +102,71 @@ void Core::SetRunSim(bool setter)
 
 void Core::LeftRotateMoveSig()
 {
-    _map->GetFactory()->GetControlledRobot()->GetMovement()->RotateLeft();
+    // _map->GetFactory()->GetControlledRobot()->GetMovement()->RotateLeft();
+    for (Robot* robot : GetVectorRobots()) {
+        if (robot->IsControlled()) {
+            robot->GetMovement()->RotateLeft();
+        }
+    }
 }
 
 void Core::RightRotateMoveSig()
 {
-    _map->GetFactory()->GetControlledRobot()->GetMovement()->RotateRight();
+    // _map->GetFactory()->GetControlledRobot()->GetMovement()->RotateRight();
+    for (Robot* robot : GetVectorRobots()) {
+        if (robot->IsControlled()) {
+            robot->GetMovement()->RotateRight();
+        }
+    }
 }
 
 void Core::ForwardMoveSig()
 {
-    _map->GetFactory()->GetControlledRobot()->GetMovement()->EnableMovement();
+    // _map->GetFactory()->GetControlledRobot()->GetMovement()->EnableMovement();
+    for (Robot* robot : GetVectorRobots()) {
+        if (robot->IsControlled()) {
+            robot->GetMovement()->EnableMovement();
+        }
+    }
 }
 
 void Core::StopMoveSig()
 {
-    _map->GetFactory()->GetControlledRobot()->GetMovement()->DisableMovement();
+    // _map->GetFactory()->GetControlledRobot()->GetMovement()->DisableMovement();
+    for (Robot* robot : GetVectorRobots()) {
+        if (robot->IsControlled()) {
+            robot->GetMovement()->DisableMovement();
+        }
+    }
 }
 
 void Core::MoveAllObjects()
 {
-    _map->GetFactory()->GetControlledRobot()->GetMovement()->MoveForward();
+    // _map->GetFactory()->GetControlledRobot()->GetMovement()->MoveAutomatedRobot();
+    for (Robot* robot : GetVectorRobots()) {
+        if (robot->IsControlled()) {
+            robot->GetMovement()->MoveControlledRobot();
+        } 
+        else
+        {
+            robot->GetMovement()->MoveAutomatedRobot();
+        }
+    }
 }
 
-Rectangle Core::RectFromCore()
+Rectangle Core::RectFromCore() // TODO
 {
-    return _map->GetFactory()->GetControlledRobot()->GetTransform()->GetRect();
+    return _map->GetFactory()->GetFirstControlledRobot()->GetTransform()->GetRect();
 }
 
-const std::vector<Wall *> &Core::GetVectorWalls() const
+const std::vector<Wall *>& Core::GetVectorWalls() const
 {
     return _map->GetFactory()->GetWalls();
+}
+
+const std::vector<Robot*>& Core::GetVectorRobots() const
+{
+    return _map->GetFactory()->GetRobots();
 }
 
 int Core::LoadingMap(std::string path)
@@ -150,7 +196,6 @@ SimObjView Core::GetBotRobotTemp()
 {
     return _map->GetFactory()->GetBotRobotTemp();
 }
-
 
 SimObjView Core::GetWallTemplate(){
     return _map->GetFactory()->GetWallTemp();

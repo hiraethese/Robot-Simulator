@@ -12,12 +12,15 @@ private:
 public:
     Robot(  Vector2d position,
             Vector2d size,
-            float speed, 
+            float speed,
+            float collisionDistance,
             int angleStep,
             int angleDegrees,
-            colors color = RED,
-            bool isControlled = true);
+            int rotateClockwise,
+            colors color,
+            bool isControlled);
     ~Robot();
+    bool IsControlled();
     Movement* GetMovement();
     SimObjView GetSimObjView() override;
 };

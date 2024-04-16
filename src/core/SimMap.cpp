@@ -103,9 +103,9 @@ int SimMap::LoadObjectsFromFile(std::string path)
 
 bool SimMap::ProcessControlledRobotLine(std::istringstream &iss)
 {
-    float x, y, w, h, speed;
-    int angleStep, angleDegrees;
-    if (!(iss >> x >> y >> w >> h >> speed >> angleStep >> angleDegrees))
+    float x, y, w, h, speed, collisionDistance;
+    int angleStep, angleDegrees, rotateClockwise;
+    if (!(iss >> x >> y >> w >> h >> speed >> collisionDistance >> angleStep >> angleDegrees >> rotateClockwise))
     {
         std::cerr << "Error: Invalid format for [ControlledRobot] line\n";
         return false;
@@ -113,17 +113,12 @@ bool SimMap::ProcessControlledRobotLine(std::istringstream &iss)
 
     // Debug
     std::cout   << "Controlled robot: "
-                << "x=" << x << ", y=" << y << ", w=" << w << ", h=" << h
-                << ", speed=" << speed << ", angleStep=" << angleStep << ", angleDegrees=" << angleDegrees
+                << "x=" << x << ", y=" << y << ", w=" << w << ", h=" << h << ", speed=" << speed << ", collisionDistance=" << collisionDistance
+                << ", angleStep=" << angleStep << ", angleDegrees=" << angleDegrees << ", rotateClockwise=" << rotateClockwise
                 << std::endl;
 
-    if (_factory->GetControlledRobot() != nullptr)
-    {
-        std::cerr << "Error: Only one controlled robot\n";
-        return false;
-    }
-    Robot* controlledRobot = new Robot({x, y}, {w, h}, speed, angleStep, angleDegrees);
-    _factory->SetControlledRobot(controlledRobot);
+    Robot* controlledRobot = new Robot({x, y}, {w, h}, speed, collisionDistance, angleStep, angleDegrees, rotateClockwise, RED, true);
+    _factory->AddRobot(controlledRobot);
     return true;
 }
 
