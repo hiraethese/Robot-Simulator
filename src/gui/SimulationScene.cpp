@@ -106,7 +106,6 @@ void SimulationScene::CreateNewWall(SimObjView view, float x, float y){
     newWall->setPen(getPen());
     newWall->setBrush(getBrushByCode(view.color));
     addItem(newWall);
-    //newWall->show();  TODO: check
     _wallsGUIVector.push_back(newWall);
 }
 

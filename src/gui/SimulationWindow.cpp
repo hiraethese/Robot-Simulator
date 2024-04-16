@@ -178,26 +178,32 @@ void SimulationWindow::StopSimScene(){
 
 
 void SimulationWindow::keyPressEvent(QKeyEvent *event){
-    if(event->key() == Qt::Key_W){
 
-        emit _forwardMoveButton->clicked();
+    if(_forwardMoveButton->isEnabled()){
+
+        if(event->key() == Qt::Key_W){
+
+            emit _forwardMoveButton->clicked();
+
+        }
+        else if(event->key() == Qt::Key_A){
+
+            emit _leftMoveButton->clicked();
+
+        }
+        else if(event->key() == Qt::Key_D){
+
+            emit _rightMoveButton->clicked();
+
+        }
+        else if(event->key() == Qt::Key_S){
+
+            emit _stopMoveButton->clicked();
+
+        }
 
     }
-    else if(event->key() == Qt::Key_A){
 
-        emit _leftMoveButton->clicked();
-
-    }
-    else if(event->key() == Qt::Key_D){
-
-        emit _rightMoveButton->clicked();
-
-    }
-    else if(event->key() == Qt::Key_S){
-
-        emit _stopMoveButton->clicked();
-
-    }
 }
 
 
