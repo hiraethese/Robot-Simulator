@@ -24,5 +24,8 @@ public:
     const std::vector<Wall*>& GetWalls() const;
     const std::vector<Robot*>& GetRobots() const;
     Robot* GetFirstControlledRobot();
+    std::vector<SimObjView> GetVectorWallsView();
+    std::vector<SimObjView> GetVectorRobotsView();
+    void UnsetOrderIndex();
 };
 #endif // SIMFACTORY_H

@@ -211,7 +211,7 @@ void Movement::MoveAutomatedRobot()
 
     // 2) Move with direction
 
-    Core* core = Core::getInstance();
+    Core* core = Core::getInstance();  // TODO: better if dont create core but have vectors from arg
     const std::vector<Wall*>& walls = core->GetVectorWalls();
 
     int map_width = core->GetMapWidth();

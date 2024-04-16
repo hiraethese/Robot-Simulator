@@ -16,7 +16,7 @@ private:
     int _width;
     int _height;
     SimFactory* _factory;
-
+    int _orderIndex = 1;
 public:
     SimMap(int width, int height);
     std::string GetPath();

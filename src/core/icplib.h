@@ -63,6 +63,9 @@ typedef struct Rectangle {
 } Rectangle;
 
 typedef struct SimObjView {
+    int orderIndex;
+    float x;
+    float y;
     float h;
     float w;
     colors color;

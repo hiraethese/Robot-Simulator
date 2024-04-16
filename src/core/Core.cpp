@@ -154,10 +154,6 @@ void Core::MoveAllObjects()
     }
 }
 
-Rectangle Core::RectFromCore() // TODO
-{
-    return _map->GetFactory()->GetFirstControlledRobot()->GetTransform()->GetRect();
-}
 
 const std::vector<Wall *>& Core::GetVectorWalls() const
 {
@@ -167,6 +163,17 @@ const std::vector<Wall *>& Core::GetVectorWalls() const
 const std::vector<Robot*>& Core::GetVectorRobots() const
 {
     return _map->GetFactory()->GetRobots();
+}
+
+
+std::vector<SimObjView> Core::GetVectorWallsView()
+{
+    return _map->GetFactory()->GetVectorWallsView();
+}
+
+std::vector<SimObjView> Core::GetVectorRobotsView()
+{
+    return _map->GetFactory()->GetVectorRobotsView();
 }
 
 int Core::LoadingMap(std::string path)

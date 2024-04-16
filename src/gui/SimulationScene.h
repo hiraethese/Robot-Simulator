@@ -61,10 +61,6 @@ private:
     std::vector<RobotGUI*>::iterator _GetRobotByOrderIndex(int orderIndex);
     std::vector<WallGUI*>::iterator _GetWallByOrderIndex(int orderIndex);
 
-    Rectangle _robotsFromCore;
-
-    int _index = 1; // after deleted; index will be inside view
-    SimObjView FromRectToView(Rectangle rect); // after delete; will not use Rectangle(use view)
 signals:
 
     void ClickSig(QPointF clickPoint);

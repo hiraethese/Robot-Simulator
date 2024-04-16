@@ -35,6 +35,7 @@ void SimMap::SetPath(std::string newPath)
 
 int SimMap::LoadObjectsFromFile(std::string path)
 {
+    _orderIndex = 1;
     _path = path;
     // Restart all objects    
     _factory->DeleteAllObjects();
@@ -117,7 +118,8 @@ bool SimMap::ProcessControlledRobotLine(std::istringstream &iss)
                 << ", angleStep=" << angleStep << ", angleDegrees=" << angleDegrees << ", rotateClockwise=" << rotateClockwise
                 << std::endl;
 
-    Robot* controlledRobot = new Robot({x, y}, {w, h}, speed, collisionDistance, angleStep, angleDegrees, rotateClockwise, RED, true);
+    Robot* controlledRobot = new Robot({x, y}, {w, h}, speed, collisionDistance, angleStep, angleDegrees, rotateClockwise, RED, _orderIndex, true);
+    ++_orderIndex;
     _factory->AddRobot(controlledRobot);
     return true;
 }
@@ -136,7 +138,8 @@ bool SimMap::ProcessWallLine(std::istringstream &iss)
                 << "x=" << x << ", y=" << y << ", w=" << w << ", h=" << h
                 << std::endl;
 
-    Wall* wall = new Wall({x, y}, {w, h});
+    Wall* wall = new Wall({x, y}, {w, h}, BLUE, _orderIndex);
+    ++_orderIndex;
     _factory->AddWall(wall);
     return true;
 }

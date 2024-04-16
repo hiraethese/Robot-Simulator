@@ -18,6 +18,7 @@ public:
             int angleDegrees,
             int rotateClockwise,
             colors color,
+            int orderIndex,
             bool isControlled);
     ~Robot();
     bool IsControlled();

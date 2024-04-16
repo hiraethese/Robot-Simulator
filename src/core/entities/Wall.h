@@ -5,7 +5,7 @@
 class Wall : public SimObject
 {
 public:
-    Wall(Vector2d position, Vector2d size, colors color=BLUE);
+    Wall(Vector2d position, Vector2d size, colors color,  int orderIndex);
     SimObjView GetSimObjView() override;
 };
 

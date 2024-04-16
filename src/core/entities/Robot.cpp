@@ -8,7 +8,8 @@ Robot::Robot(Vector2d position,
             int angleDegrees,
             int rotateClockwise,
             colors color,
-            bool isControlled) : SimObject(position, size, color)
+            int orderIndex,
+            bool isControlled) : SimObject(position, size, color, orderIndex)
 {
     _movement = new Movement(speed, collisionDistance, angleStep, angleDegrees, rotateClockwise, _transform);
     _isControlled = isControlled;
@@ -31,5 +32,5 @@ Movement* Robot::GetMovement()
 
 SimObjView Robot::GetSimObjView()
 {
-    return {GetTransform()->GetRect().h,GetTransform()->GetRect().w, _color, true, _isControlled, int(_movement->GetSpeed()), _movement->GetAngleDegrees(), 0};
+    return {_orderIndex, GetTransform()->GetRect().x, GetTransform()->GetRect().y, GetTransform()->GetRect().h, GetTransform()->GetRect().w, _color, true, _isControlled, int(_movement->GetSpeed()), _movement->GetAngleDegrees(), 0};
 }

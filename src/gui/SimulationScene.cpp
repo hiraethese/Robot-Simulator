@@ -55,31 +55,33 @@ void SimulationScene::LoadSimObj(){
 
     CleareSimulationScene();
 
-    _robotsFromCore = _core->RectFromCore();
-    const std::vector<Wall *> &wallsFromCore = _core->GetVectorWalls();
-    for(int robot = 0; robot < 1; robot++){
+    std::vector<SimObjView> robotsView = _core->GetVectorRobotsView();
+    std::vector<SimObjView> wallsView = _core->GetVectorWallsView();
 
-        CreateNewRobot(FromRectToView(_robotsFromCore), _robotsFromCore.x, _robotsFromCore.y);
+    for(SimObjView robot: robotsView){
+
+        CreateNewRobot(robot, robot.x, robot.y);
 
     }
 
-    for(Wall* wall:wallsFromCore){
+    for(SimObjView wall: wallsView){
 
-        CreateNewWall(wall->GetSimObjView(), wall->GetTransform()->GetRect().x, wall->GetTransform()->GetRect().y);
+        CreateNewWall(wall, wall.x, wall.y);
+
     }
-
 }
 
 void SimulationScene::_OneSimFrameSlot(){
 
     _core->MoveAllObjects();
-    _robotsFromCore = _core->RectFromCore();
 
-    for(auto robot: _robotsGUIVector){
+    std::vector<SimObjView> robotsView = _core->GetVectorRobotsView();
 
-        std::cout << _robotsFromCore.x <<" "<< _robotsFromCore.y << std::endl;
+    for(long unsigned int i = 0; i < _robotsGUIVector.size(); i++){  // TODO: raise EXCEPTION when not simular size of gui and view vector
 
-        robot->setPos(_robotsFromCore.x,_robotsFromCore.y);
+        std::cout << robotsView[i].x <<" "<< robotsView[i].y << std::endl;
+
+        _robotsGUIVector[i]->setPos(robotsView[i].x, robotsView[i].y);
 
     }
 
@@ -87,28 +89,25 @@ void SimulationScene::_OneSimFrameSlot(){
 
 void SimulationScene::CreateNewRobot(SimObjView view, float x, float y){
 
-    RobotGUI* newRobot = new RobotGUI(0,0,view.w,view.h, &_conn, _index);
+    RobotGUI* newRobot = new RobotGUI(0, 0, view.w, view.h, &_conn, view.orderIndex);
     newRobot->setPen(getPen());
-    newRobot->setBrush(getBrushByCode(RED));
+    newRobot->setBrush(getBrushByCode(view.color));
     newRobot->setPos(x,y);
     addItem(newRobot);
     _robotsGUIVector.push_back(newRobot);
-    ++_index;
 
 }
 
 
 void SimulationScene::CreateNewWall(SimObjView view, float x, float y){
 
-    WallGUI* newWall = new WallGUI(0,0,view.w, view.h, &_conn, _index);
+    WallGUI* newWall = new WallGUI(0, 0, view.w, view.h, &_conn, view.orderIndex);
     newWall->setPos(x,y);
     newWall->setPen(getPen());
-    newWall->setBrush(getBrushByCode(BLUE));
+    newWall->setBrush(getBrushByCode(view.color));
     addItem(newWall);
-    newWall->show();
+    //newWall->show();  TODO: check
     _wallsGUIVector.push_back(newWall);
-    ++_index;
-
 }
 
 std::vector<RobotGUI*>::iterator SimulationScene::_GetRobotByOrderIndex(int orderIndex){
@@ -172,10 +171,4 @@ void SimulationScene::RemoveWallByOrderIndex(int orderIndex){
         delete wallToRemove;
 
     }
-}
-
-SimObjView SimulationScene::FromRectToView(Rectangle rect){
-
-    return SimObjView{rect.h, rect.w, RED, true, false, 12, 12, 12};
-
 }
