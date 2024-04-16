@@ -117,13 +117,8 @@ bool SimMap::ProcessControlledRobotLine(std::istringstream &iss)
                 << ", angleStep=" << angleStep << ", angleDegrees=" << angleDegrees << ", rotateClockwise=" << rotateClockwise
                 << std::endl;
 
-    if (_factory->GetControlledRobot() != nullptr)
-    {
-        std::cerr << "Error: Only one controlled robot\n";
-        return false;
-    }
-    Robot* controlledRobot = new Robot({x, y}, {w, h}, speed, collisionDistance, angleStep, angleDegrees, rotateClockwise);
-    _factory->SetControlledRobot(controlledRobot);
+    Robot* controlledRobot = new Robot({x, y}, {w, h}, speed, collisionDistance, angleStep, angleDegrees, rotateClockwise, RED, true);
+    _factory->AddRobot(controlledRobot);
     return true;
 }
 

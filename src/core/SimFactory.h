@@ -8,8 +8,8 @@
 class SimFactory
 {
 private:
-    Robot* _controlledRobot;
     std::vector<Wall*> _walls;
+    std::vector<Robot*> _robots;
     SimObjView _controlledRobotTemplate;
     SimObjView _botRobotTemplate;
     SimObjView _wallTemplate;
@@ -17,12 +17,12 @@ public:
     SimFactory();
     void DeleteAllObjects();
     void AddWall(Wall* wall);
-    void SetControlledRobot(Robot* controlledRobot);
-    Robot* GetControlledRobot();
+    void AddRobot(Robot* robot);
     SimObjView GetControlledRobotTemp();
     SimObjView GetBotRobotTemp();
     SimObjView GetWallTemp();
     const std::vector<Wall*>& GetWalls() const;
+    const std::vector<Robot*>& GetRobots() const;
+    Robot* GetFirstControlledRobot();
 };
-
 #endif // SIMFACTORY_H

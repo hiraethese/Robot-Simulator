@@ -17,9 +17,10 @@ public:
             int angleStep,
             int angleDegrees,
             int rotateClockwise,
-            colors color = RED,
-            bool isControlled = true);
+            colors color,
+            bool isControlled);
     ~Robot();
+    bool IsControlled();
     Movement* GetMovement();
     SimObjView GetSimObjView() override;
 };

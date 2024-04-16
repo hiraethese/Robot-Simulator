@@ -45,8 +45,9 @@ public:
     void StopMoveSig();
     void MoveAllObjects();
     int LoadingMap(std::string path);
-    Rectangle RectFromCore();
+    Rectangle RectFromCore(); // TODO
     const std::vector<Wall*>& GetVectorWalls() const;
+    const std::vector<Robot*>& GetVectorRobots() const;
     SimObjView GetControlledRobotTemp();
     SimObjView GetBotRobotTemp();
     SimObjView GetWallTemplate();

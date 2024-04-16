@@ -19,6 +19,11 @@ Robot::~Robot()
     delete _movement;
 }
 
+bool Robot::IsControlled()
+{
+    return _isControlled;
+}
+
 Movement* Robot::GetMovement()
 {
     return _movement;
