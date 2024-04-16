@@ -30,7 +30,7 @@ public:
     void SetAngleDegrees(int newAngleDegrees);
     void EnableMovement();
     void DisableMovement();
-    void Rotate();
+    void RotateAutomatedRobot();
     void RotateRight();
     void RotateLeft();
     void MoveControlledRobot();
