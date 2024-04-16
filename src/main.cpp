@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
     //w.show();
     return a.exec();
 }
-
 // on merlin
 // /homes/eva/xk/xkukht01/icp2024/examples/example.txt
 

@@ -1,7 +1,8 @@
 1) improve parser;
 2) clean code, check delete;
-4) improve API with sim obj;
+4) improve API with sim obj;  50%/100%
 5) check diff input states of app;
 6) wrote error windows with expr err code;
+7) maybe better open setting windows in build mode not only with interactive mode???
 x) ... =)
 
