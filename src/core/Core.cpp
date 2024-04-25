@@ -72,12 +72,12 @@ int Core::GetMapHeight()
 
 int Core::GetSpeedValue()
 {
-    return (int)_map->GetFactory()->GetFirstControlledRobot()->GetMovement()->GetSpeed();
+    return (int)_map->GetFirstControlledRobot()->GetMovement()->GetSpeed();
 }
 
 int Core::GetAngleValue()
 {
-    return _map->GetFactory()->GetFirstControlledRobot()->GetMovement()->GetAngleStep();
+    return _map->GetFirstControlledRobot()->GetMovement()->GetAngleStep();
 }
 
 bool Core::IsSimReady()
@@ -157,23 +157,23 @@ void Core::MoveAllObjects()
 
 const std::vector<Wall *>& Core::GetVectorWalls() const
 {
-    return _map->GetFactory()->GetWalls();
+    return _map->GetWalls();
 }
 
 const std::vector<Robot*>& Core::GetVectorRobots() const
 {
-    return _map->GetFactory()->GetRobots();
+    return _map->GetRobots();
 }
 
 
 std::vector<SimObjView> Core::GetVectorWallsView()
 {
-    return _map->GetFactory()->GetVectorWallsView();
+    return _map->GetVectorWallsView();
 }
 
 std::vector<SimObjView> Core::GetVectorRobotsView()
 {
-    return _map->GetFactory()->GetVectorRobotsView();
+    return _map->GetVectorRobotsView();
 }
 
 int Core::LoadingMap(std::string path)
@@ -196,14 +196,14 @@ int Core::LoadingMap(std::string path)
 
 SimObjView Core::GetControlledRobotTemp()
 {
-    return _map->GetFactory()->GetControlledRobotTemp();
+    return _map->GetControlledRobotTemp();
 }
 
 SimObjView Core::GetBotRobotTemp()
 {
-    return _map->GetFactory()->GetBotRobotTemp();
+    return _map->GetBotRobotTemp();
 }
 
 SimObjView Core::GetWallTemplate(){
-    return _map->GetFactory()->GetWallTemp();
+    return _map->GetWallTemp();
 }

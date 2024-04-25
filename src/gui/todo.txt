@@ -4,5 +4,6 @@
 5) check diff input states of app;
 6) wrote error windows with expr err code;
 7) maybe better open setting windows in build mode not only with interactive mode???
+8) delete constr from abstr class
 x) ... =)
 

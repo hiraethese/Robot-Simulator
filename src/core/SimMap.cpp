@@ -5,7 +5,27 @@ SimMap::SimMap(int width, int height)
     //_path = path;
     _width = width;
     _height = height;
-    _factory = new SimFactory();
+    _spawner = new Spawner();
+}
+
+void SimMap::DeleteAllObjects()
+{
+    if (!_robots.empty())
+    {
+        for (auto& robot : _robots)
+        {
+            delete robot;
+        }
+        _robots.clear();
+    }
+    if (!_walls.empty())
+    {
+        for (auto& wall : _walls)
+        {
+            delete wall;
+        }
+        _walls.clear();
+    }
 }
 
 std::string SimMap::GetPath()
@@ -23,11 +43,6 @@ int SimMap::GetHeight()
     return _height;
 }
 
-SimFactory *SimMap::GetFactory()
-{
-    return _factory;
-}
-
 void SimMap::SetPath(std::string newPath)
 {
     _path = newPath;
@@ -38,7 +53,7 @@ int SimMap::LoadObjectsFromFile(std::string path)
     _orderIndex = 1;
     _path = path;
     // Restart all objects    
-    _factory->DeleteAllObjects();
+    DeleteAllObjects();
     // Open the file
 
     QFileInfo infoAboutPath(QString::fromStdString(path));
@@ -79,26 +94,32 @@ int SimMap::LoadObjectsFromFile(std::string path)
         // Controlled robot
         if (token == "[ControlledRobot]")
         {
-            if (!ProcessControlledRobotLine(iss))
+            Robot* newRobot = _spawner->GenNewRobot(iss, _orderIndex, true);
+            if (!newRobot)
             {
                 return 3; // Error processing controlled robot line
             }
+            _robots.push_back(newRobot);
         }
         // Automated robot
         else if (token == "[AutomatedRobot]")
         {
-            if (!ProcessAutomatedRobotLine(iss))
+            Robot* newRobot = _spawner->GenNewRobot(iss, _orderIndex, false);
+            if (!newRobot)
             {
                 return 4; // Error processing automated robot line
             }
+            _robots.push_back(newRobot);
         }
         // Wall
         else if (token == "[Wall]")
         {
-            if (!ProcessWallLine(iss))
+            Wall* newWall = _spawner->GenNewWall(iss, _orderIndex);
+            if (!newWall)
             {
                 return 5; // Error processing wall line
             }
+            _walls.push_back(newWall);
         }
         // Other
         else
@@ -106,72 +127,73 @@ int SimMap::LoadObjectsFromFile(std::string path)
             std::cerr << "Error: Unrecognized object type\n";
             return 6; // Error with object type from token
         }
+        ++_orderIndex;
     }
     return 0;
 }
 
-bool SimMap::ProcessControlledRobotLine(std::istringstream &iss)
+
+SimObjView SimMap::GetControlledRobotTemp()
 {
-    float x, y, w, h, speed, collisionDistance;
-    int angleStep, angleDegrees, rotateClockwise;
-
-    if (!(iss >> x >> y >> w >> h >> speed >> collisionDistance >> angleStep >> angleDegrees >> rotateClockwise))
-    {
-        std::cerr << "Error: Invalid format for [ControlledRobot] line\n";
-        return false;
-    }
-
-    // Debug
-    std::cout   << "Controlled robot: "
-                << "x=" << x << ", y=" << y << ", w=" << w << ", h=" << h << ", speed=" << speed << ", collisionDistance=" << collisionDistance
-                << ", angleStep=" << angleStep << ", angleDegrees=" << angleDegrees << ", rotateClockwise=" << rotateClockwise
-                << std::endl;
-
-    Robot* controlledRobot = new Robot({x, y}, {w, h}, speed, collisionDistance, angleStep, angleDegrees, rotateClockwise, RED, _orderIndex, true);
-    ++_orderIndex;
-    _factory->AddRobot(controlledRobot);
-    return true;
+    return _spawner->GetControlledRobotTemp();
 }
 
-bool SimMap::ProcessAutomatedRobotLine(std::istringstream &iss)
+SimObjView SimMap::GetBotRobotTemp()
 {
-    float x, y, w, h, speed, collisionDistance;
-    int angleStep, angleDegrees, rotateClockwise;
-
-    if (!(iss >> x >> y >> w >> h >> speed >> collisionDistance >> angleStep >> angleDegrees >> rotateClockwise))
-    {
-        std::cerr << "Error: Invalid format for [ControlledRobot] line\n";
-        return false;
-    }
-
-    // Debug
-    std::cout   << "Automated robot: "
-                << "x=" << x << ", y=" << y << ", w=" << w << ", h=" << h << ", speed=" << speed << ", collisionDistance=" << collisionDistance
-                << ", angleStep=" << angleStep << ", angleDegrees=" << angleDegrees << ", rotateClockwise=" << rotateClockwise
-                << std::endl;
-
-    Robot* automatedRobot = new Robot({x, y}, {w, h}, speed, collisionDistance, angleStep, angleDegrees, rotateClockwise, GREEN, _orderIndex, false);
-    ++_orderIndex;
-    _factory->AddRobot(automatedRobot);
-    return true;
+    return _spawner->GetAutoRobotTemp();
 }
 
-bool SimMap::ProcessWallLine(std::istringstream &iss)
+SimObjView SimMap::GetWallTemp()
 {
-    float x, y, w, h;
-    if (!(iss >> x >> y >> w >> h))
+    return _spawner->GetWallTemp();
+}
+
+const std::vector<Wall*>& SimMap::GetWalls() const
+{
+    return _walls;
+}
+
+const std::vector<Robot*>& SimMap::GetRobots() const
+{
+    return _robots;
+}
+
+
+std::vector<SimObjView> SimMap::GetVectorWallsView()
+{
+    std::vector<SimObjView> wallsView;
+
+    for (Wall* wall : _walls)
     {
-        std::cerr << "Error: Invalid format for [Wall] line\n";
-        return false;
+        wallsView.push_back(wall->GetSimObjView());
     }
 
-    // Debug
-    std::cout   << "Wall: "
-                << "x=" << x << ", y=" << y << ", w=" << w << ", h=" << h
-                << std::endl;
+    return wallsView;
+}
 
-    Wall* wall = new Wall({x, y}, {w, h}, BLUE, _orderIndex);
-    ++_orderIndex;
-    _factory->AddWall(wall);
-    return true;
+std::vector<SimObjView> SimMap::GetVectorRobotsView()
+{
+    std::vector<SimObjView> robotsView;
+
+    for (Robot* robot : _robots)
+    {
+        robotsView.push_back(robot->GetSimObjView());
+    }
+
+    return robotsView;
+
+}
+
+
+
+Robot* SimMap::GetFirstControlledRobot()
+{
+    for (Robot* robot : _robots)
+    {
+        if (robot->IsControlled())
+        {
+            return robot;
+        }
+    }
+    return nullptr;
 }

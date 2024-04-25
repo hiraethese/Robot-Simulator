@@ -36,7 +36,7 @@ QPen getPen(){
     return blackPen;
 }
 
-
+// TODO: check error code
 std::string getColorString(colors colorsCode){
     switch (colorsCode) {
     case WHITE:
@@ -57,5 +57,20 @@ std::string getColorString(colors colorsCode){
         return "black";
     }
 
+}
+
+bool convertColorsStringToCode(std::string colorsString, colors* colorsCode) {
+    for (char& colorsChar : colorsString) colorsChar = std::toupper(colorsChar);
+    std::cout << "COLOR: " << colorsString << std::endl;
+    if (colorsString == "WHITE") *colorsCode = WHITE;
+    else if (colorsString == "BLACK") *colorsCode = BLACK;
+    else if (colorsString == "BLUE") *colorsCode = BLUE;
+    else if (colorsString == "GREEN") *colorsCode = GREEN;
+    else if (colorsString == "YELLOW") *colorsCode = YELLOW;
+    else if (colorsString == "GRAY") *colorsCode = GRAY;
+    else if (colorsString == "RED") *colorsCode = RED;
+    else if (colorsString == "BLACK") *colorsCode = BLACK;
+    else return false;
+    return true;
 }
 

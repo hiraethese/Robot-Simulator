@@ -21,7 +21,7 @@ SOURCES += \
     src/core/properties/MyTransform.cpp \
     src/core/Core.cpp \
     src/core/icplib.cpp \
-    src/core/SimFactory.cpp \
+    src/core/Spawner.cpp \
     src/core/SimMap.cpp \
     src/gui/SettingsWindows/ASettings.cpp \
     src/gui/Notifications/InfoNotification.cpp \
@@ -43,7 +43,7 @@ HEADERS += \
     src/core/properties/MyTransform.h \
     src/core/Core.h \
     src/core/icplib.h \
-    src/core/SimFactory.h \
+    src/code/Spawner.h \
     src/core/SimMap.h \
     src/core/icplib.h \
     src/gui/SettingsWindows/ASettings.h \

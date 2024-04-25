@@ -6,7 +6,9 @@
 #include <sstream>
 #include <QFileInfo>
 #include <QString>
-#include "SimFactory.h"
+#include <vector>
+#include <string>
+#include "Spawner.h"
 
 class SimMap
 {
@@ -15,19 +17,27 @@ private:
     std::string _path {};
     int _width;
     int _height;
-    SimFactory* _factory;
     int _orderIndex = 1;
+    // new
+    Spawner* _spawner;
+    std::vector<Wall*> _walls;
+    std::vector<Robot*> _robots;
 public:
     SimMap(int width, int height);
+    void DeleteAllObjects();
     std::string GetPath();
     int GetWidth();
     int GetHeight();
-    SimFactory* GetFactory();
     void SetPath(std::string newPath);
     int LoadObjectsFromFile(std::string path);
-    bool ProcessControlledRobotLine(std::istringstream& iss);
-    bool ProcessAutomatedRobotLine(std::istringstream& iss);
-    bool ProcessWallLine(std::istringstream& iss);
+    SimObjView GetControlledRobotTemp();
+    SimObjView GetBotRobotTemp();
+    SimObjView GetWallTemp();
+    const std::vector<Wall*>& GetWalls() const;
+    const std::vector<Robot*>& GetRobots() const;
+    Robot* GetFirstControlledRobot();
+    std::vector<SimObjView> GetVectorWallsView();
+    std::vector<SimObjView> GetVectorRobotsView();
 };
 
 #endif // SIMMAP_H
