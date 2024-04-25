@@ -48,13 +48,8 @@ void Movement::SetAngleDegrees(int newAngleDegrees)
     _angleDegrees = newAngleDegrees % 360;
 }
 
-void Movement::Rotate()
+void Movement::RotateAutomatedRobot()
 {
-    // Check if movement is enabled
-    if (!_isEnabled)
-    {
-        return;
-    }
     switch (_rotateClockwise)
     {
         case 1:
@@ -196,12 +191,6 @@ void Movement::MoveAutomatedRobot()
 {
     // 1) Calculate direction
 
-    // Check if movement is enabled
-    if (!_isEnabled)
-    {
-        return;
-    }
-
     Vector2d direction = {0.0f, 0.0f};
 
     float angleRadians = _angleDegrees * ( M_PI / 180.0f );
@@ -241,7 +230,7 @@ void Movement::MoveAutomatedRobot()
         {
             if (!zoneRotationCalled[wall])
             {
-                Rotate();
+                RotateAutomatedRobot();
                 zoneRotationCalled[wall] = true;
             }
         }

@@ -26,6 +26,7 @@ public:
     void SetPath(std::string newPath);
     int LoadObjectsFromFile(std::string path);
     bool ProcessControlledRobotLine(std::istringstream& iss);
+    bool ProcessAutomatedRobotLine(std::istringstream& iss);
     bool ProcessWallLine(std::istringstream& iss);
 };
 

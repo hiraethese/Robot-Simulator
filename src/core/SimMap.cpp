@@ -84,19 +84,27 @@ int SimMap::LoadObjectsFromFile(std::string path)
                 return 3; // Error processing controlled robot line
             }
         }
+        // Automated robot
+        else if (token == "[AutomatedRobot]")
+        {
+            if (!ProcessAutomatedRobotLine(iss))
+            {
+                return 4; // Error processing automated robot line
+            }
+        }
         // Wall
         else if (token == "[Wall]")
         {
             if (!ProcessWallLine(iss))
             {
-                return 4; // Error processing wall line
+                return 5; // Error processing wall line
             }
         }
         // Other
         else
         {
             std::cerr << "Error: Unrecognized object type\n";
-            return 5; // Error with object type from token
+            return 6; // Error with object type from token
         }
     }
     return 0;
@@ -106,6 +114,7 @@ bool SimMap::ProcessControlledRobotLine(std::istringstream &iss)
 {
     float x, y, w, h, speed, collisionDistance;
     int angleStep, angleDegrees, rotateClockwise;
+
     if (!(iss >> x >> y >> w >> h >> speed >> collisionDistance >> angleStep >> angleDegrees >> rotateClockwise))
     {
         std::cerr << "Error: Invalid format for [ControlledRobot] line\n";
@@ -121,6 +130,29 @@ bool SimMap::ProcessControlledRobotLine(std::istringstream &iss)
     Robot* controlledRobot = new Robot({x, y}, {w, h}, speed, collisionDistance, angleStep, angleDegrees, rotateClockwise, RED, _orderIndex, true);
     ++_orderIndex;
     _factory->AddRobot(controlledRobot);
+    return true;
+}
+
+bool SimMap::ProcessAutomatedRobotLine(std::istringstream &iss)
+{
+    float x, y, w, h, speed, collisionDistance;
+    int angleStep, angleDegrees, rotateClockwise;
+
+    if (!(iss >> x >> y >> w >> h >> speed >> collisionDistance >> angleStep >> angleDegrees >> rotateClockwise))
+    {
+        std::cerr << "Error: Invalid format for [ControlledRobot] line\n";
+        return false;
+    }
+
+    // Debug
+    std::cout   << "Automated robot: "
+                << "x=" << x << ", y=" << y << ", w=" << w << ", h=" << h << ", speed=" << speed << ", collisionDistance=" << collisionDistance
+                << ", angleStep=" << angleStep << ", angleDegrees=" << angleDegrees << ", rotateClockwise=" << rotateClockwise
+                << std::endl;
+
+    Robot* automatedRobot = new Robot({x, y}, {w, h}, speed, collisionDistance, angleStep, angleDegrees, rotateClockwise, GREEN, _orderIndex, false);
+    ++_orderIndex;
+    _factory->AddRobot(automatedRobot);
     return true;
 }
 
