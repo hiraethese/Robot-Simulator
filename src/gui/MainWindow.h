@@ -74,9 +74,9 @@ private:
     QToolBar* _simulationToolBar;
     QAction* _simulationToolAction;
 
-    QToolBar* _simulationIdToolBar;
+    QToolBar* _simRunStatusToolBar;
     QLabel* _labelSimIdToolBar;
-    QLineEdit* _lineMapNameSimIdToolBar;
+    QLineEdit* _lineSimRunStatus;
     QToolBar* _helpToolBar;
     QAction* _helpToolAction;
 

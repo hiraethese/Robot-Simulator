@@ -152,17 +152,16 @@ void MainWindow::_CreateSimModeTools(){
     _engineSimRunToolBar = addToolBar("engineSimRun");
     _engineSimRunToolBar->addAction(_runSimulationAction);
 
-    _simulationIdToolBar = addToolBar("simulationId");
+    _simRunStatusToolBar = addToolBar("simulationRunStatus");
     _labelSimIdToolBar = new QLabel("Simulation: ");
 
-    _simulationIdToolBar->addWidget(_labelSimIdToolBar);
+    _simRunStatusToolBar->addWidget(_labelSimIdToolBar);
 
-    _lineMapNameSimIdToolBar = new QLineEdit();
-    _lineMapNameSimIdToolBar->setReadOnly(true);
-    _lineMapNameSimIdToolBar->setFixedWidth(100);
-    _lineMapNameSimIdToolBar->setText(QString::fromStdString(_core->GetMapValue()));  // ?
+    _lineSimRunStatus = new QLineEdit();
+    _lineSimRunStatus->setReadOnly(true);
+    _lineSimRunStatus->setFixedWidth(100);
 
-    _simulationIdToolBar->addWidget(_lineMapNameSimIdToolBar);
+    _simRunStatusToolBar->addWidget(_lineSimRunStatus);
 
 }
 
@@ -175,11 +174,11 @@ void MainWindow::_DeleteSimModeTools(){
     _runSimulationAction = nullptr;
 
     removeToolBar(_engineSimRunToolBar);
-    removeToolBar(_simulationIdToolBar);
+    removeToolBar(_simRunStatusToolBar);
     delete _labelSimIdToolBar;
-    delete _lineMapNameSimIdToolBar;
+    delete _lineSimRunStatus;
     delete _engineSimRunToolBar;
-    delete _simulationIdToolBar;
+    delete _simRunStatusToolBar;
 
 }
 
@@ -202,8 +201,8 @@ void MainWindow::_RunSimulationActionSlot(){
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_PauseSimulationActionSlot);
     _runSimulationAction->setIcon(QIcon(":/icons/pauseTool.svg"));
     _runSimulationAction->setText("Pause");
-    _lineMapNameSimIdToolBar->setText("Run");
-    _lineMapNameSimIdToolBar->setStyleSheet("background-color: lightgreen;");
+    _lineSimRunStatus->setText("Run");
+    _lineSimRunStatus->setStyleSheet("background-color: lightgreen;");
 
     _core->SetRunSim(true);
 
@@ -221,8 +220,8 @@ void MainWindow::_PauseSimulationActionSlot(){
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
     _runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
     _runSimulationAction->setText("Run");
-    _lineMapNameSimIdToolBar->setText("Pause");
-    _lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
+    _lineSimRunStatus->setText("Pause");
+    _lineSimRunStatus->setStyleSheet("background-color: white;");
 
 }
 
