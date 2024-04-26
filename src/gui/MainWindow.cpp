@@ -149,12 +149,8 @@ void MainWindow::_CreateSimModeTools(){
     _runSimulationAction = new QAction(QIcon(":/icons/playTool.png"), "&Run", this);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
 
-    //_restartSimulationAction = new QAction(QIcon(":/icons/restartTool.png"), "&Continue", this);  TODO: delete
-    //connect(_restartSimulationAction, &QAction::triggered, this, &MainWindow::_RestartSimulationActionSlot); TODO: delete
-
     _engineSimRunToolBar = addToolBar("engineSimRun");
     _engineSimRunToolBar->addAction(_runSimulationAction);
-    //_engineSimRunToolBar->addAction(_restartSimulationAction); TODO: delete
 
     _simulationIdToolBar = addToolBar("simulationId");
     _labelSimIdToolBar = new QLabel("Simulation: ");
@@ -232,17 +228,6 @@ void MainWindow::_PauseSimulationActionSlot(){
     _lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
 
 }
-/* TODO: delete
-void MainWindow::_RestartSimulationActionSlot(){
-
-    if(_core->IsSimReady()){
-
-        //_WarningMsgSimNotSet(); TODO:
-        return;
-
-    }
-
-}*/
 
 
 // ************************************  PART SIM WIND    *********************************************************

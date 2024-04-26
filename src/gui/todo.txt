@@ -1,9 +1,6 @@
 2) clean code, check delete;
 4) improve API with sim obj;  50%/100%
 7) maybe better open setting windows in build mode not only with interactive mode???
-8) delete constr from abstr class
-9) delete notification class
 10) delete restart
-11) when i have simulation but i download new sim with error i want continue with old
 x) ... =)
 

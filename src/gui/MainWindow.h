@@ -85,7 +85,6 @@ private:
 
     QToolBar* _engineSimRunToolBar;
     QAction* _runSimulationAction = nullptr;
-    //QAction* _restartSimulationAction; TODO: delete
 
     QToolBar* _newSimulationIdToolBar;
     QLabel* _newLabelSimIdToolBar;
