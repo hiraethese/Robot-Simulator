@@ -32,12 +32,7 @@ void SimulationWindow::_CreateSimGUI(){
     connect(_simulationScene, &SimulationScene::ClickSig, this, &SimulationWindow::_CreateNewSimObjGUISlot);
     
     // push requesting about sim obj from scene to window
-    connect(_simulationScene, &SimulationScene::RequestSimObjSig, this,
-    [=](int orderIndex, bool isRobot){
-        if(buildModeStatus == CursorStatus){
-            emit RequestSimObjSig(orderIndex, isRobot);
-        }
-    });
+    connect(_simulationScene, &SimulationScene::RequestSimObjSig, this, [=](int orderIndex, bool isRobot){emit RequestSimObjSig(orderIndex, isRobot);});
     // signal to loading new sim obj to GUI from core
     connect(this, &SimulationWindow::LoadSimSceneSig, _simulationScene, &SimulationScene::LoadSimObj);
     connect(this, &SimulationWindow::CleareSimulationSceneSig, this , [=](){_simulationScene->CleareSimulationScene();});
