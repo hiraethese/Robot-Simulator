@@ -5,6 +5,17 @@
 #include <string>
 // Note: I was planning to use cmath instead, but VS Code has problems with it
 
+enum ICP_CODE{
+    CODE_OK,
+    CODE_EMPYT_SIMULATION,
+    CODE_INTERNAL_ERROR,
+    CODE_ERROR_INPUT_FILE_NOT_EXIST,
+    CODE_SYNTAXE_ERROR_UNKNOWN_OBJ_TYPE,
+    CODE_SYNTAXE_ERROR_INPUT_FILE_CONTR_ROBOT,
+    CODE_SYNTAXE_ERROR_INPUT_FILE_AUTO_ROBOT,
+    CODE_SYNTAXE_ERROR_INPUT_FILE_WALL
+};
+
 enum colors{
     WHITE,
     BLACK,

@@ -48,7 +48,7 @@ void SimMap::SetPath(std::string newPath)
     _path = newPath;
 }
 
-int SimMap::LoadObjectsFromFile(std::string path)
+ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
 {
     _orderIndex = 1;
     _path = path;
@@ -61,12 +61,12 @@ int SimMap::LoadObjectsFromFile(std::string path)
     if(!infoAboutPath.exists()){
 
         std::cout << "file not exist" << std::endl;
-        return 6;
+        return CODE_ERROR_INPUT_FILE_NOT_EXIST;
     }
 
     if(!infoAboutPath.isFile()){
         std::cout << "it is not file" << std::endl;
-        return 7;
+        return CODE_ERROR_INPUT_FILE_NOT_EXIST;
     }
 
     std::ifstream file(_path);
@@ -74,7 +74,7 @@ int SimMap::LoadObjectsFromFile(std::string path)
     if (!file.is_open())
     {
         std::cerr << "Error: Unable to open map file\n";
-        return 1; // Error openning map file
+        return CODE_INTERNAL_ERROR; // Error openning map file
     }
     // Read each line from the file
     std::string line;
@@ -89,7 +89,7 @@ int SimMap::LoadObjectsFromFile(std::string path)
         if (!(iss >> token))
         {
             std::cerr << "Error: Unable to read token from line\n";
-            return 2; // Error reading token from line
+            return CODE_INTERNAL_ERROR; // Error reading token from line
         }
         // Controlled robot
         if (token == "[ControlledRobot]")
@@ -97,7 +97,7 @@ int SimMap::LoadObjectsFromFile(std::string path)
             Robot* newRobot = _spawner->GenNewRobot(iss, _orderIndex, true);
             if (!newRobot)
             {
-                return 3; // Error processing controlled robot line
+                return CODE_SYNTAXE_ERROR_INPUT_FILE_CONTR_ROBOT;
             }
             _robots.push_back(newRobot);
         }
@@ -107,7 +107,7 @@ int SimMap::LoadObjectsFromFile(std::string path)
             Robot* newRobot = _spawner->GenNewRobot(iss, _orderIndex, false);
             if (!newRobot)
             {
-                return 4; // Error processing automated robot line
+                return CODE_SYNTAXE_ERROR_INPUT_FILE_AUTO_ROBOT;
             }
             _robots.push_back(newRobot);
         }
@@ -117,7 +117,7 @@ int SimMap::LoadObjectsFromFile(std::string path)
             Wall* newWall = _spawner->GenNewWall(iss, _orderIndex);
             if (!newWall)
             {
-                return 5; // Error processing wall line
+                return CODE_SYNTAXE_ERROR_INPUT_FILE_WALL;
             }
             _walls.push_back(newWall);
         }
@@ -125,11 +125,11 @@ int SimMap::LoadObjectsFromFile(std::string path)
         else
         {
             std::cerr << "Error: Unrecognized object type\n";
-            return 6; // Error with object type from token
+            return CODE_SYNTAXE_ERROR_UNKNOWN_OBJ_TYPE;
         }
         ++_orderIndex;
     }
-    return 0;
+    return CODE_OK;
 }
 
 

@@ -44,7 +44,7 @@ public:
     void ForwardMoveSig();
     void StopMoveSig();
     void MoveAllObjects();
-    int LoadingMap(std::string path);
+    ICP_CODE LoadingMap(std::string path);
     const std::vector<Wall*>& GetVectorWalls() const;
     const std::vector<Robot*>& GetVectorRobots() const;
     std::vector<SimObjView> GetVectorWallsView();

@@ -200,7 +200,7 @@ void MainWindow::_RunSimulationActionSlot(){
 
     if(!_core->IsSimReady()){  // check is prepared simulation map to running
 
-        _WarningMsgSimNotSet();
+        _WarningMsgSimNotSet(CODE_EMPYT_SIMULATION);
         return;
 
     }
@@ -237,7 +237,7 @@ void MainWindow::_RestartSimulationActionSlot(){
 
     if(_core->IsSimReady()){
 
-        _WarningMsgSimNotSet();
+        //_WarningMsgSimNotSet(); TODO:
         return;
 
     }
@@ -483,15 +483,19 @@ void MainWindow::_CreateSettings(){
 
 
 void MainWindow::_PushNewMapToCoreSlot(){
+    // TODO: if not map is woked and i want store new but i have error
+    ICP_CODE code = _core->LoadingMap(_newMapWind->GetNewMapPath());  // call loading map and creating new sim obj
 
-    int code = _core->LoadingMap(_newMapWind->GetNewMapPath());
-    std::cout << "code: " << code <<std::endl;
+    if(!code){  // ok
 
-    if(!code){
+        emit _simulationWind->LoadSimSceneSig();  // draw new obj
 
-        emit _simulationWind->LoadSimSceneSig();
-        //_lineMapNameSimIdToolBar->setText(QString::fromStdString(_core->GetMapValue())); TODO: wihtout map name
+    }
+    else {  // err and info user about it
+        
+        _WarningMsgSimNotSet(code);
 
     }
 
 }
+

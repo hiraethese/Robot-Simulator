@@ -143,7 +143,6 @@ private:
     void _CreateBuildModeTools();
     void _DeleteBuildModeTools();
 
-
     Ui::MainWindow *ui;
 
 public slots:

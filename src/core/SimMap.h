@@ -29,7 +29,7 @@ public:
     int GetWidth();
     int GetHeight();
     void SetPath(std::string newPath);
-    int LoadObjectsFromFile(std::string path);
+    ICP_CODE LoadObjectsFromFile(std::string path);
     SimObjView GetControlledRobotTemp();
     SimObjView GetBotRobotTemp();
     SimObjView GetWallTemp();

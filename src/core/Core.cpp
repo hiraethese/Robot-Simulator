@@ -176,9 +176,9 @@ std::vector<SimObjView> Core::GetVectorRobotsView()
     return _map->GetVectorRobotsView();
 }
 
-int Core::LoadingMap(std::string path)
+ICP_CODE Core::LoadingMap(std::string path)
 {
-    int result = _map->LoadObjectsFromFile(path); // TODO: call load objects from file from the gui
+    ICP_CODE result = _map->LoadObjectsFromFile(path); // TODO: call load objects from file from the gui
 
     if(!result){
 
