@@ -170,12 +170,9 @@ void MainWindow::_CreateSimModeTools(){
 void MainWindow::_DeleteSimModeTools(){
 
     disconnect(_runSimulationAction, 0, 0, 0);
-    //disconnect(_restartSimulationAction, 0, 0, 0); TODO: delete
-
     delete _runSimulationAction;
 
     _runSimulationAction = nullptr;
-    //delete _restartSimulationAction;  TODO: delete
 
     removeToolBar(_engineSimRunToolBar);
     removeToolBar(_simulationIdToolBar);

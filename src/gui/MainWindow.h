@@ -154,7 +154,6 @@ private slots:
 
     void _RunSimulationActionSlot();
     void _PauseSimulationActionSlot();
-    //void _RestartSimulationActionSlot(); TODO: delete
 
     void _CreateBuildMapModeSlot();
     void _CreateSimModeSlot();
