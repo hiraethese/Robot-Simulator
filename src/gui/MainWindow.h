@@ -168,8 +168,6 @@ private slots:
 
     void _PushNewMapToCoreSlot();
 
-    void _UserClickSimSceneLogicSlot(QPointF clickPoint);
-
     void _RequestSimObjSlot(int orderIndex, bool isRobot);
 
     void _UpdateSimObjSlot(int orderIndex, bool isRobot);

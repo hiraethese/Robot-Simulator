@@ -28,25 +28,14 @@ void SimulationWindow::_CreateSimGUI(){
     _simulationView->setSceneRect(0,0,1800, 750);  // TODO: size from core
     _simulationView->setFixedSize(1800+20, 750+20);  // TODO size from core
 
-    connect(_simulationScene, &SimulationScene::ClickSig, this,
-    [=](QPointF clickPoint){
-        emit UperClickSig(clickPoint);
-    });
-
+    // creating new sim obj by user click
+    connect(_simulationScene, &SimulationScene::ClickSig, this, &SimulationWindow::_CreateNewSimObjGUISlot);
+    
+    // push requesting about sim obj from scene to window
     connect(_simulationScene, &SimulationScene::RequestSimObjSig, this,
     [=](int orderIndex, bool isRobot){
         if(buildModeStatus == CursorStatus){
             emit RequestSimObjSig(orderIndex, isRobot);
-        }
-    });
-
-    connect(this, &SimulationWindow::CreateNewSimObjSig, this,
-    [=](SimObjView view, float x, float y){
-        if(view.isRobot){
-            _simulationScene->CreateNewRobot(view, x, y);
-        }
-        else{
-            _simulationScene->CreateNewWall(view, x, y);
         }
     });
 
@@ -218,6 +207,43 @@ void SimulationWindow::RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot
 
         _simulationScene->RemoveWallByOrderIndex(orderIndex);
 
+    }
+
+}
+
+
+void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
+    emit UperClickSig(clickPoint);
+    switch(buildModeStatus){
+        case ControllRobotStatus:
+            std::cout << "Create Controlled Robot" << std::endl;
+            /* TODO:
+            *   request by _core creating new robot
+            *   if ok
+            *   create
+            */
+            _simulationScene->CreateNewRobot(_core->GetControlledRobotTemp(), clickPoint.x(), clickPoint.y());
+            break;
+        case BotRobotStatus:
+            std::cout << "Create Bot Robot" << std::endl;
+            /* TODO:
+            *   request by _core creating new robot
+            *   if ok
+            *   create
+            */
+            _simulationScene->CreateNewRobot(_core->GetBotRobotTemp(), clickPoint.x(), clickPoint.y());
+            break;
+        case WallStatus:
+            std::cout << "Create Wall" << std::endl;
+            /* TODO:
+            *   request by _core creating new wall
+            *   if ok
+            *   create
+            */
+            _simulationScene->CreateNewWall(_core->GetWallTemplate(), clickPoint.x(), clickPoint.y());
+            break;
+        default:
+            break;
     }
 
 }

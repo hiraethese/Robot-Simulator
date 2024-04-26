@@ -164,7 +164,7 @@ void MainWindow::_CreateSimModeTools(){
     _lineMapNameSimIdToolBar = new QLineEdit();
     _lineMapNameSimIdToolBar->setReadOnly(true);
     _lineMapNameSimIdToolBar->setFixedWidth(100);
-    _lineMapNameSimIdToolBar->setText(QString::fromStdString(_core->GetMapValue()));
+    _lineMapNameSimIdToolBar->setText(QString::fromStdString(_core->GetMapValue()));  // ?
 
     _simulationIdToolBar->addWidget(_lineMapNameSimIdToolBar);
 
@@ -252,52 +252,10 @@ void MainWindow::_CreateSimulationWindow(){
 
     _simulationWind = new SimulationWindow(this);
     setCentralWidget(_simulationWind);
-    connect(_simulationWind, &SimulationWindow::UperClickSig, this, &MainWindow::_UserClickSimSceneLogicSlot);
+    // show actual click of user
+    connect(_simulationWind, &SimulationWindow::UperClickSig, this, [=](QPointF clickPoint){_xCursorTouchLine->setText(QString("%1").arg(clickPoint.x()));_yCursorTouchLine->setText(QString("%1").arg(clickPoint.y()));});
+    // request sim obj from scene to core
     connect(_simulationWind, &SimulationWindow::RequestSimObjSig, this, &MainWindow::_RequestSimObjSlot);
-}
-
-void MainWindow::_UserClickSimSceneLogicSlot(QPointF clickPoint){
-
-    _xCursorTouchLine->setText(QString("%1").arg(clickPoint.x()));
-    _yCursorTouchLine->setText(QString("%1").arg(clickPoint.y()));
-
-    switch(_simulationWind->buildModeStatus){
-    case ControllRobotStatus:
-        std::cout << "Create Controlled Robot" << std::endl;
-        /* TODO:
-        *   request by _core creating new robot
-        *   if ok
-        *   create
-        */
-        emit _simulationWind->CreateNewSimObjSig(_core->GetControlledRobotTemp(), clickPoint.x(), clickPoint.y());
-
-        break;
-    case BotRobotStatus:
-        std::cout << "Create Bot Robot" << std::endl;
-        /* TODO:
-        *   request by _core creating new robot
-        *   if ok
-        *   create
-        */
-
-        emit _simulationWind->CreateNewSimObjSig(_core->GetBotRobotTemp(), clickPoint.x(), clickPoint.y());
-
-        break;
-    case WallStatus:
-        std::cout << "Create Wall" << std::endl;
-        /* TODO:
-        *   request by _core creating new wall
-        *   if ok
-        *   create
-        */
-
-        emit _simulationWind->CreateNewSimObjSig(_core->GetWallTemplate(), clickPoint.x(), clickPoint.y());
-
-        break;
-    default:
-        break;
-    }
-
 }
 
 void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
@@ -309,12 +267,14 @@ void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
     after simulation of working
 */
     if(isRobot){
-        _robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);
+        // download data about sim obj to settings window
+        _robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);  // TODO: info about concrete obj
         _robotSetWind->SetUnsetDeleteButton(true);
         _robotSetWind->exec();
     }
     else{
-        _wallSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);
+        // download data about sim obj to settings window
+        _wallSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);  // TODO: info about concrete obj
         _wallSetWind->SetUnsetDeleteButton(true);
         _wallSetWind->exec();
     }

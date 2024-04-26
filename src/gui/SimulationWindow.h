@@ -84,14 +84,14 @@ private:
     void _CreateSimulationsLayout();
     void _DeleteSimulationsLayout();
     void _SetUnsetSimButtons(bool flagIsSet);
-
 signals:
 
     void UperClickSig(QPointF clickPoint);
     void RequestSimObjSig(int orderIndex, bool isRobot);
     void LoadSimSceneSig();
     void CreateNewSimObjSig(SimObjView view, float x, float y);
-
+private slots:
+    void _CreateNewSimObjGUISlot(QPointF clickPoint);
 };
 
 #endif // SIMULATIONWINDOW_H
