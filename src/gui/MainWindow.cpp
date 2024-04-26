@@ -149,12 +149,12 @@ void MainWindow::_CreateSimModeTools(){
     _runSimulationAction = new QAction(QIcon(":/icons/playTool.png"), "&Run", this);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
 
-    _restartSimulationAction = new QAction(QIcon(":/icons/restartTool.png"), "&Continue", this);
-    connect(_restartSimulationAction, &QAction::triggered, this, &MainWindow::_RestartSimulationActionSlot);
+    //_restartSimulationAction = new QAction(QIcon(":/icons/restartTool.png"), "&Continue", this);  TODO: delete
+    //connect(_restartSimulationAction, &QAction::triggered, this, &MainWindow::_RestartSimulationActionSlot); TODO: delete
 
     _engineSimRunToolBar = addToolBar("engineSimRun");
     _engineSimRunToolBar->addAction(_runSimulationAction);
-    _engineSimRunToolBar->addAction(_restartSimulationAction);
+    //_engineSimRunToolBar->addAction(_restartSimulationAction); TODO: delete
 
     _simulationIdToolBar = addToolBar("simulationId");
     _labelSimIdToolBar = new QLabel("Simulation: ");
@@ -174,12 +174,12 @@ void MainWindow::_CreateSimModeTools(){
 void MainWindow::_DeleteSimModeTools(){
 
     disconnect(_runSimulationAction, 0, 0, 0);
-    disconnect(_restartSimulationAction, 0, 0, 0);
+    //disconnect(_restartSimulationAction, 0, 0, 0); TODO: delete
 
     delete _runSimulationAction;
 
     _runSimulationAction = nullptr;
-    delete _restartSimulationAction;
+    //delete _restartSimulationAction;  TODO: delete
 
     removeToolBar(_engineSimRunToolBar);
     removeToolBar(_simulationIdToolBar);
@@ -232,7 +232,7 @@ void MainWindow::_PauseSimulationActionSlot(){
     _lineMapNameSimIdToolBar->setStyleSheet("background-color: white;");
 
 }
-
+/* TODO: delete
 void MainWindow::_RestartSimulationActionSlot(){
 
     if(_core->IsSimReady()){
@@ -242,7 +242,7 @@ void MainWindow::_RestartSimulationActionSlot(){
 
     }
 
-}
+}*/
 
 
 // ************************************  PART SIM WIND    *********************************************************
@@ -312,13 +312,11 @@ void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
         _robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);
         _robotSetWind->SetUnsetDeleteButton(true);
         _robotSetWind->exec();
-        std::cout << "After"<< std::endl;
     }
     else{
         _wallSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);
         _wallSetWind->SetUnsetDeleteButton(true);
         _wallSetWind->exec();
-        std::cout << "After"<< std::endl;
     }
 }
 
@@ -483,7 +481,6 @@ void MainWindow::_CreateSettings(){
 
 
 void MainWindow::_PushNewMapToCoreSlot(){
-    // TODO: if not map is woked and i want store new but i have error
     ICP_CODE code = _core->LoadingMap(_newMapWind->GetNewMapPath());  // call loading map and creating new sim obj
 
     if(!code){  // ok

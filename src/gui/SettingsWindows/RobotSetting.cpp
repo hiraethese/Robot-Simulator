@@ -58,7 +58,7 @@ void RobotSetting::DownloadDataFromView(SimObjView view, int orderIndex){
     }
     else{
 
-        _typeRobotLineEdit->setText("bot");
+        _typeRobotLineEdit->setText("automated");
 
     }
 }

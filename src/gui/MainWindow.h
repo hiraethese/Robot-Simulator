@@ -48,6 +48,8 @@ namespace Ui {
 class MainWindow;
 class SimulationWindow;
 class SettinsgWindow;
+class Core;
+class InfoNotification;
 }
 QT_END_NAMESPACE
 
@@ -83,7 +85,7 @@ private:
 
     QToolBar* _engineSimRunToolBar;
     QAction* _runSimulationAction = nullptr;
-    QAction* _restartSimulationAction;
+    //QAction* _restartSimulationAction; TODO: delete
 
     QToolBar* _newSimulationIdToolBar;
     QLabel* _newLabelSimIdToolBar;
@@ -154,7 +156,7 @@ private slots:
 
     void _RunSimulationActionSlot();
     void _PauseSimulationActionSlot();
-    void _RestartSimulationActionSlot();
+    //void _RestartSimulationActionSlot(); TODO: delete
 
     void _CreateBuildMapModeSlot();
     void _CreateSimModeSlot();

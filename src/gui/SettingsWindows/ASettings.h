@@ -16,13 +16,13 @@ class ASettings : public QDialog
 {
     Q_OBJECT
 public:
-    ASettings(QWidget* parent, QString title);
     virtual void DownloadDataFromView(SimObjView view, int orderIndex) = 0;
     void SetUnsetDeleteButton(bool flag);
     void SetIndex(int orderIndex);  // after deleted; order index moved to view
     int GetOrderIndex();
     bool GetType();
 protected:
+    ASettings(QWidget* parent, QString title);
     bool _isRobot;
     int _orderIndex; // after deleted; order index moved to view
     QPushButton* _setPushButton;
