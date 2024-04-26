@@ -127,7 +127,6 @@ private:
     void _DeleteSimModeTools();
 
 
-    QAction* _cursorAction;
     QAction* _buildUserRobotAction;
     QAction* _buildBotRobotAction;
     QAction* _buildWallAction;
@@ -160,7 +159,6 @@ private slots:
     void _CreateBuildMapModeSlot();
     void _CreateSimModeSlot();
 
-    void _CursorActionSlot();
     void _BuildUserRobotActionSlot();
     void _BuildBotRobotActionSlot();
     void _BuildWallActionSlot();

@@ -300,14 +300,9 @@ void MainWindow::_CreateBuildMapModeSlot(){
 
     }
 
-    emit _cursorAction->triggered();  // default on cursor
-
 }
 
 void MainWindow::_CreateBuildModeTools(){
-
-    _cursorAction = new QAction(QIcon(":/icons/cursorTool.png"), "Cursor", this);
-    connect(_cursorAction, &QAction::triggered, this, &MainWindow::_CursorActionSlot);
 
     _buildUserRobotAction = new QAction(QIcon(":/icons/userRobotTool.png"), "User robot", this);
     connect(_buildUserRobotAction, &QAction::triggered, this, &MainWindow::_BuildUserRobotActionSlot);
@@ -324,7 +319,6 @@ void MainWindow::_CreateBuildModeTools(){
     _engineBuildToolBar->addAction(_buildWallAction);
 
     _engineCursorToolBar = addToolBar("engineCursor");
-    _engineCursorToolBar->addAction(_cursorAction);
     _xCursorTouchLab = new QLabel("X");
     _xCursorTouchLine = new QLineEdit();
     _xCursorTouchLine->setReadOnly(true);
@@ -352,11 +346,9 @@ void MainWindow::_DeleteBuildModeTools(){
 
     if(_actualPage != NotSetPage){
 
-        disconnect(_cursorAction, 0, 0, 0);
         disconnect(_buildUserRobotAction, 0, 0, 0);
         disconnect(_buildBotRobotAction, 0, 0, 0);
         disconnect(_buildWallAction, 0, 0, 0);
-        delete _cursorAction;
         delete _buildUserRobotAction;
         delete _buildBotRobotAction;
         delete _buildWallAction;
@@ -374,12 +366,6 @@ void MainWindow::_DeleteBuildModeTools(){
         delete _statusModeBuildToolBar;
 
     }
-
-}
-
-void MainWindow::_CursorActionSlot(){
-    _simulationWind->buildModeStatus = CursorStatus;
-    _statusModeLine->setText("Interaction");
 
 }
 
