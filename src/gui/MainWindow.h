@@ -27,11 +27,11 @@
 #include <QDialog>
 #include <iostream>
 
-#include "SimulationWindow.h"
+#include "simulation/SimulationWindow.h"
 #include "Notifications/InfoNotification.h"
-#include "SettingsWindows/RobotSetting.h"
-#include "SettingsWindows/WallSetting.h"
-#include "SettingsWindows/NewMapSetting.h"
+#include "settings/RobotSetting.h"
+#include "settings/WallSetting.h"
+#include "settings/NewMapSetting.h"
 #include "../core/Core.h"
 #include "style.h"
 

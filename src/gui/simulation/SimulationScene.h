@@ -15,10 +15,10 @@
 #include <QTimer>
 #include <vector>
 
-#include "style.h"
-#include "../core/Core.h"
-#include "SimObjGUI/RobotGUI.h"
-#include "SimObjGUI/WallGUI.h"
+#include "../style.h"
+#include "../../core/Core.h"
+#include "entitiesGUI/RobotGUI.h"
+#include "entitiesGUI/WallGUI.h"
 
 class SimulationScene : public QGraphicsScene
 {

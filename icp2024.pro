@@ -23,14 +23,14 @@ SOURCES += \
     src/core/icplib.cpp \
     src/core/Spawner.cpp \
     src/core/SimMap.cpp \
-    src/gui/SettingsWindows/ASettings.cpp \
-    src/gui/Notifications/InfoNotification.cpp \
+    src/gui/settings/ASettings.cpp \
+    src/gui/notifications/InfoNotification.cpp \
     src/gui/MainWindow.cpp \
-    src/gui/SettingsWindows/NewMapSetting.cpp \
-    src/gui/SettingsWindows/RobotSetting.cpp \
-    src/gui/SimulationScene.cpp \
-    src/gui/SimulationWindow.cpp \
-    src/gui/SettingsWindows/WallSetting.cpp \
+    src/gui/settings/NewMapSetting.cpp \
+    src/gui/settings/RobotSetting.cpp \
+    src/gui/simulation/SimulationScene.cpp \
+    src/gui/simulation/SimulationWindow.cpp \
+    src/gui/settings/WallSetting.cpp \
     src/gui/style.cpp \
     src/main.cpp
 
@@ -43,20 +43,20 @@ HEADERS += \
     src/core/properties/MyTransform.h \
     src/core/Core.h \
     src/core/icplib.h \
-    src/code/Spawner.h \
+    src/core/Spawner.h \
     src/core/SimMap.h \
     src/core/icplib.h \
-    src/gui/SettingsWindows/ASettings.h \
-    src/gui/SimObjGUI/ConnectorGUI.h \
-    src/gui/Notifications/InfoNotification.h \
+    src/gui/settings/ASettings.h \
+    src/gui/simulation/entitiesGUI/ConnectorGUI.h \
+    src/gui/notifications/InfoNotification.h \
     src/gui/MainWindow.h \
-    src/gui/SettingsWindows/NewMapSetting.h \
-    src/gui/SimObjGUI/RobotGUI.h \
-    src/gui/SettingsWindows/RobotSetting.h \
-    src/gui/SimulationScene.h \
-    src/gui/SimulationWindow.h \
-    src/gui/SimObjGUI/WallGUI.h \
-    src/gui/SettingsWindows/WallSetting.h \
+    src/gui/settings/NewMapSetting.h \
+    src/gui/simulation/entitiesGUI/RobotGUI.h \
+    src/gui/settings/RobotSetting.h \
+    src/gui/simulation/SimulationScene.h \
+    src/gui/simulation/SimulationWindow.h \
+    src/gui/simulation/entitiesGUI/WallGUI.h \
+    src/gui/settings/WallSetting.h \
     src/gui/style.h
 
 FORMS += \
