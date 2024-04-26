@@ -4,16 +4,6 @@
 #include <string>
 #include <iostream>
 #include "SimMap.h"
-// Simulation settings structure with default values
-struct SimSettings
-{
-    bool flagNewMap = false;
-    std::string newMapValue = "examples/example.txt";
-    bool flagNewSpeed = false;
-    int newSpeedValue = 5;
-    bool flagNewAngle = false;
-    int newAngleValue = 45;
-};
 
 // Core class with controller methods
 class Core
@@ -28,7 +18,6 @@ private:
 
 public:
     static Core* getInstance();
-    void SetNewSettings(const SimSettings& newSettings);
     std::string GetMapValue();
     int GetFPS();
     int GetMapWidth();

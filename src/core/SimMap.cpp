@@ -52,7 +52,7 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
 {
     _orderIndex = 1;
     _path = path;
-    // Restart all objects    
+    // Restart all objects
     DeleteAllObjects();
     // Open the file
 

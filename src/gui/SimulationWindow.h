@@ -90,6 +90,7 @@ signals:
     void RequestSimObjSig(int orderIndex, bool isRobot);
     void LoadSimSceneSig();
     void CreateNewSimObjSig(SimObjView view, float x, float y);
+    void CleareSimulationSceneSig();
 private slots:
     void _CreateNewSimObjGUISlot(QPointF clickPoint);
 };

@@ -38,8 +38,9 @@ void SimulationWindow::_CreateSimGUI(){
             emit RequestSimObjSig(orderIndex, isRobot);
         }
     });
-
+    // signal to loading new sim obj to GUI from core
     connect(this, &SimulationWindow::LoadSimSceneSig, _simulationScene, &SimulationScene::LoadSimObj);
+    connect(this, &SimulationWindow::CleareSimulationSceneSig, this , [=](){_simulationScene->CleareSimulationScene();});
 }
 
 void SimulationWindow::_DeleteSimGUI(){

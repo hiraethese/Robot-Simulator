@@ -441,6 +441,9 @@ void MainWindow::_CreateSettings(){
 
 
 void MainWindow::_PushNewMapToCoreSlot(){
+    
+    emit _simulationWind->CleareSimulationSceneSig();
+
     ICP_CODE code = _core->LoadingMap(_newMapWind->GetNewMapPath());  // call loading map and creating new sim obj
 
     if(!code){  // ok

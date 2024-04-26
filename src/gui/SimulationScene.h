@@ -28,7 +28,6 @@ class SimulationScene : public QGraphicsScene
 public:
 
     explicit SimulationScene(QObject *parent = nullptr);
-
     void CleareSimulationScene();
 
     bool flagSettingMode = false;

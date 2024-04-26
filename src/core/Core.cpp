@@ -5,10 +5,10 @@ Core* Core::_core = nullptr;
 Core::Core()
 {
     _FPS = 16; // Note: not actually "Frames Per Second", the name is for convenience
+    // TODOD: after in end delete this
     //_simIsRun = false;
-    //_simIsReady = true; // TODO: make setting arg from user by setting; now default true
+    _simIsReady = false; // TODO: make setting arg from user by setting; now default true
     _map = new SimMap(1800, 750);
-    //_map->LoadObjectsFromFile(); // TODO: call load objects from file from the gui
 }
 
 Core *Core::getInstance()
@@ -17,37 +17,6 @@ Core *Core::getInstance()
         _core = new Core();
     }
     return _core;
-}
-
-void Core::SetNewSettings(const SimSettings &newSettings)
-{
-    
-
-    if(newSettings.flagNewMap)
-    {
-        _map->SetPath(newSettings.newMapValue);
-        //_simIsReady = true;
-    }
-
-    if(newSettings.flagNewSpeed)
-    {
-        // _map->GetFactory()->GetControlledRobot()->GetMovement()->SetSpeed(newSettings.newSpeedValue);
-        for (Robot* robot : GetVectorRobots()) {
-            if (robot->IsControlled()) {
-                robot->GetMovement()->SetSpeed(newSettings.newSpeedValue);
-            }
-        }
-    }
-
-    if(newSettings.flagNewAngle)
-    {
-        // _map->GetFactory()->GetControlledRobot()->GetMovement()->SetAngleStep(newSettings.newAngleValue);
-        for (Robot* robot : GetVectorRobots()) {
-            if (robot->IsControlled()) {
-                robot->GetMovement()->SetAngleStep(newSettings.newAngleValue);
-            }
-        }
-    }
 }
 
 std::string Core::GetMapValue()
@@ -179,18 +148,16 @@ std::vector<SimObjView> Core::GetVectorRobotsView()
 ICP_CODE Core::LoadingMap(std::string path)
 {
     ICP_CODE result = _map->LoadObjectsFromFile(path); // TODO: call load objects from file from the gui
-
     if(!result){
 
-        _core->_simIsReady = true;
+        _simIsReady = true;
 
     }
     else{
 
-        _core->_simIsReady = false;
+        _simIsReady = false;
 
     }
-
     return result;
 }
 
