@@ -22,6 +22,7 @@ private:
     Spawner* _spawner;
     std::vector<Wall*> _walls;
     std::vector<Robot*> _robots;
+
 public:
     SimMap(int width, int height);
     void DeleteAllObjects();
@@ -30,14 +31,12 @@ public:
     int GetHeight();
     void SetPath(std::string newPath);
     ICP_CODE LoadObjectsFromFile(std::string path);
-    SimObjView GetControlledRobotTemp();
-    SimObjView GetBotRobotTemp();
-    SimObjView GetWallTemp();
     const std::vector<Wall*>& GetWalls() const;
     const std::vector<Robot*>& GetRobots() const;
-    Robot* GetFirstControlledRobot();
     std::vector<SimObjView> GetVectorWallsView();
     std::vector<SimObjView> GetVectorRobotsView();
+    Robot* GetFirstControlledRobot();
+    Spawner* GetSpawner();
 };
 
 #endif // SIMMAP_H

@@ -154,7 +154,7 @@ SimObjView Spawner::GetControlledRobotTemp()
     return _controlledRobotTemp;
 }
 
-SimObjView Spawner::GetAutoRobotTemp()
+SimObjView Spawner::GetAutomatedRobotTemp()
 {
     return _automatedRobotTemp;
 }
@@ -162,4 +162,19 @@ SimObjView Spawner::GetAutoRobotTemp()
 SimObjView Spawner::GetWallTemp()
 {
     return _wallTemp;
+}
+
+void Spawner::SetControlledRobotTemp(SimObjView newTemp)
+{
+    _controlledRobotTemp = newTemp;
+}
+
+void Spawner::SetAutomatedRobotTemp(SimObjView newTemp)
+{
+    _automatedRobotTemp = newTemp;
+}
+
+void Spawner::SetWallTemp(SimObjView newTemp)
+{
+    _wallTemp = newTemp;
 }

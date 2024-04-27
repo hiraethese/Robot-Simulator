@@ -227,7 +227,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
             *   if ok
             *   create
             */
-            _simulationScene->CreateNewRobot(_core->GetBotRobotTemp(), clickPoint.x(), clickPoint.y());
+            _simulationScene->CreateNewRobot(_core->GetAutomatedRobotTemp(), clickPoint.x(), clickPoint.y());
             break;
         case WallStatus:
             std::cout << "Create Wall" << std::endl;
@@ -236,7 +236,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
             *   if ok
             *   create
             */
-            _simulationScene->CreateNewWall(_core->GetWallTemplate(), clickPoint.x(), clickPoint.y());
+            _simulationScene->CreateNewWall(_core->GetWallTemp(), clickPoint.x(), clickPoint.y());
             break;
         default:
             break;

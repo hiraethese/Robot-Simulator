@@ -5,7 +5,7 @@ Core* Core::_core = nullptr;
 Core::Core()
 {
     _FPS = 16; // Note: not actually "Frames Per Second", the name is for convenience
-    // TODOD: after in end delete this
+    // TODO: after in end delete this
     //_simIsRun = false;
     _simIsReady = false; // TODO: make setting arg from user by setting; now default true
     _map = new SimMap(1800, 750);
@@ -123,7 +123,6 @@ void Core::MoveAllObjects()
     }
 }
 
-
 const std::vector<Wall *>& Core::GetVectorWalls() const
 {
     return _map->GetWalls();
@@ -133,7 +132,6 @@ const std::vector<Robot*>& Core::GetVectorRobots() const
 {
     return _map->GetRobots();
 }
-
 
 std::vector<SimObjView> Core::GetVectorWallsView()
 {
@@ -163,14 +161,30 @@ ICP_CODE Core::LoadingMap(std::string path)
 
 SimObjView Core::GetControlledRobotTemp()
 {
-    return _map->GetControlledRobotTemp();
+    return _map->GetSpawner()->GetControlledRobotTemp();
 }
 
-SimObjView Core::GetBotRobotTemp()
+SimObjView Core::GetAutomatedRobotTemp()
 {
-    return _map->GetBotRobotTemp();
+    return _map->GetSpawner()->GetAutomatedRobotTemp();
 }
 
-SimObjView Core::GetWallTemplate(){
-    return _map->GetWallTemp();
+SimObjView Core::GetWallTemp()
+{
+    return _map->GetSpawner()->GetWallTemp();
+}
+
+void Core::SetControlledRobotTemp(SimObjView newTemp)
+{
+    _map->GetSpawner()->SetControlledRobotTemp(newTemp);
+}
+
+void Core::SetAutomatedRobotTemp(SimObjView newTemp)
+{
+    _map->GetSpawner()->SetAutomatedRobotTemp(newTemp);
+}
+
+void Core::SetWallTemp(SimObjView newTemp)
+{
+    _map->GetSpawner()->SetWallTemp(newTemp);
 }

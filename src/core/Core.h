@@ -39,8 +39,11 @@ public:
     std::vector<SimObjView> GetVectorWallsView();
     std::vector<SimObjView> GetVectorRobotsView();
     SimObjView GetControlledRobotTemp();
-    SimObjView GetBotRobotTemp();
-    SimObjView GetWallTemplate();
+    SimObjView GetAutomatedRobotTemp();
+    SimObjView GetWallTemp();
+    void SetControlledRobotTemp(SimObjView newTemp);
+    void SetAutomatedRobotTemp(SimObjView newTemp);
+    void SetWallTemp(SimObjView newTemp);
 };
 
 #endif // CORE_H

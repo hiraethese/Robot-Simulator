@@ -96,11 +96,11 @@ void MainWindow::_CreateMenu(){
     buildUserRobotTemplate = templatesSubMenu->addAction("Controlled robot");
     connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), 0); _robotSetWind->exec();});
 
-    buildBotRobotTemplate = templatesSubMenu->addAction("Bot robot");
-    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetBotRobotTemp(), 0);_robotSetWind->exec();});
+    buildBotRobotTemplate = templatesSubMenu->addAction("Automated robot");
+    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetAutomatedRobotTemp(), 0);_robotSetWind->exec();});
 
     buildWallLayout = templatesSubMenu->addAction("Wall");
-    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemplate(), 0);_wallSetWind->exec();});
+    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemp(), 0);_wallSetWind->exec();});
 
     simulationModeAction = appMenu->addAction("Simulation");
     connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimModeSlot);

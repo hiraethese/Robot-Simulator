@@ -19,8 +19,11 @@ public:
 	Robot* GenNewRobot(std::istringstream& specification, int orderIndex, bool isControlled);
 	Wall* GenNewWall(std::istringstream& specification, int orderIndex);
 	SimObjView GetControlledRobotTemp();
-	SimObjView GetAutoRobotTemp();
+	SimObjView GetAutomatedRobotTemp();
 	SimObjView GetWallTemp();
+	void SetControlledRobotTemp(SimObjView newTemp);
+	void SetAutomatedRobotTemp(SimObjView newTemp);
+	void SetWallTemp(SimObjView newTemp);
 
 private:
 	SimObjView _controlledRobotTemp;

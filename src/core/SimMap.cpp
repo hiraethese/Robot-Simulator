@@ -132,22 +132,6 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
     return CODE_OK;
 }
 
-
-SimObjView SimMap::GetControlledRobotTemp()
-{
-    return _spawner->GetControlledRobotTemp();
-}
-
-SimObjView SimMap::GetBotRobotTemp()
-{
-    return _spawner->GetAutoRobotTemp();
-}
-
-SimObjView SimMap::GetWallTemp()
-{
-    return _spawner->GetWallTemp();
-}
-
 const std::vector<Wall*>& SimMap::GetWalls() const
 {
     return _walls;
@@ -157,7 +141,6 @@ const std::vector<Robot*>& SimMap::GetRobots() const
 {
     return _robots;
 }
-
 
 std::vector<SimObjView> SimMap::GetVectorWallsView()
 {
@@ -184,8 +167,6 @@ std::vector<SimObjView> SimMap::GetVectorRobotsView()
 
 }
 
-
-
 Robot* SimMap::GetFirstControlledRobot()
 {
     for (Robot* robot : _robots)
@@ -196,4 +177,9 @@ Robot* SimMap::GetFirstControlledRobot()
         }
     }
     return nullptr;
+}
+
+Spawner *SimMap::GetSpawner()
+{
+    return _spawner;
 }
