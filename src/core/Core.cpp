@@ -143,6 +143,21 @@ std::vector<SimObjView> Core::GetVectorRobotsView()
     return _map->GetVectorRobotsView();
 }
 
+ICP_CODE Core::CreateNewControlledRobotFromTemplate(float x, float y)
+{
+    return _map->CreateNewObjectFromTemplate(x, y, true, true);
+}
+
+ICP_CODE Core::CreateNewAutomatedRobotFromTemplate(float x, float y)
+{
+    return _map->CreateNewObjectFromTemplate(x, y, true, false);
+}
+
+ICP_CODE Core::CreateNewWallFromTemplate(float x, float y)
+{
+    return _map->CreateNewObjectFromTemplate(x, y, false, false);
+}
+
 ICP_CODE Core::LoadingMap(std::string path)
 {
     ICP_CODE result = _map->LoadObjectsFromFile(path); // TODO: call load objects from file from the gui

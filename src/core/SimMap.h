@@ -17,7 +17,7 @@ private:
     std::string _path {};
     int _width;
     int _height;
-    int _orderIndex = 1;
+    int _orderIndex;
     // new
     Spawner* _spawner;
     std::vector<Wall*> _walls;
@@ -30,6 +30,7 @@ public:
     int GetWidth();
     int GetHeight();
     void SetPath(std::string newPath);
+    ICP_CODE CreateNewObjectFromTemplate(float x, float y, bool isRobot, bool isControlled);
     ICP_CODE LoadObjectsFromFile(std::string path);
     const std::vector<Wall*>& GetWalls() const;
     const std::vector<Robot*>& GetRobots() const;

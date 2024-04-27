@@ -192,7 +192,7 @@ void MainWindow::_RunSimulationActionSlot(){
 
     if(!_core->IsSimReady()){  // check is prepared simulation map to running
 
-        _WarningMsgSimNotSet(CODE_EMPYT_SIMULATION);
+        _WarningMsgSimNotSet(CODE_EMPTY_SIMULATION);
         return;
 
     }

@@ -33,6 +33,9 @@ public:
     void ForwardMoveSig();
     void StopMoveSig();
     void MoveAllObjects();
+    ICP_CODE CreateNewControlledRobotFromTemplate(float x, float y);
+    ICP_CODE CreateNewAutomatedRobotFromTemplate(float x, float y);
+    ICP_CODE CreateNewWallFromTemplate(float x, float y);
     ICP_CODE LoadingMap(std::string path);
     const std::vector<Wall*>& GetVectorWalls() const;
     const std::vector<Robot*>& GetVectorRobots() const;
