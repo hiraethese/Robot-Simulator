@@ -13,7 +13,7 @@ public:
     void SetPosition(Vector2d newPosition);
     Vector2d GetPosition();
     Vector2d GetSize();
-    Rectangle GetRect();
+    Hitbox GetHitbox();
 };
 
 #endif // MYTRANSFORM_H

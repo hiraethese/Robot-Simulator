@@ -48,8 +48,8 @@ void RobotSetting::DownloadDataFromView(SimObjView view, int orderIndex){
     _diameterSpinBox->setValue(int(view.h));
     _speedSpinBox->setValue(int(view.speed));
     _colorComboBox->setCurrentText(QString::fromStdString(getColorString(view.color)));
-    _angleStepSpinBox->setValue(view.angle);
-    _angleDirectionSpinBox->setValue(view.way);
+    _angleStepSpinBox->setValue(view.angleStep);
+    _angleDirectionSpinBox->setValue(view.angleDegrees);
 
     if(view.isControlled){
 

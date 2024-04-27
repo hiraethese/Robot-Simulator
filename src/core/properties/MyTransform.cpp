@@ -21,7 +21,7 @@ Vector2d MyTransform::GetSize()
     return _size;
 }
 
-Rectangle MyTransform::GetRect()
+Hitbox MyTransform::GetHitbox()
 {
     return {_position.x - 0.5f * _size.x,
             _position.y - 0.5f * _size.y,

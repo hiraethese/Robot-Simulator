@@ -1,5 +1,6 @@
 #ifndef WALL_H
 #define WALL_H
+
 #include "SimObject.h"
 
 class Wall : public SimObject

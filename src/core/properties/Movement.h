@@ -23,8 +23,10 @@ public:
             int rotateClockwise,
             MyTransform* transform);
     float GetSpeed();
+    float GetCollisionDistance();
     int GetAngleStep();
     int GetAngleDegrees();
+    int GetRotateClockwise();
     void SetSpeed(float newSpeed);
     void SetAngleStep(int newAngleStep);
     void SetAngleDegrees(int newAngleDegrees);

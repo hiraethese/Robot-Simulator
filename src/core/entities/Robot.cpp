@@ -30,7 +30,38 @@ Movement* Robot::GetMovement()
     return _movement;
 }
 
+// typedef struct SimObjView {
+//     float x;
+//     float y;
+//     float w;
+//     float h;
+//     float speed;
+//     float collisionDistance;
+//     int angleStep;
+//     int angleDegrees;
+//     int rotateClockwise;
+//     colors colorCode;
+//     int orderIndex;
+//     bool isControlled;
+//     bool isRobot;
+// } SimObjView;
+
 SimObjView Robot::GetSimObjView()
 {
-    return {_orderIndex, GetTransform()->GetRect().x, GetTransform()->GetRect().y, GetTransform()->GetRect().h, GetTransform()->GetRect().w, _color, true, _isControlled, int(_movement->GetSpeed()), _movement->GetAngleDegrees(), 0};
+    // return {_orderIndex, GetTransform()->GetRect().x, GetTransform()->GetRect().y, GetTransform()->GetRect().h, GetTransform()->GetRect().w, _color, true, _isControlled, int(_movement->GetSpeed()), _movement->GetAngleDegrees(), 0};
+    return  {
+                _transform->GetHitbox().x,
+                _transform->GetHitbox().y,
+                _transform->GetHitbox().w,
+                _transform->GetHitbox().h,
+                _movement->GetSpeed(),
+                _movement->GetCollisionDistance(),
+                _movement->GetAngleStep(),
+                _movement->GetAngleDegrees(),
+                _movement->GetRotateClockwise(),
+                _color,
+                _orderIndex,
+                _isControlled,
+                true
+            };
 }

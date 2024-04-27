@@ -1,5 +1,6 @@
 #ifndef SPAWNER_H
 #define SPAWNER_H
+
 #include "icplib.h"
 #include "entities/Robot.h"
 #include "entities/Wall.h"
@@ -8,7 +9,9 @@
 #include <sstream>
 #include <string>
 #include "../gui/style.h"
-class Spawner {
+
+class Spawner
+{
 public:
 	Spawner();
 	Robot* GenNewRobot(float x, float y, int orderIndex, bool isControlled);
@@ -18,9 +21,11 @@ public:
 	SimObjView GetControlledRobotTemp();
 	SimObjView GetAutoRobotTemp();
 	SimObjView GetWallTemp();
+
 private:
-	SimObjView _wallTemplate;
-	SimObjView _controlledRobotTemplate;
-	SimObjView _autoRobotTemplate;
+	SimObjView _controlledRobotTemp;
+	SimObjView _automatedRobotTemp;
+	SimObjView _wallTemp;
 };
-#endif // !SPAWNER_H
+
+#endif // SPAWNER_H
