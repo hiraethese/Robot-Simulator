@@ -210,33 +210,37 @@ void SimulationWindow::RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot
 
 void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
     emit UperClickSig(clickPoint);
+    ICP_CODE check_creaing;
     switch(buildModeStatus){
         case ControllRobotStatus:
             std::cout << "Create Controlled Robot" << std::endl;
-            /* TODO:
-            *   request by _core creating new robot
-            *   if ok
-            *   create
-            */
-            _simulationScene->CreateNewRobot(_core->GetControlledRobotTemp(), clickPoint.x(), clickPoint.y());
+            check_creaing = _core->CreateNewControlledRobotFromTemplate(clickPoint.x(), clickPoint.y());
+            if(check_creaing){
+                emit UperErrorCodeSig(check_creaing);
+            }
+            else{
+                _simulationScene->CreateNewRobot(_core->GetControlledRobotTemp(), clickPoint.x(), clickPoint.y());
+            }
             break;
         case BotRobotStatus:
             std::cout << "Create Bot Robot" << std::endl;
-            /* TODO:
-            *   request by _core creating new robot
-            *   if ok
-            *   create
-            */
-            _simulationScene->CreateNewRobot(_core->GetAutomatedRobotTemp(), clickPoint.x(), clickPoint.y());
+            check_creaing = _core->CreateNewAutomatedRobotFromTemplate(clickPoint.x(), clickPoint.y());
+            if(check_creaing){
+                emit UperErrorCodeSig(check_creaing);
+            }
+            else{
+                _simulationScene->CreateNewRobot(_core->GetAutomatedRobotTemp(), clickPoint.x(), clickPoint.y());
+            }
             break;
         case WallStatus:
             std::cout << "Create Wall" << std::endl;
-            /* TODO:
-            *   request by _core creating new wall
-            *   if ok
-            *   create
-            */
-            _simulationScene->CreateNewWall(_core->GetWallTemp(), clickPoint.x(), clickPoint.y());
+            check_creaing = _core->CreateNewWallFromTemplate(clickPoint.x(), clickPoint.y());
+            if(check_creaing){
+                emit UperErrorCodeSig(check_creaing);
+            }
+            else{
+                _simulationScene->CreateNewWall(_core->GetWallTemp(), clickPoint.x(), clickPoint.y());
+            }
             break;
         default:
             break;

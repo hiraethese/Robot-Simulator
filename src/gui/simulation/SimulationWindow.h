@@ -91,6 +91,7 @@ signals:
     void LoadSimSceneSig();
     void CreateNewSimObjSig(SimObjView view, float x, float y);
     void CleareSimulationSceneSig();
+    void UperErrorCodeSig(ICP_CODE err_code);
 private slots:
     void _CreateNewSimObjGUISlot(QPointF clickPoint);
 };

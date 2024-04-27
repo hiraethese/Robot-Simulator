@@ -237,6 +237,8 @@ void MainWindow::_CreateSimulationWindow(){
     connect(_simulationWind, &SimulationWindow::UperClickSig, this, [=](QPointF clickPoint){_xCursorTouchLine->setText(QString("%1").arg(clickPoint.x()));_yCursorTouchLine->setText(QString("%1").arg(clickPoint.y()));});
     // request sim obj from scene to core
     connect(_simulationWind, &SimulationWindow::RequestSimObjSig, this, &MainWindow::_RequestSimObjSlot);
+    // wait from sim wind errors codes
+    connect(_simulationWind, &SimulationWindow::UperErrorCodeSig, this, [=](ICP_CODE err_code){_WarningMsgSimNotSet(err_code);});
 }
 
 void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
