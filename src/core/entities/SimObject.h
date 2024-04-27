@@ -8,12 +8,13 @@ class SimObject
 {
 protected:
     MyTransform* _transform;
-    colors _color;
     int _orderIndex;
+    colors _color;
 public:
     SimObject(Vector2d position, Vector2d size, colors color, int orderIndex);
     virtual ~SimObject();
     MyTransform* GetTransform();
+    int GetOrderIndex();
     virtual SimObjView GetSimObjView() = 0;
 };
 

@@ -3,8 +3,8 @@
 SimObject::SimObject(Vector2d position, Vector2d size, colors color, int orderIndex)
 {
     _transform = new MyTransform(position, size);
-    _color = color;
     _orderIndex = orderIndex;
+    _color = color;
 }
 
 SimObject::~SimObject()
@@ -15,4 +15,9 @@ SimObject::~SimObject()
 MyTransform* SimObject::GetTransform()
 {
     return _transform;
+}
+
+int SimObject::GetOrderIndex()
+{
+    return _orderIndex;
 }
