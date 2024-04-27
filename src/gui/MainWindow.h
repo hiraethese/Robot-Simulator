@@ -28,7 +28,7 @@
 #include <iostream>
 
 #include "simulation/SimulationWindow.h"
-#include "Notifications/InfoNotification.h"
+#include "notifications/InfoNotification.h"
 #include "settings/RobotSetting.h"
 #include "settings/WallSetting.h"
 #include "settings/NewMapSetting.h"
