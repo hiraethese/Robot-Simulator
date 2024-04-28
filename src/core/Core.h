@@ -12,8 +12,6 @@ private:
     Core();
     static Core* _core;
     int _FPS;
-    bool _simIsRun = false;
-    bool _simIsReady = false;
     SimMap* _map = nullptr;  // TODO: make method for recreating value
 
 public:
@@ -24,10 +22,7 @@ public:
     int GetMapHeight();
     int GetSpeedValue(); // TODO: speed in percent
     int GetAngleValue(); // Note: get angle step value
-    bool IsSimReady();
-    bool IsSimRun();
     void SetFPS(int FPS); // TODO: implement this as part of the settings
-    void SetRunSim(bool setter);
     void LeftRotateMoveSig();
     void RightRotateMoveSig();
     void ForwardMoveSig();

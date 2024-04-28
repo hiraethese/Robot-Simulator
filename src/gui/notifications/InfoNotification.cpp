@@ -20,8 +20,8 @@ void InfoNotification::_WarningMsgSimNotSet(ICP_CODE code){
     case CODE_SYNTAXE_ERROR_INPUT_FILE_WALL:
         QMessageBox::warning(nullptr, "Error", "Syntaxe error in specification for wall in input file!");
         break;
-    case CODE_EMPTY_SIMULATION:
-        QMessageBox::warning(nullptr, "Warning", "Simulation can not run cose have not setted simulation objects!");
+    case CODE_NEW_OBJECT_COLLISION_ERROR:
+        QMessageBox::warning(nullptr, "Error", "Collision error with new object!");
         break;
     default:
         break;

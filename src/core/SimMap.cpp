@@ -234,6 +234,7 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
             Robot* newRobot = _spawner->GenNewRobot(iss, _orderIndex, false);
             if (!newRobot)
             {
+                DeleteAllObjects();
                 return CODE_SYNTAXE_ERROR_INPUT_FILE_AUTO_ROBOT;
             }
             _robots.push_back(newRobot);
@@ -244,6 +245,7 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
             Wall* newWall = _spawner->GenNewWall(iss, _orderIndex);
             if (!newWall)
             {
+                DeleteAllObjects();
                 return CODE_SYNTAXE_ERROR_INPUT_FILE_WALL;
             }
             _walls.push_back(newWall);
@@ -251,7 +253,7 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
         // Other
         else
         {
-            std::cerr << "Error: Unrecognized object type\n";
+            DeleteAllObjects();
             return CODE_SYNTAXE_ERROR_UNKNOWN_OBJ_TYPE;
         }
         ++_orderIndex;

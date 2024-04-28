@@ -5,9 +5,6 @@ Core* Core::_core = nullptr;
 Core::Core()
 {
     _FPS = 16; // Note: not actually "Frames Per Second", the name is for convenience
-    // TODO: after in end delete this
-    //_simIsRun = false;
-    _simIsReady = false; // TODO: make setting arg from user by setting; now default true
     _map = new SimMap(1800, 750);
 }
 
@@ -49,29 +46,14 @@ int Core::GetAngleValue()
     return _map->GetFirstControlledRobot()->GetMovement()->GetAngleStep();
 }
 
-bool Core::IsSimReady()
-{
-    return _simIsReady;
-}
-
-bool Core::IsSimRun()
-{
-    return _simIsRun;
-}
 
 void Core::SetFPS(int FPS)
 {
     _FPS = FPS;
 }
 
-void Core::SetRunSim(bool setter)
-{
-    _simIsRun = setter;
-}
-
 void Core::LeftRotateMoveSig()
 {
-    // _map->GetFactory()->GetControlledRobot()->GetMovement()->RotateLeft();
     for (Robot* robot : GetVectorRobots()) {
         if (robot->IsControlled()) {
             robot->GetMovement()->RotateLeft();
@@ -81,7 +63,6 @@ void Core::LeftRotateMoveSig()
 
 void Core::RightRotateMoveSig()
 {
-    // _map->GetFactory()->GetControlledRobot()->GetMovement()->RotateRight();
     for (Robot* robot : GetVectorRobots()) {
         if (robot->IsControlled()) {
             robot->GetMovement()->RotateRight();
@@ -91,7 +72,6 @@ void Core::RightRotateMoveSig()
 
 void Core::ForwardMoveSig()
 {
-    // _map->GetFactory()->GetControlledRobot()->GetMovement()->EnableMovement();
     for (Robot* robot : GetVectorRobots()) {
         if (robot->IsControlled()) {
             robot->GetMovement()->EnableMovement();
@@ -101,7 +81,6 @@ void Core::ForwardMoveSig()
 
 void Core::StopMoveSig()
 {
-    // _map->GetFactory()->GetControlledRobot()->GetMovement()->DisableMovement();
     for (Robot* robot : GetVectorRobots()) {
         if (robot->IsControlled()) {
             robot->GetMovement()->DisableMovement();
@@ -111,7 +90,6 @@ void Core::StopMoveSig()
 
 void Core::MoveAllObjects()
 {
-    // _map->GetFactory()->GetControlledRobot()->GetMovement()->MoveAutomatedRobot();
     for (Robot* robot : GetVectorRobots()) {
         if (robot->IsControlled()) {
             robot->GetMovement()->MoveControlledRobot();
@@ -160,18 +138,7 @@ ICP_CODE Core::CreateNewWallFromTemplate(float x, float y)
 
 ICP_CODE Core::LoadingMap(std::string path)
 {
-    ICP_CODE result = _map->LoadObjectsFromFile(path); // TODO: call load objects from file from the gui
-    if(!result){
-
-        _simIsReady = true;
-
-    }
-    else{
-
-        _simIsReady = false;
-
-    }
-    return result;
+    return _map->LoadObjectsFromFile(path);// TODO: call load objects from file from the gui
 }
 
 SimObjView Core::GetControlledRobotTemp()

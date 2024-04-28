@@ -190,21 +190,12 @@ void MainWindow::_HelpTextToolActionSlot(){
 
 void MainWindow::_RunSimulationActionSlot(){
 
-    if(!_core->IsSimReady()){  // check is prepared simulation map to running
-
-        _WarningMsgSimNotSet(CODE_EMPTY_SIMULATION);
-        return;
-
-    }
-
     disconnect(_runSimulationAction, 0, 0, 0);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_PauseSimulationActionSlot);
     _runSimulationAction->setIcon(QIcon(":/icons/pauseTool.svg"));
     _runSimulationAction->setText("Pause");
     _lineSimRunStatus->setText("Run");
     _lineSimRunStatus->setStyleSheet("background-color: lightgreen;");
-
-    _core->SetRunSim(true);
 
     _simulationWind->setFocus();
 
@@ -214,7 +205,6 @@ void MainWindow::_RunSimulationActionSlot(){
 
 void MainWindow::_PauseSimulationActionSlot(){
 
-    _core->SetRunSim(false);
     _simulationWind->StopSimScene();
     disconnect(_runSimulationAction, 0, 0, 0);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
