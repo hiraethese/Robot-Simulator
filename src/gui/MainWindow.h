@@ -166,7 +166,7 @@ private slots:
 
     void _RequestSimObjSlot(int orderIndex, bool isRobot);
 
-    void _UpdateSimObjSlot(int orderIndex, bool isRobot);
-    void _DeleteSimObjSlot(int orderIndex, bool isRobot);
+    void _UpdateSimObjSlot(SimObjView view);
+    void _DeleteSimObjSlot(SimObjView view);
 };
 #endif // MAINWINDOW_H

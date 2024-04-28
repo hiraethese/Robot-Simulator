@@ -253,13 +253,13 @@ void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
     }
 }
 
-void MainWindow::_UpdateSimObjSlot(int orderIndex, bool isRobot){
+void MainWindow::_UpdateSimObjSlot(SimObjView view){
 
     if(orderIndex == -1){
 
     }
 }
-void MainWindow::_DeleteSimObjSlot(int orderIndex, bool isRobot){
+void MainWindow::_DeleteSimObjSlot(SimObjView view){
 
     /* TODO
     * send request to deleting
