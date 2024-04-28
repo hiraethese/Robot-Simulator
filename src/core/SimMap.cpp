@@ -224,6 +224,7 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
             Robot* newRobot = _spawner->GenNewRobot(iss, _orderIndex, true);
             if (!newRobot)
             {
+                DeleteAllObjects();
                 return CODE_SYNTAXE_ERROR_INPUT_FILE_CONTR_ROBOT;
             }
             _robots.push_back(newRobot);

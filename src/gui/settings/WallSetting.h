@@ -20,7 +20,7 @@ public:
 
     WallSetting(QWidget* parent, QString title);
     void DownloadDataFromView(SimObjView view, int orderIndex) override;
-
+    SimObjView GetSimObjView();
 private:
 
     QLabel* _heightLabel;

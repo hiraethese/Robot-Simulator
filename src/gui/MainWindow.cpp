@@ -94,10 +94,10 @@ void MainWindow::_CreateMenu(){
     templatesSubMenu = appMenu->addMenu("Templates");
 
     buildUserRobotTemplate = templatesSubMenu->addAction("Controlled robot");
-    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), 0); _robotSetWind->exec();});
+    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), -1); _robotSetWind->exec();});
 
     buildBotRobotTemplate = templatesSubMenu->addAction("Automated robot");
-    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetAutomatedRobotTemp(), 0);_robotSetWind->exec();});
+    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetAutomatedRobotTemp(), -1);_robotSetWind->exec();});
 
     buildWallLayout = templatesSubMenu->addAction("Wall");
     connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemp(), 0);_wallSetWind->exec();});
@@ -241,13 +241,13 @@ void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
 */
     if(isRobot){
         // download data about sim obj to settings window
-        _robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);  // TODO: info about concrete obj
+        _robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);  // TODO: order index get to cor request
         _robotSetWind->SetUnsetDeleteButton(true);
         _robotSetWind->exec();
     }
     else{
         // download data about sim obj to settings window
-        _wallSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);  // TODO: info about concrete obj
+        _wallSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);  // TODO: order index get to cor request
         _wallSetWind->SetUnsetDeleteButton(true);
         _wallSetWind->exec();
     }
@@ -255,12 +255,9 @@ void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
 
 void MainWindow::_UpdateSimObjSlot(int orderIndex, bool isRobot){
 
-    /* TODO:
-    *  send view by sett wind to core
-    *  wait confirm by core
-    *  update
-    */
-    std::cout << "User request updating for sim obj with #" << orderIndex << " " <<" and type " << isRobot << std::endl;
+    if(orderIndex == -1){
+
+    }
 }
 void MainWindow::_DeleteSimObjSlot(int orderIndex, bool isRobot){
 
@@ -385,7 +382,7 @@ void MainWindow::_BuildWallActionSlot(){
 void MainWindow::_CreateSettings(){
 
     _newMapWind = new NewMapSetting(this);
-    connect(_newMapWind, &NewMapSetting::downloadSig, this, &MainWindow::_PushNewMapToCoreSlot);
+    connect(_newMapWind, &NewMapSetting::DownloadSig, this, &MainWindow::_PushNewMapToCoreSlot);
 
     _robotSetWind = new RobotSetting(this, "Robot settings");
     connect(_robotSetWind, &RobotSetting::SetSig, this, &MainWindow::_UpdateSimObjSlot);

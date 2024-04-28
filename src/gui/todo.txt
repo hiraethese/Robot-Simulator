@@ -1,4 +1,7 @@
 2) clean code, check delete;
 4) improve API with sim obj;  50%/100%
+5) radius to robot settings
+6) add clock rotate to file parsing
+7) seter for sim obj constr
 x) ... =)
 
