@@ -25,7 +25,6 @@ private:
 
 public:
     SimMap(int width, int height);
-    void DeleteAllObjects();
     std::string GetPath();
     int GetWidth();
     int GetHeight();
@@ -40,6 +39,11 @@ public:
     std::vector<SimObjView> GetVectorRobotsView();
     Robot* GetFirstControlledRobot();
     Spawner* GetSpawner();
+    std::vector<Robot*>::iterator GetRobotByOrderIndex(int orderIndex);
+    std::vector<Wall*>::iterator GetWallByOrderIndex(int orderIndex);
+    void RemoveRobotByOrderIndex(int orderIndex);
+    void RemoveWallByOrderIndex(int orderIndex);
+    void DeleteAllObjects();
 };
 
 #endif // SIMMAP_H

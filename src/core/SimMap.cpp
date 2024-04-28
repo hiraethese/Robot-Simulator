@@ -9,26 +9,6 @@ SimMap::SimMap(int width, int height)
     _spawner = new Spawner();
 }
 
-void SimMap::DeleteAllObjects()
-{
-    if (!_robots.empty())
-    {
-        for (auto& robot : _robots)
-        {
-            delete robot;
-        }
-        _robots.clear();
-    }
-    if (!_walls.empty())
-    {
-        for (auto& wall : _walls)
-        {
-            delete wall;
-        }
-        _walls.clear();
-    }
-}
-
 std::string SimMap::GetPath()
 {
     return _path;
@@ -302,4 +282,82 @@ Robot* SimMap::GetFirstControlledRobot()
 Spawner *SimMap::GetSpawner()
 {
     return _spawner;
+}
+
+/////////////////////////////////////////////////// Delete objects here !!!
+
+std::vector<Robot*>::iterator SimMap::GetRobotByOrderIndex(int orderIndex)
+{
+    auto it = _robots.begin();
+
+    while(it != _robots.end())
+    {
+        if( (*it)->GetOrderIndex() == orderIndex )
+        {
+            return it;
+        }
+        ++it;
+    }
+    return it;
+}
+
+std::vector<Wall*>::iterator SimMap::GetWallByOrderIndex(int orderIndex)
+{
+    auto it = _walls.begin();
+
+    while(it != _walls.end())
+    {
+        if( (*it)->GetOrderIndex() == orderIndex )
+        {
+            return it;
+        }
+        ++it;
+    }
+    return it;
+}
+
+void SimMap::RemoveRobotByOrderIndex(int orderIndex)
+{
+    auto itRobotToRemove = GetRobotByOrderIndex(orderIndex);
+
+    if( itRobotToRemove != _robots.end() )
+    {
+        Robot* robotToRemove = *itRobotToRemove;
+        _robots.erase(itRobotToRemove);
+        // removeItem(robotToRemove);
+        delete robotToRemove;
+    }
+}
+
+void SimMap::RemoveWallByOrderIndex(int orderIndex)
+{
+    auto itWallToRemove = GetWallByOrderIndex(orderIndex);
+
+    if( itWallToRemove != _walls.end() )
+    {
+        Wall* wallToRemove = *itWallToRemove;
+        _walls.erase(itWallToRemove);
+        // removeItem(wallToRemove);
+        delete wallToRemove;
+    }
+}
+
+void SimMap::DeleteAllObjects()
+{
+    if (!_robots.empty())
+    {
+        for (auto& robot : _robots)
+        {
+            delete robot;
+        }
+        _robots.clear();
+    }
+    if (!_walls.empty())
+    {
+        for (auto& wall : _walls)
+        {
+            delete wall;
+        }
+        _walls.clear();
+    }
 }

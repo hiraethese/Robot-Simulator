@@ -136,6 +136,16 @@ ICP_CODE Core::CreateNewWallFromTemplate(float x, float y)
     return _map->CreateNewWallFromTemplate(x, y);
 }
 
+void Core::RemoveRobotByOrderIndex(int orderIndex)
+{
+    _map->RemoveRobotByOrderIndex(orderIndex);
+}
+
+void Core::RemoveWallByOrderIndex(int orderIndex)
+{
+    _map->RemoveWallByOrderIndex(orderIndex);
+}
+
 ICP_CODE Core::LoadingMap(std::string path)
 {
     return _map->LoadObjectsFromFile(path);// TODO: call load objects from file from the gui
