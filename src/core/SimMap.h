@@ -30,7 +30,9 @@ public:
     int GetWidth();
     int GetHeight();
     void SetPath(std::string newPath);
-    ICP_CODE CreateNewObjectFromTemplate(float x, float y, bool isRobot, bool isControlled);
+    ICP_CODE CreateNewControlledRobotFromTemplate(float x, float y);
+    ICP_CODE CreateNewAutomatedRobotFromTemplate(float x, float y);
+    ICP_CODE CreateNewWallFromTemplate(float x, float y);
     ICP_CODE LoadObjectsFromFile(std::string path);
     const std::vector<Wall*>& GetWalls() const;
     const std::vector<Robot*>& GetRobots() const;

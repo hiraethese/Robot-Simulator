@@ -49,126 +49,116 @@ void SimMap::SetPath(std::string newPath)
     _path = newPath;
 }
 
-ICP_CODE SimMap::CreateNewObjectFromTemplate(float x, float y, bool isRobot, bool isControlled)
+// New controlled robot
+ICP_CODE SimMap::CreateNewControlledRobotFromTemplate(float x, float y)
 {
-    if (isRobot)
+    // Controlled robot template
+    SimObjView controlledRobotTemp = _spawner->GetControlledRobotTemp();
+    Vector2d newControlledRobotSize = { controlledRobotTemp.w, controlledRobotTemp.h };
+    float newControlledRobotRadius = std::max(newControlledRobotSize.x, newControlledRobotSize.y) * 0.5f;
+
+    // Check for collisions with other robots
+    for (Robot* robot : _robots)
     {
-        if (isControlled) // New controlled robot
+        // bool CircCircCollision(Vector2d firstCircPos, float firstCircRadius, Vector2d secondCircPos, float secondCircRadius);
+        Vector2d robotPos = robot->GetTransform()->GetPosition();
+        Vector2d robotSize = robot->GetTransform()->GetSize();
+        float robotRadius = std::max(robotSize.x, robotSize.y) * 0.5f;
+
+        if ( CircCircCollision( robotPos, robotRadius, { x, y }, newControlledRobotRadius ) )
         {
-            // Controlled robot template
-            SimObjView controlledRobotTemp = _spawner->GetControlledRobotTemp();
-            Vector2d newControlledRobotSize = { controlledRobotTemp.w, controlledRobotTemp.h };
-            float newControlledRobotRadius = std::max(newControlledRobotSize.x, newControlledRobotSize.y) * 0.5f;
-
-            // Check for collisions with other robots
-            for (Robot* robot : _robots)
-            {
-                // bool CircCircCollision(Vector2d firstCircPos, float firstCircRadius, Vector2d secondCircPos, float secondCircRadius);
-                Vector2d robotPos = robot->GetTransform()->GetPosition();
-                Vector2d robotSize = robot->GetTransform()->GetSize();
-                float robotRadius = std::max(robotSize.x, robotSize.y) * 0.5f;
-
-                if ( CircCircCollision( robotPos, robotRadius, { x, y }, newControlledRobotRadius ) )
-                {
-                    return CODE_NEW_OBJECT_COLLISION_ERROR;
-                }
-            }
-
-            // Check for collisions with all walls
-            for (Wall* wall : _walls)
-            {
-                // bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);
-                Vector2d wallPos = wall->GetTransform()->GetPosition();
-                Vector2d wallSize = wall->GetTransform()->GetSize();
-
-                if ( CircRectCollision( { x, y }, newControlledRobotRadius, wallPos, wallSize ) )
-                {
-                    return CODE_NEW_OBJECT_COLLISION_ERROR;
-                }
-            }
-
-            // Create new controlled robot
-            Robot* newControlledRobot = _spawner->GenNewRobot(x, y, _orderIndex, true);
-
-            _robots.push_back(newControlledRobot);
-
-            ++_orderIndex;
-
-            return CODE_OK;
-        }
-        else // New automated robot
-        {
-            // Automated robot template
-            SimObjView automatedRobotTemp = _spawner->GetAutomatedRobotTemp();
-            Vector2d newAutomatedRobotSize = { automatedRobotTemp.w, automatedRobotTemp.h };
-            float newAutomatedRobotRadius = std::max(newAutomatedRobotSize.x, newAutomatedRobotSize.y) * 0.5f;
-
-            // Check for collisions with other robots
-            for (Robot* robot : _robots)
-            {
-                // bool CircCircCollision(Vector2d firstCircPos, float firstCircRadius, Vector2d secondCircPos, float secondCircRadius);
-                Vector2d robotPos = robot->GetTransform()->GetPosition();
-                Vector2d robotSize = robot->GetTransform()->GetSize();
-                float robotRadius = std::max(robotSize.x, robotSize.y) * 0.5f;
-
-                if ( CircCircCollision( robotPos, robotRadius, { x, y }, newAutomatedRobotRadius ) )
-                {
-                    return CODE_NEW_OBJECT_COLLISION_ERROR;
-                }
-            }
-
-            // Check for collisions with all walls
-            for (Wall* wall : _walls)
-            {
-                // bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);
-                Vector2d wallPos = wall->GetTransform()->GetPosition();
-                Vector2d wallSize = wall->GetTransform()->GetSize();
-
-                if ( CircRectCollision( { x, y }, newAutomatedRobotRadius, wallPos, wallSize ) )
-                {
-                    return CODE_NEW_OBJECT_COLLISION_ERROR;
-                }
-            }
-
-            // Create new automated robot
-            Robot* newAutomatedRobot = _spawner->GenNewRobot(x, y, _orderIndex, false);
-
-            _robots.push_back(newAutomatedRobot);
-
-            ++_orderIndex;
-
-            return CODE_OK;
+            return CODE_NEW_OBJECT_COLLISION_ERROR;
         }
     }
-    else // New wall
+
+    // Check for collisions with all walls
+    for (Wall* wall : _walls)
     {
-        // Wall template
-        SimObjView wallTemp = _spawner->GetWallTemp();
-        Vector2d newWallSize = { wallTemp.w, wallTemp.h };
+        // bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);
+        Vector2d wallPos = wall->GetTransform()->GetPosition();
+        Vector2d wallSize = wall->GetTransform()->GetSize();
 
-        // Check for collisions with all robots
-        for (Robot* robot : _robots)
+        if ( CircRectCollision( { x, y }, newControlledRobotRadius, wallPos, wallSize ) )
         {
-            // bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);
-            Vector2d robotPos = robot->GetTransform()->GetPosition();
-            Vector2d robotSize = robot->GetTransform()->GetSize();
-            float robotRadius = std::max(robotSize.x, robotSize.y) * 0.5f;
-
-            if ( CircRectCollision( robotPos, robotRadius, { x, y }, newWallSize ) )
-            {
-                return CODE_NEW_OBJECT_COLLISION_ERROR;
-            }
+            return CODE_NEW_OBJECT_COLLISION_ERROR;
         }
-
-        // Create new wall
-        Wall* newWall = _spawner->GenNewWall(x, y, _orderIndex);
-
-        _walls.push_back(newWall);
-
-        ++_orderIndex;
-
-        return CODE_OK;
     }
+
+    // Create new controlled robot
+    Robot* newControlledRobot = _spawner->GenNewRobot(x, y, _orderIndex, true);
+    _robots.push_back(newControlledRobot);
+    ++_orderIndex;
+    return CODE_OK;
+}
+
+// New automated robot
+ICP_CODE SimMap::CreateNewAutomatedRobotFromTemplate(float x, float y)
+{
+    // Automated robot template
+    SimObjView automatedRobotTemp = _spawner->GetAutomatedRobotTemp();
+    Vector2d newAutomatedRobotSize = { automatedRobotTemp.w, automatedRobotTemp.h };
+    float newAutomatedRobotRadius = std::max(newAutomatedRobotSize.x, newAutomatedRobotSize.y) * 0.5f;
+
+    // Check for collisions with other robots
+    for (Robot* robot : _robots)
+    {
+        // bool CircCircCollision(Vector2d firstCircPos, float firstCircRadius, Vector2d secondCircPos, float secondCircRadius);
+        Vector2d robotPos = robot->GetTransform()->GetPosition();
+        Vector2d robotSize = robot->GetTransform()->GetSize();
+        float robotRadius = std::max(robotSize.x, robotSize.y) * 0.5f;
+
+        if ( CircCircCollision( robotPos, robotRadius, { x, y }, newAutomatedRobotRadius ) )
+        {
+            return CODE_NEW_OBJECT_COLLISION_ERROR;
+        }
+    }
+
+    // Check for collisions with all walls
+    for (Wall* wall : _walls)
+    {
+        // bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);
+        Vector2d wallPos = wall->GetTransform()->GetPosition();
+        Vector2d wallSize = wall->GetTransform()->GetSize();
+
+        if ( CircRectCollision( { x, y }, newAutomatedRobotRadius, wallPos, wallSize ) )
+        {
+            return CODE_NEW_OBJECT_COLLISION_ERROR;
+        }
+    }
+
+    // Create new automated robot
+    Robot* newAutomatedRobot = _spawner->GenNewRobot(x, y, _orderIndex, false);
+    _robots.push_back(newAutomatedRobot);
+    ++_orderIndex;
+    return CODE_OK;
+}
+
+// New wall
+ICP_CODE SimMap::CreateNewWallFromTemplate(float x, float y)
+{
+    // Wall template
+    SimObjView wallTemp = _spawner->GetWallTemp();
+    Vector2d newWallSize = { wallTemp.w, wallTemp.h };
+
+    // Check for collisions with all robots
+    for (Robot* robot : _robots)
+    {
+        // bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);
+        Vector2d robotPos = robot->GetTransform()->GetPosition();
+        Vector2d robotSize = robot->GetTransform()->GetSize();
+        float robotRadius = std::max(robotSize.x, robotSize.y) * 0.5f;
+
+        if ( CircRectCollision( robotPos, robotRadius, { x, y }, newWallSize ) )
+        {
+            return CODE_NEW_OBJECT_COLLISION_ERROR;
+        }
+    }
+
+    // Create new wall
+    Wall* newWall = _spawner->GenNewWall(x, y, _orderIndex);
+    _walls.push_back(newWall);
+    ++_orderIndex;
+    return CODE_OK;
 }
 
 ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
