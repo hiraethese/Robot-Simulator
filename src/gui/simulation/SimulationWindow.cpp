@@ -219,7 +219,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
                 emit UperErrorCodeSig(check_creaing);
             }
             else{
-                _simulationScene->CreateNewRobot(_core->GetControlledRobotTemp(), clickPoint.x(), clickPoint.y());
+                _simulationScene->CreateNewRobot(_core->GetControlledRobotTemp(), _core->GetLastOrderIndex(), clickPoint.x(), clickPoint.y());
             }
             break;
         case BotRobotStatus:
@@ -229,7 +229,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
                 emit UperErrorCodeSig(check_creaing);
             }
             else{
-                _simulationScene->CreateNewRobot(_core->GetAutomatedRobotTemp(), clickPoint.x(), clickPoint.y());
+                _simulationScene->CreateNewRobot(_core->GetAutomatedRobotTemp(), _core->GetLastOrderIndex(), clickPoint.x(), clickPoint.y());
             }
             break;
         case WallStatus:
@@ -239,7 +239,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
                 emit UperErrorCodeSig(check_creaing);
             }
             else{
-                _simulationScene->CreateNewWall(_core->GetWallTemp(), clickPoint.x(), clickPoint.y());
+                _simulationScene->CreateNewWall(_core->GetWallTemp(), _core->GetLastOrderIndex(), clickPoint.x(), clickPoint.y());
             }
             break;
         default:

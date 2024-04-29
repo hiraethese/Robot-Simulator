@@ -60,13 +60,13 @@ void SimulationScene::LoadSimObj(){
 
     for(SimObjView robot: robotsView){
 
-        CreateNewRobot(robot, robot.x, robot.y);
+        CreateNewRobot(robot, robot.orderIndex, robot.x, robot.y);
 
     }
 
     for(SimObjView wall: wallsView){
 
-        CreateNewWall(wall, wall.x, wall.y);
+        CreateNewWall(wall, wall.orderIndex, wall.x, wall.y);
 
     }
 }
@@ -87,9 +87,9 @@ void SimulationScene::_OneSimFrameSlot(){
 
 }
 
-void SimulationScene::CreateNewRobot(SimObjView view, float x, float y){
+void SimulationScene::CreateNewRobot(SimObjView view, int orderIndex, float x, float y){
 
-    RobotGUI* newRobot = new RobotGUI(0, 0, view.w, view.h, &_conn, view.orderIndex);
+    RobotGUI* newRobot = new RobotGUI(0, 0, view.w, view.h, &_conn, orderIndex);
     newRobot->setPen(getPen());
     newRobot->setBrush(getBrushByCode(view.color));
     newRobot->setPos(x,y);
@@ -99,9 +99,9 @@ void SimulationScene::CreateNewRobot(SimObjView view, float x, float y){
 }
 
 
-void SimulationScene::CreateNewWall(SimObjView view, float x, float y){
+void SimulationScene::CreateNewWall(SimObjView view, int orderIndex, float x, float y){
 
-    WallGUI* newWall = new WallGUI(0, 0, view.w, view.h, &_conn, view.orderIndex);
+    WallGUI* newWall = new WallGUI(0, 0, view.w, view.h, &_conn, orderIndex);
     newWall->setPos(x,y);
     newWall->setPen(getPen());
     newWall->setBrush(getBrushByCode(view.color));

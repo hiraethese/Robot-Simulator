@@ -33,6 +33,7 @@ protected:
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override{
         if(event->button() == Qt::RightButton){
+            std::cout << "Clikc on Order index: " << _orderIndex << std::endl;
             emit _conn->connectSig(GetOrderIndex(), true);
         }
     }

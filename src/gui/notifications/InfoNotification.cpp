@@ -1,6 +1,6 @@
 #include "InfoNotification.h"
 
-void InfoNotification::_WarningMsgSimNotSet(ICP_CODE code){
+void InfoNotification::_WarningMsg(ICP_CODE code){
     switch(code){
     case CODE_INTERNAL_ERROR:
         QMessageBox::warning(nullptr, "Error", "Internal error with ICP2024!");

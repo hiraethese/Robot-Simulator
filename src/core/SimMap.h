@@ -44,6 +44,7 @@ public:
     void RemoveRobotByOrderIndex(int orderIndex);
     void RemoveWallByOrderIndex(int orderIndex);
     void DeleteAllObjects();
+    int GetLastOrderIndex();
 };
 
 #endif // SIMMAP_H

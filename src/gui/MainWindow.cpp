@@ -228,7 +228,7 @@ void MainWindow::_CreateSimulationWindow(){
     // request sim obj from scene to core
     connect(_simulationWind, &SimulationWindow::RequestSimObjSig, this, &MainWindow::_RequestSimObjSlot);
     // wait from sim wind errors codes
-    connect(_simulationWind, &SimulationWindow::UperErrorCodeSig, this, [=](ICP_CODE err_code){_WarningMsgSimNotSet(err_code);});
+    connect(_simulationWind, &SimulationWindow::UperErrorCodeSig, this, [=](ICP_CODE err_code){_WarningMsg(err_code);});
 }
 
 void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
@@ -273,14 +273,18 @@ void MainWindow::_UpdateSimObjSlot(SimObjView view){
 
 void MainWindow::_DeleteSimObjSlot(SimObjView view){
 
-    /* TODO
-    * send request to deleting
-    * wait confirm by core
-    * delete
-    */
+    if(view.orderIndex != -1){
 
-    //_simulationWind->RemoveSimObjByOrderIndexSlot(orderIndex, isRobot);
-    return;
+        if(view.isRobot){
+            _core->RemoveRobotByOrderIndex(view.orderIndex);
+        }
+        else{
+            _core->RemoveWallByOrderIndex(view.orderIndex);
+        }
+
+        _simulationWind->RemoveSimObjByOrderIndexSlot(view.orderIndex, view.isRobot);
+    }
+
 }
 
 // ************************************  PART BUILD MODE    *********************************************************
@@ -422,7 +426,7 @@ void MainWindow::_PushNewMapToCoreSlot(){
     }
     else {  // err and info user about it
         
-        _WarningMsgSimNotSet(code);
+        _WarningMsg(code);
 
     }
 

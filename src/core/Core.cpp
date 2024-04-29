@@ -180,3 +180,7 @@ void Core::SetWallTemp(SimObjView newTemp)
 {
     _map->GetSpawner()->SetWallTemp(newTemp);
 }
+
+int Core::GetLastOrderIndex(){
+    return _map->GetLastOrderIndex();
+}

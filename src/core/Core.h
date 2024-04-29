@@ -44,6 +44,7 @@ public:
     void SetControlledRobotTemp(SimObjView newTemp);
     void SetAutomatedRobotTemp(SimObjView newTemp);
     void SetWallTemp(SimObjView newTemp);
+    int GetLastOrderIndex();
 };
 
 #endif // CORE_H

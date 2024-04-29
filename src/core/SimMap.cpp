@@ -362,3 +362,7 @@ void SimMap::DeleteAllObjects()
         _walls.clear();
     }
 }
+
+int SimMap::GetLastOrderIndex(){
+    return (_orderIndex - 1);
+}
