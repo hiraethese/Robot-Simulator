@@ -100,7 +100,7 @@ void MainWindow::_CreateMenu(){
     connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetAutomatedRobotTemp(), -1);_robotSetWind->exec();});
 
     buildWallLayout = templatesSubMenu->addAction("Wall");
-    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemp(), 0);_wallSetWind->exec();});
+    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemp(), -1);_wallSetWind->exec();});
 
     simulationModeAction = appMenu->addAction("Simulation");
     connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimModeSlot);
@@ -255,10 +255,22 @@ void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
 
 void MainWindow::_UpdateSimObjSlot(SimObjView view){
 
-    if(orderIndex == -1){
-
+    if(view.orderIndex == -1){
+        if(view.isRobot){
+            if(view.isControlled){
+                _core->SetControlledRobotTemp(view);
+            }
+            else{
+                _core->SetAutomatedRobotTemp(view);
+            }
+        }
+        else{
+            _core->SetWallTemp(view);
+        }
     }
+
 }
+
 void MainWindow::_DeleteSimObjSlot(SimObjView view){
 
     /* TODO
@@ -267,7 +279,8 @@ void MainWindow::_DeleteSimObjSlot(SimObjView view){
     * delete
     */
 
-    _simulationWind->RemoveSimObjByOrderIndexSlot(orderIndex, isRobot);
+    //_simulationWind->RemoveSimObjByOrderIndexSlot(orderIndex, isRobot);
+    return;
 }
 
 // ************************************  PART BUILD MODE    *********************************************************
