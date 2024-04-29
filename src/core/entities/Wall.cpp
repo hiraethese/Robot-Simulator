@@ -18,6 +18,7 @@ Wall::Wall(Vector2d position, Vector2d size, colors color, int orderIndex) : Sim
 //     bool isRobot;
 // } SimObjView;
 
+////////////////////////////// TODO - Correct GUI hitboxes !!!
 SimObjView Wall::GetSimObjView(){
     // return {_orderIndex, GetTransform()->GetRect().x, GetTransform()->GetRect().y,GetTransform()->GetRect().h,GetTransform()->GetRect().w, _color, false, false, 0, 0, 0};
     return  {

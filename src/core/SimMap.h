@@ -25,12 +25,13 @@ private:
 
 public:
     SimMap(int width, int height);
-    void DeleteAllObjects();
     std::string GetPath();
     int GetWidth();
     int GetHeight();
     void SetPath(std::string newPath);
-    ICP_CODE CreateNewObjectFromTemplate(float x, float y, bool isRobot, bool isControlled);
+    ICP_CODE CreateNewControlledRobotFromTemplate(float x, float y);
+    ICP_CODE CreateNewAutomatedRobotFromTemplate(float x, float y);
+    ICP_CODE CreateNewWallFromTemplate(float x, float y);
     ICP_CODE LoadObjectsFromFile(std::string path);
     const std::vector<Wall*>& GetWalls() const;
     const std::vector<Robot*>& GetRobots() const;
@@ -38,6 +39,11 @@ public:
     std::vector<SimObjView> GetVectorRobotsView();
     Robot* GetFirstControlledRobot();
     Spawner* GetSpawner();
+    std::vector<Robot*>::iterator GetRobotByOrderIndex(int orderIndex);
+    std::vector<Wall*>::iterator GetWallByOrderIndex(int orderIndex);
+    void RemoveRobotByOrderIndex(int orderIndex);
+    void RemoveWallByOrderIndex(int orderIndex);
+    void DeleteAllObjects();
 };
 
 #endif // SIMMAP_H

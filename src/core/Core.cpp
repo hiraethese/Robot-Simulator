@@ -123,17 +123,27 @@ std::vector<SimObjView> Core::GetVectorRobotsView()
 
 ICP_CODE Core::CreateNewControlledRobotFromTemplate(float x, float y)
 {
-    return _map->CreateNewObjectFromTemplate(x, y, true, true);
+    return _map->CreateNewControlledRobotFromTemplate(x, y);
 }
 
 ICP_CODE Core::CreateNewAutomatedRobotFromTemplate(float x, float y)
 {
-    return _map->CreateNewObjectFromTemplate(x, y, true, false);
+    return _map->CreateNewAutomatedRobotFromTemplate(x, y);
 }
 
 ICP_CODE Core::CreateNewWallFromTemplate(float x, float y)
 {
-    return _map->CreateNewObjectFromTemplate(x, y, false, false);
+    return _map->CreateNewWallFromTemplate(x, y);
+}
+
+void Core::RemoveRobotByOrderIndex(int orderIndex)
+{
+    _map->RemoveRobotByOrderIndex(orderIndex);
+}
+
+void Core::RemoveWallByOrderIndex(int orderIndex)
+{
+    _map->RemoveWallByOrderIndex(orderIndex);
 }
 
 ICP_CODE Core::LoadingMap(std::string path)
