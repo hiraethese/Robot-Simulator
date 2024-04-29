@@ -66,3 +66,15 @@ SimObjView Robot::GetSimObjView()
                 true
             };
 }
+
+void Robot::SetSimObjView(SimObjView view)
+{
+    _transform->SetSize({view.w, view.h});
+    _color = view.color;
+    _movement->SetSpeed(view.speed);
+    _movement->SetCollisionDistance(view.collisionDistance);
+    _movement->SetAngleDegrees(view.angleDegrees);
+    _movement->SetAngleStep(view.angleStep);
+    _movement->SetRotateClockwise(view.rotateClockwise);
+
+}

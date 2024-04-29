@@ -136,6 +136,16 @@ ICP_CODE Core::CreateNewWallFromTemplate(float x, float y)
     return _map->CreateNewWallFromTemplate(x, y);
 }
 
+ICP_CODE Core::UpdateRobotState(SimObjView view)
+{
+    return _map->UpdateRobotState(view);
+}
+
+ICP_CODE Core::UpdateWallState(SimObjView view)
+{
+    return _map->UpdateWallState(view);
+}
+
 void Core::RemoveRobotByOrderIndex(int orderIndex)
 {
     _map->RemoveRobotByOrderIndex(orderIndex);

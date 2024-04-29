@@ -46,7 +46,7 @@ public:
     BuildModeStatus buildModeStatus = NotSetStatus;
 
     void RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot);
-
+    void UpdateSimObjGuiState(SimObjView view);
 protected:
 
     void keyPressEvent(QKeyEvent *event) override;
@@ -92,6 +92,8 @@ signals:
     void CreateNewSimObjSig(SimObjView view, float x, float y);
     void CleareSimulationSceneSig();
     void UperErrorCodeSig(ICP_CODE err_code);
+    void UpdateSimObjGuiFromMainSig(SimObjView view);
+
 private slots:
     void _CreateNewSimObjGUISlot(QPointF clickPoint);
 };

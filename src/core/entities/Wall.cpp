@@ -37,3 +37,9 @@ SimObjView Wall::GetSimObjView(){
                 false
             };
 }
+
+void Wall::SetSimObjView(SimObjView view)
+{
+    _transform->SetSize({view.w, view.h});
+    _color = view.color;
+}

@@ -58,6 +58,17 @@ void Movement::SetAngleDegrees(int newAngleDegrees)
     _angleDegrees = newAngleDegrees % 360;
 }
 
+
+void Movement::SetCollisionDistance(float newCollisionDistance)
+{
+    _collisionDistance = newCollisionDistance;
+}
+
+void Movement::SetRotateClockwise(int rotateClockwise)
+{
+    _rotateClockwise = rotateClockwise;
+}
+
 void Movement::RotateAutomatedRobot()
 {
     switch (_rotateClockwise)

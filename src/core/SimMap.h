@@ -32,6 +32,8 @@ public:
     ICP_CODE CreateNewControlledRobotFromTemplate(float x, float y);
     ICP_CODE CreateNewAutomatedRobotFromTemplate(float x, float y);
     ICP_CODE CreateNewWallFromTemplate(float x, float y);
+    ICP_CODE UpdateRobotState(SimObjView view);
+    ICP_CODE UpdateWallState(SimObjView view);
     ICP_CODE LoadObjectsFromFile(std::string path);
     const std::vector<Wall*>& GetWalls() const;
     const std::vector<Robot*>& GetRobots() const;

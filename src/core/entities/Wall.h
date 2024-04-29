@@ -8,6 +8,7 @@ class Wall : public SimObject
 public:
     Wall(Vector2d position, Vector2d size, colors color,  int orderIndex);
     SimObjView GetSimObjView() override;
+    void SetSimObjView(SimObjView view) override;
 };
 
 #endif // WALL_H

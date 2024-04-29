@@ -16,6 +16,7 @@ public:
     MyTransform* GetTransform();
     int GetOrderIndex();
     virtual SimObjView GetSimObjView() = 0;
+    virtual void SetSimObjView(SimObjView view) = 0;
 };
 
 #endif // SIMOBJECT_H

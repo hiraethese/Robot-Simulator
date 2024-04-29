@@ -141,6 +141,78 @@ ICP_CODE SimMap::CreateNewWallFromTemplate(float x, float y)
     return CODE_OK;
 }
 
+ICP_CODE SimMap::UpdateRobotState(SimObjView view)
+{
+    auto itRobotToUpd = GetRobotByOrderIndex(view.orderIndex);  // find robot
+    if( itRobotToUpd != _robots.end() )  // TODO from Myron to all: maybe better this all cycles move to another independet method ???
+    {
+        Robot* robotToUpd = *itRobotToUpd;        
+        Vector2d newRobotSize = { view.w, view.h };
+        float newRobotRadius = std::max(newRobotSize.x, newRobotSize.y) * 0.5f;
+        // Check for collisions with other robots
+        for (Robot* robot : _robots)
+        {
+            if(robot->GetOrderIndex() != view.orderIndex){  // if it is not the same robot
+                // bool CircCircCollision(Vector2d firstCircPos, float firstCircRadius, Vector2d secondCircPos, float secondCircRadius);
+                Vector2d robotPos = robot->GetTransform()->GetPosition();
+                Vector2d robotSize = robot->GetTransform()->GetSize();
+                float robotRadius = std::max(robotSize.x, robotSize.y) * 0.5f;
+
+                if ( CircCircCollision( robotPos, robotRadius, robotToUpd->GetTransform()->GetPosition(), newRobotRadius ) )
+                {
+                    return CODE_NEW_OBJECT_COLLISION_ERROR;
+                }
+            }
+        }
+
+        // Check for collisions with all walls
+        for (Wall* wall : _walls)
+        {
+            // bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);
+            Vector2d wallPos = wall->GetTransform()->GetPosition();
+            Vector2d wallSize = wall->GetTransform()->GetSize();
+
+            if ( CircRectCollision( robotToUpd->GetTransform()->GetPosition(), newRobotRadius, wallPos, wallSize ) )
+            {
+                return CODE_NEW_OBJECT_COLLISION_ERROR;
+            }
+        }
+
+        robotToUpd->SetSimObjView(view);
+        // TODO by Myron for Myron : return CODE_OK down maybe better unknown obj ???
+    }
+
+    return CODE_OK;
+
+}
+
+ICP_CODE SimMap::UpdateWallState(SimObjView view)
+{
+    auto itWallToUpd = GetWallByOrderIndex(view.orderIndex);
+    if( itWallToUpd != _walls.end() )
+    {
+        Wall* wallToUpd = *itWallToUpd;
+        Vector2d newWallSize = { view.w, view.h };
+
+        // Check for collisions with all robots
+        for (Robot* robot : _robots)
+        {
+            // bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);
+            Vector2d robotPos = robot->GetTransform()->GetPosition();
+            Vector2d robotSize = robot->GetTransform()->GetSize();
+            float robotRadius = std::max(robotSize.x, robotSize.y) * 0.5f;
+
+            if ( CircRectCollision( robotPos, robotRadius, wallToUpd->GetTransform()->GetPosition(), newWallSize ) )
+            {
+                return CODE_NEW_OBJECT_COLLISION_ERROR;
+            }
+        }
+
+        wallToUpd->SetSimObjView(view);
+    }
+    return CODE_OK;
+}
+
 ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
 {
     _orderIndex = 1;

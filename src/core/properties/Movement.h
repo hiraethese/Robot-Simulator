@@ -30,6 +30,8 @@ public:
     void SetSpeed(float newSpeed);
     void SetAngleStep(int newAngleStep);
     void SetAngleDegrees(int newAngleDegrees);
+    void SetCollisionDistance(float newCollisionDistance);
+    void SetRotateClockwise(int rotateClockwise);
     void EnableMovement();
     void DisableMovement();
     void RotateAutomatedRobot();

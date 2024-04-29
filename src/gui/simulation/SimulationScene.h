@@ -65,10 +65,13 @@ signals:
     void ClickSig(QPointF clickPoint);
     void RequestSimObjSig(int orderIndex, bool isRobot);
 
+public slots:
+
+    void UpdateSimObjGuiState(SimObjView view);
+
 private slots:
 
     void _OneSimFrameSlot();
-
 };
 
 #endif // SIMULATIONSCENE_H

@@ -255,7 +255,7 @@ void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
 
 void MainWindow::_UpdateSimObjSlot(SimObjView view){
 
-    if(view.orderIndex == -1){
+    if(view.orderIndex == -1){  // update tamplates
         if(view.isRobot){
             if(view.isControlled){
                 _core->SetControlledRobotTemp(view);
@@ -267,6 +267,31 @@ void MainWindow::_UpdateSimObjSlot(SimObjView view){
         else{
             _core->SetWallTemp(view);
         }
+    }
+    else{  // update obj
+        ICP_CODE ret;
+        if(view.isRobot){
+
+            ret = _core->UpdateRobotState(view);
+
+        }
+        else{
+
+            ret = _core->UpdateWallState(view);
+
+        }
+
+        if(ret){  // if unsuccessfull updation
+
+            _WarningMsg(ret);
+
+        }
+        else{  // update GUI after CORE
+
+            emit _simulationWind->UpdateSimObjGuiFromMainSig(view);
+
+        }
+
     }
 
 }

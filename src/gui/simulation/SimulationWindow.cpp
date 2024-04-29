@@ -36,6 +36,7 @@ void SimulationWindow::_CreateSimGUI(){
     // signal to loading new sim obj to GUI from core
     connect(this, &SimulationWindow::LoadSimSceneSig, _simulationScene, &SimulationScene::LoadSimObj);
     connect(this, &SimulationWindow::CleareSimulationSceneSig, this , [=](){_simulationScene->CleareSimulationScene();});
+    connect(this, &SimulationWindow::UpdateSimObjGuiFromMainSig, _simulationScene, &SimulationScene::UpdateSimObjGuiState);
 }
 
 void SimulationWindow::_DeleteSimGUI(){

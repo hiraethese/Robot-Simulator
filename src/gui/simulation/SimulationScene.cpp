@@ -84,6 +84,7 @@ void SimulationScene::_OneSimFrameSlot(){
         _robotsGUIVector[i]->setPos(robotsView[i].x, robotsView[i].y);
 
     }
+    update();  // TODO: maybe yes maybe not...
 
 }
 
@@ -170,4 +171,28 @@ void SimulationScene::RemoveWallByOrderIndex(int orderIndex){
         delete wallToRemove;
 
     }
+}
+
+void SimulationScene::UpdateSimObjGuiState(SimObjView view){
+    if(view.isRobot){  // update robot
+
+        auto itRobotForUpd = _GetRobotByOrderIndex(view.orderIndex);
+        if(itRobotForUpd != _robotsGUIVector.end()){
+            RobotGUI* robotForUpd = *itRobotForUpd;
+            robotForUpd->setRect(robotForUpd->scenePos().x(), robotForUpd->scenePos().y(), view.w, view.h);
+            robotForUpd->setBrush(getBrushByCode(view.color));
+        }
+
+    }
+    else{  // update wall
+
+        auto itWallForUpd = _GetWallByOrderIndex(view.orderIndex);
+        if(itWallForUpd != _wallsGUIVector.end()){
+            WallGUI* wallForUpd = *itWallForUpd;
+            wallForUpd->setRect(wallForUpd->scenePos().x(), wallForUpd->scenePos().y(), view.w, view.h);
+            wallForUpd->setBrush(getBrushByCode(view.color));
+        }
+
+    }
+    update();  // TODO: maybe need maybe not
 }

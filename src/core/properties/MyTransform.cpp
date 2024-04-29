@@ -10,7 +10,9 @@ void MyTransform::SetPosition(Vector2d newPosition)
 {
     _position = newPosition;
 }
-
+void MyTransform::SetSize(Vector2d newSize){
+    _size = newSize;
+}
 Vector2d MyTransform::GetPosition()
 {
     return _position;
