@@ -1,3 +1,4 @@
+1) do/check all TODOs!
 2) clean code, check delete;
 4) improve API with sim obj;  50%/100%
 x) ... =)
