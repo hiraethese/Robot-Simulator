@@ -316,25 +316,25 @@ const std::vector<Robot*>& SimMap::GetRobots() const
     return _robots;
 }
 
-std::vector<SimObjView> SimMap::GetVectorWallsView()
+std::vector<SimObjView> SimMap::GetVectorWallsViewGUI()
 {
     std::vector<SimObjView> wallsView;
 
     for (Wall* wall : _walls)
     {
-        wallsView.push_back(*wall->GetSimObjView());
+        wallsView.push_back(*wall->GetSimObjViewGUI());
     }
 
     return wallsView;
 }
 
-std::vector<SimObjView> SimMap::GetVectorRobotsView()
+std::vector<SimObjView> SimMap::GetVectorRobotsViewGUI()
 {
     std::vector<SimObjView> robotsView;
 
     for (Robot* robot : _robots)
     {
-        robotsView.push_back(*robot->GetSimObjView());
+        robotsView.push_back(*robot->GetSimObjViewGUI());
     }
 
     return robotsView;
@@ -447,23 +447,23 @@ int SimMap::GetLastOrderIndex(){
 }
 
 
-ICP_CODE SimMap::GetRobotViewByOrder(SimObjView* view, int orderIndex)
+ICP_CODE SimMap::GetRobotViewByOrderGUI(SimObjView* view, int orderIndex)
 {
     auto itRobot = GetRobotByOrderIndex(orderIndex);
     if(itRobot != _robots.end()){
         Robot* robot = *itRobot;
-        *view = *(robot->GetSimObjView());
+        *view = *(robot->GetSimObjViewGUI());
         return CODE_OK;
     }
     return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE;
 }
 
-ICP_CODE SimMap::GetWallViewByOrder(SimObjView* view, int orderIndex)
+ICP_CODE SimMap::GetWallViewByOrderGUI(SimObjView* view, int orderIndex)
 {
     auto itWall = GetWallByOrderIndex(orderIndex);
     if(itWall != _walls.end()){
         Wall* wall = *itWall;
-        *view = *(wall->GetSimObjView());
+        *view = *(wall->GetSimObjViewGUI());
         return CODE_OK;
     }
     return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE;

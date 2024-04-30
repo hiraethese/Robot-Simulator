@@ -111,14 +111,14 @@ const std::vector<Robot*>& Core::GetVectorRobots() const
     return _map->GetRobots();
 }
 
-std::vector<SimObjView> Core::GetVectorWallsView()
+std::vector<SimObjView> Core::GetVectorWallsViewGUI()
 {
-    return _map->GetVectorWallsView();
+    return _map->GetVectorWallsViewGUI();
 }
 
-std::vector<SimObjView> Core::GetVectorRobotsView()
+std::vector<SimObjView> Core::GetVectorRobotsViewGUI()
 {
-    return _map->GetVectorRobotsView();
+    return _map->GetVectorRobotsViewGUI();
 }
 
 ICP_CODE Core::CreateNewControlledRobotFromTemplate(float x, float y)
@@ -191,14 +191,13 @@ void Core::SetWallTemp(SimObjView newTemp)
     _map->GetSpawner()->SetWallTemp(newTemp);
 }
 
-
-ICP_CODE Core::GetViewByOrder(SimObjView* view, int orderIndex, bool isRobot)
+ICP_CODE Core::GetViewByOrderGUI(SimObjView* view, int orderIndex, bool isRobot)
 {
     if(isRobot){
-        return _map->GetRobotViewByOrder(view, orderIndex);
+        return _map->GetRobotViewByOrderGUI(view, orderIndex);
     }
     else{
-        return _map->GetWallViewByOrder(view, orderIndex);
+        return _map->GetWallViewByOrderGUI(view, orderIndex);
     }
 }
 

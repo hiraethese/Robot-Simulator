@@ -235,7 +235,7 @@ void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
     std::cout << "Order index: " << orderIndex << "; is Robot: " << isRobot << std::endl;
     ICP_CODE ret;
     SimObjView view;
-    ret = _core->GetViewByOrder(&view, orderIndex, isRobot);
+    ret = _core->GetViewByOrderGUI(&view, orderIndex, isRobot);
 
     std::cout << "Test2: " << view.h << " " << view.color << std::endl;
     if(ret != CODE_OK){

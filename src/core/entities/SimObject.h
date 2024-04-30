@@ -17,6 +17,7 @@ public:
     MyTransform* GetTransform();
     int GetOrderIndex();
     virtual SimObjView* GetSimObjView() = 0;
+    virtual SimObjView* GetSimObjViewGUI() = 0; // for GUI
     virtual void SetSimObjView(SimObjView view) = 0;
 };
 

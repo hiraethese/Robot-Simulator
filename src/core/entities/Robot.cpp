@@ -51,10 +51,10 @@ SimObjView* Robot::GetSimObjView()
 {
     // return {_orderIndex, GetTransform()->GetRect().x, GetTransform()->GetRect().y, GetTransform()->GetRect().h, GetTransform()->GetRect().w, _color, true, _isControlled, int(_movement->GetSpeed()), _movement->GetAngleDegrees(), 0};
     _simObjView =   {
-                _transform->GetHitbox().x,
-                _transform->GetHitbox().y,
-                _transform->GetHitbox().w,
-                _transform->GetHitbox().h,
+                _transform->GetPosition().x,
+                _transform->GetPosition().y,
+                _transform->GetSize().x,
+                _transform->GetSize().y,
                 _movement->GetSpeed(),
                 _movement->GetCollisionDistance(),
                 _movement->GetAngleStep(),
@@ -65,7 +65,17 @@ SimObjView* Robot::GetSimObjView()
                 _isControlled,
                 true
             };
-    return &_simObjView;
+
+    // _simObjView = _simObjView.toGUI(); // TODO: for Myron -- fix
+
+    return &(_simObjView);
+}
+
+SimObjView *Robot::GetSimObjViewGUI()
+{
+    GetSimObjView();
+    _simObjView = _simObjView.toGUI();
+    return &(_simObjView);
 }
 
 void Robot::SetSimObjView(SimObjView view)

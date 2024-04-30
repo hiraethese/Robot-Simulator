@@ -26,6 +26,7 @@ public:
     bool IsControlled();
     Movement* GetMovement();
     SimObjView* GetSimObjView() override;
+    SimObjView* GetSimObjViewGUI() override;
     void SetSimObjView(SimObjView view) override;
 };
 

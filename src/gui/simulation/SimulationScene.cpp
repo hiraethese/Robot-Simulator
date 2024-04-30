@@ -55,8 +55,8 @@ void SimulationScene::LoadSimObj(){
 
     CleareSimulationScene();
 
-    std::vector<SimObjView> robotsView = _core->GetVectorRobotsView();
-    std::vector<SimObjView> wallsView = _core->GetVectorWallsView();
+    std::vector<SimObjView> robotsView = _core->GetVectorRobotsViewGUI();
+    std::vector<SimObjView> wallsView = _core->GetVectorWallsViewGUI();
 
     for(SimObjView robot: robotsView){
 
@@ -75,7 +75,7 @@ void SimulationScene::_OneSimFrameSlot(){
 
     _core->MoveAllObjects();
 
-    std::vector<SimObjView> robotsView = _core->GetVectorRobotsView();
+    std::vector<SimObjView> robotsView = _core->GetVectorRobotsViewGUI();
 
     for(long unsigned int i = 0; i < _robotsGUIVector.size(); i++){  // TODO: raise EXCEPTION when not simular size of gui and view vector
 

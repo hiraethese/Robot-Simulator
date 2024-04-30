@@ -89,6 +89,20 @@ typedef struct SimObjView {
     int orderIndex;
     bool isControlled;
     bool isRobot;
+
+    SimObjView toCore() {
+        SimObjView result;
+        result.x = result.x - 0.5f * result.x;
+        result.y = result.y - 0.5f * result.y;
+        return result;
+    }
+
+    SimObjView toGUI() {
+        SimObjView result;
+        result.x = result.x + 0.5f * result.x;
+        result.y = result.y - 0.5f * result.y;
+        return result;
+    }
 } SimObjView;
 
 bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);

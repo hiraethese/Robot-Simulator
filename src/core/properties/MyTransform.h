@@ -14,7 +14,6 @@ public:
     void SetSize(Vector2d newSize);
     Vector2d GetPosition();
     Vector2d GetSize();
-    Hitbox GetHitbox();
 };
 
 #endif // MYTRANSFORM_H

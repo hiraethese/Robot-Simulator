@@ -212,6 +212,7 @@ ICP_CODE SimulationWindow::RemoveSimObjByOrderIndexSlot(int orderIndex, bool isR
 void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
     emit UperClickSig(clickPoint);
     ICP_CODE check_creaing;
+    SimObjView view;
     switch(buildModeStatus){
         case ControllRobotStatus:
             std::cout << "Create Controlled Robot" << std::endl;
@@ -220,7 +221,8 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
                 emit UperErrorCodeSig(check_creaing);
             }
             else{
-                _simulationScene->CreateNewRobot(_core->GetControlledRobotTemp(), _core->GetLastOrderIndex(), clickPoint.x(), clickPoint.y());
+                _core->GetViewByOrderGUI(&view, _core->GetLastOrderIndex(), true);
+                _simulationScene->CreateNewRobot(view, _core->GetLastOrderIndex(), view.x, view.y); // TODO: Myron do this please this shit
             }
             break;
         case BotRobotStatus:
@@ -230,7 +232,8 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
                 emit UperErrorCodeSig(check_creaing);
             }
             else{
-                _simulationScene->CreateNewRobot(_core->GetAutomatedRobotTemp(), _core->GetLastOrderIndex(), clickPoint.x(), clickPoint.y());
+                _core->GetViewByOrderGUI(&view, _core->GetLastOrderIndex(), true);
+                _simulationScene->CreateNewRobot(view, _core->GetLastOrderIndex(), view.x, view.y);
             }
             break;
         case WallStatus:
@@ -240,7 +243,8 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
                 emit UperErrorCodeSig(check_creaing);
             }
             else{
-                _simulationScene->CreateNewWall(_core->GetWallTemp(), _core->GetLastOrderIndex(), clickPoint.x(), clickPoint.y());
+                _core->GetViewByOrderGUI(&view, _core->GetLastOrderIndex(), false);
+                _simulationScene->CreateNewWall(view, _core->GetLastOrderIndex(), view.x, view.y);
             }
             break;
         default:

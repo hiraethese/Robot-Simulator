@@ -37,8 +37,8 @@ public:
     ICP_CODE LoadObjectsFromFile(std::string path);
     const std::vector<Wall*>& GetWalls() const;
     const std::vector<Robot*>& GetRobots() const;
-    std::vector<SimObjView> GetVectorWallsView();
-    std::vector<SimObjView> GetVectorRobotsView();
+    std::vector<SimObjView> GetVectorWallsViewGUI();
+    std::vector<SimObjView> GetVectorRobotsViewGUI();
     Robot* GetFirstControlledRobot();
     Spawner* GetSpawner();
     std::vector<Robot*>::iterator GetRobotByOrderIndex(int orderIndex);
@@ -47,8 +47,8 @@ public:
     ICP_CODE RemoveWallByOrderIndex(int orderIndex);
     void DeleteAllObjects();
     int GetLastOrderIndex();
-    ICP_CODE GetRobotViewByOrder(SimObjView* view, int orderIndex);
-    ICP_CODE GetWallViewByOrder(SimObjView* view, int orderIndex);
+    ICP_CODE GetRobotViewByOrderGUI(SimObjView* view, int orderIndex);
+    ICP_CODE GetWallViewByOrderGUI(SimObjView* view, int orderIndex);
 };
 
 #endif // SIMMAP_H

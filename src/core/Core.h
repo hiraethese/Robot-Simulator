@@ -38,12 +38,12 @@ public:
     ICP_CODE LoadingMap(std::string path);
     const std::vector<Wall*>& GetVectorWalls() const;
     const std::vector<Robot*>& GetVectorRobots() const;
-    std::vector<SimObjView> GetVectorWallsView();
-    std::vector<SimObjView> GetVectorRobotsView();
+    std::vector<SimObjView> GetVectorWallsViewGUI();
+    std::vector<SimObjView> GetVectorRobotsViewGUI();
     SimObjView GetControlledRobotTemp();
     SimObjView GetAutomatedRobotTemp();
     SimObjView GetWallTemp();
-    ICP_CODE GetViewByOrder(SimObjView* view, int orderIndex, bool IsRobot);
+    ICP_CODE GetViewByOrderGUI(SimObjView* view, int orderIndex, bool IsRobot);
     void SetControlledRobotTemp(SimObjView newTemp);
     void SetAutomatedRobotTemp(SimObjView newTemp);
     void SetWallTemp(SimObjView newTemp);
