@@ -43,6 +43,7 @@ public:
     SimObjView GetControlledRobotTemp();
     SimObjView GetAutomatedRobotTemp();
     SimObjView GetWallTemp();
+    ICP_CODE GetViewByOrder(SimObjView* view, int orderIndex, bool IsRobot);
     void SetControlledRobotTemp(SimObjView newTemp);
     void SetAutomatedRobotTemp(SimObjView newTemp);
     void SetWallTemp(SimObjView newTemp);

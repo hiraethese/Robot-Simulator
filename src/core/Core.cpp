@@ -191,6 +191,17 @@ void Core::SetWallTemp(SimObjView newTemp)
     _map->GetSpawner()->SetWallTemp(newTemp);
 }
 
+
+ICP_CODE Core::GetViewByOrder(SimObjView* view, int orderIndex, bool isRobot)
+{
+    if(isRobot){
+        return _map->GetRobotViewByOrder(view, orderIndex);
+    }
+    else{
+        return _map->GetWallViewByOrder(view, orderIndex);
+    }
+}
+
 int Core::GetLastOrderIndex(){
     return _map->GetLastOrderIndex();
 }

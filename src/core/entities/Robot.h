@@ -25,7 +25,7 @@ public:
     ~Robot();
     bool IsControlled();
     Movement* GetMovement();
-    SimObjView GetSimObjView() override;
+    SimObjView* GetSimObjView() override;
     void SetSimObjView(SimObjView view) override;
 };
 

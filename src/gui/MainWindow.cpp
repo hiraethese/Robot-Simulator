@@ -238,18 +238,28 @@ void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
         -- request by core view about simobj
         -- show settings window about it
     after simulation of working
-*/
-    if(isRobot){
-        // download data about sim obj to settings window
-        _robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);  // TODO: order index get to cor request
-        _robotSetWind->SetUnsetDeleteButton(true);
-        _robotSetWind->exec();
+*/  
+    ICP_CODE ret;
+    SimObjView view;
+    ret = _core->GetViewByOrder(&view, orderIndex, isRobot);
+
+    std::cout << "Test2: " << view.h << " " << view.color << std::endl;
+    if(ret != CODE_OK){
+        _WarningMsg(ret);
     }
     else{
-        // download data about sim obj to settings window
-        _wallSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);  // TODO: order index get to cor request
-        _wallSetWind->SetUnsetDeleteButton(true);
-        _wallSetWind->exec();
+        if(isRobot){
+            // download data about sim obj to settings window
+            _robotSetWind->DownloadDataFromView(view, orderIndex);  // TODO: order index get to cor request
+            _robotSetWind->SetUnsetDeleteButton(true);
+            _robotSetWind->exec();
+        }
+        else{
+            // download data about sim obj to settings window
+            _wallSetWind->DownloadDataFromView(view, orderIndex);  // TODO: order index get to cor request
+            _wallSetWind->SetUnsetDeleteButton(true);
+            _wallSetWind->exec();
+        }
     }
 }
 
@@ -281,7 +291,7 @@ void MainWindow::_UpdateSimObjSlot(SimObjView view){
 
         }
 
-        if(ret){  // if unsuccessfull updation
+        if(ret != CODE_OK){  // if unsuccessfull updation
 
             _WarningMsg(ret);
 
@@ -444,7 +454,7 @@ void MainWindow::_PushNewMapToCoreSlot(){
 
     ICP_CODE code = _core->LoadingMap(_newMapWind->GetNewMapPath());  // call loading map and creating new sim obj
 
-    if(!code){  // ok
+    if(code == CODE_OK){  // ok
 
         emit _simulationWind->LoadSimSceneSig();  // draw new obj
 

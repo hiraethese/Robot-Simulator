@@ -19,9 +19,9 @@ Wall::Wall(Vector2d position, Vector2d size, colors color, int orderIndex) : Sim
 // } SimObjView;
 
 ////////////////////////////// TODO - Correct GUI hitboxes !!!
-SimObjView Wall::GetSimObjView(){
+SimObjView* Wall::GetSimObjView(){
     // return {_orderIndex, GetTransform()->GetRect().x, GetTransform()->GetRect().y,GetTransform()->GetRect().h,GetTransform()->GetRect().w, _color, false, false, 0, 0, 0};
-    return  {
+    _simObjView = {
                 _transform->GetHitbox().x,
                 _transform->GetHitbox().y,
                 _transform->GetHitbox().w,
@@ -36,6 +36,7 @@ SimObjView Wall::GetSimObjView(){
                 false,
                 false
             };
+    return &_simObjView;
 }
 
 void Wall::SetSimObjView(SimObjView view)

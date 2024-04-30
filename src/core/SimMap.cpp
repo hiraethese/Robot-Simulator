@@ -179,10 +179,10 @@ ICP_CODE SimMap::UpdateRobotState(SimObjView view)
         }
 
         robotToUpd->SetSimObjView(view);
-        // TODO by Myron for Myron : return CODE_OK down maybe better unknown obj ???
+        return CODE_OK;
     }
 
-    return CODE_OK;
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND;
 
 }
 
@@ -209,8 +209,9 @@ ICP_CODE SimMap::UpdateWallState(SimObjView view)
         }
 
         wallToUpd->SetSimObjView(view);
+        return CODE_OK;
     }
-    return CODE_OK;
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND;
 }
 
 ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
@@ -321,7 +322,7 @@ std::vector<SimObjView> SimMap::GetVectorWallsView()
 
     for (Wall* wall : _walls)
     {
-        wallsView.push_back(wall->GetSimObjView());
+        wallsView.push_back(*wall->GetSimObjView());
     }
 
     return wallsView;
@@ -333,7 +334,7 @@ std::vector<SimObjView> SimMap::GetVectorRobotsView()
 
     for (Robot* robot : _robots)
     {
-        robotsView.push_back(robot->GetSimObjView());
+        robotsView.push_back(*robot->GetSimObjView());
     }
 
     return robotsView;
@@ -412,7 +413,7 @@ void SimMap::RemoveWallByOrderIndex(int orderIndex)
         _walls.erase(itWallToRemove);
         // removeItem(wallToRemove);
         delete wallToRemove;
-    }
+    }  // TODO: obj not found ret
 }
 
 void SimMap::DeleteAllObjects()
@@ -437,4 +438,28 @@ void SimMap::DeleteAllObjects()
 
 int SimMap::GetLastOrderIndex(){
     return (_orderIndex - 1);
+}
+
+
+ICP_CODE SimMap::GetRobotViewByOrder(SimObjView* view, int orderIndex)
+{
+    auto itRobot = GetRobotByOrderIndex(orderIndex);
+    if(itRobot != _robots.end()){
+        Robot* robot = *itRobot;
+        *view = *(robot->GetSimObjView());
+        return CODE_OK;
+    }
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND;
+}
+
+ICP_CODE SimMap::GetWallViewByOrder(SimObjView* view, int orderIndex)
+{
+    auto itWall = GetWallByOrderIndex(orderIndex);
+    if(itWall != _walls.end()){
+        Wall* wall = *itWall;
+        *view = *(wall->GetSimObjView());
+        return CODE_OK;
+    }
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND;
+
 }

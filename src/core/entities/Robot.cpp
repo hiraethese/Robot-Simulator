@@ -47,10 +47,10 @@ Movement* Robot::GetMovement()
 // } SimObjView;
 
 ////////////////////////////// TODO - Correct GUI hitboxes !!!
-SimObjView Robot::GetSimObjView()
+SimObjView* Robot::GetSimObjView()
 {
     // return {_orderIndex, GetTransform()->GetRect().x, GetTransform()->GetRect().y, GetTransform()->GetRect().h, GetTransform()->GetRect().w, _color, true, _isControlled, int(_movement->GetSpeed()), _movement->GetAngleDegrees(), 0};
-    return  {
+    _simObjView =   {
                 _transform->GetHitbox().x,
                 _transform->GetHitbox().y,
                 _transform->GetHitbox().w,
@@ -65,6 +65,7 @@ SimObjView Robot::GetSimObjView()
                 _isControlled,
                 true
             };
+    return &_simObjView;
 }
 
 void Robot::SetSimObjView(SimObjView view)

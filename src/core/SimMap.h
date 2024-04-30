@@ -47,6 +47,8 @@ public:
     void RemoveWallByOrderIndex(int orderIndex);
     void DeleteAllObjects();
     int GetLastOrderIndex();
+    ICP_CODE GetRobotViewByOrder(SimObjView* view, int orderIndex);
+    ICP_CODE GetWallViewByOrder(SimObjView* view, int orderIndex);
 };
 
 #endif // SIMMAP_H

@@ -23,6 +23,9 @@ void InfoNotification::_WarningMsg(ICP_CODE code){
     case CODE_NEW_OBJECT_COLLISION_ERROR:
         QMessageBox::warning(nullptr, "Error", "Collision error with new object!");
         break;
+    case CODE_ERROR_SIM_OBJ_IS_NOT_FOUND:
+        QMessageBox::warning(nullptr, "Error", "Problem with synchronization between core and gui, requested object is not founded!");
+        break;
     default:
         break;
     }

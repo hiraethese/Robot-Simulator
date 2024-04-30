@@ -10,12 +10,13 @@ protected:
     MyTransform* _transform;
     int _orderIndex;
     colors _color;
+    SimObjView _simObjView;
 public:
     SimObject(Vector2d position, Vector2d size, colors color, int orderIndex);
     virtual ~SimObject();
     MyTransform* GetTransform();
     int GetOrderIndex();
-    virtual SimObjView GetSimObjView() = 0;
+    virtual SimObjView* GetSimObjView() = 0;
     virtual void SetSimObjView(SimObjView view) = 0;
 };
 
