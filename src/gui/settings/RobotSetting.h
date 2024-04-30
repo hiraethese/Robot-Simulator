@@ -22,6 +22,7 @@ class RobotSetting : public ASettings
 public:
     RobotSetting(QWidget* parent, QString title);
     void DownloadDataFromView(SimObjView view, int orderIndex) override;
+    void ChangeEnablingOfSettingsObjects(bool flag) override;
     SimObjView GetSimObjView();
 private:
     bool _isControlled = false;

@@ -39,7 +39,7 @@ void ASettings::_CreateButtonsSettings(int row){
 
 }
 
-void ASettings::SetUnsetDeleteButton(bool flag){
+void ASettings::ChangeEnablingOfSettingsObjects(bool flag){
     _deletePushButton->setEnabled(flag);
 }
 

@@ -94,13 +94,13 @@ void MainWindow::_CreateMenu(){
     templatesSubMenu = appMenu->addMenu("Templates");
 
     buildUserRobotTemplate = templatesSubMenu->addAction("Controlled robot");
-    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), -1); _robotSetWind->exec();});
+    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), -1);_robotSetWind->ChangeEnablingOfSettingsObjects(false); _robotSetWind->exec();});
 
     buildBotRobotTemplate = templatesSubMenu->addAction("Automated robot");
-    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetAutomatedRobotTemp(), -1);_robotSetWind->exec();});
+    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetAutomatedRobotTemp(), -1); _robotSetWind->ChangeEnablingOfSettingsObjects(false);_robotSetWind->exec();});
 
     buildWallLayout = templatesSubMenu->addAction("Wall");
-    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemp(), -1);_wallSetWind->exec();});
+    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemp(), -1);_wallSetWind->ChangeEnablingOfSettingsObjects(false);_wallSetWind->exec();});
 
     simulationModeAction = appMenu->addAction("Simulation");
     connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimModeSlot);
@@ -245,13 +245,13 @@ void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
         if(isRobot){
             // download data about sim obj to settings window
             _robotSetWind->DownloadDataFromView(view, orderIndex);  // TODO: order index get to cor request
-            _robotSetWind->SetUnsetDeleteButton(true);
+            _robotSetWind->ChangeEnablingOfSettingsObjects(true);
             _robotSetWind->exec();
         }
         else{
             // download data about sim obj to settings window
             _wallSetWind->DownloadDataFromView(view, orderIndex);  // TODO: order index get to cor request
-            _wallSetWind->SetUnsetDeleteButton(true);
+            _wallSetWind->ChangeEnablingOfSettingsObjects(true);
             _wallSetWind->exec();
         }
     }

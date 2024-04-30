@@ -76,7 +76,7 @@ void RobotSetting::DownloadDataFromView(SimObjView view, int orderIndex){
     }
     else{
 
-        _typeRobotComboBox->setCurrentText(_contrRobotString);
+        _typeRobotComboBox->setCurrentText(_autoRobotString);
 
     }
     if(view.rotateClockwise == 1){
@@ -133,3 +133,10 @@ SimObjView RobotSetting::GetSimObjView(){
             true
     };
 }
+
+
+void RobotSetting::ChangeEnablingOfSettingsObjects(bool flag){
+    ASettings::ChangeEnablingOfSettingsObjects(flag);
+    _typeRobotComboBox->setEnabled(flag);
+}
+
