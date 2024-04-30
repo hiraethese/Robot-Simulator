@@ -96,6 +96,7 @@ void SimulationScene::CreateNewRobot(SimObjView view, int orderIndex, float x, f
     newRobot->setPos(x,y);
     addItem(newRobot);
     _robotsGUIVector.push_back(newRobot);
+    update();
 
 }
 
@@ -108,6 +109,7 @@ void SimulationScene::CreateNewWall(SimObjView view, int orderIndex, float x, fl
     newWall->setBrush(getBrushByCode(view.color));
     addItem(newWall);
     _wallsGUIVector.push_back(newWall);
+    update();
 }
 
 std::vector<RobotGUI*>::iterator SimulationScene::_GetRobotByOrderIndex(int orderIndex){

@@ -73,8 +73,23 @@ SimObjView* Robot::GetSimObjView()
 
 SimObjView *Robot::GetSimObjViewGUI()
 {
-    GetSimObjView();
-    _simObjView = _simObjView.toGUI();
+    _simObjView =   {
+                _transform->GetPosition().x,
+                _transform->GetPosition().y,
+                _transform->GetSize().x,
+                _transform->GetSize().y,
+                _movement->GetSpeed(),
+                _movement->GetCollisionDistance(),
+                _movement->GetAngleStep(),
+                _movement->GetAngleDegrees(),
+                _movement->GetRotateClockwise(),
+                _color,
+                _orderIndex,
+                _isControlled,
+                true
+            };
+
+    _simObjView.toGUI();
     return &(_simObjView);
 }
 

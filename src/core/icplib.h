@@ -90,18 +90,18 @@ typedef struct SimObjView {
     bool isControlled;
     bool isRobot;
 
-    SimObjView toCore() {
-        SimObjView result;
-        result.x = result.x - 0.5f * result.x;
-        result.y = result.y - 0.5f * result.y;
-        return result;
+    void toCore() {// +
+        float _x = this->x;
+        float _y = this->y;
+        this->x = _x + 0.5f * this->w;
+        this->y = _y + 0.5f * this->h;
     }
 
-    SimObjView toGUI() {
-        SimObjView result;
-        result.x = result.x + 0.5f * result.x;
-        result.y = result.y - 0.5f * result.y;
-        return result;
+    void toGUI() {  // -
+        float _x = this->x;
+        float _y = this->y;
+        this->x = _x - 0.5f * this->w;
+        this->y = _y - 0.5f * this->h;
     }
 } SimObjView;
 

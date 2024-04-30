@@ -42,8 +42,22 @@ SimObjView* Wall::GetSimObjView()
 
 SimObjView *Wall::GetSimObjViewGUI()
 {
-    GetSimObjView();
-    _simObjView = _simObjView.toGUI();
+    _simObjView = {
+                _transform->GetPosition().x,
+                _transform->GetPosition().y,
+                _transform->GetSize().x,
+                _transform->GetSize().y,
+                0.0,
+                0.0,
+                0,
+                0,
+                0,
+                _color,
+                _orderIndex,
+                false,
+                false
+            };
+    _simObjView.toGUI();
     return &(_simObjView);
 }
 

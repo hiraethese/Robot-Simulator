@@ -222,6 +222,8 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
             }
             else{
                 _core->GetViewByOrderGUI(&view, _core->GetLastOrderIndex(), true);
+
+                std::cout << "B =" << view.x << "A=  " << view.y<<std::endl;
                 _simulationScene->CreateNewRobot(view, _core->GetLastOrderIndex(), view.x, view.y); // TODO: Myron do this please this shit
             }
             break;
@@ -233,6 +235,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
             }
             else{
                 _core->GetViewByOrderGUI(&view, _core->GetLastOrderIndex(), true);
+                std::cout << "A =" << view.x << "B=  " << view.y<<std::endl;
                 _simulationScene->CreateNewRobot(view, _core->GetLastOrderIndex(), view.x, view.y);
             }
             break;
