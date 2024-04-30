@@ -25,9 +25,12 @@ public:
     SimObjView GetSimObjView();
 private:
     bool _isControlled = false;
-
+    const QString _contrRobotString = "Controlled";
+    const QString _autoRobotString = "Autometed";
+    const QString _leftClockW = "Left";
+    const QString _rightClockW = "Right"; 
     QLabel* _typeRobotLabel;  // TODO: COMBOBOX ???
-    QLabel* _typeRobotLineEdit;
+    QComboBox* _typeRobotComboBox;
 
     QLabel* _diameterLabel;
     QSpinBox* _diameterSpinBox;

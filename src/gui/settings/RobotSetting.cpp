@@ -3,9 +3,12 @@
 RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, title){
 
     _typeRobotLabel = new QLabel("Type : ", this);
-    _typeRobotLineEdit = new QLabel(this);
+    _typeRobotComboBox = new QComboBox(this);
+    _typeRobotComboBox->addItem(_autoRobotString);
+    _typeRobotComboBox->addItem(_contrRobotString);
+
     _settingGridLayot->addWidget(_typeRobotLabel, 0, 0);
-    _settingGridLayot->addWidget(_typeRobotLineEdit, 0, 1);
+    _settingGridLayot->addWidget(_typeRobotComboBox, 0, 1);
 
     _diameterLabel = new QLabel("Radius : ", this);
     _diameterSpinBox = new QSpinBox(this);
@@ -45,8 +48,8 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
     
     _rotateClockwiseLabel = new QLabel("Rotate clock wise", this);
     _rotateClockwiseComboBox = new QComboBox(this);
-    _rotateClockwiseComboBox->addItem("Left");
-    _rotateClockwiseComboBox->addItem("Right");
+    _rotateClockwiseComboBox->addItem(_leftClockW);
+    _rotateClockwiseComboBox->addItem(_rightClockW);
     _settingGridLayot->addWidget(_rotateClockwiseLabel, 6, 0);
     _settingGridLayot->addWidget(_rotateClockwiseComboBox, 6, 1);
 
@@ -68,27 +71,28 @@ void RobotSetting::DownloadDataFromView(SimObjView view, int orderIndex){
 
     if(view.isControlled){
 
-        _typeRobotLineEdit->setText("controlled");
+        _typeRobotComboBox->setCurrentText(_contrRobotString);
 
     }
     else{
 
-        _typeRobotLineEdit->setText("automated");
+        _typeRobotComboBox->setCurrentText(_contrRobotString);
 
     }
     if(view.rotateClockwise == 1){
         
-        _rotateClockwiseComboBox->setCurrentText("Right");
+        _rotateClockwiseComboBox->setCurrentText(_rightClockW);
     
     }
     else{
     
-        _rotateClockwiseComboBox->setCurrentText("Left");
+        _rotateClockwiseComboBox->setCurrentText(_leftClockW);
     
     }
 }
 
 SimObjView RobotSetting::GetSimObjView(){
+    // TODO: delete this comment
     /*float x;
     float y;
     float w;
@@ -104,7 +108,7 @@ SimObjView RobotSetting::GetSimObjView(){
     bool isRobot;*/
     int rotateClockwise;
     colors colorsCode;
-    if(_rotateClockwiseLabel->text() == "Left"){
+    if(_rotateClockwiseLabel->text() == _leftClockW){
         rotateClockwise = -1;
     }
     else{

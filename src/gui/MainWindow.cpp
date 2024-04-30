@@ -233,12 +233,6 @@ void MainWindow::_CreateSimulationWindow(){
 
 void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
     std::cout << "Order index: " << orderIndex << "; is Robot: " << isRobot << std::endl;
-/*
-    TODO:
-        -- request by core view about simobj
-        -- show settings window about it
-    after simulation of working
-*/  
     ICP_CODE ret;
     SimObjView view;
     ret = _core->GetViewByOrder(&view, orderIndex, isRobot);
