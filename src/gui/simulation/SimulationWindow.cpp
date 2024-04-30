@@ -35,8 +35,15 @@ void SimulationWindow::_CreateSimGUI(){
     connect(_simulationScene, &SimulationScene::RequestSimObjSig, this, [=](int orderIndex, bool isRobot){emit RequestSimObjSig(orderIndex, isRobot);});
     // signal to loading new sim obj to GUI from core
     connect(this, &SimulationWindow::LoadSimSceneSig, _simulationScene, &SimulationScene::LoadSimObj);
+    
     connect(this, &SimulationWindow::CleareSimulationSceneSig, this , [=](){_simulationScene->CleareSimulationScene();});
-    connect(this, &SimulationWindow::UpdateSimObjGuiFromMainSig, _simulationScene, &SimulationScene::UpdateSimObjGuiState);
+    
+    connect(this, &SimulationWindow::UpdateSimObjGuiFromMainSig, this, 
+    [=](SimObjView view){
+        ICP_CODE ret = _simulationScene->UpdateSimObjGuiState(view);
+        if(ret != CODE_OK){
+            emit UperErrorCodeSig(ret);
+        }});
 }
 
 void SimulationWindow::_DeleteSimGUI(){
@@ -193,16 +200,16 @@ void SimulationWindow::keyPressEvent(QKeyEvent *event){
 }
 
 
-void SimulationWindow::RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot){
+ICP_CODE SimulationWindow::RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot){
 
     if(isRobot){
 
-        _simulationScene->RemoveRobotByOrderIndex(orderIndex);
+        return _simulationScene->RemoveRobotByOrderIndex(orderIndex);
 
     }
     else{
 
-        _simulationScene->RemoveWallByOrderIndex(orderIndex);
+        return _simulationScene->RemoveWallByOrderIndex(orderIndex);
 
     }
 

@@ -182,7 +182,7 @@ ICP_CODE SimMap::UpdateRobotState(SimObjView view)
         return CODE_OK;
     }
 
-    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND;
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE;
 
 }
 
@@ -211,7 +211,7 @@ ICP_CODE SimMap::UpdateWallState(SimObjView view)
         wallToUpd->SetSimObjView(view);
         return CODE_OK;
     }
-    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND;
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE;
 }
 
 ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
@@ -402,7 +402,7 @@ ICP_CODE SimMap::RemoveRobotByOrderIndex(int orderIndex)
         delete robotToRemove;
         return CODE_OK;
     }
-    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND;
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE;
 }
 
 ICP_CODE SimMap::RemoveWallByOrderIndex(int orderIndex)
@@ -419,7 +419,7 @@ ICP_CODE SimMap::RemoveWallByOrderIndex(int orderIndex)
 
     }  // TODO: obj not found ret
     
-    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND;
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE;
 }
 
 void SimMap::DeleteAllObjects()
@@ -455,7 +455,7 @@ ICP_CODE SimMap::GetRobotViewByOrder(SimObjView* view, int orderIndex)
         *view = *(robot->GetSimObjView());
         return CODE_OK;
     }
-    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND;
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE;
 }
 
 ICP_CODE SimMap::GetWallViewByOrder(SimObjView* view, int orderIndex)
@@ -466,6 +466,6 @@ ICP_CODE SimMap::GetWallViewByOrder(SimObjView* view, int orderIndex)
         *view = *(wall->GetSimObjView());
         return CODE_OK;
     }
-    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND;
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE;
 
 }

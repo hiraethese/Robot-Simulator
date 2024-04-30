@@ -45,7 +45,7 @@ public:
 
     BuildModeStatus buildModeStatus = NotSetStatus;
 
-    void RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot);
+    ICP_CODE RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot);
     void UpdateSimObjGuiState(SimObjView view);
 protected:
 

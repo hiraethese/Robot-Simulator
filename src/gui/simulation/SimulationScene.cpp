@@ -146,7 +146,7 @@ std::vector<WallGUI*>::iterator SimulationScene::_GetWallByOrderIndex(int orderI
 }
 
 
-void SimulationScene::RemoveRobotByOrderIndex(int orderIndex){
+ICP_CODE SimulationScene::RemoveRobotByOrderIndex(int orderIndex){
 
     auto itRobotToRemove = _GetRobotByOrderIndex(orderIndex);
     if(itRobotToRemove != _robotsGUIVector.end()){
@@ -155,12 +155,15 @@ void SimulationScene::RemoveRobotByOrderIndex(int orderIndex){
         _robotsGUIVector.erase(itRobotToRemove);
         removeItem(robotToRemove);
         delete robotToRemove;
-
+        
+        return CODE_OK;
     }
+
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_GUI;
 
 }
 
-void SimulationScene::RemoveWallByOrderIndex(int orderIndex){
+ICP_CODE SimulationScene::RemoveWallByOrderIndex(int orderIndex){
 
     auto itWallToRemove = _GetWallByOrderIndex(orderIndex);
     if(itWallToRemove != _wallsGUIVector.end()){
@@ -170,10 +173,13 @@ void SimulationScene::RemoveWallByOrderIndex(int orderIndex){
         removeItem(wallToRemove);
         delete wallToRemove;
 
+        return CODE_OK;
     }
+
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_GUI;
 }
 
-void SimulationScene::UpdateSimObjGuiState(SimObjView view){
+ICP_CODE SimulationScene::UpdateSimObjGuiState(SimObjView view){
     if(view.isRobot){  // update robot
 
         auto itRobotForUpd = _GetRobotByOrderIndex(view.orderIndex);
@@ -181,6 +187,8 @@ void SimulationScene::UpdateSimObjGuiState(SimObjView view){
             RobotGUI* robotForUpd = *itRobotForUpd;
             robotForUpd->setRect(robotForUpd->scenePos().x(), robotForUpd->scenePos().y(), view.w, view.h);
             robotForUpd->setBrush(getBrushByCode(view.color));
+            update();  // TODO: maybe need maybe not
+            return CODE_OK;
         }
 
     }
@@ -191,8 +199,10 @@ void SimulationScene::UpdateSimObjGuiState(SimObjView view){
             WallGUI* wallForUpd = *itWallForUpd;
             wallForUpd->setRect(wallForUpd->scenePos().x(), wallForUpd->scenePos().y(), view.w, view.h);
             wallForUpd->setBrush(getBrushByCode(view.color));
+            update();  // TODO: maybe need maybe not
+            return CODE_OK;
         }
 
     }
-    update();  // TODO: maybe need maybe not
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_GUI;
 }

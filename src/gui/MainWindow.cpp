@@ -328,8 +328,14 @@ void MainWindow::_DeleteSimObjSlot(SimObjView view){
         }   
         else{
         
-            _simulationWind->RemoveSimObjByOrderIndexSlot(view.orderIndex, view.isRobot);
-        
+            ret = _simulationWind->RemoveSimObjByOrderIndexSlot(view.orderIndex, view.isRobot);
+
+            if(ret != CODE_OK){
+                
+                _WarningMsg(ret);
+
+            }
+
         }
     }
 
