@@ -292,8 +292,10 @@ void MainWindow::_UpdateSimObjSlot(SimObjView view){
         }
         else{  // update GUI after CORE
 
-            emit _simulationWind->UpdateSimObjGuiFromMainSig(view);
-
+            ret = _simulationWind->UpdateSimObjGuiState(view);
+            if(ret != CODE_OK){
+                _WarningMsg(ret);
+            }
         }
 
     }

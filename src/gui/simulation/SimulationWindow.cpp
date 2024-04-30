@@ -37,13 +37,6 @@ void SimulationWindow::_CreateSimGUI(){
     connect(this, &SimulationWindow::LoadSimSceneSig, _simulationScene, &SimulationScene::LoadSimObj);
     
     connect(this, &SimulationWindow::CleareSimulationSceneSig, this , [=](){_simulationScene->CleareSimulationScene();});
-    
-    connect(this, &SimulationWindow::UpdateSimObjGuiFromMainSig, this, 
-    [=](SimObjView view){
-        ICP_CODE ret = _simulationScene->UpdateSimObjGuiState(view);
-        if(ret != CODE_OK){
-            emit UperErrorCodeSig(ret);
-        }});
 }
 
 void SimulationWindow::_DeleteSimGUI(){
@@ -256,3 +249,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
 
 }
 
+ICP_CODE SimulationWindow::UpdateSimObjGuiState(SimObjView view)
+{
+    return _simulationScene->UpdateSimObjGuiState(view);
+}
