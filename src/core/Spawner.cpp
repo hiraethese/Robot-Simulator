@@ -95,7 +95,7 @@ Robot* Spawner::GenNewRobot(std::istringstream& specification, int orderIndex, b
         std::cerr << "Error: Invalid colors format for robot";
         return nullptr;
     }
-    if(rotateClockwise != -1 ||  rotateClockwise != 1){
+    if(rotateClockwise != -1 && rotateClockwise != 1){
         std::cerr << "Error: Invalid rotate clockwise valeu for robot";
         return nullptr;
     }

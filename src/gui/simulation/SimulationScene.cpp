@@ -41,7 +41,7 @@ void SimulationScene::mousePressEvent(QGraphicsSceneMouseEvent* event){
 
 void SimulationScene::InitSimRun(){
 
-    _simTimer.start(16);
+    _simTimer.start(1000 / 60);
 
 }
 
