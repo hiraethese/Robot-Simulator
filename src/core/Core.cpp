@@ -146,14 +146,14 @@ ICP_CODE Core::UpdateWallState(SimObjView view)
     return _map->UpdateWallState(view);
 }
 
-void Core::RemoveRobotByOrderIndex(int orderIndex)
+ICP_CODE Core::RemoveRobotByOrderIndex(int orderIndex)
 {
-    _map->RemoveRobotByOrderIndex(orderIndex);
+    return _map->RemoveRobotByOrderIndex(orderIndex);
 }
 
-void Core::RemoveWallByOrderIndex(int orderIndex)
+ICP_CODE Core::RemoveWallByOrderIndex(int orderIndex)
 {
-    _map->RemoveWallByOrderIndex(orderIndex);
+    return _map->RemoveWallByOrderIndex(orderIndex);
 }
 
 ICP_CODE Core::LoadingMap(std::string path)

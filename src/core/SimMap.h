@@ -43,8 +43,8 @@ public:
     Spawner* GetSpawner();
     std::vector<Robot*>::iterator GetRobotByOrderIndex(int orderIndex);
     std::vector<Wall*>::iterator GetWallByOrderIndex(int orderIndex);
-    void RemoveRobotByOrderIndex(int orderIndex);
-    void RemoveWallByOrderIndex(int orderIndex);
+    ICP_CODE RemoveRobotByOrderIndex(int orderIndex);
+    ICP_CODE RemoveWallByOrderIndex(int orderIndex);
     void DeleteAllObjects();
     int GetLastOrderIndex();
     ICP_CODE GetRobotViewByOrder(SimObjView* view, int orderIndex);

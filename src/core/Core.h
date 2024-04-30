@@ -33,8 +33,8 @@ public:
     ICP_CODE CreateNewWallFromTemplate(float x, float y);
     ICP_CODE UpdateRobotState(SimObjView view);
     ICP_CODE UpdateWallState(SimObjView view);
-    void RemoveRobotByOrderIndex(int orderIndex);
-    void RemoveWallByOrderIndex(int orderInex);
+    ICP_CODE RemoveRobotByOrderIndex(int orderIndex);
+    ICP_CODE RemoveWallByOrderIndex(int orderInex);
     ICP_CODE LoadingMap(std::string path);
     const std::vector<Wall*>& GetVectorWalls() const;
     const std::vector<Robot*>& GetVectorRobots() const;

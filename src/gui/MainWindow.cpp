@@ -309,15 +309,28 @@ void MainWindow::_UpdateSimObjSlot(SimObjView view){
 void MainWindow::_DeleteSimObjSlot(SimObjView view){
 
     if(view.orderIndex != -1){
-
+        ICP_CODE ret;
         if(view.isRobot){
-            _core->RemoveRobotByOrderIndex(view.orderIndex);
+        
+            ret = _core->RemoveRobotByOrderIndex(view.orderIndex);
+        
         }
         else{
-            _core->RemoveWallByOrderIndex(view.orderIndex);
+        
+            ret = _core->RemoveWallByOrderIndex(view.orderIndex);
+        
         }
+        
+        if(ret != CODE_OK){
 
-        _simulationWind->RemoveSimObjByOrderIndexSlot(view.orderIndex, view.isRobot);
+            _WarningMsg(ret);
+        
+        }   
+        else{
+        
+            _simulationWind->RemoveSimObjByOrderIndexSlot(view.orderIndex, view.isRobot);
+        
+        }
     }
 
 }

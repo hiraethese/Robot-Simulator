@@ -390,7 +390,7 @@ std::vector<Wall*>::iterator SimMap::GetWallByOrderIndex(int orderIndex)
     return it;
 }
 
-void SimMap::RemoveRobotByOrderIndex(int orderIndex)
+ICP_CODE SimMap::RemoveRobotByOrderIndex(int orderIndex)
 {
     auto itRobotToRemove = GetRobotByOrderIndex(orderIndex);
 
@@ -400,10 +400,12 @@ void SimMap::RemoveRobotByOrderIndex(int orderIndex)
         _robots.erase(itRobotToRemove);
         // removeItem(robotToRemove);
         delete robotToRemove;
+        return CODE_OK;
     }
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND;
 }
 
-void SimMap::RemoveWallByOrderIndex(int orderIndex)
+ICP_CODE SimMap::RemoveWallByOrderIndex(int orderIndex)
 {
     auto itWallToRemove = GetWallByOrderIndex(orderIndex);
 
@@ -413,7 +415,11 @@ void SimMap::RemoveWallByOrderIndex(int orderIndex)
         _walls.erase(itWallToRemove);
         // removeItem(wallToRemove);
         delete wallToRemove;
+        return CODE_OK;
+
     }  // TODO: obj not found ret
+    
+    return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND;
 }
 
 void SimMap::DeleteAllObjects()
