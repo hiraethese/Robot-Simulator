@@ -226,7 +226,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
                 _simulationScene->PushNewRobotToMap(view);
             }
             break;
-        case BotRobotStatus:
+        case AutoRobotStatus:
             std::cout << "Create Bot Robot" << std::endl;
             check_creaing = _core->CreateNewAutomatedRobotFromTemplate(clickPoint.x(), clickPoint.y());
             if(check_creaing){

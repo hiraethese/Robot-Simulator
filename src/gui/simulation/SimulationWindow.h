@@ -27,7 +27,7 @@ enum BuildModeStatus{
     NotSetStatus,
     CursorStatus,
     ControllRobotStatus,
-    BotRobotStatus,
+    AutoRobotStatus,
     WallStatus
 };
 

@@ -27,8 +27,6 @@ MainWindow::~MainWindow()
 }
 
 
-
-// ************************************  PART APPLICATION    *********************************************************
 void MainWindow::_CreateAppWindows(){
 
     _CreateSimulationWindow();
@@ -93,14 +91,14 @@ void MainWindow::_CreateMenu(){
 
     templatesSubMenu = appMenu->addMenu("Templates");
 
-    buildUserRobotTemplate = templatesSubMenu->addAction("Controlled robot");
-    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), -1);_robotSetWind->ChangeEnablingOfSettingsObjects(false); _robotSetWind->exec();});
+    buildControlledRobotTemplate = templatesSubMenu->addAction("Controlled robot");
+    connect(buildControlledRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), -1);_robotSetWind->ChangeEnablingOfSettingsObjects(false); _robotSetWind->exec();});
 
-    buildBotRobotTemplate = templatesSubMenu->addAction("Automated robot");
-    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetAutomatedRobotTemp(), -1); _robotSetWind->ChangeEnablingOfSettingsObjects(false);_robotSetWind->exec();});
+    buildAutoRobotTemplate = templatesSubMenu->addAction("Automated robot");
+    connect(buildAutoRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetAutomatedRobotTemp(), -1); _robotSetWind->ChangeEnablingOfSettingsObjects(false);_robotSetWind->exec();});
 
-    buildWallLayout = templatesSubMenu->addAction("Wall");
-    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemp(), -1);_wallSetWind->ChangeEnablingOfSettingsObjects(false);_wallSetWind->exec();});
+    buildWallTemplate = templatesSubMenu->addAction("Wall");
+    connect(buildWallTemplate, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemp(), -1);_wallSetWind->ChangeEnablingOfSettingsObjects(false);_wallSetWind->exec();});
 
     simulationModeAction = appMenu->addAction("Simulation");
     connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimModeSlot);
@@ -118,9 +116,9 @@ void MainWindow::_DeleteMenu(){
     delete simulationModeAction;
     delete downloadNewModeMapAction;
     delete buildMapModeAction;
-    delete buildUserRobotTemplate;
-    delete buildBotRobotTemplate;
-    delete buildWallLayout;
+    delete buildControlledRobotTemplate;
+    delete buildAutoRobotTemplate;
+    delete buildWallTemplate;
     delete templatesSubMenu;
     delete appMenu;
 
@@ -356,18 +354,18 @@ void MainWindow::_CreateBuildMapModeSlot(){
 
 void MainWindow::_CreateBuildModeTools(){
 
-    _buildUserRobotAction = new QAction(QIcon(":/icons/userRobotTool.png"), "User robot", this);
-    connect(_buildUserRobotAction, &QAction::triggered, this, &MainWindow::_BuildUserRobotActionSlot);
+    _buildControlRobotAction = new QAction(QIcon(":/icons/userRobotTool.png"), "Controlled robot", this);
+    connect(_buildControlRobotAction, &QAction::triggered, this, [=](){_simulationWind->buildModeStatus = ControllRobotStatus;_statusModeLine->setText("Build controlled robot");});
 
-    _buildBotRobotAction = new QAction(QIcon(":/icons/botRobotTool.png"), "Bot robot", this);
-    connect(_buildBotRobotAction, &QAction::triggered, this, &MainWindow::_BuildBotRobotActionSlot);
+    _buildAutoRobotAction = new QAction(QIcon(":/icons/botRobotTool.png"), "Automatic robot", this);
+    connect(_buildAutoRobotAction, &QAction::triggered, this, [=](){_simulationWind->buildModeStatus = AutoRobotStatus; _statusModeLine->setText("Build automatic robots");});
 
     _buildWallAction = new QAction(QIcon(":/icons/wallTool.png"), "Wall", this);
-    connect(_buildWallAction, &QAction::triggered, this, &MainWindow::_BuildWallActionSlot);
+    connect(_buildWallAction, &QAction::triggered, this, [=](){_simulationWind->buildModeStatus = WallStatus;_statusModeLine->setText("Build walls");});
 
     _engineBuildToolBar = addToolBar("engineBuild");
-    _engineBuildToolBar->addAction(_buildUserRobotAction);
-    _engineBuildToolBar->addAction(_buildBotRobotAction);
+    _engineBuildToolBar->addAction(_buildControlRobotAction);
+    _engineBuildToolBar->addAction(_buildAutoRobotAction);
     _engineBuildToolBar->addAction(_buildWallAction);
 
     _engineCursorToolBar = addToolBar("engineCursor");
@@ -398,11 +396,11 @@ void MainWindow::_DeleteBuildModeTools(){
 
     if(_actualPage != NotSetPage){
 
-        disconnect(_buildUserRobotAction, 0, 0, 0);
-        disconnect(_buildBotRobotAction, 0, 0, 0);
+        disconnect(_buildControlRobotAction, 0, 0, 0);
+        disconnect(_buildAutoRobotAction, 0, 0, 0);
         disconnect(_buildWallAction, 0, 0, 0);
-        delete _buildUserRobotAction;
-        delete _buildBotRobotAction;
+        delete _buildControlRobotAction;
+        delete _buildAutoRobotAction;
         delete _buildWallAction;
         delete _statusModeLabel;
         delete _statusModeLine;
@@ -418,28 +416,6 @@ void MainWindow::_DeleteBuildModeTools(){
         delete _statusModeBuildToolBar;
 
     }
-
-}
-
-void MainWindow::_BuildUserRobotActionSlot(){
-
-    _simulationWind->buildModeStatus = ControllRobotStatus;
-    _statusModeLine->setText("Build users robot");
-
-}
-
-void MainWindow::_BuildBotRobotActionSlot(){
-
-    _simulationWind->buildModeStatus = BotRobotStatus;
-    _statusModeLine->setText("Build bot robots");
-
-}
-
-
-void MainWindow::_BuildWallActionSlot(){
-
-    _simulationWind->buildModeStatus = WallStatus;
-    _statusModeLine->setText("Build walls");
 
 }
 
