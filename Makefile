@@ -9,6 +9,7 @@
 
 ifeq ($(OS),Windows_NT)
     # Windows commands and settings
+    ICP_EXE = icp2024.exe
     RM = del /Q
     MKDIR = mkdir
     ZIP = zip
@@ -18,6 +19,7 @@ ifeq ($(OS),Windows_NT)
     DIR_SEPARATOR = \\
 else
     # Linux commands and settings
+    ICP_EXE = icp2024
     RM = rm -f
     MKDIR = mkdir -p
     ZIP = zip -r
@@ -37,14 +39,14 @@ q_prepare:
 	$(QMAKE) -o src/Makefile icp2024.pro
 
 run:
-	./bin/icp2024
+	./bin/$(ICP_EXE)
 
 clean: clean_pack
 	$(RM) obj/* moc/* bin/* src/qrc_icons.cpp src/ui_MainWindow.h src/Makefile src/.qmake.stash
 	$(RM) -rf logs doc/html doc/latex
 
 clean_pack:
-	$(RM) xbatur00_xkukht01.zip
+	$(RM) xbatur00-xkukht01.zip
 
 doxygen:
 	doxygen doc/Doxyfile
