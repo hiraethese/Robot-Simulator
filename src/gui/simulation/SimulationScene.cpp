@@ -60,13 +60,13 @@ void SimulationScene::LoadSimObj(){
 
     for(SimObjView robot: robotsView){
 
-        CreateNewRobot(robot);
+        PushNewRobotToMap(robot);
 
     }
 
     for(SimObjView wall: wallsView){
 
-        CreateNewWall(wall);
+        PushNewWallToMap(wall);
 
     }
 }
@@ -88,28 +88,42 @@ void SimulationScene::_OneSimFrameSlot(){
 
 }
 
-void SimulationScene::CreateNewRobot(SimObjView view){
+RobotGUI* SimulationScene::_CreateNewRobotGui(SimObjView view){
 
     RobotGUI* newRobot = new RobotGUI(0, 0, view.w, view.h, &_conn, view.orderIndex);
     newRobot->setPen(getPen());
     newRobot->setBrush(getBrushByCode(view.color));
     newRobot->setPos(view.x_GUI, view.y_GUI);
     addItem(newRobot);
-    _robotsGUIVector.push_back(newRobot);
     update();
+    return newRobot;
 
 }
 
-
-void SimulationScene::CreateNewWall(SimObjView view){
+WallGUI* SimulationScene::_CreateNewWallGUI(SimObjView view){
 
     WallGUI* newWall = new WallGUI(0, 0, view.w, view.h, &_conn, view.orderIndex);
     newWall->setPos(view.x_GUI,view.y_GUI);
     newWall->setPen(getPen());
     newWall->setBrush(getBrushByCode(view.color));
     addItem(newWall);
-    _wallsGUIVector.push_back(newWall);
     update();
+    return newWall;
+}
+
+void SimulationScene::PushNewRobotToMap(SimObjView view){
+    
+    RobotGUI* newRobot = _CreateNewRobotGui(view); 
+    _robotsGUIVector.push_back(newRobot);
+
+}
+
+
+void SimulationScene::PushNewWallToMap(SimObjView view){
+
+    WallGUI* newWall = _CreateNewWallGUI(view);
+    _wallsGUIVector.push_back(newWall);
+
 }
 
 std::vector<RobotGUI*>::iterator SimulationScene::_GetRobotByOrderIndex(int orderIndex){
@@ -157,7 +171,7 @@ ICP_CODE SimulationScene::RemoveRobotByOrderIndex(int orderIndex){
         _robotsGUIVector.erase(itRobotToRemove);
         removeItem(robotToRemove);
         delete robotToRemove;
-        
+
         return CODE_OK;
     }
 
@@ -181,27 +195,26 @@ ICP_CODE SimulationScene::RemoveWallByOrderIndex(int orderIndex){
     return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_GUI;
 }
 
-ICP_CODE SimulationScene::UpdateSimObjGuiState(SimObjView view){
-    if(view.isRobot){  // update robot
-
-        auto itRobotForUpd = _GetRobotByOrderIndex(view.orderIndex);
+ICP_CODE SimulationScene::UpdateSimObjGuiState(int orderIndex, bool isRobot){
+    SimObjView view;
+    _core->GetViewByOrderGUI(&view, orderIndex, isRobot);
+    if(isRobot){  // update robot
+        auto itRobotForUpd = _GetRobotByOrderIndex(orderIndex);
         if(itRobotForUpd != _robotsGUIVector.end()){
-            RobotGUI* robotForUpd = *itRobotForUpd;
-            robotForUpd->setRect(robotForUpd->scenePos().x(), robotForUpd->scenePos().y(), view.w, view.h);
-            robotForUpd->setBrush(getBrushByCode(view.color));
-            update();  // TODO: maybe need maybe not
+            //RobotGUI* robotForUpd = *itRobotForUpd;
+            removeItem(*itRobotForUpd);
+            delete *itRobotForUpd;
+            *itRobotForUpd = _CreateNewRobotGui(view);
             return CODE_OK;
         }
 
     }
     else{  // update wall
-
         auto itWallForUpd = _GetWallByOrderIndex(view.orderIndex);
         if(itWallForUpd != _wallsGUIVector.end()){
-            WallGUI* wallForUpd = *itWallForUpd;
-            wallForUpd->setRect(wallForUpd->scenePos().x(), wallForUpd->scenePos().y(), view.w, view.h);
-            wallForUpd->setBrush(getBrushByCode(view.color));
-            update();  // TODO: maybe need maybe not
+            removeItem(*itWallForUpd);
+            delete *itWallForUpd;
+            *itWallForUpd = _CreateNewWallGUI(view);
             return CODE_OK;
         }
 

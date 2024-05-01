@@ -37,9 +37,9 @@ public:
     void InitSimRun();
     void StopSimRun();
 
-    void CreateNewRobot(SimObjView view);
-    void CreateNewWall(SimObjView view);
-    ICP_CODE UpdateSimObjGuiState(SimObjView view);
+    void PushNewRobotToMap(SimObjView view);
+    void PushNewWallToMap(SimObjView view);
+    ICP_CODE UpdateSimObjGuiState(int orderIndex, bool isRobot);
     ICP_CODE RemoveRobotByOrderIndex(int orderIndex);
     ICP_CODE RemoveWallByOrderIndex(int orderIndex);
 
@@ -59,6 +59,8 @@ private:
     std::vector<WallGUI*>_wallsGUIVector;
     std::vector<RobotGUI*>::iterator _GetRobotByOrderIndex(int orderIndex);
     std::vector<WallGUI*>::iterator _GetWallByOrderIndex(int orderIndex);
+    RobotGUI* _CreateNewRobotGui(SimObjView view);
+    WallGUI* _CreateNewWallGUI(SimObjView view);
     
 signals:
 

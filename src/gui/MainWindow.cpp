@@ -292,7 +292,7 @@ void MainWindow::_UpdateSimObjSlot(SimObjView view){
         }
         else{  // update GUI after CORE
 
-            ret = _simulationWind->UpdateSimObjGuiState(view);
+            ret = _simulationWind->UpdateSimObjGuiState(view.orderIndex, view.isRobot);
             if(ret != CODE_OK){
                 _WarningMsg(ret);
             }

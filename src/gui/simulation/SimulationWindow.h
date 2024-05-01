@@ -46,7 +46,7 @@ public:
     BuildModeStatus buildModeStatus = NotSetStatus;
 
     ICP_CODE RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot);
-    ICP_CODE UpdateSimObjGuiState(SimObjView view);
+    ICP_CODE UpdateSimObjGuiState(int orderIndex, bool isRobot);
 protected:
 
     void keyPressEvent(QKeyEvent *event) override;

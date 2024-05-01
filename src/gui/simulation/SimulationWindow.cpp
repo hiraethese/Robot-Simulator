@@ -223,8 +223,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
             else{
                 _core->GetViewByOrderGUI(&view, _core->GetLastOrderIndex(), true);
 
-                std::cout << "B =" << view.x << "A=  " << view.y<<std::endl;
-                _simulationScene->CreateNewRobot(view); // TODO: Myron do this please this shit
+                _simulationScene->PushNewRobotToMap(view);
             }
             break;
         case BotRobotStatus:
@@ -235,8 +234,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
             }
             else{
                 _core->GetViewByOrderGUI(&view, _core->GetLastOrderIndex(), true);
-                std::cout << "A =" << view.x << "B=  " << view.y<<std::endl;
-                _simulationScene->CreateNewRobot(view);
+                _simulationScene->PushNewRobotToMap(view);
             }
             break;
         case WallStatus:
@@ -247,7 +245,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
             }
             else{
                 _core->GetViewByOrderGUI(&view, _core->GetLastOrderIndex(), false);
-                _simulationScene->CreateNewWall(view);
+                _simulationScene->PushNewWallToMap(view);
             }
             break;
         default:
@@ -256,7 +254,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
 
 }
 
-ICP_CODE SimulationWindow::UpdateSimObjGuiState(SimObjView view)
+ICP_CODE SimulationWindow::UpdateSimObjGuiState(int orderIndex, bool isRobot)
 {
-    return _simulationScene->UpdateSimObjGuiState(view);
+    return _simulationScene->UpdateSimObjGuiState(orderIndex, isRobot);
 }
