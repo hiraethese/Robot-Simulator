@@ -35,6 +35,11 @@ public:
     ICP_CODE UpdateRobotState(SimObjView view);
     ICP_CODE UpdateWallState(SimObjView view);
     ICP_CODE LoadObjectsFromFile(std::string path);
+    bool RobotTemplateWithRobotsCollision(float x, float y, float radius);
+    bool RobotTemplateWithWallsCollision(float x, float y, float radius);
+    bool RobotTemplateWithBordersCollision(float x, float y, float radius);
+    bool WallTeamplateWithRobotsCollision(float x, float y, Vector2d size);
+    bool WallTemplateWithBordersCollision(float x, float y, Vector2d size);
     const std::vector<Wall*>& GetWalls() const;
     const std::vector<Robot*>& GetRobots() const;
     std::vector<SimObjView> GetVectorWallsView();
