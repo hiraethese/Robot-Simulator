@@ -44,6 +44,7 @@ clean: clean_pack
 	$(RM) -rf logs doc/html doc/latex
 
 clean_pack:
+	echo $(RM)
 	$(RM) xbatur00_xkukht01.zip
 
 doxygen:
