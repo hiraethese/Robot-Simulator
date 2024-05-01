@@ -7,51 +7,24 @@
 # ICP-2024
 #
 
-ifeq ($(OS),Windows_NT)
-    # Windows commands and settings
-    CC=g++
-    ICP_EXE = icp2024.exe
-    RM = del /Q
-    MKDIR = mkdir
-    ZIP = zip
-    QMAKE = qmake
-    MAKE = mingw32-make
-    RM_FLAGS = /F
-    DIR_SEPARATOR = \\
-else
-    # Linux commands and settings
-    CC=g++
-    ICP_EXE = icp2024
-    RM = rm -f
-    MKDIR = mkdir -p
-    ZIP = zip -r
-    QMAKE = qmake
-    MAKE = make
-    RM_FLAGS =
-    DIR_SEPARATOR = /
-endif
-
-# Phony targets
-.PHONY: all clean q_prepare run doxygen pack
-
 all: clean q_prepare
-	$(MAKE) CXX=$(CC) -C src
+	make -C src
 
 q_prepare:
-	$(QMAKE) -o src/Makefile icp2024.pro
+	qmake -o src/Makefile icp2024.pro
 
 run:
-	./bin/$(ICP_EXE)
+	./src/icp2024
 
 clean: clean_pack
-	$(RM) obj/* moc/* bin/* src/qrc_icons.cpp src/ui_MainWindow.h src/Makefile src/.qmake.stash
-	$(RM) -rf logs doc/html doc/latex
+	rm -f src/icp2024 src/*.o src/moc_mainwindow.cpp src/moc_predefs.h src/ui_mainwindow.h src/Makefile src/.qmake.stash
+	rm -rf logs doc/html doc/latex
 
 clean_pack:
-	$(RM) xbatur00-xkukht01.zip
+	rm -f xbatur00_xkukht01.zip
 
 doxygen:
 	doxygen doc/Doxyfile
 
 pack: clean
-	$(ZIP) xbatur00_xkukht01.zip src bin obj moc LICENSE Makefile README.txt icp2024.pro examples doc/Doxyfile
+	zip -r xbatur00_xkukht01.zip src LICENSE Makefile README.txt icp2024.pro examples doc/Doxyfile
