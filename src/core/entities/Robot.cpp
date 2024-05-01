@@ -77,6 +77,7 @@ SimObjView* Robot::GetSimObjView()
 
 void Robot::SetSimObjView(SimObjView view)
 {
+    _isControlled = view.isControlled;
     _transform->SetSize({view.w, view.h});
     _color = view.color;
     _movement->SetSpeed(view.speed);
