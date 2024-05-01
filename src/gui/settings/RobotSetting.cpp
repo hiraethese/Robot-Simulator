@@ -106,6 +106,12 @@ SimObjView RobotSetting::GetSimObjView(){
     int orderIndex;
     bool isControlled;
     bool isRobot;*/
+    if(_typeRobotComboBox->currentText() == _autoRobotString){
+        _isControlled = false;
+    }
+    else{
+        _isControlled = true;
+    }
     int rotateClockwise;
     colors colorsCode;
     if(_rotateClockwiseLabel->text() == _leftClockW){
