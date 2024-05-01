@@ -55,18 +55,18 @@ void SimulationScene::LoadSimObj(){
 
     CleareSimulationScene();
 
-    std::vector<SimObjView> robotsView = _core->GetVectorRobotsViewGUI();
-    std::vector<SimObjView> wallsView = _core->GetVectorWallsViewGUI();
+    std::vector<SimObjView> robotsView = _core->GetVectorRobotsView();
+    std::vector<SimObjView> wallsView = _core->GetVectorWallsView();
 
     for(SimObjView robot: robotsView){
 
-        CreateNewRobot(robot, robot.orderIndex, robot.x, robot.y);
+        CreateNewRobot(robot);
 
     }
 
     for(SimObjView wall: wallsView){
 
-        CreateNewWall(wall, wall.orderIndex, wall.x, wall.y);
+        CreateNewWall(wall);
 
     }
 }
@@ -75,25 +75,25 @@ void SimulationScene::_OneSimFrameSlot(){
 
     _core->MoveAllObjects();
 
-    std::vector<SimObjView> robotsView = _core->GetVectorRobotsViewGUI();
+    std::vector<SimObjView> robotsView = _core->GetVectorRobotsView();
 
     for(long unsigned int i = 0; i < _robotsGUIVector.size(); i++){  // TODO: raise EXCEPTION when not simular size of gui and view vector
 
         std::cout << robotsView[i].x <<" "<< robotsView[i].y << std::endl;
 
-        _robotsGUIVector[i]->setPos(robotsView[i].x, robotsView[i].y);
+        _robotsGUIVector[i]->setPos(robotsView[i].x_GUI, robotsView[i].y_GUI);
 
     }
     update();  // TODO: maybe yes maybe not...
 
 }
 
-void SimulationScene::CreateNewRobot(SimObjView view, int orderIndex, float x, float y){
+void SimulationScene::CreateNewRobot(SimObjView view){
 
-    RobotGUI* newRobot = new RobotGUI(0, 0, view.w, view.h, &_conn, orderIndex);
+    RobotGUI* newRobot = new RobotGUI(0, 0, view.w, view.h, &_conn, view.orderIndex);
     newRobot->setPen(getPen());
     newRobot->setBrush(getBrushByCode(view.color));
-    newRobot->setPos(x,y);
+    newRobot->setPos(view.x_GUI, view.y_GUI);
     addItem(newRobot);
     _robotsGUIVector.push_back(newRobot);
     update();
@@ -101,10 +101,10 @@ void SimulationScene::CreateNewRobot(SimObjView view, int orderIndex, float x, f
 }
 
 
-void SimulationScene::CreateNewWall(SimObjView view, int orderIndex, float x, float y){
+void SimulationScene::CreateNewWall(SimObjView view){
 
-    WallGUI* newWall = new WallGUI(0, 0, view.w, view.h, &_conn, orderIndex);
-    newWall->setPos(x,y);
+    WallGUI* newWall = new WallGUI(0, 0, view.w, view.h, &_conn, view.orderIndex);
+    newWall->setPos(view.x_GUI,view.y_GUI);
     newWall->setPen(getPen());
     newWall->setBrush(getBrushByCode(view.color));
     addItem(newWall);

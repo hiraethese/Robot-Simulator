@@ -22,6 +22,8 @@ Wall::Wall(Vector2d position, Vector2d size, colors color, int orderIndex) : Sim
 SimObjView* Wall::GetSimObjView()
 {
     _simObjView = {
+                _transform->GetPosition().x - 0.5f * _transform->GetSize().x,
+                _transform->GetPosition().y - 0.5f * _transform->GetSize().y,
                 _transform->GetPosition().x,
                 _transform->GetPosition().y,
                 _transform->GetSize().x,
@@ -37,27 +39,6 @@ SimObjView* Wall::GetSimObjView()
                 false
             };
 
-    return &(_simObjView);
-}
-
-SimObjView *Wall::GetSimObjViewGUI()
-{
-    _simObjView = {
-                _transform->GetPosition().x,
-                _transform->GetPosition().y,
-                _transform->GetSize().x,
-                _transform->GetSize().y,
-                0.0,
-                0.0,
-                0,
-                0,
-                0,
-                _color,
-                _orderIndex,
-                false,
-                false
-            };
-    _simObjView.toGUI();
     return &(_simObjView);
 }
 

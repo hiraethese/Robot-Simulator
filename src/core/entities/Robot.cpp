@@ -51,6 +51,9 @@ SimObjView* Robot::GetSimObjView()
 {
     // return {_orderIndex, GetTransform()->GetRect().x, GetTransform()->GetRect().y, GetTransform()->GetRect().h, GetTransform()->GetRect().w, _color, true, _isControlled, int(_movement->GetSpeed()), _movement->GetAngleDegrees(), 0};
     _simObjView =   {
+
+                _transform->GetPosition().x - 0.5f * _transform->GetSize().x,
+                _transform->GetPosition().y - 0.5f * _transform->GetSize().y,
                 _transform->GetPosition().x,
                 _transform->GetPosition().y,
                 _transform->GetSize().x,
@@ -71,27 +74,6 @@ SimObjView* Robot::GetSimObjView()
     return &(_simObjView);
 }
 
-SimObjView *Robot::GetSimObjViewGUI()
-{
-    _simObjView =   {
-                _transform->GetPosition().x,
-                _transform->GetPosition().y,
-                _transform->GetSize().x,
-                _transform->GetSize().y,
-                _movement->GetSpeed(),
-                _movement->GetCollisionDistance(),
-                _movement->GetAngleStep(),
-                _movement->GetAngleDegrees(),
-                _movement->GetRotateClockwise(),
-                _color,
-                _orderIndex,
-                _isControlled,
-                true
-            };
-
-    _simObjView.toGUI();
-    return &(_simObjView);
-}
 
 void Robot::SetSimObjView(SimObjView view)
 {

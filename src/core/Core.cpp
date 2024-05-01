@@ -111,14 +111,14 @@ const std::vector<Robot*>& Core::GetVectorRobots() const
     return _map->GetRobots();
 }
 
-std::vector<SimObjView> Core::GetVectorWallsViewGUI()
+std::vector<SimObjView> Core::GetVectorWallsView()
 {
-    return _map->GetVectorWallsViewGUI();
+    return _map->GetVectorWallsView();
 }
 
-std::vector<SimObjView> Core::GetVectorRobotsViewGUI()
+std::vector<SimObjView> Core::GetVectorRobotsView()
 {
-    return _map->GetVectorRobotsViewGUI();
+    return _map->GetVectorRobotsView();
 }
 
 ICP_CODE Core::CreateNewControlledRobotFromTemplate(float x, float y)

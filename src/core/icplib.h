@@ -76,6 +76,8 @@ typedef struct Hitbox {
 } Hitbox;
 
 typedef struct SimObjView {
+    float x_GUI;
+    float y_GUI;
     float x;
     float y;
     float w;

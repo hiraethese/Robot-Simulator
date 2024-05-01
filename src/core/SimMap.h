@@ -37,8 +37,8 @@ public:
     ICP_CODE LoadObjectsFromFile(std::string path);
     const std::vector<Wall*>& GetWalls() const;
     const std::vector<Robot*>& GetRobots() const;
-    std::vector<SimObjView> GetVectorWallsViewGUI();
-    std::vector<SimObjView> GetVectorRobotsViewGUI();
+    std::vector<SimObjView> GetVectorWallsView();
+    std::vector<SimObjView> GetVectorRobotsView();
     Robot* GetFirstControlledRobot();
     Spawner* GetSpawner();
     std::vector<Robot*>::iterator GetRobotByOrderIndex(int orderIndex);

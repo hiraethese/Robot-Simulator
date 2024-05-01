@@ -120,6 +120,8 @@ SimObjView RobotSetting::GetSimObjView(){
     return  {
             0.0,
             0.0,
+            0.0,
+            0.0,
             float(_diameterSpinBox->value()),
             float(_diameterSpinBox->value()),
             float(_speedSpinBox->value()),

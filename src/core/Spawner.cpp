@@ -18,9 +18,9 @@
 
 Spawner::Spawner()
 {
-    _controlledRobotTemp = { 0.0, 0.0, 50.0, 50.0, 5.0, 75.0, 45, 0, 1, RED, -1, true, true }; // default values
-    _automatedRobotTemp = { 0.0, 0.0, 50.0, 50.0, 5.0, 75.0, 45, 0, 1, GREEN, -1, false, true }; // default values
-    _wallTemp = { 0.0, 0.0, 50.0, 50.0, 0.0, 0.0, 0, 0, 0, BLUE, -1, false, false }; // default values
+    _controlledRobotTemp = { 0.0, 0.0, 0.0, 0.0, 50.0, 50.0, 5.0, 75.0, 45, 0, 1, RED, -1, true, true }; // default values
+    _automatedRobotTemp = { 0.0, 0.0, 0.0, 0.0, 50.0, 50.0, 5.0, 75.0, 45, 0, 1, GREEN, -1, false, true }; // default values
+    _wallTemp = { 0.0, 0.0, 0.0, 0.0, 50.0, 50.0, 0.0, 0.0, 0, 0, 0, BLUE, -1, false, false }; // default values
 }
 
 Robot* Spawner::GenNewRobot(float x, float y, int orderIndex, bool isControlled)

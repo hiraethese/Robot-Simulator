@@ -37,8 +37,8 @@ public:
     void InitSimRun();
     void StopSimRun();
 
-    void CreateNewRobot(SimObjView view, int orderIndex, float x, float y);
-    void CreateNewWall(SimObjView view,  int orderIndex, float x, float y);
+    void CreateNewRobot(SimObjView view);
+    void CreateNewWall(SimObjView view);
     ICP_CODE UpdateSimObjGuiState(SimObjView view);
     ICP_CODE RemoveRobotByOrderIndex(int orderIndex);
     ICP_CODE RemoveWallByOrderIndex(int orderIndex);

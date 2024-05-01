@@ -53,6 +53,8 @@ SimObjView WallSetting::GetSimObjView(){
     return  {
         0.0,
         0.0,
+        0.0,
+        0.0,
         float(_widthSpinBox->value()),
         float(_heightSpinBox->value()),
         0.0,
