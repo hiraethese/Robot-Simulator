@@ -40,11 +40,10 @@ run:
 	./bin/icp2024
 
 clean: clean_pack
-	$(RM) src/icp2024 obj/* moc/* bin/* src/qrc_icons.cpp src/ui_MainWindow.h src/Makefile src/.qmake.stash
+	$(RM) obj/* moc/* bin/* src/qrc_icons.cpp src/ui_MainWindow.h src/Makefile src/.qmake.stash
 	$(RM) -rf logs doc/html doc/latex
 
 clean_pack:
-	echo $(RM)
 	$(RM) xbatur00_xkukht01.zip
 
 doxygen:
