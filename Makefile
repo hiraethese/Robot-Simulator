@@ -9,6 +9,7 @@
 
 ifeq ($(OS),Windows_NT)
     # Windows commands and settings
+    CC=g++
     ICP_EXE = icp2024.exe
     RM = del /Q
     MKDIR = mkdir
@@ -19,6 +20,7 @@ ifeq ($(OS),Windows_NT)
     DIR_SEPARATOR = \\
 else
     # Linux commands and settings
+    CC=g++
     ICP_EXE = icp2024
     RM = rm -f
     MKDIR = mkdir -p
@@ -33,7 +35,7 @@ endif
 .PHONY: all clean q_prepare run doxygen pack
 
 all: clean q_prepare
-	$(MAKE) -C src
+	$(MAKE) CXX=$(CC) -C src
 
 q_prepare:
 	$(QMAKE) -o src/Makefile icp2024.pro
