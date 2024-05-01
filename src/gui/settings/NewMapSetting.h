@@ -30,7 +30,7 @@ private:
 
 signals:
 
-    void downloadSig();
+    void DownloadSig();
 
 };
 

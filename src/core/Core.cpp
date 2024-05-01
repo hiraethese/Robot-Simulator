@@ -5,9 +5,6 @@ Core* Core::_core = nullptr;
 Core::Core()
 {
     _FPS = 16; // Note: not actually "Frames Per Second", the name is for convenience
-    // TODOD: after in end delete this
-    //_simIsRun = false;
-    _simIsReady = false; // TODO: make setting arg from user by setting; now default true
     _map = new SimMap(1800, 750);
 }
 
@@ -49,29 +46,14 @@ int Core::GetAngleValue()
     return _map->GetFirstControlledRobot()->GetMovement()->GetAngleStep();
 }
 
-bool Core::IsSimReady()
-{
-    return _simIsReady;
-}
-
-bool Core::IsSimRun()
-{
-    return _simIsRun;
-}
 
 void Core::SetFPS(int FPS)
 {
     _FPS = FPS;
 }
 
-void Core::SetRunSim(bool setter)
-{
-    _simIsRun = setter;
-}
-
 void Core::LeftRotateMoveSig()
 {
-    // _map->GetFactory()->GetControlledRobot()->GetMovement()->RotateLeft();
     for (Robot* robot : GetVectorRobots()) {
         if (robot->IsControlled()) {
             robot->GetMovement()->RotateLeft();
@@ -81,7 +63,6 @@ void Core::LeftRotateMoveSig()
 
 void Core::RightRotateMoveSig()
 {
-    // _map->GetFactory()->GetControlledRobot()->GetMovement()->RotateRight();
     for (Robot* robot : GetVectorRobots()) {
         if (robot->IsControlled()) {
             robot->GetMovement()->RotateRight();
@@ -91,7 +72,6 @@ void Core::RightRotateMoveSig()
 
 void Core::ForwardMoveSig()
 {
-    // _map->GetFactory()->GetControlledRobot()->GetMovement()->EnableMovement();
     for (Robot* robot : GetVectorRobots()) {
         if (robot->IsControlled()) {
             robot->GetMovement()->EnableMovement();
@@ -101,7 +81,6 @@ void Core::ForwardMoveSig()
 
 void Core::StopMoveSig()
 {
-    // _map->GetFactory()->GetControlledRobot()->GetMovement()->DisableMovement();
     for (Robot* robot : GetVectorRobots()) {
         if (robot->IsControlled()) {
             robot->GetMovement()->DisableMovement();
@@ -111,7 +90,6 @@ void Core::StopMoveSig()
 
 void Core::MoveAllObjects()
 {
-    // _map->GetFactory()->GetControlledRobot()->GetMovement()->MoveAutomatedRobot();
     for (Robot* robot : GetVectorRobots()) {
         if (robot->IsControlled()) {
             robot->GetMovement()->MoveControlledRobot();
@@ -123,7 +101,6 @@ void Core::MoveAllObjects()
     }
 }
 
-
 const std::vector<Wall *>& Core::GetVectorWalls() const
 {
     return _map->GetWalls();
@@ -134,43 +111,96 @@ const std::vector<Robot*>& Core::GetVectorRobots() const
     return _map->GetRobots();
 }
 
-
-std::vector<SimObjView> Core::GetVectorWallsView()
+std::vector<SimObjView> Core::GetVectorWallsViewGUI()
 {
-    return _map->GetVectorWallsView();
+    return _map->GetVectorWallsViewGUI();
 }
 
-std::vector<SimObjView> Core::GetVectorRobotsView()
+std::vector<SimObjView> Core::GetVectorRobotsViewGUI()
 {
-    return _map->GetVectorRobotsView();
+    return _map->GetVectorRobotsViewGUI();
+}
+
+ICP_CODE Core::CreateNewControlledRobotFromTemplate(float x, float y)
+{
+    return _map->CreateNewControlledRobotFromTemplate(x, y);
+}
+
+ICP_CODE Core::CreateNewAutomatedRobotFromTemplate(float x, float y)
+{
+    return _map->CreateNewAutomatedRobotFromTemplate(x, y);
+}
+
+ICP_CODE Core::CreateNewWallFromTemplate(float x, float y)
+{
+    return _map->CreateNewWallFromTemplate(x, y);
+}
+
+ICP_CODE Core::UpdateRobotState(SimObjView view)
+{
+    return _map->UpdateRobotState(view);
+}
+
+ICP_CODE Core::UpdateWallState(SimObjView view)
+{
+    return _map->UpdateWallState(view);
+}
+
+ICP_CODE Core::RemoveRobotByOrderIndex(int orderIndex)
+{
+    return _map->RemoveRobotByOrderIndex(orderIndex);
+}
+
+ICP_CODE Core::RemoveWallByOrderIndex(int orderIndex)
+{
+    return _map->RemoveWallByOrderIndex(orderIndex);
 }
 
 ICP_CODE Core::LoadingMap(std::string path)
 {
-    ICP_CODE result = _map->LoadObjectsFromFile(path); // TODO: call load objects from file from the gui
-    if(!result){
-
-        _simIsReady = true;
-
-    }
-    else{
-
-        _simIsReady = false;
-
-    }
-    return result;
+    return _map->LoadObjectsFromFile(path);// TODO: call load objects from file from the gui
 }
 
 SimObjView Core::GetControlledRobotTemp()
 {
-    return _map->GetControlledRobotTemp();
+    return _map->GetSpawner()->GetControlledRobotTemp();
 }
 
-SimObjView Core::GetBotRobotTemp()
+SimObjView Core::GetAutomatedRobotTemp()
 {
-    return _map->GetBotRobotTemp();
+    return _map->GetSpawner()->GetAutomatedRobotTemp();
 }
 
-SimObjView Core::GetWallTemplate(){
-    return _map->GetWallTemp();
+SimObjView Core::GetWallTemp()
+{
+    return _map->GetSpawner()->GetWallTemp();
+}
+
+void Core::SetControlledRobotTemp(SimObjView newTemp)
+{
+    _map->GetSpawner()->SetControlledRobotTemp(newTemp);
+}
+
+void Core::SetAutomatedRobotTemp(SimObjView newTemp)
+{
+    _map->GetSpawner()->SetAutomatedRobotTemp(newTemp);
+}
+
+void Core::SetWallTemp(SimObjView newTemp)
+{
+    _map->GetSpawner()->SetWallTemp(newTemp);
+}
+
+ICP_CODE Core::GetViewByOrderGUI(SimObjView* view, int orderIndex, bool isRobot)
+{
+    if(isRobot){
+        return _map->GetRobotViewByOrderGUI(view, orderIndex);
+    }
+    else{
+        return _map->GetWallViewByOrderGUI(view, orderIndex);
+    }
+}
+
+int Core::GetLastOrderIndex(){
+    return _map->GetLastOrderIndex();
 }

@@ -12,8 +12,6 @@ private:
     Core();
     static Core* _core;
     int _FPS;
-    bool _simIsRun = false;
-    bool _simIsReady = false;
     SimMap* _map = nullptr;  // TODO: make method for recreating value
 
 public:
@@ -24,23 +22,32 @@ public:
     int GetMapHeight();
     int GetSpeedValue(); // TODO: speed in percent
     int GetAngleValue(); // Note: get angle step value
-    bool IsSimReady();
-    bool IsSimRun();
     void SetFPS(int FPS); // TODO: implement this as part of the settings
-    void SetRunSim(bool setter);
     void LeftRotateMoveSig();
     void RightRotateMoveSig();
     void ForwardMoveSig();
     void StopMoveSig();
     void MoveAllObjects();
+    ICP_CODE CreateNewControlledRobotFromTemplate(float x, float y);
+    ICP_CODE CreateNewAutomatedRobotFromTemplate(float x, float y);
+    ICP_CODE CreateNewWallFromTemplate(float x, float y);
+    ICP_CODE UpdateRobotState(SimObjView view);
+    ICP_CODE UpdateWallState(SimObjView view);
+    ICP_CODE RemoveRobotByOrderIndex(int orderIndex);
+    ICP_CODE RemoveWallByOrderIndex(int orderInex);
     ICP_CODE LoadingMap(std::string path);
     const std::vector<Wall*>& GetVectorWalls() const;
     const std::vector<Robot*>& GetVectorRobots() const;
-    std::vector<SimObjView> GetVectorWallsView();
-    std::vector<SimObjView> GetVectorRobotsView();
+    std::vector<SimObjView> GetVectorWallsViewGUI();
+    std::vector<SimObjView> GetVectorRobotsViewGUI();
     SimObjView GetControlledRobotTemp();
-    SimObjView GetBotRobotTemp();
-    SimObjView GetWallTemplate();
+    SimObjView GetAutomatedRobotTemp();
+    SimObjView GetWallTemp();
+    ICP_CODE GetViewByOrderGUI(SimObjView* view, int orderIndex, bool IsRobot);
+    void SetControlledRobotTemp(SimObjView newTemp);
+    void SetAutomatedRobotTemp(SimObjView newTemp);
+    void SetWallTemp(SimObjView newTemp);
+    int GetLastOrderIndex();
 };
 
 #endif // CORE_H

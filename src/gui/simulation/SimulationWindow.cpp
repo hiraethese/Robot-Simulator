@@ -35,6 +35,7 @@ void SimulationWindow::_CreateSimGUI(){
     connect(_simulationScene, &SimulationScene::RequestSimObjSig, this, [=](int orderIndex, bool isRobot){emit RequestSimObjSig(orderIndex, isRobot);});
     // signal to loading new sim obj to GUI from core
     connect(this, &SimulationWindow::LoadSimSceneSig, _simulationScene, &SimulationScene::LoadSimObj);
+    
     connect(this, &SimulationWindow::CleareSimulationSceneSig, this , [=](){_simulationScene->CleareSimulationScene();});
 }
 
@@ -192,16 +193,16 @@ void SimulationWindow::keyPressEvent(QKeyEvent *event){
 }
 
 
-void SimulationWindow::RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot){
+ICP_CODE SimulationWindow::RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot){
 
     if(isRobot){
 
-        _simulationScene->RemoveRobotByOrderIndex(orderIndex);
+        return _simulationScene->RemoveRobotByOrderIndex(orderIndex);
 
     }
     else{
 
-        _simulationScene->RemoveWallByOrderIndex(orderIndex);
+        return _simulationScene->RemoveWallByOrderIndex(orderIndex);
 
     }
 
@@ -210,33 +211,44 @@ void SimulationWindow::RemoveSimObjByOrderIndexSlot(int orderIndex, bool isRobot
 
 void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
     emit UperClickSig(clickPoint);
+    ICP_CODE check_creaing;
+    SimObjView view;
     switch(buildModeStatus){
         case ControllRobotStatus:
             std::cout << "Create Controlled Robot" << std::endl;
-            /* TODO:
-            *   request by _core creating new robot
-            *   if ok
-            *   create
-            */
-            _simulationScene->CreateNewRobot(_core->GetControlledRobotTemp(), clickPoint.x(), clickPoint.y());
+            check_creaing = _core->CreateNewControlledRobotFromTemplate(clickPoint.x(), clickPoint.y());
+            if(check_creaing){
+                emit UperErrorCodeSig(check_creaing);
+            }
+            else{
+                _core->GetViewByOrderGUI(&view, _core->GetLastOrderIndex(), true);
+
+                std::cout << "B =" << view.x << "A=  " << view.y<<std::endl;
+                _simulationScene->CreateNewRobot(view, _core->GetLastOrderIndex(), view.x, view.y); // TODO: Myron do this please this shit
+            }
             break;
         case BotRobotStatus:
             std::cout << "Create Bot Robot" << std::endl;
-            /* TODO:
-            *   request by _core creating new robot
-            *   if ok
-            *   create
-            */
-            _simulationScene->CreateNewRobot(_core->GetBotRobotTemp(), clickPoint.x(), clickPoint.y());
+            check_creaing = _core->CreateNewAutomatedRobotFromTemplate(clickPoint.x(), clickPoint.y());
+            if(check_creaing){
+                emit UperErrorCodeSig(check_creaing);
+            }
+            else{
+                _core->GetViewByOrderGUI(&view, _core->GetLastOrderIndex(), true);
+                std::cout << "A =" << view.x << "B=  " << view.y<<std::endl;
+                _simulationScene->CreateNewRobot(view, _core->GetLastOrderIndex(), view.x, view.y);
+            }
             break;
         case WallStatus:
             std::cout << "Create Wall" << std::endl;
-            /* TODO:
-            *   request by _core creating new wall
-            *   if ok
-            *   create
-            */
-            _simulationScene->CreateNewWall(_core->GetWallTemplate(), clickPoint.x(), clickPoint.y());
+            check_creaing = _core->CreateNewWallFromTemplate(clickPoint.x(), clickPoint.y());
+            if(check_creaing){
+                emit UperErrorCodeSig(check_creaing);
+            }
+            else{
+                _core->GetViewByOrderGUI(&view, _core->GetLastOrderIndex(), false);
+                _simulationScene->CreateNewWall(view, _core->GetLastOrderIndex(), view.x, view.y);
+            }
             break;
         default:
             break;
@@ -244,3 +256,7 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
 
 }
 
+ICP_CODE SimulationWindow::UpdateSimObjGuiState(SimObjView view)
+{
+    return _simulationScene->UpdateSimObjGuiState(view);
+}

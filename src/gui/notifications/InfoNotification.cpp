@@ -1,6 +1,6 @@
 #include "InfoNotification.h"
 
-void InfoNotification::_WarningMsgSimNotSet(ICP_CODE code){
+void InfoNotification::_WarningMsg(ICP_CODE code){
     switch(code){
     case CODE_INTERNAL_ERROR:
         QMessageBox::warning(nullptr, "Error", "Internal error with ICP2024!");
@@ -20,8 +20,14 @@ void InfoNotification::_WarningMsgSimNotSet(ICP_CODE code){
     case CODE_SYNTAXE_ERROR_INPUT_FILE_WALL:
         QMessageBox::warning(nullptr, "Error", "Syntaxe error in specification for wall in input file!");
         break;
-    case CODE_EMPYT_SIMULATION:
-        QMessageBox::warning(nullptr, "Warning", "Simulation can not run cose have not setted simulation objects!");
+    case CODE_NEW_OBJECT_COLLISION_ERROR:
+        QMessageBox::warning(nullptr, "Error", "Collision error with new object!");
+        break;
+    case CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE:
+        QMessageBox::warning(nullptr, "Error", "Problem with synchronization between core and gui, requested object is not founded in core!");
+        break;
+    case CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_GUI:
+        QMessageBox::warning(nullptr, "Error", "Problem with synchronization between core and gui, requested object is not founded in GUI!");
         break;
     default:
         break;

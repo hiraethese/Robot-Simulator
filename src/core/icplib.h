@@ -5,18 +5,20 @@
 #include <string>
 // Note: I was planning to use cmath instead, but VS Code has problems with it
 
-enum ICP_CODE{
+enum ICP_CODE {
     CODE_OK,
-    CODE_EMPYT_SIMULATION,
     CODE_INTERNAL_ERROR,
     CODE_ERROR_INPUT_FILE_NOT_EXIST,
     CODE_SYNTAXE_ERROR_UNKNOWN_OBJ_TYPE,
     CODE_SYNTAXE_ERROR_INPUT_FILE_CONTR_ROBOT,
     CODE_SYNTAXE_ERROR_INPUT_FILE_AUTO_ROBOT,
-    CODE_SYNTAXE_ERROR_INPUT_FILE_WALL
+    CODE_SYNTAXE_ERROR_INPUT_FILE_WALL,
+    CODE_NEW_OBJECT_COLLISION_ERROR, // collision between a new object and an existing one
+    CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE,
+    CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_GUI
 };
 
-enum colors{
+enum colors {
     WHITE,
     BLACK,
     BLUE,
@@ -65,28 +67,45 @@ typedef struct Vector2d {
     }
 } Vector2d;
 
-// Rectangle structure
-typedef struct Rectangle {
-    float x; // Rectangle x component
-    float y; // Rectangle y component
-    float w; // Rectangle width component
-    float h; // Rectangle height component
-} Rectangle;
+// Hitbox structure
+typedef struct Hitbox {
+    float x; // Hitbox x component
+    float y; // Hitbox y component
+    float w; // Hitbox width component
+    float h; // Hitbox height component
+} Hitbox;
 
 typedef struct SimObjView {
-    int orderIndex;
     float x;
     float y;
-    float h;
     float w;
+    float h;
+    float speed;
+    float collisionDistance;
+    int angleStep;
+    int angleDegrees;
+    int rotateClockwise;
     colors color;
-    bool isRobot;
+    int orderIndex;
     bool isControlled;
-    int speed;
-    int angle;
-    int way;
+    bool isRobot;
+
+    void toCore() {// +
+        float _x = this->x;
+        float _y = this->y;
+        this->x = _x + 0.5f * this->w;
+        this->y = _y + 0.5f * this->h;
+    }
+
+    void toGUI() {  // -
+        float _x = this->x;
+        float _y = this->y;
+        this->x = _x - 0.5f * this->w;
+        this->y = _y - 0.5f * this->h;
+    }
 } SimObjView;
 
 bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);
+bool CircCircCollision(Vector2d firstCircPos, float firstCircRadius, Vector2d secondCircPos, float secondCircRadius);
 
 #endif // ICPLIB_H

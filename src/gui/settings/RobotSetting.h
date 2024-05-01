@@ -11,6 +11,7 @@
 #include <QPushButton>
 #include <iostream>
 #include <QString>
+#include <QComboBox>
 #include "../../core/icplib.h"
 #include "../style.h"
 #include "ASettings.h"
@@ -21,13 +22,16 @@ class RobotSetting : public ASettings
 public:
     RobotSetting(QWidget* parent, QString title);
     void DownloadDataFromView(SimObjView view, int orderIndex) override;
-
+    void ChangeEnablingOfSettingsObjects(bool flag) override;
+    SimObjView GetSimObjView();
 private:
-    bool flagIsUserRobot;
-
-
-    QLabel* _typeRobotLabel;
-    QLabel* _typeRobotLineEdit;
+    bool _isControlled = false;
+    const QString _contrRobotString = "Controlled";
+    const QString _autoRobotString = "Autometed";
+    const QString _leftClockW = "Left";
+    const QString _rightClockW = "Right"; 
+    QLabel* _typeRobotLabel;  // TODO: COMBOBOX ???
+    QComboBox* _typeRobotComboBox;
 
     QLabel* _diameterLabel;
     QSpinBox* _diameterSpinBox;
@@ -38,8 +42,15 @@ private:
     QLabel* _angleStepLabel;
     QSpinBox* _angleStepSpinBox;
 
-    QLabel* _angleDirectionLable;
-    QSpinBox* _angleDirectionSpinBox;
+    QLabel* _angleDegreesLable;
+    QSpinBox* _angleDegreesSpinBox;
+
+    QLabel* _collisionDistanceLabel;
+    QSpinBox* _collisionDistanceSpinBox;
+
+    QLabel* _rotateClockwiseLabel;
+    QComboBox* _rotateClockwiseComboBox;
+
 
 };
 

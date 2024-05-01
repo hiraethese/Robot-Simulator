@@ -23,6 +23,11 @@ float Movement::GetSpeed()
     return _speed;
 }
 
+float Movement::GetCollisionDistance()
+{
+    return _collisionDistance;
+}
+
 int Movement::GetAngleStep()
 {
     return _angleStep;
@@ -31,6 +36,11 @@ int Movement::GetAngleStep()
 int Movement::GetAngleDegrees()
 {
     return _angleDegrees;
+}
+
+int Movement::GetRotateClockwise()
+{
+    return _rotateClockwise;
 }
 
 void Movement::SetSpeed(float newSpeed)
@@ -46,6 +56,17 @@ void Movement::SetAngleStep(int newAngleStep)
 void Movement::SetAngleDegrees(int newAngleDegrees)
 {
     _angleDegrees = newAngleDegrees % 360;
+}
+
+
+void Movement::SetCollisionDistance(float newCollisionDistance)
+{
+    _collisionDistance = newCollisionDistance;
+}
+
+void Movement::SetRotateClockwise(int rotateClockwise)
+{
+    _rotateClockwise = rotateClockwise;
 }
 
 void Movement::RotateAutomatedRobot()

@@ -32,3 +32,19 @@ bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vec
     }
     return false;
 }
+
+bool CircCircCollision(Vector2d firstCircPos, float firstCircRadius, Vector2d secondCircPos, float secondCircRadius)
+{
+    // get distance between the circle's centers
+    // use the Pythagorean Theorem to compute the distance
+    float distX = firstCircPos.x - secondCircPos.x;
+    float distY = firstCircPos.y - secondCircPos.y;
+    float distance = sqrt((distX * distX) + (distY * distY));
+
+    // if the distance is less than the sum of the circle's
+    // radii, the circles are touching!
+    if (distance <= firstCircRadius + secondCircRadius) {
+        return true;
+    }
+    return false;
+}

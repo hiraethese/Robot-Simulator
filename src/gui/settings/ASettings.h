@@ -17,13 +17,12 @@ class ASettings : public QDialog
     Q_OBJECT
 public:
     virtual void DownloadDataFromView(SimObjView view, int orderIndex) = 0;
-    void SetUnsetDeleteButton(bool flag);
-    void SetIndex(int orderIndex);  // after deleted; order index moved to view
-    int GetOrderIndex();
-    bool GetType();
+    virtual SimObjView GetSimObjView() = 0;
+    virtual void ChangeEnablingOfSettingsObjects(bool flag);
+
 protected:
     ASettings(QWidget* parent, QString title);
-    bool _isRobot;
+    bool _isRobot;  // TODO: delete
     int _orderIndex; // after deleted; order index moved to view
     QPushButton* _setPushButton;
     QPushButton* _deletePushButton;
@@ -35,10 +34,9 @@ protected:
 
     void _CreateColorsSettings(int row);
     void _CreateButtonsSettings(int row);
-
 signals:
-    void SetSig(int orderIndex, bool isRobot);
-    void DeleteSig(int orderIndex, bool isRobot);
+    void SetSig(SimObjView view);
+    void DeleteSig(SimObjView view);
 
 };
 

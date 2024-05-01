@@ -4,11 +4,13 @@
 #include "SimObject.h"
 #include "../properties/Movement.h"
 #include <iostream>
+
 class Robot : public SimObject
 {
 private:
     Movement* _movement;
     bool _isControlled;
+
 public:
     Robot(  Vector2d position,
             Vector2d size,
@@ -23,7 +25,9 @@ public:
     ~Robot();
     bool IsControlled();
     Movement* GetMovement();
-    SimObjView GetSimObjView() override;
+    SimObjView* GetSimObjView() override;
+    SimObjView* GetSimObjViewGUI() override;
+    void SetSimObjView(SimObjView view) override;
 };
 
 #endif // ROBOT_H

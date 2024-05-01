@@ -37,11 +37,11 @@ public:
     void InitSimRun();
     void StopSimRun();
 
-    void CreateNewRobot(SimObjView view, float x, float y);
-    void CreateNewWall(SimObjView view,  float x, float y);
-
-    void RemoveRobotByOrderIndex(int orderIndex);
-    void RemoveWallByOrderIndex(int orderIndex);
+    void CreateNewRobot(SimObjView view, int orderIndex, float x, float y);
+    void CreateNewWall(SimObjView view,  int orderIndex, float x, float y);
+    ICP_CODE UpdateSimObjGuiState(SimObjView view);
+    ICP_CODE RemoveRobotByOrderIndex(int orderIndex);
+    ICP_CODE RemoveWallByOrderIndex(int orderIndex);
 
 protected:
 
@@ -59,7 +59,7 @@ private:
     std::vector<WallGUI*>_wallsGUIVector;
     std::vector<RobotGUI*>::iterator _GetRobotByOrderIndex(int orderIndex);
     std::vector<WallGUI*>::iterator _GetWallByOrderIndex(int orderIndex);
-
+    
 signals:
 
     void ClickSig(QPointF clickPoint);
@@ -68,7 +68,6 @@ signals:
 private slots:
 
     void _OneSimFrameSlot();
-
 };
 
 #endif // SIMULATIONSCENE_H

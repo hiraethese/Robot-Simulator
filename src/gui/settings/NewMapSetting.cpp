@@ -10,7 +10,7 @@ NewMapSetting::NewMapSetting(QWidget* parent): QDialog(parent) {
     _newMapLine = new QLineEdit(this);
 
     _downloadButton = new QPushButton("Download", this);
-    connect(_downloadButton, &QPushButton::clicked, this, [=](){emit downloadSig();});
+    connect(_downloadButton, &QPushButton::clicked, this, [=](){emit DownloadSig();});
 
     _newMapGridLayot->addWidget(_newMapLabel, 0, 0);
     _newMapGridLayot->addWidget(_newMapLine, 0, 1);

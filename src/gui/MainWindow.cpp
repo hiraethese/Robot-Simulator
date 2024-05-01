@@ -94,13 +94,13 @@ void MainWindow::_CreateMenu(){
     templatesSubMenu = appMenu->addMenu("Templates");
 
     buildUserRobotTemplate = templatesSubMenu->addAction("Controlled robot");
-    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), 0); _robotSetWind->exec();});
+    connect(buildUserRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), -1);_robotSetWind->ChangeEnablingOfSettingsObjects(false); _robotSetWind->exec();});
 
-    buildBotRobotTemplate = templatesSubMenu->addAction("Bot robot");
-    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetBotRobotTemp(), 0);_robotSetWind->exec();});
+    buildBotRobotTemplate = templatesSubMenu->addAction("Automated robot");
+    connect(buildBotRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetAutomatedRobotTemp(), -1); _robotSetWind->ChangeEnablingOfSettingsObjects(false);_robotSetWind->exec();});
 
     buildWallLayout = templatesSubMenu->addAction("Wall");
-    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemplate(), 0);_wallSetWind->exec();});
+    connect(buildWallLayout, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemp(), -1);_wallSetWind->ChangeEnablingOfSettingsObjects(false);_wallSetWind->exec();});
 
     simulationModeAction = appMenu->addAction("Simulation");
     connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimModeSlot);
@@ -190,21 +190,12 @@ void MainWindow::_HelpTextToolActionSlot(){
 
 void MainWindow::_RunSimulationActionSlot(){
 
-    if(!_core->IsSimReady()){  // check is prepared simulation map to running
-
-        _WarningMsgSimNotSet(CODE_EMPYT_SIMULATION);
-        return;
-
-    }
-
     disconnect(_runSimulationAction, 0, 0, 0);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_PauseSimulationActionSlot);
     _runSimulationAction->setIcon(QIcon(":/icons/pauseTool.svg"));
     _runSimulationAction->setText("Pause");
     _lineSimRunStatus->setText("Run");
     _lineSimRunStatus->setStyleSheet("background-color: lightgreen;");
-
-    _core->SetRunSim(true);
 
     _simulationWind->setFocus();
 
@@ -214,7 +205,6 @@ void MainWindow::_RunSimulationActionSlot(){
 
 void MainWindow::_PauseSimulationActionSlot(){
 
-    _core->SetRunSim(false);
     _simulationWind->StopSimScene();
     disconnect(_runSimulationAction, 0, 0, 0);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
@@ -237,48 +227,114 @@ void MainWindow::_CreateSimulationWindow(){
     connect(_simulationWind, &SimulationWindow::UperClickSig, this, [=](QPointF clickPoint){_xCursorTouchLine->setText(QString("%1").arg(clickPoint.x()));_yCursorTouchLine->setText(QString("%1").arg(clickPoint.y()));});
     // request sim obj from scene to core
     connect(_simulationWind, &SimulationWindow::RequestSimObjSig, this, &MainWindow::_RequestSimObjSlot);
+    // wait from sim wind errors codes
+    connect(_simulationWind, &SimulationWindow::UperErrorCodeSig, this, [=](ICP_CODE err_code){_WarningMsg(err_code);});
 }
 
 void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
     std::cout << "Order index: " << orderIndex << "; is Robot: " << isRobot << std::endl;
-/*
-    TODO:
-        -- request by core view about simobj
-        -- show settings window about it
-    after simulation of working
-*/
-    if(isRobot){
-        // download data about sim obj to settings window
-        _robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);  // TODO: info about concrete obj
-        _robotSetWind->SetUnsetDeleteButton(true);
-        _robotSetWind->exec();
+    ICP_CODE ret;
+    SimObjView view;
+    ret = _core->GetViewByOrderGUI(&view, orderIndex, isRobot);
+
+    std::cout << "Test2: " << view.h << " " << view.color << std::endl;
+    if(ret != CODE_OK){
+        _WarningMsg(ret);
     }
     else{
-        // download data about sim obj to settings window
-        _wallSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), orderIndex);  // TODO: info about concrete obj
-        _wallSetWind->SetUnsetDeleteButton(true);
-        _wallSetWind->exec();
+        if(isRobot){
+            // download data about sim obj to settings window
+            _robotSetWind->DownloadDataFromView(view, orderIndex);  // TODO: order index get to cor request
+            _robotSetWind->ChangeEnablingOfSettingsObjects(true);
+            _robotSetWind->exec();
+        }
+        else{
+            // download data about sim obj to settings window
+            _wallSetWind->DownloadDataFromView(view, orderIndex);  // TODO: order index get to cor request
+            _wallSetWind->ChangeEnablingOfSettingsObjects(true);
+            _wallSetWind->exec();
+        }
     }
 }
 
-void MainWindow::_UpdateSimObjSlot(int orderIndex, bool isRobot){
+void MainWindow::_UpdateSimObjSlot(SimObjView view){
 
-    /* TODO:
-    *  send view by sett wind to core
-    *  wait confirm by core
-    *  update
-    */
-    std::cout << "User request updating for sim obj with #" << orderIndex << " " <<" and type " << isRobot << std::endl;
+    if(view.orderIndex == -1){  // update tamplates
+        if(view.isRobot){
+            if(view.isControlled){
+                _core->SetControlledRobotTemp(view);
+            }
+            else{
+                _core->SetAutomatedRobotTemp(view);
+            }
+        }
+        else{
+            _core->SetWallTemp(view);
+        }
+    }
+    else{  // update obj
+        ICP_CODE ret;
+        if(view.isRobot){
+
+            ret = _core->UpdateRobotState(view);
+
+        }
+        else{
+
+            ret = _core->UpdateWallState(view);
+
+        }
+
+        if(ret != CODE_OK){  // if unsuccessfull updation
+
+            _WarningMsg(ret);
+
+        }
+        else{  // update GUI after CORE
+
+            ret = _simulationWind->UpdateSimObjGuiState(view);
+            if(ret != CODE_OK){
+                _WarningMsg(ret);
+            }
+        }
+
+    }
+
 }
-void MainWindow::_DeleteSimObjSlot(int orderIndex, bool isRobot){
 
-    /* TODO
-    * send request to deleting
-    * wait confirm by core
-    * delete
-    */
+void MainWindow::_DeleteSimObjSlot(SimObjView view){
 
-    _simulationWind->RemoveSimObjByOrderIndexSlot(orderIndex, isRobot);
+    if(view.orderIndex != -1){
+        ICP_CODE ret;
+        if(view.isRobot){
+        
+            ret = _core->RemoveRobotByOrderIndex(view.orderIndex);
+        
+        }
+        else{
+        
+            ret = _core->RemoveWallByOrderIndex(view.orderIndex);
+        
+        }
+        
+        if(ret != CODE_OK){
+
+            _WarningMsg(ret);
+        
+        }   
+        else{
+        
+            ret = _simulationWind->RemoveSimObjByOrderIndexSlot(view.orderIndex, view.isRobot);
+
+            if(ret != CODE_OK){
+                
+                _WarningMsg(ret);
+
+            }
+
+        }
+    }
+
 }
 
 // ************************************  PART BUILD MODE    *********************************************************
@@ -393,7 +449,7 @@ void MainWindow::_BuildWallActionSlot(){
 void MainWindow::_CreateSettings(){
 
     _newMapWind = new NewMapSetting(this);
-    connect(_newMapWind, &NewMapSetting::downloadSig, this, &MainWindow::_PushNewMapToCoreSlot);
+    connect(_newMapWind, &NewMapSetting::DownloadSig, this, &MainWindow::_PushNewMapToCoreSlot);
 
     _robotSetWind = new RobotSetting(this, "Robot settings");
     connect(_robotSetWind, &RobotSetting::SetSig, this, &MainWindow::_UpdateSimObjSlot);
@@ -413,14 +469,14 @@ void MainWindow::_PushNewMapToCoreSlot(){
 
     ICP_CODE code = _core->LoadingMap(_newMapWind->GetNewMapPath());  // call loading map and creating new sim obj
 
-    if(!code){  // ok
+    if(code == CODE_OK){  // ok
 
         emit _simulationWind->LoadSimSceneSig();  // draw new obj
 
     }
     else {  // err and info user about it
         
-        _WarningMsgSimNotSet(code);
+        _WarningMsg(code);
 
     }
 

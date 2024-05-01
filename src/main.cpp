@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     a.setStyleSheet(stylesSting);
     MainWindow w;
     w.showMaximized();
-    //w.show();
+    //w.show();  TODO: i think that not
     return a.exec();
 }
 // on merlin

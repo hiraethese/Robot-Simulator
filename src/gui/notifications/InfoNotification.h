@@ -7,7 +7,7 @@
 class InfoNotification
 {
 protected:
-    void _WarningMsgSimNotSet(ICP_CODE code);
+    void _WarningMsg(ICP_CODE code);
 };
 
 #endif // INFONOTIFICATION_H

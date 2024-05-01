@@ -38,7 +38,6 @@ HEADERS += \
     src/core/entities/Robot.h \
     src/core/entities/SimObject.h \
     src/core/entities/Wall.h \
-    src/core/entities/templates.h \
     src/core/properties/Movement.h \
     src/core/properties/MyTransform.h \
     src/core/Core.h \
