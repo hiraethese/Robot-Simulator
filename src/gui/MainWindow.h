@@ -2,7 +2,7 @@
  * @file MainWindow.h
  * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
  * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
- * @brief Implement main GUI class
+ * @brief Header of main GUI class
  */
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
@@ -86,9 +86,7 @@ public:
     ~MainWindow();
 
 private:
-    /**
-     * @brief The instance of Core singelton 
-     */
+    //! Button slot to call when creating a new scheme
     Core* _core;
     /**
      * @brief Actual UI state of application

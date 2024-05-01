@@ -1,3 +1,9 @@
+/**
+ * @file MainWindow.h
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implement main GUI class
+ */
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
