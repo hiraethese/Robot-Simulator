@@ -86,7 +86,10 @@ public:
     ~MainWindow();
 
 private:
-    //! Button slot to call when creating a new scheme
+    /**
+     * @brief Instance of core for synchro internal app process
+     * 
+     */
     Core* _core;
     /**
      * @brief Actual UI state of application

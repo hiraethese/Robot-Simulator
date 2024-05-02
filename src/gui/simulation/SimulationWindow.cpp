@@ -1,9 +1,16 @@
+/**
+ * @file SimulationWindow.cpp
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation class for buffer between main window and simulation scene
+
+ */
 #include "SimulationWindow.h"
 
 SimulationWindow::SimulationWindow(QWidget *parent)
     : QWidget{parent}
 {
-
+    // connect to core
     _core = Core::getInstance();
     _CreateSimGUI();
     _CreateSimulationsLayout();
@@ -166,23 +173,23 @@ void SimulationWindow::StopSimScene(){
 void SimulationWindow::keyPressEvent(QKeyEvent *event){
 
     if(_forwardMoveButton->isEnabled()){
-
-        if(event->key() == Qt::Key_W){
-
+        
+        if(event->key() == Qt::Key_W){  // controlled robot forward move
+        
             emit _forwardMoveButton->clicked();
 
         }
-        else if(event->key() == Qt::Key_A){
+        else if(event->key() == Qt::Key_A){  // controlled robot rotate counterclockwise
 
             emit _leftMoveButton->clicked();
 
         }
-        else if(event->key() == Qt::Key_D){
+        else if(event->key() == Qt::Key_D){  // controlled robot rotate clockwise
 
             emit _rightMoveButton->clicked();
 
         }
-        else if(event->key() == Qt::Key_S){
+        else if(event->key() == Qt::Key_S){  // controlled robot stop move
 
             emit _stopMoveButton->clicked();
 
@@ -210,6 +217,7 @@ ICP_CODE SimulationWindow::RemoveSimObjByOrderIndexSlot(int orderIndex, bool isR
 
 
 void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
+    // TODO : move to scene and delete in window
     emit UperClickSig(clickPoint);
     ICP_CODE check_creaing;
     SimObjView view;
