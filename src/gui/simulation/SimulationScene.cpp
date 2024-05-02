@@ -43,10 +43,10 @@ void SimulationScene::CleareSimulationScene(){
 
 void SimulationScene::mousePressEvent(QGraphicsSceneMouseEvent* event){
 
-    // request settings for simulation object by double right mouse click 
+    // create new simualtions objects display only by left click mouse button 
     if(event->button() == Qt::LeftButton){
 
-        // signalizate about it for SimulationWindow
+        // signalizate about it
         emit ClickSig(event->scenePos());
     }
 }
