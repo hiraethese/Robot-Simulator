@@ -114,7 +114,7 @@ SimObjView RobotSetting::GetSimObjView(){
     }
     int rotateClockwise;
     colors colorsCode;
-    if(_rotateClockwiseLabel->text() == _leftClockW){
+    if(_rotateClockwiseComboBox->currentText() == _leftClockW){
         rotateClockwise = -1;
     }
     else{
