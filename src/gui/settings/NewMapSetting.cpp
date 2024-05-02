@@ -9,6 +9,7 @@ NewMapSetting::NewMapSetting(QWidget* parent): QDialog(parent) {
     _newMapLabel = new QLabel("New map path: ", this);
     _newMapLine = new QLineEdit(this);
 
+    // connect button action with signal for sending
     _downloadButton = new QPushButton("Download", this);
     connect(_downloadButton, &QPushButton::clicked, this, [=](){emit DownloadSig();});
 
