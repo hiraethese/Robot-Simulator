@@ -21,10 +21,10 @@ clean: clean_pack
 	rm -rf logs doc/html doc/latex
 
 clean_pack:
-	rm -f xbatur00_xkukht01.zip
+	rm -f xbatur00-xkukht01.zip
 
 doxygen:
 	doxygen doc/Doxyfile
 
 pack: clean
-	zip -r xbatur00_xkukht01.zip src bin obj moc LICENSE Makefile README.txt icp2024.pro examples doc/Doxyfile
+	zip -r xbatur00-xkukht01.zip src bin obj moc LICENSE Makefile README.txt icp2024.pro examples res doc/Doxyfile
