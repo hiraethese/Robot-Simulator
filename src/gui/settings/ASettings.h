@@ -2,7 +2,7 @@
  * @file ASettings.h
  * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
  * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
- * @brief Header of abstract class for sim obj settings 
+ * @brief Header of abstract class for display settings simulations object 
  */
 #ifndef ASETTINGS_H
 #define ASETTINGS_H

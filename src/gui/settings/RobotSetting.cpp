@@ -1,3 +1,9 @@
+/**
+ * @file RobotSetting.cpp
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation of class for display settings robot simulations object
+ */
 #include "RobotSetting.h"
 
 RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, title){
@@ -33,7 +39,7 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
     _settingGridLayot->addWidget(_angleStepSpinBox, 3, 1);
 
     _angleDegreesLable = new QLabel("Angle direction (degree) : ", this);
-    _angleDegreesSpinBox = new QSpinBox(this);  // combox
+    _angleDegreesSpinBox = new QSpinBox(this);
     _angleDegreesSpinBox->setMinimum(0);
     _angleDegreesSpinBox->setMaximum(360);
     _settingGridLayot->addWidget(_angleDegreesLable, 4, 0);
@@ -59,6 +65,8 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
 
 
 void RobotSetting::DownloadDataFromView(SimObjView view, int orderIndex){
+    
+    // update data
     _orderIndex = orderIndex;
     _isControlled = view.isControlled;
     _isRobot = true;
@@ -92,28 +100,17 @@ void RobotSetting::DownloadDataFromView(SimObjView view, int orderIndex){
 }
 
 SimObjView RobotSetting::GetSimObjView(){
-    // TODO: delete this comment
-    /*float x;
-    float y;
-    float w;
-    float h;
-    float speed;
-    float collisionDistance;
-    int angleStep;
-    int angleDegrees;
+    
     int rotateClockwise;
-    colors color;
-    int orderIndex;
-    bool isControlled;
-    bool isRobot;*/
+    colors colorsCode;
+    
+    // convert data for sended forms
     if(_typeRobotComboBox->currentText() == _autoRobotString){
         _isControlled = false;
     }
     else{
         _isControlled = true;
     }
-    int rotateClockwise;
-    colors colorsCode;
     if(_rotateClockwiseComboBox->currentText() == _leftClockW){
         rotateClockwise = -1;
     }
@@ -123,6 +120,9 @@ SimObjView RobotSetting::GetSimObjView(){
     if(!convertColorsStringToCode(_colorComboBox->currentText().toStdString(), &colorsCode)){
         colorsCode = RED;
     }
+
+
+    // get updated information about simulation object
     return  {
             0.0,
             0.0,
@@ -144,7 +144,9 @@ SimObjView RobotSetting::GetSimObjView(){
 
 
 void RobotSetting::ChangeEnablingOfSettingsObjects(bool flag){
+    // call methof from base class
     ASettings::ChangeEnablingOfSettingsObjects(flag);
+    // upd enabling of type robots changing 
     _typeRobotComboBox->setEnabled(flag);
 }
 

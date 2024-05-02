@@ -1,8 +1,14 @@
+/**
+ * @file WallSetting.cpp
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation class for display settings wall simulations object
+ */
 #include "WallSetting.h"
 
 WallSetting::WallSetting(QWidget* parent, QString title):ASettings(parent, title) {
 
-    _isRobot = false;  // after deleted
+    _isRobot = false;  // TODO: after deleted
 
     _heightLabel = new QLabel("Height : ", this);
     _heightSpinBox = new QSpinBox(this);
@@ -26,6 +32,8 @@ WallSetting::WallSetting(QWidget* parent, QString title):ASettings(parent, title
 
 
 void WallSetting::DownloadDataFromView(SimObjView view, int orderIndex){
+    
+    // upd information about simulation object
     _orderIndex = orderIndex;
     _heightSpinBox->setValue(view.h);
     _widthSpinBox->setValue(view.w);
@@ -33,23 +41,14 @@ void WallSetting::DownloadDataFromView(SimObjView view, int orderIndex){
 }
 
 SimObjView WallSetting::GetSimObjView(){
-    /*float x;
-    float y;
-    float w;
-    float h;
-    float speed;
-    float collisionDistance;
-    int angleStep;
-    int angleDegrees;
-    int rotateClockwise;
-    colors color;
-    int orderIndex;
-    bool isControlled;
-    bool isRobot;*/
+
+    // convert colors string to code
     colors colorsCode;
     if(!convertColorsStringToCode(_colorComboBox->currentText().toStdString(), &colorsCode)){
         colorsCode = BLACK;
     }
+
+    // get updated information about simulation object
     return  {
         0.0,
         0.0,

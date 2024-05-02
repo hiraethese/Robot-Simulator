@@ -1,5 +1,5 @@
 /**
- * @file NeMapSetting.h
+ * @file NewMapSetting.h
  * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
  * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
  * @brief Header of class for stroing users input file name in GUI 

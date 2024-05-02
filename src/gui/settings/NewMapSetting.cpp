@@ -1,3 +1,9 @@
+/**
+ * @file NewMapSetting.h
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation class for stroing users input file name in GUI 
+ */
 #include "NewMapSetting.h"
 
 NewMapSetting::NewMapSetting(QWidget* parent): QDialog(parent) {
