@@ -1,3 +1,9 @@
+/**
+ * @file InfoNotification.cpp
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation class for warning notifications
+ */
 #include "InfoNotification.h"
 
 void InfoNotification::_WarningMsg(ICP_CODE code){
@@ -30,6 +36,7 @@ void InfoNotification::_WarningMsg(ICP_CODE code){
         QMessageBox::warning(nullptr, "Error", "Problem with synchronization between core and gui, requested object is not founded in GUI!");
         break;
     default:
+        QMessageBox::warning(nullptr, "Error", "Unexpected errors!");
         break;
     }
 }
