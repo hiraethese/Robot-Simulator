@@ -18,16 +18,16 @@ MainWindow::MainWindow(QWidget *parent)
     QApplication::setApplicationDisplayName("ICP2024");
     setWindowTitle("ICP2024");
     setStyleSheet("background-color: lightgray;");
-    _core = Core::getInstance();
+    _core = Core::getInstance();  // connect to core
 
-    _CreateAppWindows();
+    _CreateAppWindows();  // init all GUi part items of app
 }
 
 
 MainWindow::~MainWindow()
 {
 
-    _DeleteAppWindows();
+    _DeleteAppWindows();  // delete all GUI part items of app
     delete ui;
 
 }
@@ -70,12 +70,12 @@ void MainWindow::_CreateTools(){
 
 void MainWindow::_DeleteTools(){
 
-    if(_actualPage == SimulationPage){
+    if(_actualPage == SimulationPage){  // if actual page is simualtion mode
 
         _DeleteSimModeTools();
 
     }
-    else{
+    else{  // if actual page is build mode
 
         _DeleteBuildModeTools();
 
@@ -97,21 +97,27 @@ void MainWindow::_CreateMenu(){
 
     templatesSubMenu = appMenu->addMenu("Templates");
 
+    // connect to loading and showing settings info about controlled robots
     buildControlledRobotTemplate = templatesSubMenu->addAction("Controlled robot");
     connect(buildControlledRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetControlledRobotTemp(), -1);_robotSetWind->ChangeEnablingOfSettingsObjects(false); _robotSetWind->exec();});
 
+    // connect to loading and showing settings info about automated robots
     buildAutoRobotTemplate = templatesSubMenu->addAction("Automated robot");
     connect(buildAutoRobotTemplate, &QAction::triggered, this, [=](){_robotSetWind->DownloadDataFromView(_core->GetAutomatedRobotTemp(), -1); _robotSetWind->ChangeEnablingOfSettingsObjects(false);_robotSetWind->exec();});
 
+    // connect to loading and showing settings info about wall
     buildWallTemplate = templatesSubMenu->addAction("Wall");
     connect(buildWallTemplate, &QAction::triggered, this, [=](){_wallSetWind->DownloadDataFromView(_core->GetWallTemp(), -1);_wallSetWind->ChangeEnablingOfSettingsObjects(false);_wallSetWind->exec();});
 
+    // connect to switching mode to simulation
     simulationModeAction = appMenu->addAction("Simulation");
     connect(simulationModeAction, &QAction::triggered, this, &MainWindow::_CreateSimModeSlot);
 
+    // connect to switching mode to build
     buildMapModeAction = appMenu->addAction("Build map");
     connect(buildMapModeAction, &QAction::triggered, this, &MainWindow::_CreateBuildMapModeSlot);
 
+    // connect to loading specification map file
     downloadNewModeMapAction = appMenu->addAction("Download map");
     connect(downloadNewModeMapAction, &QAction::triggered, this, [=](){_simulationWind->StopSimScene();_newMapWind->exec();});
 
@@ -137,11 +143,11 @@ void MainWindow::_CreateSimModeSlot(){
 
     setWindowTitle("Simulation");
 
-    if(_actualPage != SimulationPage){
+    if(_actualPage != SimulationPage){  // refresh if is not simulation
 
         _DeleteBuildModeTools();
         _CreateSimModeTools();
-        _simulationWind->SwitchBetweenSimAndBuild(false);
+        _simulationWind->SwitchBetweenSimAndBuild(false); 
         _actualPage = SimulationPage;
 
     }
@@ -150,6 +156,7 @@ void MainWindow::_CreateSimModeSlot(){
 
 void MainWindow::_CreateSimModeTools(){
 
+    // conect to launcher of simulation runnig
     _runSimulationAction = new QAction(QIcon(":/icons/playTool.png"), "&Run", this);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
 
@@ -188,12 +195,13 @@ void MainWindow::_DeleteSimModeTools(){
 
 
 void MainWindow::_HelpTextToolActionSlot(){
-    // !!! need add help text for users interface actions
+    // TODO: need add help text for users interface actions
     QMessageBox::about(this, "Help", "<b>This place will be for help users text!</b>");
 }
 
 void MainWindow::_RunSimulationActionSlot(){
 
+    // change functional button to simulation stop
     disconnect(_runSimulationAction, 0, 0, 0);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_PauseSimulationActionSlot);
     _runSimulationAction->setIcon(QIcon(":/icons/pauseTool.svg"));
@@ -203,13 +211,16 @@ void MainWindow::_RunSimulationActionSlot(){
 
     _simulationWind->setFocus();
 
+    // run simulation
     _simulationWind->RunSimScene();
 
 }
 
 void MainWindow::_PauseSimulationActionSlot(){
-
+    // stop simulation
     _simulationWind->StopSimScene();
+    
+    // change functional button to simulation run
     disconnect(_runSimulationAction, 0, 0, 0);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_RunSimulationActionSlot);
     _runSimulationAction->setIcon(QIcon(":/icons/playTool.png"));
@@ -227,9 +238,9 @@ void MainWindow::_CreateSimulationWindow(){
 
     _simulationWind = new SimulationWindow(this);
     setCentralWidget(_simulationWind);
-    // show actual click of user
+    // connect to show actual click of user (build mode)
     connect(_simulationWind, &SimulationWindow::UperClickSig, this, [=](QPointF clickPoint){_xCursorTouchLine->setText(QString("%1").arg(clickPoint.x()));_yCursorTouchLine->setText(QString("%1").arg(clickPoint.y()));});
-    // request sim obj from scene to core
+    // connect to request sim obj from scene to core  (build mode)
     connect(_simulationWind, &SimulationWindow::RequestSimObjSig, this, &MainWindow::_RequestSimObjSlot);
     // wait from sim wind errors codes
     connect(_simulationWind, &SimulationWindow::UperErrorCodeSig, this, [=](ICP_CODE err_code){_WarningMsg(err_code);});
@@ -239,20 +250,23 @@ void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
     std::cout << "Order index: " << orderIndex << "; is Robot: " << isRobot << std::endl;
     ICP_CODE ret;
     SimObjView view;
+
+    // request from core info about simulation object
     ret = _core->GetViewByOrderGUI(&view, orderIndex, isRobot);
 
     std::cout << "Test2: " << view.h << " " << view.color << std::endl;
-    if(ret != CODE_OK){
+    
+    if(ret != CODE_OK){  // if not find or smth error
         _WarningMsg(ret);
     }
-    else{
-        if(isRobot){
+    else{  // find
+        if(isRobot){  // if robot object
             // download data about sim obj to settings window
             _robotSetWind->DownloadDataFromView(view, orderIndex);  // TODO: order index get to cor request
             _robotSetWind->ChangeEnablingOfSettingsObjects(true);
             _robotSetWind->exec();
         }
-        else{
+        else{  // if wall object
             // download data about sim obj to settings window
             _wallSetWind->DownloadDataFromView(view, orderIndex);  // TODO: order index get to cor request
             _wallSetWind->ChangeEnablingOfSettingsObjects(true);
@@ -266,38 +280,38 @@ void MainWindow::_UpdateSimObjSlot(SimObjView view){
     if(view.orderIndex == -1){  // update tamplates
         if(view.isRobot){
             if(view.isControlled){
-                _core->SetControlledRobotTemp(view);
+                _core->SetControlledRobotTemp(view);  // upd
             }
             else{
-                _core->SetAutomatedRobotTemp(view);
+                _core->SetAutomatedRobotTemp(view);  // upd
             }
         }
         else{
-            _core->SetWallTemp(view);
+            _core->SetWallTemp(view);  // upd
         }
     }
-    else{  // update obj
+    else{  // update simulation obj
         ICP_CODE ret;
         if(view.isRobot){
 
-            ret = _core->UpdateRobotState(view);
+            ret = _core->UpdateRobotState(view);  //  upd
 
         }
         else{
 
-            ret = _core->UpdateWallState(view);
+            ret = _core->UpdateWallState(view);  // upd
 
         }
 
-        if(ret != CODE_OK){  // if unsuccessfull updation
+        if(ret != CODE_OK){  // if unsuccessfull upd
 
             _WarningMsg(ret);
 
         }
-        else{  // update GUI after CORE
+        else{  // upd GUI after CORE
 
-            ret = _simulationWind->UpdateSimObjGuiState(view.orderIndex, view.isRobot);
-            if(ret != CODE_OK){
+            ret = _simulationWind->UpdateSimObjGuiState(view.orderIndex, view.isRobot);  // upd
+            if(ret != CODE_OK){  // if unsuccessfull upd
                 _WarningMsg(ret);
             }
         }
@@ -308,29 +322,29 @@ void MainWindow::_UpdateSimObjSlot(SimObjView view){
 
 void MainWindow::_DeleteSimObjSlot(SimObjView view){
 
-    if(view.orderIndex != -1){
+    if(view.orderIndex != -1){  // if not template
         ICP_CODE ret;
         if(view.isRobot){
         
-            ret = _core->RemoveRobotByOrderIndex(view.orderIndex);
+            ret = _core->RemoveRobotByOrderIndex(view.orderIndex);  // del from core
         
         }
         else{
         
-            ret = _core->RemoveWallByOrderIndex(view.orderIndex);
+            ret = _core->RemoveWallByOrderIndex(view.orderIndex);  // del from core
         
         }
         
-        if(ret != CODE_OK){
+        if(ret != CODE_OK){  // if unsuccessful del
 
             _WarningMsg(ret);
         
         }   
         else{
         
-            ret = _simulationWind->RemoveSimObjByOrderIndexSlot(view.orderIndex, view.isRobot);
+            ret = _simulationWind->RemoveSimObjByOrderIndexSlot(view.orderIndex, view.isRobot);  // del from gui
 
-            if(ret != CODE_OK){
+            if(ret != CODE_OK){  // if unsuccessful del
                 
                 _WarningMsg(ret);
 
@@ -341,13 +355,12 @@ void MainWindow::_DeleteSimObjSlot(SimObjView view){
 
 }
 
-// ************************************  PART BUILD MODE    *********************************************************
 
 void MainWindow::_CreateBuildMapModeSlot(){
 
     setWindowTitle("Build map");
 
-    if(_actualPage != BuildPage){
+    if(_actualPage != BuildPage){  // refresh if pervuse is not build mode
 
         _DeleteSimModeTools();
         _CreateBuildModeTools();
@@ -360,12 +373,15 @@ void MainWindow::_CreateBuildMapModeSlot(){
 
 void MainWindow::_CreateBuildModeTools(){
 
+    // connect to setting cursor to creation new controlled robots
     _buildControlRobotAction = new QAction(QIcon(":/icons/userRobotTool.png"), "Controlled robot", this);
     connect(_buildControlRobotAction, &QAction::triggered, this, [=](){_simulationWind->buildModeStatus = ControllRobotStatus;_statusModeLine->setText("Build controlled robot");});
 
+    // connect to setting cursor to creation new automatic robots
     _buildAutoRobotAction = new QAction(QIcon(":/icons/botRobotTool.png"), "Automatic robot", this);
     connect(_buildAutoRobotAction, &QAction::triggered, this, [=](){_simulationWind->buildModeStatus = AutoRobotStatus; _statusModeLine->setText("Build automatic robots");});
 
+    // connect to setting cursor to creation new wall
     _buildWallAction = new QAction(QIcon(":/icons/wallTool.png"), "Wall", this);
     connect(_buildWallAction, &QAction::triggered, this, [=](){_simulationWind->buildModeStatus = WallStatus;_statusModeLine->setText("Build walls");});
 
@@ -374,6 +390,7 @@ void MainWindow::_CreateBuildModeTools(){
     _engineBuildToolBar->addAction(_buildAutoRobotAction);
     _engineBuildToolBar->addAction(_buildWallAction);
 
+    // actual user clicl on OX-OY
     _engineCursorToolBar = addToolBar("engineCursor");
     _xCursorTouchLab = new QLabel("X");
     _xCursorTouchLine = new QLineEdit();
@@ -388,6 +405,7 @@ void MainWindow::_CreateBuildModeTools(){
     _engineCursorToolBar->addWidget(_yCursorTouchLab);
     _engineCursorToolBar->addWidget(_yCursorTouchLine);
 
+    // actual created sim obj type
     _statusModeBuildToolBar = addToolBar("statusModeBuild");
     _statusModeLabel = new QLabel("Build mode: ");
     _statusModeBuildToolBar->addWidget(_statusModeLabel);
@@ -426,17 +444,18 @@ void MainWindow::_DeleteBuildModeTools(){
 }
 
 
-// ************************************  PART SETTINGS MODE    *********************************************************
-
 void MainWindow::_CreateSettings(){
 
+    // connect to given new map value to core and check result loading
     _newMapWind = new NewMapSetting(this);
     connect(_newMapWind, &NewMapSetting::DownloadSig, this, &MainWindow::_PushNewMapToCoreSlot);
 
+    // connect to given core information about upd/del sim robot from gui to core and check it
     _robotSetWind = new RobotSetting(this, "Robot settings");
     connect(_robotSetWind, &RobotSetting::SetSig, this, &MainWindow::_UpdateSimObjSlot);
     connect(_robotSetWind, &RobotSetting::DeleteSig, this, &MainWindow::_DeleteSimObjSlot);
 
+    // connect to given core information about upd/del wall from gui to core and check it
     _wallSetWind = new WallSetting(this, "Wall settings");
     connect(_wallSetWind, &WallSetting::SetSig, this, &MainWindow::_UpdateSimObjSlot);
     connect(_wallSetWind, &WallSetting::DeleteSig, this, &MainWindow::_DeleteSimObjSlot);
@@ -447,13 +466,16 @@ void MainWindow::_CreateSettings(){
 
 void MainWindow::_PushNewMapToCoreSlot(){
     
+    // del all from prevuse map
     emit _simulationWind->CleareSimulationSceneSig();
-
-    ICP_CODE code = _core->LoadingMap(_newMapWind->GetNewMapPath());  // call loading map and creating new sim obj
+    
+    // call loading map and creating new sim obj in core side
+    ICP_CODE code = _core->LoadingMap(_newMapWind->GetNewMapPath());
 
     if(code == CODE_OK){  // ok
-
-        emit _simulationWind->LoadSimSceneSig();  // draw new obj
+        
+        // draw new obj
+        emit _simulationWind->LoadSimSceneSig();
 
     }
     else {  // err and info user about it
