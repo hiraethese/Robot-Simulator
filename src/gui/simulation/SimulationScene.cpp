@@ -1,25 +1,36 @@
+/**
+ * @file SimulationScene.cpp
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation class for simulation scene
+ */
 #include "SimulationScene.h"
 
 SimulationScene::SimulationScene(QObject *parent)
     : QGraphicsScene{parent}
 {
+    // connect to core
     _core = Core::getInstance();
-    connect(&_simTimer, &QTimer::timeout, this, &SimulationScene::_OneSimFrameSlot);
+    
     setBackgroundBrush(getBrushByCode(WHITE));
+
+    // when timer have timeout -> make new animations frame
+    connect(&_simTimer, &QTimer::timeout, this, &SimulationScene::_OneSimFrameSlot);
+    // when client request settings about simulation scene -> send it to SimulationWindow
     connect(&_conn, &ConnectorGUI::connectSig, this, [=](int orderIndex, bool isRobot){emit RequestSimObjSig(orderIndex, isRobot);});
 }
 
 void SimulationScene::CleareSimulationScene(){
 
 
-    for(auto robot: _robotsGUIVector){
+    for(auto robot: _robotsGUIVector){  // remove every robots display
 
         removeItem(robot);
         delete robot;
     }
 
 
-    for(auto wall: _wallsGUIVector){
+    for(auto wall: _wallsGUIVector){  // remove every wall display
 
         removeItem(wall);
         delete wall;
@@ -32,8 +43,10 @@ void SimulationScene::CleareSimulationScene(){
 
 void SimulationScene::mousePressEvent(QGraphicsSceneMouseEvent* event){
 
+    // request settings for simulation object by double right mouse click 
     if(event->button() == Qt::LeftButton){
 
+        // signalizate about it for SimulationWindow
         emit ClickSig(event->scenePos());
     }
 }
@@ -41,29 +54,35 @@ void SimulationScene::mousePressEvent(QGraphicsSceneMouseEvent* event){
 
 void SimulationScene::InitSimRun(){
 
+    // one animations frame interval init
     _simTimer.start(1000 / 60);
 
 }
 
 void SimulationScene::StopSimRun(){
 
+    // stop animation
     _simTimer.stop();
 
 }
 
 void SimulationScene::LoadSimObj(){
 
+    // delete previous simulations objects displays
     CleareSimulationScene();
 
+    // store view of actual simulations objects from core
     std::vector<SimObjView> robotsView = _core->GetVectorRobotsView();
     std::vector<SimObjView> wallsView = _core->GetVectorWallsView();
 
+    // init and push new robots displays
     for(SimObjView robot: robotsView){
 
         PushNewRobotToMap(robot);
 
     }
 
+    // init and push new walls displays
     for(SimObjView wall: wallsView){
 
         PushNewWallToMap(wall);
@@ -73,66 +92,83 @@ void SimulationScene::LoadSimObj(){
 
 void SimulationScene::_OneSimFrameSlot(){
 
+    // signal about moving all object on new animations frame
     _core->MoveAllObjects();
 
+    // call new view for every robots from core
     std::vector<SimObjView> robotsView = _core->GetVectorRobotsView();
 
     for(long unsigned int i = 0; i < _robotsGUIVector.size(); i++){  // TODO: raise EXCEPTION when not simular size of gui and view vector
 
         std::cout << robotsView[i].x <<" "<< robotsView[i].y << std::endl;
 
+        // update position for every robot
         _robotsGUIVector[i]->setPos(robotsView[i].x_GUI, robotsView[i].y_GUI);
 
     }
-    update();  // TODO: maybe yes maybe not...
+    // update simulation scene
+    update();
 
 }
 
 RobotGUI* SimulationScene::_CreateNewRobotGui(SimObjView view){
-
+    // create new robot
     RobotGUI* newRobot = new RobotGUI(0, 0, view.w, view.h, &_conn, view.orderIndex);
+    // set new pen for form
     newRobot->setPen(getPen());
+    // set new color
     newRobot->setBrush(getBrushByCode(view.color));
+    // set start position
     newRobot->setPos(view.x_GUI, view.y_GUI);
+    // insert new robot to scene
     addItem(newRobot);
+    // update scene
     update();
     return newRobot;
 
 }
 
 WallGUI* SimulationScene::_CreateNewWallGUI(SimObjView view){
-
+    // create new wall
     WallGUI* newWall = new WallGUI(0, 0, view.w, view.h, &_conn, view.orderIndex);
+    // set new pen for form
     newWall->setPos(view.x_GUI,view.y_GUI);
+    // set new color
     newWall->setPen(getPen());
+    // set position
     newWall->setBrush(getBrushByCode(view.color));
+    // insert new robot to scene
     addItem(newWall);
+    // update scene
     update();
     return newWall;
 }
 
 void SimulationScene::PushNewRobotToMap(SimObjView view){
-    
+    // create new robots display
     RobotGUI* newRobot = _CreateNewRobotGui(view); 
+    // push on vector
     _robotsGUIVector.push_back(newRobot);
 
 }
 
 
 void SimulationScene::PushNewWallToMap(SimObjView view){
-
+    // create new walls display
     WallGUI* newWall = _CreateNewWallGUI(view);
+    // push on vector
     _wallsGUIVector.push_back(newWall);
 
 }
 
 std::vector<RobotGUI*>::iterator SimulationScene::_GetRobotByOrderIndex(int orderIndex){
-
+    
     auto it = _robotsGUIVector.begin();
 
     while(it != _robotsGUIVector.end()){
-
+        
         if((*it)->GetOrderIndex() == orderIndex){
+            // find robots display by order index
             return it;
         }
 
@@ -151,6 +187,7 @@ std::vector<WallGUI*>::iterator SimulationScene::_GetWallByOrderIndex(int orderI
     while( it != _wallsGUIVector.end()){
 
         if((*it)->GetOrderIndex() == orderIndex){
+            // find walls display by order index
             return it;
         }
 
@@ -163,12 +200,15 @@ std::vector<WallGUI*>::iterator SimulationScene::_GetWallByOrderIndex(int orderI
 
 
 ICP_CODE SimulationScene::RemoveRobotByOrderIndex(int orderIndex){
-
+    // search robots display
     auto itRobotToRemove = _GetRobotByOrderIndex(orderIndex);
+    // if find
     if(itRobotToRemove != _robotsGUIVector.end()){
 
         RobotGUI* robotToRemove = *itRobotToRemove;
+        // cut from vector
         _robotsGUIVector.erase(itRobotToRemove);
+        // delete from scene
         removeItem(robotToRemove);
         delete robotToRemove;
 
@@ -180,12 +220,15 @@ ICP_CODE SimulationScene::RemoveRobotByOrderIndex(int orderIndex){
 }
 
 ICP_CODE SimulationScene::RemoveWallByOrderIndex(int orderIndex){
-
+    // search wall display
     auto itWallToRemove = _GetWallByOrderIndex(orderIndex);
+    // if find
     if(itWallToRemove != _wallsGUIVector.end()){
 
         WallGUI* wallToRemove = *itWallToRemove;
+        // cur from vector
         _wallsGUIVector.erase(itWallToRemove);
+        // delete from scene
         removeItem(wallToRemove);
         delete wallToRemove;
 
@@ -197,27 +240,34 @@ ICP_CODE SimulationScene::RemoveWallByOrderIndex(int orderIndex){
 
 ICP_CODE SimulationScene::UpdateSimObjGuiState(int orderIndex, bool isRobot){
     SimObjView view;
+    // search view simulations object to updating
     _core->GetViewByOrderGUI(&view, orderIndex, isRobot);
-    if(isRobot){  // update robot
+    if(isRobot){  // update robots display
+        // find display in vector
         auto itRobotForUpd = _GetRobotByOrderIndex(orderIndex);
         if(itRobotForUpd != _robotsGUIVector.end()){
-            //RobotGUI* robotForUpd = *itRobotForUpd;
+            // delete robots display from scene
             removeItem(*itRobotForUpd);
             delete *itRobotForUpd;
+            // reinit with new view
             *itRobotForUpd = _CreateNewRobotGui(view);
             return CODE_OK;
         }
 
     }
-    else{  // update wall
+    else{  // update walls display
+        // find display in vector
         auto itWallForUpd = _GetWallByOrderIndex(view.orderIndex);
         if(itWallForUpd != _wallsGUIVector.end()){
+            // delete walls display from scene
             removeItem(*itWallForUpd);
             delete *itWallForUpd;
+            // reinit with new view
             *itWallForUpd = _CreateNewWallGUI(view);
             return CODE_OK;
         }
 
     }
+
     return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_GUI;
 }
