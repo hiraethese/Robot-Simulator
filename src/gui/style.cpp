@@ -1,6 +1,13 @@
+/**
+ * @file MainWindow.h
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implement of helpful function for frontend styling
+ */
 #include "style.h"
 
 QBrush getBrushByCode(colors colorCode){
+    // declare all base colors for sim obj
     QBrush redBrush(Qt::red);
     QBrush yellowBrush(Qt::yellow);
     QBrush greenBrush(Qt::green);
@@ -9,6 +16,7 @@ QBrush getBrushByCode(colors colorCode){
     QBrush grayBrush(Qt::gray);
     QBrush blackBrush(Qt::black);
 
+    // find correct brush for colors code
     switch (colorCode) {
     case WHITE:
         return whiteBrush;
@@ -38,6 +46,7 @@ QPen getPen(){
 
 // TODO: check error code
 std::string getColorString(colors colorsCode){
+    // conv code
     switch (colorsCode) {
     case WHITE:
         return "white";
@@ -60,8 +69,11 @@ std::string getColorString(colors colorsCode){
 }
 
 bool convertColorsStringToCode(std::string colorsString, colors* colorsCode) {
+    // for low/high litterals
     for (char& colorsChar : colorsString) colorsChar = std::toupper(colorsChar);
+
     std::cout << "COLOR: " << colorsString << std::endl;
+    // convert    
     if (colorsString == "WHITE") *colorsCode = WHITE;
     else if (colorsString == "BLACK") *colorsCode = BLACK;
     else if (colorsString == "BLUE") *colorsCode = BLUE;
@@ -70,7 +82,9 @@ bool convertColorsStringToCode(std::string colorsString, colors* colorsCode) {
     else if (colorsString == "GRAY") *colorsCode = GRAY;
     else if (colorsString == "RED") *colorsCode = RED;
     else if (colorsString == "BLACK") *colorsCode = BLACK;
-    else return false;
+    else return false;  // not convert
+    
+    
     return true;
 }
 
