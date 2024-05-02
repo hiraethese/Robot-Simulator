@@ -8,6 +8,8 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <algorithm>
+#include <cctype>
 #include "../style.h"
 
 class NewMapSetting : public QDialog

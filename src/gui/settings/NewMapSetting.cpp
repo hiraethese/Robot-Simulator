@@ -20,7 +20,13 @@ NewMapSetting::NewMapSetting(QWidget* parent): QDialog(parent) {
 
 
 std::string NewMapSetting::GetNewMapPath(){
+    // store actual new path to map specification
+    std::string pathToMap = _newMapLine->text().toStdString();
+    
+    // cut white spaces from start and end of path line
+    pathToMap.erase(pathToMap.begin(), std::find_if(pathToMap.begin(), pathToMap.end(), [](unsigned char ch) {return !std::isspace(ch);}));
+    pathToMap.erase(std::find_if(pathToMap.rbegin(), pathToMap.rend(), [](unsigned char ch) {return !std::isspace(ch);}).base(), pathToMap.end());
 
-    return _newMapLine->text().toStdString();
+    return pathToMap;
 
 }
