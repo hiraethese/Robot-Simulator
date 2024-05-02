@@ -23,7 +23,7 @@ clean: clean_pack
 clean_pack:
 	rm -f xbatur00_xkukht01.zip
 
-doxygen:clean
+doxygen:
 	doxygen doc/Doxyfile
 
 pack: clean
