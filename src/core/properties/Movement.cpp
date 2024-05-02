@@ -225,6 +225,7 @@ void Movement::MoveControlledRobot(int orderIndex)
         newPosition.y = map_height - radius;
     }
 
+    // New value
     _transform->SetPosition(newPosition);
 }
 
@@ -334,23 +335,32 @@ void Movement::MoveAutomatedRobot(int orderIndex)
         }
     }
 
+    // New angle for automated robot
+    float newAngleDegrees = _angleDegrees;
+
     // Check map boundaries
     if (newPosition.x - radius < 0)
     {
         newPosition.x = radius;
+        newAngleDegrees = 180 - newAngleDegrees;
     }
     if (newPosition.x + radius > map_width)
     {
         newPosition.x = map_width - radius;
+        newAngleDegrees = 180 - newAngleDegrees;
     }
     if (newPosition.y - radius < 0)
     {
         newPosition.y = radius;
+        newAngleDegrees = -newAngleDegrees;
     }
     if (newPosition.y + radius > map_height)
     {
         newPosition.y = map_height - radius;
+        newAngleDegrees = -newAngleDegrees;
     }
 
+    // New values
     _transform->SetPosition(newPosition);
+    SetAngleDegrees(newAngleDegrees + 360);
 }
