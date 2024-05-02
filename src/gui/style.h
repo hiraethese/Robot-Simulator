@@ -1,5 +1,5 @@
 /**
- * @file MainWindow.h
+ * @file style.h
  * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
  * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
  * @brief Header of helpful function for frontend styling
