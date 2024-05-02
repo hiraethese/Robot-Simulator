@@ -1,16 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>icons/helpTool.png</file>
-        <file>icons/newMapTool.png</file>
-        <file>icons/listOfMapTool.png</file>
         <file>icons/settingsTool.png</file>
         <file>icons/playTool.png</file>
         <file>icons/pauseTool.svg</file>
-        <file>icons/restartTool.png</file>
         <file>icons/botRobotTool.png</file>
         <file>icons/userRobotTool.png</file>
         <file>icons/cursorTool.png</file>
         <file>icons/wallTool.png</file>
-        <file>icons/hummerTool.png</file>
     </qresource>
 </RCC>
