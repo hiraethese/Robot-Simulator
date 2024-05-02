@@ -2,12 +2,9 @@
 2) clean code, check delete;
 4) improve API with sim obj;  50%/100%
 5) check synch all constants from core to gui
-6) defult path is from core to downlaoud window
 7) clean all notudes images
-8) check created directory (obj, build) in ../icp2024
 9) makefile
 10) doc
-11) doxygen
 x) ... =)
 
 
