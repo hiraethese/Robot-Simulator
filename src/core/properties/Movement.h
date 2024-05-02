@@ -37,8 +37,8 @@ public:
     void RotateAutomatedRobot();
     void RotateRight();
     void RotateLeft();
-    void MoveControlledRobot();
-    void MoveAutomatedRobot();
+    void MoveControlledRobot(int orderIndex);
+    void MoveAutomatedRobot(int orderIndex);
 };
 
 #endif // MOVEMENT_H

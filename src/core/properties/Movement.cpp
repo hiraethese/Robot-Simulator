@@ -116,7 +116,7 @@ void Movement::DisableMovement()
     _isEnabled = false;
 }
 
-void Movement::MoveControlledRobot()
+void Movement::MoveControlledRobot(int orderIndex)
 {
     // 1) Calculate direction
 
@@ -135,11 +135,13 @@ void Movement::MoveControlledRobot()
 
     // 2) Move with direction
 
-    Core* core = Core::getInstance();
-    const std::vector<Wall*>& walls = core->GetVectorWalls();
+    // Note: vector from argument is include error from core
+    Core* _core = Core::getInstance();
+    const std::vector<Wall*> &walls = _core->GetVectorWalls();
+    const std::vector<Robot*> &robots = _core->GetVectorRobots();
 
-    int map_width = core->GetMapWidth();
-    int map_height = core->GetMapHeight();
+    int map_width = _core->GetMapWidth();
+    int map_height = _core->GetMapHeight();
 
     Vector2d position = _transform->GetPosition();
     Vector2d size = _transform->GetSize();
@@ -149,16 +151,34 @@ void Movement::MoveControlledRobot()
     // Calculate new estimated position
     Vector2d newPosition = position + direction;
 
-    // Check for collision with walls
+    // Check for collisions with other robots
+    for (Robot* robot : robots)
+    {
+        // If it is not the same robot
+        if ( robot->GetOrderIndex() != orderIndex )
+        {
+            Vector2d robotPosition = robot->GetTransform()->GetPosition();
+            Vector2d robotSize = robot->GetTransform()->GetSize();
+            float robotRadius = std::max(robotSize.x, robotSize.y) * 0.5f;
+
+            if ( CircCircCollision(newPosition, radius, robotPosition, robotRadius) )
+            {
+                Vector2d directionToRobot = robotPosition - position;
+                float distanceToRobot = directionToRobot.getLength();
+                float distanceToTouch = distanceToRobot - radius - robotRadius;
+                directionToRobot.Normalize();
+                newPosition = position + directionToRobot * distanceToTouch;
+            }
+        }
+    }
+
+    // Check for collisions with all walls
     for (Wall* wall : walls)
     {
         Vector2d wallPosition = wall->GetTransform()->GetPosition();
         Vector2d wallSize = wall->GetTransform()->GetSize();
 
-        if (newPosition.x + radius >= wallPosition.x - wallSize.x * 0.5f &&
-            newPosition.x - radius <= wallPosition.x + wallSize.x * 0.5f &&
-            newPosition.y + radius >= wallPosition.y - wallSize.y * 0.5f &&
-            newPosition.y - radius <= wallPosition.y + wallSize.y * 0.5f)
+        if ( CircRectCollision(newPosition, radius, wallPosition, wallSize) )
         {
             if         (newPosition.x < wallPosition.x &&
                         newPosition.y < wallPosition.y + wallSize.y * 0.5f &&
@@ -208,7 +228,7 @@ void Movement::MoveControlledRobot()
     _transform->SetPosition(newPosition);
 }
 
-void Movement::MoveAutomatedRobot()
+void Movement::MoveAutomatedRobot(int orderIndex)
 {
     // 1) Calculate direction
 
@@ -221,11 +241,13 @@ void Movement::MoveAutomatedRobot()
 
     // 2) Move with direction
 
-    Core* core = Core::getInstance();  // TODO: better if dont create core but have vectors from arg
-    const std::vector<Wall*>& walls = core->GetVectorWalls();
+    // Note: vector from argument is include error from core
+    Core* _core = Core::getInstance();
+    const std::vector<Wall*> &walls = _core->GetVectorWalls();
+    const std::vector<Robot*> &robots = _core->GetVectorRobots();
 
-    int map_width = core->GetMapWidth();
-    int map_height = core->GetMapHeight();
+    int map_width = _core->GetMapWidth();
+    int map_height = _core->GetMapHeight();
 
     Vector2d position = _transform->GetPosition();
     Vector2d size = _transform->GetSize();
@@ -235,10 +257,31 @@ void Movement::MoveAutomatedRobot()
     // Calculate new estimated position
     Vector2d newPosition = position + direction;
 
+    // Check for collisions with other robots
+    for (Robot* robot : robots)
+    {
+        // If it is not the same robot
+        if ( robot->GetOrderIndex() != orderIndex )
+        {
+            Vector2d robotPosition = robot->GetTransform()->GetPosition();
+            Vector2d robotSize = robot->GetTransform()->GetSize();
+            float robotRadius = std::max(robotSize.x, robotSize.y) * 0.5f;
+
+            if ( CircCircCollision(newPosition, radius, robotPosition, robotRadius) )
+            {
+                Vector2d directionToRobot = robotPosition - position;
+                float distanceToRobot = directionToRobot.getLength();
+                float distanceToTouch = distanceToRobot - radius - robotRadius;
+                directionToRobot.Normalize();
+                newPosition = position + directionToRobot * distanceToTouch;
+            }
+        }
+    }
+
     // Track whether rotation function has been called for each wall
     std::unordered_map<Wall*, bool> zoneRotationCalled;
 
-    // Check for collisions
+    // Check for collisions with all walls
     for (Wall* wall : walls)
     {
         Vector2d wallPosition = wall->GetTransform()->GetPosition();
@@ -247,9 +290,9 @@ void Movement::MoveAutomatedRobot()
 
         // 3) Check for collision zone
 
-        if (CircRectCollision(newPosition, radius, wallPosition, collisionZone))
+        if ( CircRectCollision(newPosition, radius, wallPosition, collisionZone) )
         {
-            if (!zoneRotationCalled[wall])
+            if ( !zoneRotationCalled[wall] )
             {
                 RotateAutomatedRobot();
                 zoneRotationCalled[wall] = true;
@@ -262,10 +305,7 @@ void Movement::MoveAutomatedRobot()
 
         // 4) Check for collision with walls
 
-        if (newPosition.x + radius >= wallPosition.x - wallSize.x * 0.5f &&
-            newPosition.x - radius <= wallPosition.x + wallSize.x * 0.5f &&
-            newPosition.y + radius >= wallPosition.y - wallSize.y * 0.5f &&
-            newPosition.y - radius <= wallPosition.y + wallSize.y * 0.5f)
+        if ( CircRectCollision(newPosition, radius, wallPosition, wallSize) )
         {
             if         (newPosition.x < wallPosition.x &&
                         newPosition.y < wallPosition.y + wallSize.y * 0.5f &&
