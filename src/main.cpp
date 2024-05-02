@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
     a.setStyleSheet(stylesSting);
     MainWindow w;
     w.showMaximized();
+    w.show();
     return a.exec();
 }
 // on merlin
