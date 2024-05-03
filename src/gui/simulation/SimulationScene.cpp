@@ -24,7 +24,12 @@ void SimulationScene::CleareSimulationScene(){
 
 
     for(auto robot: _robotsGUIVector){  // remove every robots display
-
+        
+        if(!robot->GetRobotType()){
+            removeItem(robot->GetDetectedZone());
+            robot->DeleteDetectedZone();
+        }
+        
         removeItem(robot);
         delete robot;
     }
@@ -101,9 +106,13 @@ void SimulationScene::_OneSimFrameSlot(){
     for(long unsigned int i = 0; i < _robotsGUIVector.size(); i++){  // TODO: raise EXCEPTION when not simular size of gui and view vector
 
         std::cout << robotsView[i].x <<" "<< robotsView[i].y << std::endl;
-
+        RobotGUI* movRobot = _robotsGUIVector[i];
+        
+        if(!movRobot->GetRobotType()){
+            movRobot->GetDetectedZone()->setPos(robotsView[i].x_GUI-robotsView[i].collisionDistance, robotsView[i].y_GUI-robotsView[i].collisionDistance);
+        }
         // update position for every robot
-        _robotsGUIVector[i]->setPos(robotsView[i].x_GUI, robotsView[i].y_GUI);
+        movRobot->setPos(robotsView[i].x_GUI, robotsView[i].y_GUI);
 
     }
     // update simulation scene
@@ -113,13 +122,12 @@ void SimulationScene::_OneSimFrameSlot(){
 
 RobotGUI* SimulationScene::_CreateNewRobotGui(SimObjView view){
     // create new robot
-    RobotGUI* newRobot = new RobotGUI(0, 0, view.w, view.h, &_conn, view.orderIndex);
-    // set new pen for form
-    newRobot->setPen(getPen());
-    // set new color
-    newRobot->setBrush(getBrushByCode(view.color));
-    // set start position
-    newRobot->setPos(view.x_GUI, view.y_GUI);
+    RobotGUI* newRobot = new RobotGUI(view.x_GUI, view.y_GUI, view.w, view.h, &_conn, view.orderIndex, view.collisionDistance, view.color, view.isControlled);
+    
+    if(!newRobot->GetRobotType()){
+        addItem(newRobot->GetDetectedZone());
+    }
+    
     // insert new robot to scene
     addItem(newRobot);
     // update scene
@@ -209,6 +217,10 @@ ICP_CODE SimulationScene::RemoveRobotByOrderIndex(int orderIndex){
         // cut from vector
         _robotsGUIVector.erase(itRobotToRemove);
         // delete from scene
+        if(!robotToRemove->GetRobotType()){
+            removeItem(robotToRemove->GetDetectedZone());
+            robotToRemove->DeleteDetectedZone();
+        }
         removeItem(robotToRemove);
         delete robotToRemove;
 
@@ -247,9 +259,13 @@ ICP_CODE SimulationScene::UpdateSimObjGuiState(int orderIndex, bool isRobot){
         auto itRobotForUpd = _GetRobotByOrderIndex(orderIndex);
         if(itRobotForUpd != _robotsGUIVector.end()){
             // delete robots display from scene
-            removeItem(*itRobotForUpd);
+            
+            if(!(*itRobotForUpd)->GetRobotType()){
+                removeItem((*itRobotForUpd)->GetDetectedZone());
+                (*itRobotForUpd)->DeleteDetectedZone();
+            }
+
             delete *itRobotForUpd;
-            // reinit with new view
             *itRobotForUpd = _CreateNewRobotGui(view);
             return CODE_OK;
         }
