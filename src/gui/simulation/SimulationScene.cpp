@@ -105,9 +105,7 @@ void SimulationScene::_OneSimFrameSlot(){
 
     for(long unsigned int i = 0; i < _robotsGUIVector.size(); i++){  // TODO: raise EXCEPTION when not simular size of gui and view vector
 
-        RobotGUI* movRobot = _robotsGUIVector[i];
-        
-        movRobot->UpdatePosition(robotsView[i].x_GUI, robotsView[i].y_GUI, robotsView[i].collisionDistance);
+        _robotsGUIVector[i]->UpdatePosition(robotsView[i]);
 
     }
 
@@ -118,7 +116,7 @@ void SimulationScene::_OneSimFrameSlot(){
 
 RobotGUI* SimulationScene::_CreateNewRobotGui(SimObjView view){
     // create new robot
-    RobotGUI* newRobot = new RobotGUI(view.x_GUI, view.y_GUI, view.w, view.h, &_conn, view.orderIndex, view.collisionDistance, view.color, view.isControlled);
+    RobotGUI* newRobot = new RobotGUI(view, &_conn);
     
     if(!newRobot->GetRobotType()){
         addItem(newRobot->GetDetectedZone());
@@ -134,7 +132,7 @@ RobotGUI* SimulationScene::_CreateNewRobotGui(SimObjView view){
 
 WallGUI* SimulationScene::_CreateNewWallGUI(SimObjView view){
     // create new wall
-    WallGUI* newWall = new WallGUI(view.x_GUI, view.y_GUI, view.w, view.h, &_conn, view.orderIndex, view.color);
+    WallGUI* newWall = new WallGUI(view, &_conn);
     
     // insert new wall to scene
     addItem(newWall);

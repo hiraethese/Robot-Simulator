@@ -8,15 +8,17 @@
 #include "WallGUI.h"
 
 
-WallGUI::WallGUI(qreal x, qreal y, qreal w, qreal h, ConnectorGUI* conn, int orderIndex, colors colorsCode)
-    :QGraphicsRectItem(0, 0, w, h)
+WallGUI::WallGUI(SimObjView view, ConnectorGUI* conn)
+    :QGraphicsRectItem(0, 0, view.w, view.h)
 {
+    
     _conn = conn;
-    _orderIndex = orderIndex;
+    _orderIndex = view.orderIndex;
 
     setPen(getPen());
-    setBrush(getBrushByCode(colorsCode));
-    setPos(x, y);
+    setBrush(getBrushByCode(view.color));
+    setPos(view.x_GUI, view.y_GUI);
+
 }
 
 int WallGUI::GetOrderIndex(){

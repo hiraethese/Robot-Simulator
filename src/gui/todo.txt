@@ -4,6 +4,7 @@
 9) makefile
 10) doc
 11) delete help act
+12) upd comments in scene wall and robot guis
 x) ... =)
 
 

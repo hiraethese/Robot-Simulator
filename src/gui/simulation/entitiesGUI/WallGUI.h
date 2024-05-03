@@ -13,6 +13,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include "ConnectorGUI.h"
 #include "../../style.h"
+#include "../../../core/icplib.h"
 
 /**
  * @brief Class for display simulation object from core with type "wall"
@@ -31,7 +32,7 @@ public:
      * @param conn object for connection simulation scene with display
      * @param orderIndex index of simulation object with type "wall" which will be displayed
      */
-    WallGUI(qreal x, qreal y, qreal w, qreal h, ConnectorGUI* conn, int orderIndex, colors colorsCode);
+    WallGUI(SimObjView view, ConnectorGUI* conn);
 
     /**
      * @brief Get order index of wall which displayed

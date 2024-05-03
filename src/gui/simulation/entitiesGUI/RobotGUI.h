@@ -13,7 +13,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include "ConnectorGUI.h"
 #include "../../style.h"
-
+#include "../../../core/icplib.h"
 /**
  * @brief Class for display simulation object from core with type "robot"
  * 
@@ -36,7 +36,7 @@ public:
      * @param colorsCode code of robots color
      * @param isControlled subtype of robot (automatic/controlled)
      */
-    RobotGUI(qreal x, qreal y, qreal w, qreal h, ConnectorGUI* conn, int orderIndex, qreal collisionDistance, colors colorsCode, bool isControlled);
+    RobotGUI(SimObjView view, ConnectorGUI* conn);
 
     /**
      * @brief Get order index of robot which displayed
@@ -69,7 +69,7 @@ public:
      * @param y left high corner of display on OY
      * @param collisionDistance distance on which automatic robot can detect wall
      */
-    void UpdatePosition(qreal x, qreal y, qreal collisionDistance);
+    void UpdatePosition(SimObjView view);
 
 private:
 
@@ -100,7 +100,7 @@ private:
      * @param h height of display
      * @param collisionDistance distance on which automatic robot can detect wall
      */
-    void _CreateDetectedZone(qreal x, qreal y, qreal w, qreal h, qreal collisionDistance);
+    void _CreateDetectedZone(Vector2d pos, Vector2d size);
 
 protected:
 

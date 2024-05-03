@@ -6,22 +6,22 @@
  */
 #include "RobotGUI.h"
 
-RobotGUI::RobotGUI(qreal x, qreal y, qreal w, qreal h, ConnectorGUI* conn, int orderIndex, qreal collisionDistance, colors colorsCode, bool isControlled)
-    :QGraphicsEllipseItem(0, 0, w, h)
+RobotGUI::RobotGUI(SimObjView view, ConnectorGUI* conn)
+    :QGraphicsEllipseItem(0, 0, view.w, view.h)
 {
 
     _conn = conn;
-    _orderIndex = orderIndex;
-    _isControlled = isControlled;
+    _orderIndex = view.orderIndex;
+    _isControlled = view.isControlled;
 
     // only for automatic robot
     if(!_isControlled){
-        _CreateDetectedZone(x, y, w, h, collisionDistance);
+        _CreateDetectedZone(view.getDetectedZonePos(), view.getDetectedZoneSize());
     }
 
     setPen(getPen());
-    setBrush(getBrushByCode(colorsCode));
-    setPos(x, y);
+    setBrush(getBrushByCode(view.color));
+    setPos(view.x_GUI, view.y_GUI);
 }
 
 
@@ -54,28 +54,29 @@ void RobotGUI::DeleteDetectedZone(){
 
 }
 
-void RobotGUI::_CreateDetectedZone(qreal x, qreal y, qreal w, qreal h,qreal collisionDistance){
+void RobotGUI::_CreateDetectedZone(Vector2d pos, Vector2d size){
     
     DeleteDetectedZone();
     
     if(_detectedZone == nullptr){
 
-        _detectedZone = new QGraphicsEllipseItem(0, 0, w + collisionDistance * 2, h + collisionDistance * 2);
-        _detectedZone->setPos(x - collisionDistance, y - collisionDistance);
+        _detectedZone = new QGraphicsEllipseItem(0, 0, size.x, size.y);
+        _detectedZone->setPos(pos.x, pos.y);
         setPen(getPen());
         
     }
 }
 
 
-void RobotGUI::UpdatePosition(qreal x, qreal y, qreal collisionDistance){
+void RobotGUI::UpdatePosition(SimObjView view){
         
         // only for automatic robot
+        Vector2d detectedZonePos = view.getDetectedZonePos();
         if(!_isControlled){
-            _detectedZone->setPos(x - collisionDistance, y - collisionDistance);
+            _detectedZone->setPos(detectedZonePos.x, detectedZonePos.y);
         }
         
-        setPos(x, y);
+        setPos(view.x_GUI, view.y_GUI);
 
 }
 
