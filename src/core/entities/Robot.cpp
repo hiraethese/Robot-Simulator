@@ -68,9 +68,6 @@ SimObjView* Robot::GetSimObjView()
                 _isControlled,
                 true
             };
-
-    // _simObjView = _simObjView.toGUI(); // TODO: for Myron -- fix
-
     return &(_simObjView);
 }
 
@@ -85,5 +82,4 @@ void Robot::SetSimObjView(SimObjView view)
     _movement->SetAngleDegrees(view.angleDegrees);
     _movement->SetAngleStep(view.angleStep);
     _movement->SetRotateClockwise(view.rotateClockwise);
-
 }

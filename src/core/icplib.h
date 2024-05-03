@@ -89,14 +89,12 @@ typedef struct SimObjView {
     bool isControlled;
     bool isRobot;
 
-    void toCore() { // +
-        x = x + 0.5f * w;
-        y = y + 0.5f * h;
+    Vector2d getDetectedZonePos() {
+        return {x_GUI - collisionDistance, y_GUI - collisionDistance};
     }
 
-    void toGUI() { // -
-        x = x - 0.5f * w;
-        y = y - 0.5f * h;
+    Vector2d getDetectedZoneSize() {
+        return {w + collisionDistance * 2, h + collisionDistance * 2};
     }
 } SimObjView;
 
