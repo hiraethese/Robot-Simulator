@@ -218,6 +218,11 @@ ICP_CODE SimulationScene::RemoveRobotByOrderIndex(int orderIndex){
             robotToRemove->DeleteDetectedZone();
         }
 
+        // delete line direction
+
+        removeItem(robotToRemove->GetLineDirection());
+        robotToRemove->DeleteLineDirection();
+
         // delete from scene robot
         removeItem(robotToRemove);
         delete robotToRemove;
