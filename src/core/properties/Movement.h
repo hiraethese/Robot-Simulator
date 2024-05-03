@@ -15,6 +15,8 @@ private:
     int _angleDegrees;
     int _rotateClockwise;
     MyTransform* _transform;
+    std::unordered_map<int, bool> wallZoneRotationCalled;
+    std::unordered_map<int, bool> robotZoneRotationCalled;
 
 public:
     Movement(float speed,

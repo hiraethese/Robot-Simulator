@@ -129,7 +129,7 @@ void Movement::MoveControlledRobot(int orderIndex)
 
     Vector2d direction = {0.0f, 0.0f};
 
-    float angleRadians = _angleDegrees * ( M_PI / 180.0f );
+    float angleRadians = ConvertDegreesToRadians(_angleDegrees);
 
     direction.x = _speed * cos(angleRadians);
     direction.y = _speed * sin(angleRadians);
@@ -236,7 +236,7 @@ void Movement::MoveAutomatedRobot(int orderIndex)
 
     Vector2d direction = {0.0f, 0.0f};
 
-    float angleRadians = _angleDegrees * ( M_PI / 180.0f );
+    float angleRadians = ConvertDegreesToRadians(_angleDegrees);
 
     direction.x = _speed * cos(angleRadians);
     direction.y = _speed * sin(angleRadians);
@@ -259,14 +259,13 @@ void Movement::MoveAutomatedRobot(int orderIndex)
     // Calculate new estimated position
     Vector2d newPosition = position + direction;
 
-    // Track whether rotation function has been called for each robot
-    std::unordered_map<Robot*, bool> robotZoneRotationCalled;
-
     // Check for collisions with other robots
     for (Robot* robot : robots)
     {
+        int checkRobotIndex = robot->GetOrderIndex();
+
         // If it is not the same robot
-        if ( robot->GetOrderIndex() != orderIndex )
+        if ( orderIndex != checkRobotIndex )
         {
             Vector2d robotPosition = robot->GetTransform()->GetPosition();
             Vector2d robotSize = robot->GetTransform()->GetSize();
@@ -277,15 +276,15 @@ void Movement::MoveAutomatedRobot(int orderIndex)
 
             if ( CircCircCollision(newPosition, radius, robotPosition, robotCollisionZoneRadius) )
             {
-                if ( !robotZoneRotationCalled[robot] )
+                if ( !robotZoneRotationCalled[checkRobotIndex] )
                 {
-                    robotZoneRotationCalled[robot] = true;
+                    robotZoneRotationCalled[checkRobotIndex] = true;
                     RotateAutomatedRobot();
                 }
             }
             else
             {
-                robotZoneRotationCalled[robot] = false;
+                robotZoneRotationCalled[checkRobotIndex] = false;
             }
 
             // 4) Check for collision with robots
@@ -301,12 +300,11 @@ void Movement::MoveAutomatedRobot(int orderIndex)
         }
     }
 
-    // Track whether rotation function has been called for each wall
-    std::unordered_map<Wall*, bool> wallZoneRotationCalled;
-
     // Check for collisions with all walls
     for (Wall* wall : walls)
     {
+        int checkWallIndex = wall->GetOrderIndex();
+
         Vector2d wallPosition = wall->GetTransform()->GetPosition();
         Vector2d wallSize = wall->GetTransform()->GetSize();
         Vector2d wallCollisionZone = {wallSize.x + _collisionDistance * 2, wallSize.y + _collisionDistance * 2};
@@ -315,15 +313,15 @@ void Movement::MoveAutomatedRobot(int orderIndex)
 
         if ( CircRectCollision(newPosition, radius, wallPosition, wallCollisionZone) )
         {
-            if ( !wallZoneRotationCalled[wall] )
+            if ( !wallZoneRotationCalled[checkWallIndex] )
             {
-                wallZoneRotationCalled[wall] = true;
+                wallZoneRotationCalled[checkWallIndex] = true;
                 RotateAutomatedRobot();
             }
         }
         else
         {
-            wallZoneRotationCalled[wall] = false;
+            wallZoneRotationCalled[checkWallIndex] = false;
         }
 
         // 6) Check for collision with walls

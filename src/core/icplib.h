@@ -72,6 +72,11 @@ typedef struct Hitbox {
     float h; // Hitbox height component
 } Hitbox;
 
+// ICP library functions
+bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);
+bool CircCircCollision(Vector2d firstCircPos, float firstCircRadius, Vector2d secondCircPos, float secondCircRadius);
+float ConvertDegreesToRadians(float angleDegrees);
+
 typedef struct SimObjView {
     float x_GUI;
     float y_GUI;
@@ -81,8 +86,8 @@ typedef struct SimObjView {
     float h;
     float speed;
     float collisionDistance;
-    int angleStep;
-    int angleDegrees;
+    int angleStep; // rotate with "angleStep" (45 for example) degrees if collision
+    int angleDegrees; // angle of movement in the simulation (up to 360)
     int rotateClockwise;
     colors color;
     int orderIndex;
@@ -90,15 +95,18 @@ typedef struct SimObjView {
     bool isRobot;
 
     Vector2d getDetectedZonePos() {
-        return {x_GUI - collisionDistance, y_GUI - collisionDistance};
+        return { x_GUI - collisionDistance, y_GUI - collisionDistance };
     }
 
     Vector2d getDetectedZoneSize() {
-        return {w + collisionDistance * 2, h + collisionDistance * 2};
+        return { w + collisionDistance * 2, h + collisionDistance * 2 };
+    }
+
+    Vector2d getPointOnCircleByDirection() {
+        float pointX = x + cos( ConvertDegreesToRadians(angleDegrees) ) * std::max(w, h) * 0.5f;
+        float pointY = y + sin( ConvertDegreesToRadians(angleDegrees) ) * std::max(w, h) * 0.5f;
+        return {pointX, pointY};
     }
 } SimObjView;
-
-bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize);
-bool CircCircCollision(Vector2d firstCircPos, float firstCircRadius, Vector2d secondCircPos, float secondCircRadius);
 
 #endif // ICPLIB_H

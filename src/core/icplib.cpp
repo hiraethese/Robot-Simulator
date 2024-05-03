@@ -48,3 +48,8 @@ bool CircCircCollision(Vector2d firstCircPos, float firstCircRadius, Vector2d se
     }
     return false;
 }
+
+float ConvertDegreesToRadians(float angleDegrees)
+{
+    return angleDegrees * ( M_PI / 180.0f );
+}
