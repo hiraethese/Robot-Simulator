@@ -5,6 +5,7 @@
 10) doc
 11) delete help act
 12) upd comments in scene wall and robot guis
+13) check colors error
 x) ... =)
 
 
