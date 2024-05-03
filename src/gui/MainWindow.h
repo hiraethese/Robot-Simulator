@@ -338,6 +338,9 @@ private slots:
      */
     void _CreateSimModeSlot();
 
+    /**
+     * @brief Emit loading map by core and displayng on simuation scene
+     */
     void _PushNewMapToCoreSlot();
 
     /**
