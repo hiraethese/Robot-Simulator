@@ -53,17 +53,14 @@ typedef struct Vector2d {
         return sqrt(x*x + y*y);
     }
 
-    Vector2d Normalize() {
-        Vector2d result;
-        float length = result.getLength();
-
-        if (length > 0) {
-            float ilength = 1.0f/length;
-            result.x = x*ilength;
-            result.y = y*ilength;
+    void Normalize() {
+        float length = getLength();
+        if (length > 0)
+        {
+            float ilength = 1.0f / length;
+            x = x * ilength;
+            y = y * ilength;
         }
-
-        return result;
     }
 } Vector2d;
 
@@ -92,18 +89,14 @@ typedef struct SimObjView {
     bool isControlled;
     bool isRobot;
 
-    void toCore() {// +
-        float _x = this->x;
-        float _y = this->y;
-        this->x = _x + 0.5f * this->w;
-        this->y = _y + 0.5f * this->h;
+    void toCore() { // +
+        x = x + 0.5f * w;
+        y = y + 0.5f * h;
     }
 
-    void toGUI() {  // -
-        float _x = this->x;
-        float _y = this->y;
-        this->x = _x - 0.5f * this->w;
-        this->y = _y - 0.5f * this->h;
+    void toGUI() { // -
+        x = x - 0.5f * w;
+        y = y - 0.5f * h;
     }
 } SimObjView;
 

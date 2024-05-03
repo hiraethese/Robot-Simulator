@@ -92,11 +92,11 @@ void Core::MoveAllObjects()
 {
     for (Robot* robot : GetVectorRobots()) {
         if (robot->IsControlled()) {
-            robot->GetMovement()->MoveControlledRobot();
-        } 
+            robot->GetMovement()->MoveControlledRobot( robot->GetOrderIndex() );
+        }
         else
         {
-            robot->GetMovement()->MoveAutomatedRobot();
+            robot->GetMovement()->MoveAutomatedRobot( robot->GetOrderIndex() );
         }
     }
 }
