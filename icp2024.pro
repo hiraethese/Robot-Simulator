@@ -28,6 +28,8 @@ SOURCES += \
     src/gui/MainWindow.cpp \
     src/gui/settings/NewMapSetting.cpp \
     src/gui/settings/RobotSetting.cpp \
+    src/gui/simulation/entitiesGUI/RobotGUI.cpp \
+    src/gui/simulation/entitiesGUI/WallGUI.cpp \
     src/gui/simulation/SimulationScene.cpp \
     src/gui/simulation/SimulationWindow.cpp \
     src/gui/settings/WallSetting.cpp \

@@ -7,7 +7,12 @@
 #ifndef WALLGUI_H
 #define WALLGUI_H
 
+#include <QBrush>
+#include <QGraphicsRectItem>
+#include <QColor>
+#include <QGraphicsSceneMouseEvent>
 #include "ConnectorGUI.h"
+#include "../../style.h"
 
 /**
  * @brief Class for display simulation object from core with type "wall"
@@ -26,24 +31,14 @@ public:
      * @param conn object for connection simulation scene with display
      * @param orderIndex index of simulation object with type "wall" which will be displayed
      */
-    WallGUI(qreal x, qreal y, qreal w, qreal h, ConnectorGUI* conn, int orderIndex)
-        :QGraphicsRectItem(x, y, w, h)
-    {
-        _conn = conn;
-        _orderIndex = orderIndex;
-    }
+    WallGUI(qreal x, qreal y, qreal w, qreal h, ConnectorGUI* conn, int orderIndex, colors colorsCode);
 
     /**
      * @brief Get order index of wall which displayed
      * 
      * @return int 
      */
-    int GetOrderIndex(){
-
-
-        return _orderIndex;
-
-    }
+    int GetOrderIndex();
 
 private:
 
@@ -64,13 +59,6 @@ protected:
      * 
      * @param event catched users event
      */
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override{
-        // only for double click by right mouse button
-        if(event->button() == Qt::RightButton){
-            // signal about it
-            emit _conn->connectSig(GetOrderIndex(), false);
-        }
-
-    }
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 };
 #endif // WALLGUI_H

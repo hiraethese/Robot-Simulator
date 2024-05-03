@@ -105,16 +105,12 @@ void SimulationScene::_OneSimFrameSlot(){
 
     for(long unsigned int i = 0; i < _robotsGUIVector.size(); i++){  // TODO: raise EXCEPTION when not simular size of gui and view vector
 
-        std::cout << robotsView[i].x <<" "<< robotsView[i].y << std::endl;
         RobotGUI* movRobot = _robotsGUIVector[i];
         
-        if(!movRobot->GetRobotType()){
-            movRobot->GetDetectedZone()->setPos(robotsView[i].x_GUI-robotsView[i].collisionDistance, robotsView[i].y_GUI-robotsView[i].collisionDistance);
-        }
-        // update position for every robot
-        movRobot->setPos(robotsView[i].x_GUI, robotsView[i].y_GUI);
+        movRobot->UpdatePosition(robotsView[i].x_GUI, robotsView[i].y_GUI, robotsView[i].collisionDistance);
 
     }
+
     // update simulation scene
     update();
 
@@ -130,7 +126,7 @@ RobotGUI* SimulationScene::_CreateNewRobotGui(SimObjView view){
     
     // insert new robot to scene
     addItem(newRobot);
-    // update scene
+    
     update();
     return newRobot;
 
@@ -138,16 +134,11 @@ RobotGUI* SimulationScene::_CreateNewRobotGui(SimObjView view){
 
 WallGUI* SimulationScene::_CreateNewWallGUI(SimObjView view){
     // create new wall
-    WallGUI* newWall = new WallGUI(0, 0, view.w, view.h, &_conn, view.orderIndex);
-    // set new pen for form
-    newWall->setPos(view.x_GUI,view.y_GUI);
-    // set new color
-    newWall->setPen(getPen());
-    // set position
-    newWall->setBrush(getBrushByCode(view.color));
-    // insert new robot to scene
+    WallGUI* newWall = new WallGUI(view.x_GUI, view.y_GUI, view.w, view.h, &_conn, view.orderIndex, view.color);
+    
+    // insert new wall to scene
     addItem(newWall);
-    // update scene
+    
     update();
     return newWall;
 }
@@ -214,13 +205,17 @@ ICP_CODE SimulationScene::RemoveRobotByOrderIndex(int orderIndex){
     if(itRobotToRemove != _robotsGUIVector.end()){
 
         RobotGUI* robotToRemove = *itRobotToRemove;
+        
         // cut from vector
         _robotsGUIVector.erase(itRobotToRemove);
-        // delete from scene
+        
+        // delete detected zone (only for automatic robot)
         if(!robotToRemove->GetRobotType()){
             removeItem(robotToRemove->GetDetectedZone());
             robotToRemove->DeleteDetectedZone();
         }
+
+        // delete from scene robot
         removeItem(robotToRemove);
         delete robotToRemove;
 
@@ -238,8 +233,10 @@ ICP_CODE SimulationScene::RemoveWallByOrderIndex(int orderIndex){
     if(itWallToRemove != _wallsGUIVector.end()){
 
         WallGUI* wallToRemove = *itWallToRemove;
+        
         // cur from vector
         _wallsGUIVector.erase(itWallToRemove);
+        
         // delete from scene
         removeItem(wallToRemove);
         delete wallToRemove;
@@ -255,17 +252,22 @@ ICP_CODE SimulationScene::UpdateSimObjGuiState(int orderIndex, bool isRobot){
     // search view simulations object to updating
     _core->GetViewByOrderGUI(&view, orderIndex, isRobot);
     if(isRobot){  // update robots display
+        
         // find display in vector
         auto itRobotForUpd = _GetRobotByOrderIndex(orderIndex);
         if(itRobotForUpd != _robotsGUIVector.end()){
-            // delete robots display from scene
             
+            // delete detected zone (only for automatic robot)
             if(!(*itRobotForUpd)->GetRobotType()){
                 removeItem((*itRobotForUpd)->GetDetectedZone());
                 (*itRobotForUpd)->DeleteDetectedZone();
             }
 
+            // delete robots display from scene
+            removeItem(*itRobotForUpd);
             delete *itRobotForUpd;
+            
+            // recrate with updating
             *itRobotForUpd = _CreateNewRobotGui(view);
             return CODE_OK;
         }
@@ -275,10 +277,12 @@ ICP_CODE SimulationScene::UpdateSimObjGuiState(int orderIndex, bool isRobot){
         // find display in vector
         auto itWallForUpd = _GetWallByOrderIndex(view.orderIndex);
         if(itWallForUpd != _wallsGUIVector.end()){
+            
             // delete walls display from scene
             removeItem(*itWallForUpd);
             delete *itWallForUpd;
-            // reinit with new view
+            
+            // recrate with new view
             *itWallForUpd = _CreateNewWallGUI(view);
             return CODE_OK;
         }

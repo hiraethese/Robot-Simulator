@@ -10,6 +10,7 @@
 #include <QGraphicsEllipseItem>
 #include <QBrush>
 #include <QColor>
+#include <QGraphicsSceneMouseEvent>
 #include "ConnectorGUI.h"
 #include "../../style.h"
 
@@ -31,63 +32,44 @@ public:
      * @param h height of display
      * @param conn object for connection simulation scene with display
      * @param orderIndex index of simulation object with type "robot" which will be displayed
+     * @param collisionDistance distance on which automatic robot can detect wall
+     * @param colorsCode code of robots color
+     * @param isControlled subtype of robot (automatic/controlled)
      */
-    RobotGUI(qreal x, qreal y, qreal w, qreal h, ConnectorGUI* conn, int orderIndex, qreal collisionDistance, colors colorsCode, bool isControlled)
-        :QGraphicsEllipseItem(0, 0, w, h)
-    {
-
-        _conn = conn;
-        _orderIndex = orderIndex;
-        _isControlled = isControlled;
-
-        if(!_isControlled){
-            _CreateDetectedZone(x, y, w, h, collisionDistance);
-        }
-
-        setPen(getPen());
-        setBrush(getBrushByCode(colorsCode));
-        setPos(x, y);
-    }
-
+    RobotGUI(qreal x, qreal y, qreal w, qreal h, ConnectorGUI* conn, int orderIndex, qreal collisionDistance, colors colorsCode, bool isControlled);
 
     /**
      * @brief Get order index of robot which displayed
      * 
      * @return int 
      */
-    int GetOrderIndex(){
+    int GetOrderIndex();
 
-        return _orderIndex;
+    /**
+     * @brief Get the subtype of robot
+     * 
+     * @return true is controlled subtype
+     * @return false  is automatic subtype
+     */
+    bool GetRobotType();
 
-    }
-
-    bool GetRobotType(){
-
-        return _isControlled;
-
-    }
-
-    QGraphicsEllipseItem* GetDetectedZone(){
-        
-        return _detectedZone;
-    
-    }
+    QGraphicsEllipseItem* GetDetectedZone();
 
     /**
      * @brief Delete detected zones display for robot
      * 
      */
-    void DeleteDetectedZone(){
-        
-        if(_detectedZone != nullptr){
-        
-            delete _detectedZone;
-            _detectedZone = nullptr;
+    void DeleteDetectedZone();
 
-        }
 
-    }
-
+    /**
+     * @brief Update robots display by one frame
+     *
+     * @param x left high corner of display on OX
+     * @param y left high corner of display on OY
+     * @param collisionDistance distance on which automatic robot can detect wall
+     */
+    void UpdatePosition(qreal x, qreal y, qreal collisionDistance);
 
 private:
 
@@ -110,22 +92,15 @@ private:
     QGraphicsEllipseItem* _detectedZone = nullptr;
 
     /**
-     * @brief Create new detected zone for robot
+     * @brief Create display of distance arround robot diswplay on wich automatic robot can detect wall
      * 
-     * @param detectedDistance distance on wich robot can detect wall
+     * @param x left high corner of display on OX
+     * @param y left high corner of display on OY
+     * @param w width of display
+     * @param h height of display
+     * @param collisionDistance distance on which automatic robot can detect wall
      */
-    void _CreateDetectedZone(qreal x, qreal y, qreal w, qreal h,qreal collisionDistance){
-        
-        DeleteDetectedZone();
-        
-        if(_detectedZone == nullptr){
-
-            _detectedZone = new QGraphicsEllipseItem(0, 0, w + collisionDistance * 2, h + collisionDistance * 2);
-            _detectedZone->setPos(x - collisionDistance, y - collisionDistance);
-            setPen(getPen());
-            
-        }
-    }
+    void _CreateDetectedZone(qreal x, qreal y, qreal w, qreal h, qreal collisionDistance);
 
 protected:
 
@@ -134,13 +109,7 @@ protected:
      * 
      * @param event catched users event
      */
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override{
-        // only for double click by right mouse button
-        if(event->button() == Qt::RightButton){
-            // signal about it
-            emit _conn->connectSig(GetOrderIndex(), true);
-        }
-    }
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
 };
 
