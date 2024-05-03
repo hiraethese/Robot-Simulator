@@ -11,6 +11,8 @@
 #include <QBrush>
 #include <QColor>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsLineItem>
+#include <QPen>
 #include "ConnectorGUI.h"
 #include "../../style.h"
 #include "../../../core/icplib.h"
@@ -54,12 +56,15 @@ public:
     bool GetRobotType();
 
     QGraphicsEllipseItem* GetDetectedZone();
+    QGraphicsLineItem* GetLineDirection();
 
     /**
      * @brief Delete detected zones display for robot
      * 
      */
     void DeleteDetectedZone();
+
+    void DeleteLineDirection();
 
 
     /**
@@ -91,6 +96,7 @@ private:
      */
     QGraphicsEllipseItem* _detectedZone = nullptr;
 
+
     /**
      * @brief Create display of distance arround robot diswplay on wich automatic robot can detect wall
      * 
@@ -101,6 +107,12 @@ private:
      * @param collisionDistance distance on which automatic robot can detect wall
      */
     void _CreateDetectedZone(Vector2d pos, Vector2d size);
+
+
+
+    QGraphicsLineItem* _lineDirection = nullptr;
+    void _CreateLineDirection(qreal xCentre, qreal yCentre, qreal xCircle, qreal yCircle);
+
 
 protected:
 

@@ -22,6 +22,9 @@ RobotGUI::RobotGUI(SimObjView view, ConnectorGUI* conn)
     setPen(getPen());
     setBrush(getBrushByCode(view.color));
     setPos(view.x_GUI, view.y_GUI);
+
+    Vector2d pointOnCircleForDirection = view.getPointOnCircleByDirection();
+    _CreateLineDirection(view.x, view.y, pointOnCircleForDirection.x, pointOnCircleForDirection.y);
 }
 
 
@@ -40,6 +43,12 @@ bool RobotGUI::GetRobotType(){
 QGraphicsEllipseItem* RobotGUI::GetDetectedZone(){
     
     return _detectedZone;
+
+}
+
+QGraphicsLineItem* RobotGUI::GetLineDirection(){
+
+    return _lineDirection;
 
 }
 
@@ -68,14 +77,45 @@ void RobotGUI::_CreateDetectedZone(Vector2d pos, Vector2d size){
 }
 
 
+void RobotGUI::DeleteLineDirection(){
+
+    if(_lineDirection != nullptr){
+
+        delete _lineDirection;
+        _lineDirection = nullptr;
+
+    }
+
+}
+
+void RobotGUI::_CreateLineDirection(qreal xCentre, qreal yCentre, qreal xCircle, qreal yCircle){
+
+    DeleteLineDirection();
+
+    if(_lineDirection == nullptr){
+
+        _lineDirection = new QGraphicsLineItem(xCentre, yCentre, xCircle, yCircle);
+        QPen newPen = getPen();
+        newPen.setWidth(5);
+        _lineDirection->setPen(newPen);
+    }
+
+}
+
+
 void RobotGUI::UpdatePosition(SimObjView view){
         
-        // only for automatic robot
+        // only for automatic robot upd posiotion of detected zone
         Vector2d detectedZonePos = view.getDetectedZonePos();
         if(!_isControlled){
             _detectedZone->setPos(detectedZonePos.x, detectedZonePos.y);
         }
+
+        // upd position of line direction
+        Vector2d pointOnCircleForDirection = view.getPointOnCircleByDirection();
+        _lineDirection->setLine(view.x, view.y, pointOnCircleForDirection.x, pointOnCircleForDirection.y);
         
+        // upd posioton of robot
         setPos(view.x_GUI, view.y_GUI);
 
 }

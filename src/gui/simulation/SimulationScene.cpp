@@ -29,7 +29,10 @@ void SimulationScene::CleareSimulationScene(){
             removeItem(robot->GetDetectedZone());
             robot->DeleteDetectedZone();
         }
-        
+
+        removeItem(robot->GetLineDirection());
+        robot->DeleteLineDirection();
+
         removeItem(robot);
         delete robot;
     }
@@ -125,6 +128,8 @@ RobotGUI* SimulationScene::_CreateNewRobotGui(SimObjView view){
     // insert new robot to scene
     addItem(newRobot);
     
+    addItem(newRobot->GetLineDirection());
+
     update();
     return newRobot;
 
@@ -260,6 +265,10 @@ ICP_CODE SimulationScene::UpdateSimObjGuiState(int orderIndex, bool isRobot){
                 removeItem((*itRobotForUpd)->GetDetectedZone());
                 (*itRobotForUpd)->DeleteDetectedZone();
             }
+
+            // delete robots line direction
+            removeItem((*itRobotForUpd)->GetLineDirection());
+            (*itRobotForUpd)->DeleteLineDirection();
 
             // delete robots display from scene
             removeItem(*itRobotForUpd);
