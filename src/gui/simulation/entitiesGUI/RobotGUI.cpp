@@ -14,7 +14,7 @@ RobotGUI::RobotGUI(SimObjView view, ConnectorGUI* conn)
     _orderIndex = view.orderIndex;
     _isControlled = view.isControlled;
 
-    // only for automatic robot
+    // only for automatic robot create detected zone
     if(!_isControlled){
         _CreateDetectedZone(view.getDetectedZonePos(), view.getDetectedZoneSize());
     }
@@ -23,6 +23,7 @@ RobotGUI::RobotGUI(SimObjView view, ConnectorGUI* conn)
     setBrush(getBrushByCode(view.color));
     setPos(view.x_GUI, view.y_GUI);
 
+    // create lines direction
     Vector2d pointOnCircleForDirection = view.getPointOnCircleByDirection();
     _CreateLineDirection(view.x, view.y, pointOnCircleForDirection.x, pointOnCircleForDirection.y);
 }

@@ -28,15 +28,8 @@ public:
     /**
      * @brief Construct a new Robot G U I object
      * 
-     * @param x left high corner of display on OX
-     * @param y left high corner of display on OY
-     * @param w width of display
-     * @param h height of display
+     * @param view information about robot
      * @param conn object for connection simulation scene with display
-     * @param orderIndex index of simulation object with type "robot" which will be displayed
-     * @param collisionDistance distance on which automatic robot can detect wall
-     * @param colorsCode code of robots color
-     * @param isControlled subtype of robot (automatic/controlled)
      */
     RobotGUI(SimObjView view, ConnectorGUI* conn);
 
@@ -55,24 +48,35 @@ public:
      */
     bool GetRobotType();
 
+    /**
+     * @brief Get robots detected zone
+     * 
+     * @return QGraphicsEllipseItem* 
+     */
     QGraphicsEllipseItem* GetDetectedZone();
+
+    /**
+     * @brief Get robots line direction
+     * 
+     * @return QGraphicsLineItem* 
+     */
     QGraphicsLineItem* GetLineDirection();
 
     /**
      * @brief Delete detected zones display for robot
-     * 
      */
     void DeleteDetectedZone();
 
+    /**
+     * @brief Delete line direction display for robot
+     */
     void DeleteLineDirection();
 
 
     /**
      * @brief Update robots display by one frame
      *
-     * @param x left high corner of display on OX
-     * @param y left high corner of display on OY
-     * @param collisionDistance distance on which automatic robot can detect wall
+     * @param view information about robots updating
      */
     void UpdatePosition(SimObjView view);
 
@@ -83,6 +87,9 @@ private:
      */
     int _orderIndex;
 
+    /**
+     * @brief subtype of robot
+     */
     bool _isControlled;
 
     /**
@@ -100,17 +107,26 @@ private:
     /**
      * @brief Create display of distance arround robot diswplay on wich automatic robot can detect wall
      * 
-     * @param x left high corner of display on OX
-     * @param y left high corner of display on OY
-     * @param w width of display
-     * @param h height of display
-     * @param collisionDistance distance on which automatic robot can detect wall
+     * @param pos left high coordinates for detected zone
+     * @param size width and height for detected zone
      */
     void _CreateDetectedZone(Vector2d pos, Vector2d size);
 
 
-
+    /**
+     * @brief Line wich display moving direction for robot
+     * 
+     */
     QGraphicsLineItem* _lineDirection = nullptr;
+
+    /**
+     * @brief Create robots line direction
+     * 
+     * @param xCentre line from centrs coordinates on OX
+     * @param yCentre line from centrs coordinates on OY
+     * @param xCircle line to point on circle coordinates on OX
+     * @param yCircle line to point on circle coordinates on OY
+     */
     void _CreateLineDirection(qreal xCentre, qreal yCentre, qreal xCircle, qreal yCircle);
 
 

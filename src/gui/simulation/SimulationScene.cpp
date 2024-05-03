@@ -121,6 +121,7 @@ RobotGUI* SimulationScene::_CreateNewRobotGui(SimObjView view){
     // create new robot
     RobotGUI* newRobot = new RobotGUI(view, &_conn);
     
+    // add detected zone for robot
     if(!newRobot->GetRobotType()){
         addItem(newRobot->GetDetectedZone());
     }
@@ -128,6 +129,7 @@ RobotGUI* SimulationScene::_CreateNewRobotGui(SimObjView view){
     // insert new robot to scene
     addItem(newRobot);
     
+    // add robots line direction
     addItem(newRobot->GetLineDirection());
 
     update();
@@ -219,7 +221,6 @@ ICP_CODE SimulationScene::RemoveRobotByOrderIndex(int orderIndex){
         }
 
         // delete line direction
-
         removeItem(robotToRemove->GetLineDirection());
         robotToRemove->DeleteLineDirection();
 
