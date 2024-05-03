@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/helpTool.png</file>
         <file>icons/settingsTool.png</file>
         <file>icons/playTool.png</file>
         <file>icons/pauseTool.svg</file>

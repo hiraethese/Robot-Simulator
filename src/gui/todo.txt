@@ -3,9 +3,9 @@
 5) check synch all constants from core to gui
 9) makefile
 10) doc
-11) delete help act
 12) upd comments in scene wall and robot guis
 13) check colors error
+14) w = h in robot check
 x) ... =)
 
 

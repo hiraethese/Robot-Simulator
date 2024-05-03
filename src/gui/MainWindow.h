@@ -123,9 +123,6 @@ private:
      */
     QLineEdit* _lineSimRunStatus;
 
-    QToolBar* _helpToolBar;  // TODO: delete
-    QAction* _helpToolAction;
-
     /**
      * @brief The tool bar with controlling of simulation launch
      */
@@ -135,8 +132,6 @@ private:
      * @brief The part of _engineSimRunToolBar, launcher of simulaton
      */
     QAction* _runSimulationAction = nullptr;
-
-    void _CreateTools();  // TODO: delete
     
     /**
      * @brief Remove all tools from 
@@ -322,11 +317,6 @@ private:
 public slots:
 
 private slots:
-
-    /**
-     * @brief The slot for pop-up window with helpng text for user
-     */
-    void _HelpTextToolActionSlot();  // TODO: delete
 
     /**
      * @brief The slot for launch simulation

@@ -41,8 +41,6 @@ void MainWindow::_CreateAppWindows(){
 
     _CreateMenu();
 
-    _CreateTools();
-
     _CreateSimModeSlot();
 
 }
@@ -58,16 +56,6 @@ void MainWindow::_DeleteAppWindows(){
 }
 
 
-void MainWindow::_CreateTools(){
-
-    _helpToolAction = new QAction(QIcon(":/icons/helpTool.png"), "&Help", this);
-    connect(_helpToolAction, &QAction::triggered, this, &MainWindow::_HelpTextToolActionSlot);
-
-    _helpToolBar = addToolBar("help");
-    _helpToolBar->addAction(_helpToolAction);
-
-}
-
 void MainWindow::_DeleteTools(){
 
     if(_actualPage == SimulationPage){  // if actual page is simualtion mode
@@ -80,12 +68,6 @@ void MainWindow::_DeleteTools(){
         _DeleteBuildModeTools();
 
     }
-
-
-    disconnect(_helpToolAction, 0, 0, 0);
-    delete _helpToolAction;
-    removeToolBar(_helpToolBar);
-    delete _helpToolBar;
 
 }
 
@@ -193,11 +175,6 @@ void MainWindow::_DeleteSimModeTools(){
 
 }
 
-
-void MainWindow::_HelpTextToolActionSlot(){
-    // TODO: need add help text for users interface actions
-    QMessageBox::about(this, "Help", "<b>This place will be for help users text!</b>");
-}
 
 void MainWindow::_RunSimulationActionSlot(){
 
