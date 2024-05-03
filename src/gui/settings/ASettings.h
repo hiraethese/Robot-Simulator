@@ -55,9 +55,6 @@ protected:
      */
     ASettings(QWidget* parent, QString title);
 
-
-    bool _isRobot;  // TODO: delete
-
     /**
      * @brief index of displayed simualtions object
      */

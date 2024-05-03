@@ -8,8 +8,6 @@
 
 WallSetting::WallSetting(QWidget* parent, QString title):ASettings(parent, title) {
 
-    _isRobot = false;  // TODO: after deleted
-
     _heightLabel = new QLabel("Height : ", this);
     _heightSpinBox = new QSpinBox(this);
     _heightSpinBox->setMinimum(10);   // TODO: value ???

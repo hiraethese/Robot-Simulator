@@ -44,7 +44,6 @@ QPen getPen(){
     return blackPen;
 }
 
-// TODO: check error code
 std::string getColorString(colors colorsCode){
     // conv code
     switch (colorsCode) {

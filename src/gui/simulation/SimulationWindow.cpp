@@ -32,8 +32,8 @@ void SimulationWindow::_CreateSimGUI(){
     _simulationView->setInteractive(false);
     
     _simulationView->setStyleSheet("background-color: black;");
-    _simulationView->setSceneRect(0,0,1800, 750);  // TODO: size from core
-    _simulationView->setFixedSize(1800+20, 750+20);  // TODO size from core
+    _simulationView->setSceneRect(0,0, _core->GetMapWidth(), _core->GetMapHeight());
+    _simulationView->setFixedSize(_core->GetMapWidth()+20, _core->GetMapHeight()+20);
 
     // creating new sim obj by user click
     connect(_simulationScene, &SimulationScene::ClickSig, this, &SimulationWindow::_CreateNewSimObjGUISlot);
@@ -217,7 +217,6 @@ ICP_CODE SimulationWindow::RemoveSimObjByOrderIndexSlot(int orderIndex, bool isR
 
 
 void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
-    // TODO : move to scene and delete in window
     emit UperClickSig(clickPoint);
     ICP_CODE check_creaing;
     SimObjView view;

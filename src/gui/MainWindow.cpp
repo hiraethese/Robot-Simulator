@@ -239,13 +239,13 @@ void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
     else{  // find
         if(isRobot){  // if robot object
             // download data about sim obj to settings window
-            _robotSetWind->DownloadDataFromView(view, orderIndex);  // TODO: order index get to cor request
+            _robotSetWind->DownloadDataFromView(view, orderIndex);
             _robotSetWind->ChangeEnablingOfSettingsObjects(true);
             _robotSetWind->exec();
         }
         else{  // if wall object
             // download data about sim obj to settings window
-            _wallSetWind->DownloadDataFromView(view, orderIndex);  // TODO: order index get to cor request
+            _wallSetWind->DownloadDataFromView(view, orderIndex);
             _wallSetWind->ChangeEnablingOfSettingsObjects(true);
             _wallSetWind->exec();
         }

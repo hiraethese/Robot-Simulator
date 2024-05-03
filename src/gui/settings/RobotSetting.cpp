@@ -26,7 +26,7 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
 
     _speedLabel = new QLabel("Speed(%) : ", this);
     _speedSpinBox = new QSpinBox(this);
-    _speedSpinBox->setMinimum(1);
+    _speedSpinBox->setMinimum(0);
     _speedSpinBox->setMaximum(100);
     _settingGridLayot->addWidget(_speedLabel, 2, 0);
     _settingGridLayot->addWidget(_speedSpinBox, 2, 1);
@@ -48,7 +48,7 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
     _collisionDistanceLabel = new QLabel("Collision distance", this);
     _collisionDistanceSpinBox = new QSpinBox(this);
     _collisionDistanceSpinBox->setMinimum(0);
-    _collisionDistanceSpinBox->setMaximum(1800);
+    _collisionDistanceSpinBox->setMaximum(300);
     _settingGridLayot->addWidget(_collisionDistanceLabel, 5, 0);
     _settingGridLayot->addWidget(_collisionDistanceSpinBox, 5, 1);
     
@@ -69,7 +69,6 @@ void RobotSetting::DownloadDataFromView(SimObjView view, int orderIndex){
     // update data
     _orderIndex = orderIndex;
     _isControlled = view.isControlled;
-    _isRobot = true;
     _diameterSpinBox->setValue(int(view.h));
     _speedSpinBox->setValue(int(view.speed));
     _colorComboBox->setCurrentText(QString::fromStdString(getColorString(view.color)));

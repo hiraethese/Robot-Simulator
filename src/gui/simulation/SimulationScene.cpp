@@ -106,7 +106,7 @@ void SimulationScene::_OneSimFrameSlot(){
     // call new view for every robots from core
     std::vector<SimObjView> robotsView = _core->GetVectorRobotsView();
 
-    for(long unsigned int i = 0; i < _robotsGUIVector.size(); i++){  // TODO: raise EXCEPTION when not simular size of gui and view vector
+    for(long unsigned int i = 0; i < _robotsGUIVector.size(); i++){
 
         _robotsGUIVector[i]->UpdatePosition(robotsView[i]);
 
