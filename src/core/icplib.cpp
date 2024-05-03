@@ -27,7 +27,7 @@ bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vec
     Vector2d distance = {circPos.x - testX, circPos.y - testY};
 
     // if the distance is less than the radius, collision!
-    if (distance.getLength() <= circRadius) {
+    if (distance.getLength() < circRadius) {
         return true;
     }
     return false;
@@ -43,7 +43,7 @@ bool CircCircCollision(Vector2d firstCircPos, float firstCircRadius, Vector2d se
 
     // if the distance is less than the sum of the circle's
     // radii, the circles are touching!
-    if (distance <= firstCircRadius + secondCircRadius) {
+    if (distance < firstCircRadius + secondCircRadius) {
         return true;
     }
     return false;

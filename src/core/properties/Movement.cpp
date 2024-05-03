@@ -1,6 +1,7 @@
 #include "Movement.h"
 
-#include "../Core.h" // Note: include errors
+// Note: include errors
+#include "../Core.h"
 
 Movement::Movement(float speed,
                     float collisionDistance,
@@ -258,6 +259,9 @@ void Movement::MoveAutomatedRobot(int orderIndex)
     // Calculate new estimated position
     Vector2d newPosition = position + direction;
 
+    // Track whether rotation function has been called for each robot
+    std::unordered_map<Robot*, bool> robotZoneRotationCalled;
+
     // Check for collisions with other robots
     for (Robot* robot : robots)
     {
@@ -267,6 +271,24 @@ void Movement::MoveAutomatedRobot(int orderIndex)
             Vector2d robotPosition = robot->GetTransform()->GetPosition();
             Vector2d robotSize = robot->GetTransform()->GetSize();
             float robotRadius = std::max(robotSize.x, robotSize.y) * 0.5f;
+            float robotCollisionZoneRadius = robotRadius + _collisionDistance;
+
+            // 3) Check for robot collision zone
+
+            if ( CircCircCollision(newPosition, radius, robotPosition, robotCollisionZoneRadius) )
+            {
+                if ( !robotZoneRotationCalled[robot] )
+                {
+                    robotZoneRotationCalled[robot] = true;
+                    RotateAutomatedRobot();
+                }
+            }
+            else
+            {
+                robotZoneRotationCalled[robot] = false;
+            }
+
+            // 4) Check for collision with robots
 
             if ( CircCircCollision(newPosition, radius, robotPosition, robotRadius) )
             {
@@ -280,31 +302,31 @@ void Movement::MoveAutomatedRobot(int orderIndex)
     }
 
     // Track whether rotation function has been called for each wall
-    std::unordered_map<Wall*, bool> zoneRotationCalled;
+    std::unordered_map<Wall*, bool> wallZoneRotationCalled;
 
     // Check for collisions with all walls
     for (Wall* wall : walls)
     {
         Vector2d wallPosition = wall->GetTransform()->GetPosition();
         Vector2d wallSize = wall->GetTransform()->GetSize();
-        Vector2d collisionZone = {wallSize.x + _collisionDistance * 2, wallSize.y + _collisionDistance * 2};
+        Vector2d wallCollisionZone = {wallSize.x + _collisionDistance * 2, wallSize.y + _collisionDistance * 2};
 
-        // 3) Check for collision zone
+        // 5) Check for wall collision zone
 
-        if ( CircRectCollision(newPosition, radius, wallPosition, collisionZone) )
+        if ( CircRectCollision(newPosition, radius, wallPosition, wallCollisionZone) )
         {
-            if ( !zoneRotationCalled[wall] )
+            if ( !wallZoneRotationCalled[wall] )
             {
+                wallZoneRotationCalled[wall] = true;
                 RotateAutomatedRobot();
-                zoneRotationCalled[wall] = true;
             }
         }
         else
         {
-            zoneRotationCalled[wall] = false;
+            wallZoneRotationCalled[wall] = false;
         }
 
-        // 4) Check for collision with walls
+        // 6) Check for collision with walls
 
         if ( CircRectCollision(newPosition, radius, wallPosition, wallSize) )
         {
