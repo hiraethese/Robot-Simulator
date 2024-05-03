@@ -37,20 +37,10 @@ ICP_CODE SimMap::CreateNewControlledRobotFromTemplate(float x, float y)
     Vector2d newControlledRobotSize = { controlledRobotTemp.w, controlledRobotTemp.h };
     float newControlledRobotRadius = std::max(newControlledRobotSize.x, newControlledRobotSize.y) * 0.5f;
 
-    // Check for collisions with other robots
-    if ( RobotWithRobotsCollision({x, y}, newControlledRobotRadius, -1) ) // no order index
-    {
-        return CODE_NEW_OBJECT_COLLISION_ERROR;
-    }
-
-    // Check for collisions with all walls
-    if ( RobotWithWallsCollision({x, y}, newControlledRobotRadius) )
-    {
-        return CODE_NEW_OBJECT_COLLISION_ERROR;
-    }
-
-    // Check for collision with map borders
-    if ( RobotWithBordersCollision({x, y}, newControlledRobotRadius) )
+    // Check for collisions
+    if (RobotWithRobotsCollision({x, y}, newControlledRobotRadius, -1) || // no order index
+        RobotWithWallsCollision({x, y}, newControlledRobotRadius) ||
+        RobotWithBordersCollision({x, y}, newControlledRobotRadius))
     {
         return CODE_NEW_OBJECT_COLLISION_ERROR;
     }
@@ -70,20 +60,10 @@ ICP_CODE SimMap::CreateNewAutomatedRobotFromTemplate(float x, float y)
     Vector2d newAutomatedRobotSize = { automatedRobotTemp.w, automatedRobotTemp.h };
     float newAutomatedRobotRadius = std::max(newAutomatedRobotSize.x, newAutomatedRobotSize.y) * 0.5f;
 
-    // Check for collisions with other robots
-    if ( RobotWithRobotsCollision({x, y}, newAutomatedRobotRadius, -1) ) // no order index
-    {
-        return CODE_NEW_OBJECT_COLLISION_ERROR;
-    }
-
-    // Check for collisions with all walls
-    if ( RobotWithWallsCollision({x, y}, newAutomatedRobotRadius) )
-    {
-        return CODE_NEW_OBJECT_COLLISION_ERROR;
-    }
-
-    // Check for collision with map borders
-    if ( RobotWithBordersCollision({x, y}, newAutomatedRobotRadius) )
+    // Check for collisions
+    if (RobotWithRobotsCollision({x, y}, newAutomatedRobotRadius, -1) || // no order index
+        RobotWithWallsCollision({x, y}, newAutomatedRobotRadius) ||
+        RobotWithBordersCollision({x, y}, newAutomatedRobotRadius))
     {
         return CODE_NEW_OBJECT_COLLISION_ERROR;
     }
@@ -102,14 +82,9 @@ ICP_CODE SimMap::CreateNewWallFromTemplate(float x, float y)
     SimObjView wallTemp = _spawner->GetWallTemp();
     Vector2d newWallSize = { wallTemp.w, wallTemp.h };
 
-    // Check for collisions with all robots
-    if ( WallWithRobotsCollision({x, y}, newWallSize) )
-    {
-        return CODE_NEW_OBJECT_COLLISION_ERROR;
-    }
-
-    // Check for collision with map borders
-    if ( WallWithBordersCollision({x, y}, newWallSize) )
+    // Check for collisions
+    if (WallWithRobotsCollision({x, y}, newWallSize) ||
+        WallWithBordersCollision({x, y}, newWallSize))
     {
         return CODE_NEW_OBJECT_COLLISION_ERROR;
     }
@@ -135,20 +110,10 @@ ICP_CODE SimMap::UpdateRobotState(SimObjView view)
         Vector2d newRobotSize = { view.w, view.h }; // new robot size
         float newRobotRadius = std::max(newRobotSize.x, newRobotSize.y) * 0.5f; // new robot radius
 
-        // Check for collisions with other robots
-        if ( RobotWithRobotsCollision(origRobotPos, newRobotRadius, view.orderIndex) )
-        {
-            return CODE_NEW_OBJECT_COLLISION_ERROR;
-        }
-
-        // Check for collisions with all walls
-        if ( RobotWithWallsCollision(origRobotPos, newRobotRadius) )
-        {
-            return CODE_NEW_OBJECT_COLLISION_ERROR;
-        }
-
-        // Check for collisions with map borders
-        if ( RobotWithBordersCollision(origRobotPos, newRobotRadius) )
+        // Check for collisions
+        if (RobotWithRobotsCollision(origRobotPos, newRobotRadius, view.orderIndex) ||
+            RobotWithWallsCollision(origRobotPos, newRobotRadius) ||
+            RobotWithBordersCollision(origRobotPos, newRobotRadius))
         {
             return CODE_NEW_OBJECT_COLLISION_ERROR;
         }
@@ -172,14 +137,9 @@ ICP_CODE SimMap::UpdateWallState(SimObjView view)
 
         Vector2d newWallSize = { view.w, view.h }; // new wall size
 
-        // Check for collisions with all robots
-        if ( WallWithRobotsCollision(origWallPos, newWallSize) )
-        {
-            return CODE_NEW_OBJECT_COLLISION_ERROR;
-        }
-
-        // Check for collisions with map borders
-        if ( WallWithBordersCollision(origWallPos, newWallSize) )
+        // Check for collisions
+        if (WallWithRobotsCollision(origWallPos, newWallSize) ||
+            WallWithBordersCollision(origWallPos, newWallSize))
         {
             return CODE_NEW_OBJECT_COLLISION_ERROR;
         }
@@ -219,7 +179,7 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
     if (!file.is_open())
     {
         std::cerr << "Error: Unable to open map file\n";
-        return CODE_INTERNAL_ERROR; // Error openning map file
+        return CODE_INTERNAL_ERROR; // error openning map file
     }
 
     // Read each line from the file
@@ -238,39 +198,94 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
             std::cerr << "Error: Unable to read token from line\n";
             return CODE_INTERNAL_ERROR; // Error reading token from line
         }
-        // Controlled robot
+
+        // New controlled robot
         if (token == "[ControlledRobot]")
         {
-            Robot* newRobot = _spawner->GenNewRobot(iss, _orderIndex, true);
-            if (!newRobot)
+            Robot* newControlledRobot = _spawner->GenNewRobot(iss, _orderIndex, true);
+
+            if (!newControlledRobot)
             {
                 DeleteAllObjects();
                 return CODE_SYNTAXE_ERROR_INPUT_FILE_CONTR_ROBOT;
             }
-            _robots.push_back(newRobot);
+
+            // New controlled robot values
+            Vector2d newControlledRobotPos = newControlledRobot->GetTransform()->GetPosition();
+            Vector2d newControlledRobotSize = newControlledRobot->GetTransform()->GetSize();
+            float newControlledRobotRadius = std::max(newControlledRobotSize.x, newControlledRobotSize.y) * 0.5f;
+            int newControlledRobotIndex = newControlledRobot->GetOrderIndex();
+
+            // Check for collisions
+            if (RobotWithRobotsCollision(newControlledRobotPos, newControlledRobotRadius, newControlledRobotIndex) ||
+                RobotWithWallsCollision(newControlledRobotPos, newControlledRobotRadius) ||
+                RobotWithBordersCollision(newControlledRobotPos, newControlledRobotRadius))
+            {
+                delete newControlledRobot;
+                DeleteAllObjects();
+                return CODE_NEW_OBJECT_COLLISION_ERROR;
+            }
+
+            _robots.push_back(newControlledRobot);
         }
-        // Automated robot
+
+        // New automated robot
         else if (token == "[AutomatedRobot]")
         {
-            Robot* newRobot = _spawner->GenNewRobot(iss, _orderIndex, false);
-            if (!newRobot)
+            Robot* newAutomatedRobot = _spawner->GenNewRobot(iss, _orderIndex, false);
+
+            if (!newAutomatedRobot)
             {
                 DeleteAllObjects();
                 return CODE_SYNTAXE_ERROR_INPUT_FILE_AUTO_ROBOT;
             }
-            _robots.push_back(newRobot);
+
+            // New automated robot values
+            Vector2d newAutomatedRobotPos = newAutomatedRobot->GetTransform()->GetPosition();
+            Vector2d newAutomatedRobotSize = newAutomatedRobot->GetTransform()->GetSize();
+            float newAutomatedRobotRadius = std::max(newAutomatedRobotSize.x, newAutomatedRobotSize.y) * 0.5f;
+            int newAutomatedRobotIndex = newAutomatedRobot->GetOrderIndex();
+
+            // Check for collisions
+            if (RobotWithRobotsCollision(newAutomatedRobotPos, newAutomatedRobotRadius, newAutomatedRobotIndex) ||
+                RobotWithWallsCollision(newAutomatedRobotPos, newAutomatedRobotRadius) ||
+                RobotWithBordersCollision(newAutomatedRobotPos, newAutomatedRobotRadius))
+            {
+                delete newAutomatedRobot;
+                DeleteAllObjects();
+                return CODE_NEW_OBJECT_COLLISION_ERROR;
+            }
+
+            _robots.push_back(newAutomatedRobot);
         }
-        // Wall
+
+        // New wall
         else if (token == "[Wall]")
         {
             Wall* newWall = _spawner->GenNewWall(iss, _orderIndex);
+
             if (!newWall)
             {
                 DeleteAllObjects();
                 return CODE_SYNTAXE_ERROR_INPUT_FILE_WALL;
             }
+
+            // New wall values
+            Vector2d newWallPos = newWall->GetTransform()->GetPosition();
+            Vector2d newWallSize = newWall->GetTransform()->GetSize();
+
+            // Check for collisions
+            if (WallWithRobotsCollision(newWallPos, newWallSize) ||
+                WallWithBordersCollision(newWallPos, newWallSize))
+            {
+                delete newWall;
+                DeleteAllObjects();
+                return CODE_NEW_OBJECT_COLLISION_ERROR;
+            }
+
             _walls.push_back(newWall);
         }
+
         // Other
         else
         {
@@ -279,6 +294,7 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
         }
         ++_orderIndex;
     }
+
     return CODE_OK;
 }
 
@@ -480,6 +496,7 @@ ICP_CODE SimMap::RemoveRobotByOrderIndex(int orderIndex)
         delete robotToRemove;
         return CODE_OK;
     }
+
     return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE;
 }
 
@@ -496,7 +513,7 @@ ICP_CODE SimMap::RemoveWallByOrderIndex(int orderIndex)
         return CODE_OK;
 
     }  // TODO: obj not found ret
-    
+
     return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE;
 }
 
@@ -520,7 +537,8 @@ void SimMap::DeleteAllObjects()
     }
 }
 
-int SimMap::GetLastOrderIndex(){
+int SimMap::GetLastOrderIndex()
+{
     return (_orderIndex - 1);
 }
 
@@ -544,5 +562,4 @@ ICP_CODE SimMap::GetWallViewByOrderGUI(SimObjView* view, int orderIndex)
         return CODE_OK;
     }
     return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE;
-
 }

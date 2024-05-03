@@ -296,6 +296,7 @@ void Movement::MoveAutomatedRobot(int orderIndex)
                 float distanceToTouch = distanceToRobot - radius - robotRadius;
                 directionToRobot.Normalize();
                 newPosition = position + directionToRobot * distanceToTouch;
+                RotateAutomatedRobot();
             }
         }
     }
@@ -333,24 +334,28 @@ void Movement::MoveAutomatedRobot(int orderIndex)
                         newPosition.y > wallPosition.y - wallSize.y * 0.5f)
             {
                 newPosition.x = wallPosition.x - wallSize.x * 0.5f - radius;
+                RotateAutomatedRobot();
             }
             else if    (newPosition.x > wallPosition.x &&
                         newPosition.y < wallPosition.y + wallSize.y * 0.5f &&
                         newPosition.y > wallPosition.y - wallSize.y * 0.5f)
             {
                 newPosition.x = wallPosition.x + wallSize.x * 0.5f + radius;
+                RotateAutomatedRobot();
             }
             else if    (newPosition.y < wallPosition.y &&
                         newPosition.x < wallPosition.x + wallSize.x * 0.5f &&
                         newPosition.x > wallPosition.x - wallSize.x * 0.5f)
             {
                 newPosition.y = wallPosition.y - wallSize.y * 0.5f - radius;
+                RotateAutomatedRobot();
             }
             else if    (newPosition.y > wallPosition.y &&
                         newPosition.x < wallPosition.x + wallSize.x * 0.5f &&
                         newPosition.x > wallPosition.x - wallSize.x * 0.5f)
             {
                 newPosition.y = wallPosition.y + wallSize.y * 0.5f + radius;
+                RotateAutomatedRobot();
             }
         }
     }
