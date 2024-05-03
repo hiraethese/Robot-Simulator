@@ -9,6 +9,12 @@ SimMap::SimMap(int width, int height)
     _spawner = new Spawner();
 }
 
+SimMap::~SimMap()
+{
+    delete _spawner;
+    DeleteAllObjects();
+}
+
 std::string SimMap::GetPath()
 {
     return _path;

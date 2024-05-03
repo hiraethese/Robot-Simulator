@@ -18,7 +18,6 @@ Wall::Wall(Vector2d position, Vector2d size, colors color, int orderIndex) : Sim
 //     bool isRobot;
 // } SimObjView;
 
-////////////////////////////// TODO - Correct GUI hitboxes !!!
 SimObjView* Wall::GetSimObjView()
 {
     _simObjView = {
@@ -38,7 +37,6 @@ SimObjView* Wall::GetSimObjView()
                 false,
                 false
             };
-
     return &(_simObjView);
 }
 
