@@ -25,6 +25,7 @@ private:
 
 public:
     SimMap(int width, int height);
+    ~SimMap();
     std::string GetPath();
     int GetWidth();
     int GetHeight();
