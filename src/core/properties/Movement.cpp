@@ -166,7 +166,7 @@ void Movement::MoveControlledRobot(int orderIndex)
                 float distanceToRobot = directionToRobot.getLength();
                 float distanceToTouch = distanceToRobot - radius - robotRadius;
                 directionToRobot.Normalize();
-                newPosition = position + directionToRobot * distanceToTouch;
+                newPosition = newPosition + directionToRobot * distanceToTouch;
             }
         }
     }
@@ -200,11 +200,8 @@ void Movement::MoveControlledRobot(int orderIndex)
             Vector2d directionToWall = { newPosition.x - closestX, newPosition.y - closestY };
             float distanceToWall = directionToWall.getLength();
             float penetrationDepth = radius - distanceToWall;
-            if (penetrationDepth > 0 && distanceToWall != 0)
-            {
-                newPosition.x += penetrationDepth * (directionToWall.x / distanceToWall);
-                newPosition.y += penetrationDepth * (directionToWall.y / distanceToWall);
-            }
+            directionToWall.Normalize();
+            newPosition = newPosition + directionToWall * penetrationDepth;
         }
     }
 
@@ -295,7 +292,7 @@ void Movement::MoveAutomatedRobot(int orderIndex)
                 float distanceToRobot = directionToRobot.getLength();
                 float distanceToTouch = distanceToRobot - radius - robotRadius;
                 directionToRobot.Normalize();
-                newPosition = position + directionToRobot * distanceToTouch;
+                newPosition = newPosition + directionToRobot * distanceToTouch;
                 RotateAutomatedRobot();
             }
         }
@@ -350,12 +347,9 @@ void Movement::MoveAutomatedRobot(int orderIndex)
             Vector2d directionToWall = { newPosition.x - closestX, newPosition.y - closestY };
             float distanceToWall = directionToWall.getLength();
             float penetrationDepth = radius - distanceToWall;
-            if (penetrationDepth > 0 && distanceToWall != 0)
-            {
-                newPosition.x += penetrationDepth * (directionToWall.x / distanceToWall);
-                newPosition.y += penetrationDepth * (directionToWall.y / distanceToWall);
-                RotateAutomatedRobot();
-            }
+            directionToWall.Normalize();
+            newPosition = newPosition + directionToWall * penetrationDepth;
+            RotateAutomatedRobot();
         }
     }
 
