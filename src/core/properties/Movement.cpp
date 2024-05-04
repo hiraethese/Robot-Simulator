@@ -162,7 +162,7 @@ void Movement::MoveControlledRobot(int orderIndex)
 
             if ( CircCircCollision(newPosition, radius, robotPosition, robotRadius) )
             {
-                Vector2d directionToRobot = robotPosition - position;
+                Vector2d directionToRobot = robotPosition - newPosition;
                 float distanceToRobot = directionToRobot.getLength();
                 float distanceToTouch = distanceToRobot - radius - robotRadius;
                 directionToRobot.Normalize();
@@ -179,29 +179,31 @@ void Movement::MoveControlledRobot(int orderIndex)
 
         if ( CircRectCollision(newPosition, radius, wallPosition, wallSize) )
         {
-            if         (newPosition.x < wallPosition.x &&
-                        newPosition.y < wallPosition.y + wallSize.y * 0.5f &&
-                        newPosition.y > wallPosition.y - wallSize.y * 0.5f)
+            float closestX = newPosition.x;
+            float closestY = newPosition.y;
+            if (newPosition.x < wallPosition.x - wallSize.x * 0.5f)
             {
-                newPosition.x = wallPosition.x - wallSize.x * 0.5f - radius;
+                closestX = wallPosition.x - wallSize.x * 0.5f;
             }
-            else if    (newPosition.x > wallPosition.x &&
-                        newPosition.y < wallPosition.y + wallSize.y * 0.5f &&
-                        newPosition.y > wallPosition.y - wallSize.y * 0.5f)
+            else if (newPosition.x > wallPosition.x + wallSize.x * 0.5f)
             {
-                newPosition.x = wallPosition.x + wallSize.x * 0.5f + radius;
+                closestX = wallPosition.x + wallSize.x * 0.5f;
             }
-            else if    (newPosition.y < wallPosition.y &&
-                        newPosition.x < wallPosition.x + wallSize.x * 0.5f &&
-                        newPosition.x > wallPosition.x - wallSize.x * 0.5f)
+            if (newPosition.y < wallPosition.y - wallSize.y * 0.5f)
             {
-                newPosition.y = wallPosition.y - wallSize.y * 0.5f - radius;
+                closestY = wallPosition.y - wallSize.y * 0.5f;
             }
-            else if    (newPosition.y > wallPosition.y &&
-                        newPosition.x < wallPosition.x + wallSize.x * 0.5f &&
-                        newPosition.x > wallPosition.x - wallSize.x * 0.5f)
+            else if (newPosition.y > wallPosition.y + wallSize.y * 0.5f)
             {
-                newPosition.y = wallPosition.y + wallSize.y * 0.5f + radius;
+                closestY = wallPosition.y + wallSize.y * 0.5f;
+            }
+            Vector2d directionToWall = { newPosition.x - closestX, newPosition.y - closestY };
+            float distanceToWall = directionToWall.getLength();
+            float penetrationDepth = radius - distanceToWall;
+            if (penetrationDepth > 0 && distanceToWall != 0)
+            {
+                newPosition.x += penetrationDepth * (directionToWall.x / distanceToWall);
+                newPosition.y += penetrationDepth * (directionToWall.y / distanceToWall);
             }
         }
     }
@@ -327,32 +329,31 @@ void Movement::MoveAutomatedRobot(int orderIndex)
 
         if ( CircRectCollision(newPosition, radius, wallPosition, wallSize) )
         {
-            if         (newPosition.x < wallPosition.x &&
-                        newPosition.y < wallPosition.y + wallSize.y * 0.5f &&
-                        newPosition.y > wallPosition.y - wallSize.y * 0.5f)
+            float closestX = newPosition.x;
+            float closestY = newPosition.y;
+            if (newPosition.x < wallPosition.x - wallSize.x * 0.5f)
             {
-                newPosition.x = wallPosition.x - wallSize.x * 0.5f - radius;
-                RotateAutomatedRobot();
+                closestX = wallPosition.x - wallSize.x * 0.5f;
             }
-            else if    (newPosition.x > wallPosition.x &&
-                        newPosition.y < wallPosition.y + wallSize.y * 0.5f &&
-                        newPosition.y > wallPosition.y - wallSize.y * 0.5f)
+            else if (newPosition.x > wallPosition.x + wallSize.x * 0.5f)
             {
-                newPosition.x = wallPosition.x + wallSize.x * 0.5f + radius;
-                RotateAutomatedRobot();
+                closestX = wallPosition.x + wallSize.x * 0.5f;
             }
-            else if    (newPosition.y < wallPosition.y &&
-                        newPosition.x < wallPosition.x + wallSize.x * 0.5f &&
-                        newPosition.x > wallPosition.x - wallSize.x * 0.5f)
+            if (newPosition.y < wallPosition.y - wallSize.y * 0.5f)
             {
-                newPosition.y = wallPosition.y - wallSize.y * 0.5f - radius;
-                RotateAutomatedRobot();
+                closestY = wallPosition.y - wallSize.y * 0.5f;
             }
-            else if    (newPosition.y > wallPosition.y &&
-                        newPosition.x < wallPosition.x + wallSize.x * 0.5f &&
-                        newPosition.x > wallPosition.x - wallSize.x * 0.5f)
+            else if (newPosition.y > wallPosition.y + wallSize.y * 0.5f)
             {
-                newPosition.y = wallPosition.y + wallSize.y * 0.5f + radius;
+                closestY = wallPosition.y + wallSize.y * 0.5f;
+            }
+            Vector2d directionToWall = { newPosition.x - closestX, newPosition.y - closestY };
+            float distanceToWall = directionToWall.getLength();
+            float penetrationDepth = radius - distanceToWall;
+            if (penetrationDepth > 0 && distanceToWall != 0)
+            {
+                newPosition.x += penetrationDepth * (directionToWall.x / distanceToWall);
+                newPosition.y += penetrationDepth * (directionToWall.y / distanceToWall);
                 RotateAutomatedRobot();
             }
         }
