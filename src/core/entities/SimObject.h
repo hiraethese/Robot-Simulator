@@ -13,7 +13,6 @@
 
 /**
  * @brief Class that represents any simulation object
- * 
  */
 class SimObject
 {
@@ -39,7 +38,6 @@ protected:
 
     /**
      * @brief Structure that contains all the necessary parameters of the simulation object
-     * 
      */
     SimObjView _simObjView;
 
@@ -56,7 +54,6 @@ public:
 
     /**
      * @brief Destroy the Sim Object object
-     * 
      */
     virtual ~SimObject();
 
