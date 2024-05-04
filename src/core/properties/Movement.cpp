@@ -19,11 +19,6 @@ Movement::Movement(float speed,
     _transform = transform;
 }
 
-Movement::~Movement()
-{
-    delete _transform;
-}
-
 float Movement::GetSpeed()
 {
     return _speed;

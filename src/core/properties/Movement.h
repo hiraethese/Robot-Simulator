@@ -25,7 +25,6 @@ public:
             int angleDegrees,
             int rotateClockwise,
             MyTransform* transform);
-    ~Movement();
     float GetSpeed();
     float GetCollisionDistance();
     int GetAngleStep();
