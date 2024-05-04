@@ -38,7 +38,7 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
     _settingGridLayot->addWidget(_angleStepLabel, 3, 0);
     _settingGridLayot->addWidget(_angleStepSpinBox, 3, 1);
 
-    _angleDegreesLable = new QLabel("Angle direction (degree) : ", this);
+    _angleDegreesLable = new QLabel("Angle degree : ", this);
     _angleDegreesSpinBox = new QSpinBox(this);
     _angleDegreesSpinBox->setMinimum(0);
     _angleDegreesSpinBox->setMaximum(360);

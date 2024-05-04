@@ -6,38 +6,25 @@
 # Project:
 # ICP-2024
 #
-ifeq ($(OS),Windows_NT)
-    RM_FILE=del /S /Q
-    RM_DIR=rmdir /S /Q
-    TRG_BIN=bin\icp2024.exe
-	ZIP_MAKER=tar.exe acvf
-	DIR_SEPARATOR=\\
-else
-    RM_FILE=rm -f
-    RM_DIR=rm -rf
-    TRG_BIN=bin/icp2024
-	ZIP_MAKER=zip -r
-	DIR_SEPARATOR=/
-endif
 
-.PHONY: all clean q_prepare run doxygen pack
-
-all: q_prepare
+all: clean q_prepare
 	make -C src
 
 q_prepare:
-	qmake -o src$(DIR_SEPARATOR)Makefile icp2024.pro
+	qmake -o src/Makefile icp2024.pro
 
 run:
-	./$(TRG_BIN)
+	./bin/icp2024
 
 clean:
-	$(RM_FILE) src$(DIR_SEPARATOR)qrc_icons.cpp src$(DIR_SEPARATOR)ui_MainWindow.h src$(DIR_SEPARATOR)Makefile src$(DIR_SEPARATOR)Makefile.Debug src$(DIR_SEPARATOR)Makefile.Release src$(DIR_SEPARATOR).qmake.stash
-	$(RM_DIR) src$(DIR_SEPARATOR)release src$(DIR_SEPARATOR)debug obj moc bin
+	rm -f src/qrc_icons.cpp src/ui_MainWindow.h src/Makefile src/.qmake.stash
+	rm -rf obj moc bin
+
+clean_pack:
+	rm -f xbatur00-xkukht01.zip
 
 doxygen:
 	doxygen doc/Doxyfile
 
-pack:
-	$(ZIP_MAKER) xbatur00-xkukht01.zip src res LICENSE Makefile README.txt icp2024.pro examples doc$(DIR_SEPARATOR)Doxyfile
-
+pack: clean_pack clean
+	zip -r xbatur00-xkukht01.zip src LICENSE Makefile README.txt icp2024.pro examples res doc/Doxyfile
