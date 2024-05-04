@@ -63,7 +63,6 @@ public:
 
     /**
      * @brief Destroy the Robot object
-     * 
      */
     ~Robot();
 

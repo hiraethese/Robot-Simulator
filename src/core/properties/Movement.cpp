@@ -1,3 +1,10 @@
+/**
+ * @file Movement.cpp
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation of the movement class and methods required for moving objects
+ */
+
 #include "Movement.h"
 
 // Note: include errors
@@ -58,7 +65,6 @@ void Movement::SetAngleDegrees(int newAngleDegrees)
 {
     _angleDegrees = newAngleDegrees % 360;
 }
-
 
 void Movement::SetCollisionDistance(float newCollisionDistance)
 {
