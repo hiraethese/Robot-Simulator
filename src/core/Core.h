@@ -15,7 +15,7 @@ private:
     SimMap* _map = nullptr;  // TODO: make method for recreating value
 
 public:
-    void CleanCoreMemory();
+    void ClearCoreMemory();
     static Core* getInstance();
     std::string GetMapValue();
     int GetFPS();

@@ -28,6 +28,7 @@ MainWindow::~MainWindow()
 {
 
     _DeleteAppWindows();  // delete all GUI part items of app
+    _core->ClearCoreMemory();
     delete ui;
 
 }

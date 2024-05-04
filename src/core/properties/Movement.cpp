@@ -80,8 +80,6 @@ void Movement::RotateAutomatedRobot()
         case -1:
             _angleDegrees = (_angleDegrees - _angleStep) % 360;
             break;
-        case 0:
-            break;
         default:
             break;
     }

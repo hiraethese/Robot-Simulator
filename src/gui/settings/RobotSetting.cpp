@@ -19,12 +19,12 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
     _diameterLabel = new QLabel("Radius : ", this);
     _diameterSpinBox = new QSpinBox(this);
     _diameterSpinBox->setMinimum(10);
-    _diameterSpinBox->setMaximum(200);
+    _diameterSpinBox->setMaximum(1000);
     _settingGridLayot->addWidget(_diameterLabel, 1, 0);
     _settingGridLayot->addWidget(_diameterSpinBox, 1, 1);
 
 
-    _speedLabel = new QLabel("Speed(%) : ", this);
+    _speedLabel = new QLabel("Speed : ", this);
     _speedSpinBox = new QSpinBox(this);
     _speedSpinBox->setMinimum(0);
     _speedSpinBox->setMaximum(100);
@@ -48,7 +48,7 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
     _collisionDistanceLabel = new QLabel("Collision distance", this);
     _collisionDistanceSpinBox = new QSpinBox(this);
     _collisionDistanceSpinBox->setMinimum(0);
-    _collisionDistanceSpinBox->setMaximum(300);
+    _collisionDistanceSpinBox->setMaximum(1000);
     _settingGridLayot->addWidget(_collisionDistanceLabel, 5, 0);
     _settingGridLayot->addWidget(_collisionDistanceSpinBox, 5, 1);
     
