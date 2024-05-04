@@ -8,6 +8,11 @@ Core::Core()
     _map = new SimMap(1800, 750);
 }
 
+void Core::CleanCoreMemory()
+{
+    delete _map;
+}
+
 Core *Core::getInstance()
 {
     if (!_core) {
