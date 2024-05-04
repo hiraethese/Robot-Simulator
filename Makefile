@@ -20,7 +20,6 @@ else
 	DIR_SEPARATOR=/
 endif
 
-# Phony targets
 .PHONY: all clean q_prepare run doxygen pack
 
 all: q_prepare
@@ -34,7 +33,7 @@ run:
 
 clean:
 	$(RM_FILE) src$(DIR_SEPARATOR)qrc_icons.cpp src$(DIR_SEPARATOR)ui_MainWindow.h src$(DIR_SEPARATOR)Makefile src$(DIR_SEPARATOR)Makefile.Debug src$(DIR_SEPARATOR)Makefile.Release src$(DIR_SEPARATOR).qmake.stash
-	$(RM_DIR) src$(DIR_SEPARATOR)release src$(DIR_SEPARATOR)debug obj moc  bin
+	$(RM_DIR) src$(DIR_SEPARATOR)release src$(DIR_SEPARATOR)debug obj moc bin
 
 doxygen:
 	doxygen doc/Doxyfile
