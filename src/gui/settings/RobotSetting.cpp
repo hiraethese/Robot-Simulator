@@ -16,7 +16,7 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
     _settingGridLayot->addWidget(_typeRobotLabel, 0, 0);
     _settingGridLayot->addWidget(_typeRobotComboBox, 0, 1);
 
-    _diameterLabel = new QLabel("Radius : ", this);
+    _diameterLabel = new QLabel("Diagonal : ", this);
     _diameterSpinBox = new QSpinBox(this);
     _diameterSpinBox->setMinimum(10);
     _diameterSpinBox->setMaximum(1000);

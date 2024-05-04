@@ -1,5 +1,5 @@
 /**
- * @file style.h
+ * @file style.cpp
  * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
  * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
  * @brief Implement of helpful function for frontend styling

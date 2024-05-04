@@ -1,5 +1,5 @@
 /**
- * @file NewMapSetting.h
+ * @file NewMapSetting.cpp
  * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
  * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
  * @brief Implementation class for stroing users input file name in GUI 
