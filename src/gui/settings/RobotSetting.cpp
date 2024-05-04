@@ -27,7 +27,7 @@ RobotSetting::RobotSetting(QWidget* parent, QString title) : ASettings(parent, t
     _speedLabel = new QLabel("Speed : ", this);
     _speedSpinBox = new QSpinBox(this);
     _speedSpinBox->setMinimum(0);
-    _speedSpinBox->setMaximum(100);
+    _speedSpinBox->setMaximum(50);
     _settingGridLayot->addWidget(_speedLabel, 2, 0);
     _settingGridLayot->addWidget(_speedSpinBox, 2, 1);
 
