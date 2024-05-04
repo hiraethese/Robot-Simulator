@@ -182,7 +182,7 @@ void MainWindow::_RunSimulationActionSlot(){
     // change functional button to simulation stop
     disconnect(_runSimulationAction, 0, 0, 0);
     connect(_runSimulationAction, &QAction::triggered, this, &MainWindow::_PauseSimulationActionSlot);
-    _runSimulationAction->setIcon(QIcon(":/icons/test.png"));
+    _runSimulationAction->setIcon(QIcon(":/icons/pauseTool.png"));
     _runSimulationAction->setText("Pause");
     _lineSimRunStatus->setText("Run");
     _lineSimRunStatus->setStyleSheet("background-color: lightgreen;");
