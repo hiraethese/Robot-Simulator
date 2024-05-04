@@ -514,11 +514,11 @@ ICP_CODE SimMap::RemoveWallByOrderIndex(int orderIndex)
     {
         Wall* wallToRemove = *itWallToRemove;
         _walls.erase(itWallToRemove);
-        // removeItem(wallToRemove);
+        
         delete wallToRemove;
         return CODE_OK;
 
-    }  // TODO: obj not found ret
+    }
 
     return CODE_ERROR_SIM_OBJ_IS_NOT_FOUND_IN_CORE;
 }

@@ -12,7 +12,6 @@
 
 class SimMap
 {
-    // TODO: return 0 if i give path "/mnt"
 private:
     std::string _path {};
     int _width;

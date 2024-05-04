@@ -11,19 +11,16 @@ class Core
 private:
     Core();
     static Core* _core;
-    int _FPS;
-    SimMap* _map = nullptr;  // TODO: make method for recreating value
+    SimMap* _map = nullptr;
 
 public:
     void ClearCoreMemory();
     static Core* getInstance();
     std::string GetMapValue();
-    int GetFPS();
     int GetMapWidth();
     int GetMapHeight();
-    int GetSpeedValue(); // TODO: speed in percent
-    int GetAngleValue(); // Note: get angle step value
-    void SetFPS(int FPS); // TODO: implement this as part of the settings
+    int GetSpeedValue();
+    int GetAngleValue();
     void LeftRotateMoveSig();
     void RightRotateMoveSig();
     void ForwardMoveSig();

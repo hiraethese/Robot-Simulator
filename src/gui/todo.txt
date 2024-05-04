@@ -1,6 +1,4 @@
 1) do/check all TODOs!
-2) clean code, check delete;
-5) check synch all constants from core to gui
+2) clean code;
 10) doc
-14) w = h in robot check
 x) ... =)

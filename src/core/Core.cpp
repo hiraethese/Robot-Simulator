@@ -4,7 +4,6 @@ Core* Core::_core = nullptr;
 
 Core::Core()
 {
-    _FPS = 16; // Note: not actually "Frames Per Second", the name is for convenience
     _map = new SimMap(1800, 750);
 }
 
@@ -24,11 +23,6 @@ Core *Core::getInstance()
 std::string Core::GetMapValue()
 {
     return _map->GetPath();
-}
-
-int Core::GetFPS()
-{
-    return _FPS;
 }
 
 int Core::GetMapWidth()
@@ -51,11 +45,6 @@ int Core::GetAngleValue()
     return _map->GetFirstControlledRobot()->GetMovement()->GetAngleStep();
 }
 
-
-void Core::SetFPS(int FPS)
-{
-    _FPS = FPS;
-}
 
 void Core::LeftRotateMoveSig()
 {
@@ -163,7 +152,7 @@ ICP_CODE Core::RemoveWallByOrderIndex(int orderIndex)
 
 ICP_CODE Core::LoadingMap(std::string path)
 {
-    return _map->LoadObjectsFromFile(path);// TODO: call load objects from file from the gui
+    return _map->LoadObjectsFromFile(path);
 }
 
 SimObjView Core::GetControlledRobotTemp()

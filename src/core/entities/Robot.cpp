@@ -30,26 +30,8 @@ Movement* Robot::GetMovement()
     return _movement;
 }
 
-// typedef struct SimObjView {
-//     float x;
-//     float y;
-//     float w;
-//     float h;
-//     float speed;
-//     float collisionDistance;
-//     int angleStep;
-//     int angleDegrees;
-//     int rotateClockwise;
-//     colors colorCode;
-//     int orderIndex;
-//     bool isControlled;
-//     bool isRobot;
-// } SimObjView;
-
-////////////////////////////// TODO - Correct GUI hitboxes !!!
 SimObjView* Robot::GetSimObjView()
 {
-    // return {_orderIndex, GetTransform()->GetRect().x, GetTransform()->GetRect().y, GetTransform()->GetRect().h, GetTransform()->GetRect().w, _color, true, _isControlled, int(_movement->GetSpeed()), _movement->GetAngleDegrees(), 0};
     _simObjView =   {
 
                 _transform->GetPosition().x - 0.5f * _transform->GetSize().x,
