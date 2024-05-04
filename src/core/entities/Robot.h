@@ -46,8 +46,8 @@ public:
      * (in degrees)
      * @param rotateClockwise rotation of the robot clockwise or counterclockwise
      * (1 is clockwise, -1 is counterclockwise)
-     * @param color robot color during simulation
-     * @param orderIndex unique number for each object
+     * @param color robot color
+     * @param orderIndex robot unique number
      * @param isControlled robot type
      */
     Robot(  Vector2d position,
