@@ -7,5 +7,6 @@
         <file>icons/userRobotTool.png</file>
         <file>icons/cursorTool.png</file>
         <file>icons/wallTool.png</file>
+        <file>icons/test.png</file>
     </qresource>
 </RCC>
