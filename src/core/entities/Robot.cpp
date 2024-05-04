@@ -1,3 +1,10 @@
+/**
+ * @file Robot.cpp
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation of the robot class and its methods
+ */
+
 #include "Robot.h"
 
 Robot::Robot(Vector2d position,
@@ -32,27 +39,25 @@ Movement* Robot::GetMovement()
 
 SimObjView* Robot::GetSimObjView()
 {
-    _simObjView =   {
-
-                _transform->GetPosition().x - 0.5f * _transform->GetSize().x,
-                _transform->GetPosition().y - 0.5f * _transform->GetSize().y,
-                _transform->GetPosition().x,
-                _transform->GetPosition().y,
-                _transform->GetSize().x,
-                _transform->GetSize().y,
-                _movement->GetSpeed(),
-                _movement->GetCollisionDistance(),
-                _movement->GetAngleStep(),
-                _movement->GetAngleDegrees(),
-                _movement->GetRotateClockwise(),
-                _color,
-                _orderIndex,
-                _isControlled,
-                true
-            };
+    _simObjView = {
+        _transform->GetPosition().x - 0.5f * _transform->GetSize().x,
+        _transform->GetPosition().y - 0.5f * _transform->GetSize().y,
+        _transform->GetPosition().x,
+        _transform->GetPosition().y,
+        _transform->GetSize().x,
+        _transform->GetSize().y,
+        _movement->GetSpeed(),
+        _movement->GetCollisionDistance(),
+        _movement->GetAngleStep(),
+        _movement->GetAngleDegrees(),
+        _movement->GetRotateClockwise(),
+        _color,
+        _orderIndex,
+        _isControlled,
+        true
+    };
     return &(_simObjView);
 }
-
 
 void Robot::SetSimObjView(SimObjView view)
 {
