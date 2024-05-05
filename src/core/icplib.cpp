@@ -1,51 +1,59 @@
+/**
+ * @file icplib.cpp
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation of useful functions for the project
+ */
+
 #include "icplib.h"
 
 bool CircRectCollision(Vector2d circPos, float circRadius, Vector2d rectPos, Vector2d rectSize)
 {
-    // temporary variables to set edges for testing
+    // Temporary variables to set edges for testing
     float testX = circPos.x;
     float testY = circPos.y;
 
-    // which edge is closest?
+    // Which edge is closest
     if (circPos.x < rectPos.x - rectSize.x * 0.5) {
-        // test left edge
+        // Test left edge
         testX = rectPos.x - rectSize.x * 0.5;
     } else if (circPos.x > rectPos.x + rectSize.x * 0.5) {
-        // right edge
+        // Right edge
         testX = rectPos.x + rectSize.x * 0.5;
     }
 
     if (circPos.y < rectPos.y - rectSize.y * 0.5) {
-        // top edge
+        // Top edge
         testY = rectPos.y - rectSize.y * 0.5;
     } else if (circPos.y > rectPos.y + rectSize.y * 0.5) {
-        // bottom edge
+        // Bottom edge
         testY = rectPos.y + rectSize.y * 0.5;
     }
 
-    // get distance from closest edges
+    // Get distance from closest edges
     Vector2d distance = {circPos.x - testX, circPos.y - testY};
 
-    // if the distance is less than the radius, collision!
+    // If the distance is less than the radius, collision
     if (distance.getLength() < circRadius) {
         return true;
     }
+
     return false;
 }
 
 bool CircCircCollision(Vector2d firstCircPos, float firstCircRadius, Vector2d secondCircPos, float secondCircRadius)
 {
-    // get distance between the circle's centers
-    // use the Pythagorean Theorem to compute the distance
+    // Get distance between the circle's centers
+    // Use the Pythagorean Theorem to compute the distance
     float distX = firstCircPos.x - secondCircPos.x;
     float distY = firstCircPos.y - secondCircPos.y;
     float distance = sqrt((distX * distX) + (distY * distY));
 
-    // if the distance is less than the sum of the circle's
-    // radii, the circles are touching!
+    // If the distance is less than the sum of the circle's radii, the circles are touching
     if (distance < firstCircRadius + secondCircRadius) {
         return true;
     }
+
     return false;
 }
 
