@@ -77,12 +77,12 @@ Wall* Spawner::GenNewWall(float x, float y, int orderIndex)
 
 Robot* Spawner::GenNewRobot(std::istringstream& specification, int orderIndex, bool isControlled)
 {
-    float x, y, r, speed, collisionDistance;
+    float x, y, d, speed, collisionDistance;
     int angleStep, angleDegrees, rotateClockwise;
     std::string colorString, test;
     colors color;
 
-    if (!(specification >> x >> y >> r >> speed >> collisionDistance >> angleStep >> angleDegrees >> rotateClockwise >> colorString))
+    if (!(specification >> x >> y >> d >> speed >> collisionDistance >> angleStep >> angleDegrees >> rotateClockwise >> colorString))
     {
         std::cerr << "Error: Invalid format for [ControlledRobot] line\n";
         return nullptr;
@@ -100,7 +100,7 @@ Robot* Spawner::GenNewRobot(std::istringstream& specification, int orderIndex, b
         return nullptr;
     }
 
-    if(!(r >= 10 && r <= 1000))
+    if(!(d >= 10 && d <= 1000))
     {
         return nullptr;
     }
@@ -117,7 +117,7 @@ Robot* Spawner::GenNewRobot(std::istringstream& specification, int orderIndex, b
 
     return new Robot(
                         { x, y },
-                        { r, r },
+                        { d, d },
                         speed,
                         collisionDistance,
                         angleStep,
