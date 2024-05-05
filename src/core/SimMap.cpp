@@ -1,3 +1,10 @@
+/**
+ * @file SimMap.cpp
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation of the simulation map class and its methods
+ */
+
 #include "SimMap.h"
 
 SimMap::SimMap(int width, int height)
@@ -304,7 +311,7 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
     return CODE_OK;
 }
 
-//////////////////////////////////////////// COLLISION CHECK !!! ////////////////////////////////////////////
+//////////////////////////////////////////// COLLISION CHECK ////////////////////////////////////////////
 
 // Check for collisions with other robots
 bool SimMap::RobotWithRobotsCollision(Vector2d position, float radius, int orderIndex)
@@ -404,7 +411,7 @@ bool SimMap::WallWithBordersCollision(Vector2d position, Vector2d size)
     return false;
 }
 
-//////////// THE END OF COLLISIONS
+//////////// THE END OF COLLISIONS ////////////
 
 const std::vector<Wall*>& SimMap::GetWalls() const
 {

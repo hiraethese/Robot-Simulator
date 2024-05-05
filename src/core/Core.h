@@ -2,7 +2,7 @@
  * @file Core.h
  * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
  * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
- * @brief Header of the core
+ * @brief Header file of the Core
  */
 
 #ifndef CORE_H
@@ -123,8 +123,7 @@ public:
     void MoveAllObjects();
 
     /**
-     * @brief Create a New Controlled Robot From Template object
-     * Creates a new controlled robot from a template
+     * @brief Creates a new controlled robot from template
      * 
      * @param x X coordinate when clicking
      * @param y Y coordinate when clicking
@@ -134,8 +133,7 @@ public:
     ICP_CODE CreateNewControlledRobotFromTemplate(float x, float y);
 
     /**
-     * @brief Create a New Automated Robot From Template object
-     * Creates a new automated robot from a template
+     * @brief Creates a new automated robot from template
      * 
      * @param x X coordinate when clicking
      * @param y Y coordinate when clicking
@@ -145,8 +143,7 @@ public:
     ICP_CODE CreateNewAutomatedRobotFromTemplate(float x, float y);
 
     /**
-     * @brief Create a New Wall From Template object
-     * Creates a new wall from a template
+     * @brief Creates a new wall from template
      * 
      * @param x X coordinate when clicking
      * @param y Y coordinate when clicking
