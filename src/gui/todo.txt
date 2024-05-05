@@ -1,4 +1,0 @@
-1) do/check all TODOs!
-2) clean code;
-10) doc
-x) ... =)

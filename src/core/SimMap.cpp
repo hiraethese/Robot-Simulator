@@ -175,14 +175,13 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
     // Open the file
     QFileInfo infoAboutPath(QString::fromStdString(path));
 
-    if(!infoAboutPath.exists()){
-
-        std::cout << "file not exist" << std::endl;
+    if(!infoAboutPath.exists())
+    {
         return CODE_ERROR_INPUT_FILE_NOT_EXIST;
     }
 
-    if(!infoAboutPath.isFile()){
-        std::cout << "it is not file" << std::endl;
+    if(!infoAboutPath.isFile())
+    {
         return CODE_ERROR_INPUT_FILE_NOT_EXIST;
     }
 
@@ -191,7 +190,6 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
     // Check if the file is opened
     if (!file.is_open())
     {
-        std::cerr << "Error: Unable to open map file\n";
         return CODE_INTERNAL_ERROR; // error openning map file
     }
 
@@ -208,7 +206,6 @@ ICP_CODE SimMap::LoadObjectsFromFile(std::string path)
         std::string token;
         if (!(iss >> token))
         {
-            std::cerr << "Error: Unable to read token from line\n";
             return CODE_INTERNAL_ERROR; // Error reading token from line
         }
 

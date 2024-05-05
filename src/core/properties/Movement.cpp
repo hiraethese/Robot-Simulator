@@ -6,8 +6,6 @@
  */
 
 #include "Movement.h"
-
-// Note: include errors
 #include "../Core.h"
 
 Movement::Movement(float speed,
@@ -140,7 +138,6 @@ void Movement::MoveControlledRobot(int orderIndex)
 
     // 2) Move with direction
 
-    // Note: vector from argument is include error from core
     Core* _core = Core::getInstance();
     const std::vector<Wall*> &walls = _core->GetVectorWalls();
     const std::vector<Robot*> &robots = _core->GetVectorRobots();
@@ -246,7 +243,6 @@ void Movement::MoveAutomatedRobot(int orderIndex)
 
     // 2) Move with direction
 
-    // Note: vector from argument is include error from core
     Core* _core = Core::getInstance();
     const std::vector<Wall*> &walls = _core->GetVectorWalls();
     const std::vector<Robot*> &robots = _core->GetVectorRobots();

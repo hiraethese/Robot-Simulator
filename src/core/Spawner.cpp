@@ -84,19 +84,18 @@ Robot* Spawner::GenNewRobot(std::istringstream& specification, int orderIndex, b
 
     if (!(specification >> x >> y >> d >> speed >> collisionDistance >> angleStep >> angleDegrees >> rotateClockwise >> colorString))
     {
-        std::cerr << "Error: Invalid format for [ControlledRobot] line\n";
         return nullptr;
     }
-    if (specification >> test) {
-        std::cerr << "Error: Invalid format for [ControlledRobot] line\n";
+    if (specification >> test)
+    {
         return nullptr;
     }
-    if (!convertColorsStringToCode(colorString, &color)) {
-        std::cerr << "Error: Invalid colors format for robot";
+    if (!convertColorsStringToCode(colorString, &color))
+    {
         return nullptr;
     }
-    if(rotateClockwise != -1 && rotateClockwise != 1){
-        std::cerr << "Error: Invalid rotate clockwise value for robot";
+    if(rotateClockwise != -1 && rotateClockwise != 1)
+    {
         return nullptr;
     }
 
@@ -137,15 +136,14 @@ Wall* Spawner::GenNewWall(std::istringstream& specification, int orderIndex)
 
     if (!(specification >> x >> y >> w >> h >> colorString))
     {
-        std::cerr << "Error: Invalid format for [Wall] line\n";
         return nullptr;
     }
-    if (specification >> test) {
-        std::cerr << "Error: Invalid format for [Wall] line\n";
+    if (specification >> test)
+    {
         return nullptr;
     }
-    if (!convertColorsStringToCode(colorString, &color)) {
-        std::cerr << "Error: Invalid colors format for robot";
+    if (!convertColorsStringToCode(colorString, &color))
+    {
         return nullptr;
     }
 

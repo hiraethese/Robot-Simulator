@@ -71,7 +71,6 @@ bool convertColorsStringToCode(std::string colorsString, colors* colorsCode) {
     // for low/high litterals
     for (char& colorsChar : colorsString) colorsChar = std::toupper(colorsChar);
 
-    std::cout << "COLOR: " << colorsString << std::endl;
     // convert    
     if (colorsString == "WHITE") *colorsCode = WHITE;
     else if (colorsString == "BLACK") *colorsCode = BLACK;

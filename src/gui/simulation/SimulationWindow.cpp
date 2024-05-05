@@ -222,7 +222,6 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
     SimObjView view;
     switch(buildModeStatus){
         case ControllRobotStatus:
-            std::cout << "Create Controlled Robot" << std::endl;
             check_creaing = _core->CreateNewControlledRobotFromTemplate(clickPoint.x(), clickPoint.y());
             if(check_creaing){
                 emit UperErrorCodeSig(check_creaing);
@@ -234,7 +233,6 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
             }
             break;
         case AutoRobotStatus:
-            std::cout << "Create Bot Robot" << std::endl;
             check_creaing = _core->CreateNewAutomatedRobotFromTemplate(clickPoint.x(), clickPoint.y());
             if(check_creaing){
                 emit UperErrorCodeSig(check_creaing);
@@ -245,7 +243,6 @@ void SimulationWindow::_CreateNewSimObjGUISlot(QPointF clickPoint){
             }
             break;
         case WallStatus:
-            std::cout << "Create Wall" << std::endl;
             check_creaing = _core->CreateNewWallFromTemplate(clickPoint.x(), clickPoint.y());
             if(check_creaing){
                 emit UperErrorCodeSig(check_creaing);

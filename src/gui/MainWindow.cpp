@@ -225,14 +225,11 @@ void MainWindow::_CreateSimulationWindow(){
 }
 
 void MainWindow::_RequestSimObjSlot(int orderIndex, bool isRobot){
-    std::cout << "Order index: " << orderIndex << "; is Robot: " << isRobot << std::endl;
     ICP_CODE ret;
     SimObjView view;
 
     // request from core info about simulation object
     ret = _core->GetViewByOrderGUI(&view, orderIndex, isRobot);
-
-    std::cout << "Test2: " << view.h << " " << view.color << std::endl;
     
     if(ret != CODE_OK){  // if not find or smth error
         _WarningMsg(ret);
