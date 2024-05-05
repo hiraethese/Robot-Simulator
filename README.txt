@@ -30,9 +30,10 @@ Kukhta Myron (xkukht01@stud.fit.vutbr.cz).
 
 
 ## Implementation 
-The project was implemented in C++ using the Qt framework to solve the graphical interface and logic of user interaction with the application
-Our main idea was the division of responsibilities between the core and the GUI, where core was responsible for the behavior of the simulation
-and the GUI played the role of an intermediary between the user and the core, displaying the simulation graphics and passing user requests to
+The project was implemented in C++ using the Qt framework to solve the graphical interface and logic of user
+interaction with the application. Our main idea was the division of responsibilities between the core and the
+GUI, where core was responsible for the behavior of the simulation and the GUI played the role of an 
+intermediary between the user and the core, displaying the simulation graphics and passing user requests to
 the cornel.
 
 ## License 
