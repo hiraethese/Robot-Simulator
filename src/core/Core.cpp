@@ -1,3 +1,10 @@
+/**
+ * @file Core.cpp
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation of the simulation core using singleton pattern
+ */
+
 #include "Core.h"
 
 Core* Core::_core = nullptr;
@@ -44,7 +51,6 @@ int Core::GetAngleValue()
 {
     return _map->GetFirstControlledRobot()->GetMovement()->GetAngleStep();
 }
-
 
 void Core::LeftRotateMoveSig()
 {
