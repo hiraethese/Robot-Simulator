@@ -7,6 +7,8 @@ Kukhta Myron (xkukht01@stud.fit.vutbr.cz).
 
 ### BUILDING ###
 
+Instruction for building project by Makefile (only for Linux)
+
 1. Build project: Clean previuse compiling and create new executive file from soucre code. 
 
     $ make
