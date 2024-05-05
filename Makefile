@@ -27,4 +27,4 @@ doxygen:
 	doxygen doc/Doxyfile
 
 pack: clean_pack clean
-	zip -r xbatur00-xkukht01.zip src LICENSE Makefile README.txt icp2024.pro examples res doc/Doxyfile
+	zip -r xbatur00-xkukht01.zip src LICENSE Makefile ClassDiagrams.pdf README.txt icp2024.pro examples res doc/Doxyfile
