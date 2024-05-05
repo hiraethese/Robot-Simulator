@@ -1,4 +1,4 @@
-## ICP 2024 project (VUT FIT) ###
+### ICP 2024 project (VUT FIT) ###
 A simple 2D mobile robot simulator.
 
 ### AUTHORS ###
@@ -110,7 +110,8 @@ Wall :
     -- only static existing without collision with a wall (for the possibility of generating irregular shape)
 
     
-
+PS: We recommend setting the speed for robots in the range from 0 to 15 !!!
+    At high speeds, the robot does not have time to detect a collision !!!
 
 ### IMPLEMENTATION  ### 
 The project was implemented in C++ using the Qt framework to solve the graphical interface and logic of user
@@ -125,5 +126,5 @@ The application is divided into two parts: Core and GUI.
 -- Singelton: Used to simplify the communication of different parts of the GUI with the core
 -- Factory method: free implementation of the pattern for creating simulation objects on the core side
 
-## License 
+### License  ### 
 MIT
