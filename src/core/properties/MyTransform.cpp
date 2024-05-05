@@ -1,3 +1,10 @@
+/**
+ * @file MyTransform.cpp
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation of the transform class and its methods
+ */
+
 #include "MyTransform.h"
 
 MyTransform::MyTransform(Vector2d position, Vector2d size)
