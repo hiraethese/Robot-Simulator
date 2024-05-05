@@ -1,3 +1,11 @@
+/**
+ * @file Spawner.cpp
+ * @author Baturov Illia (xbatur00@stud.fit.vutbr.cz)
+ * @author Kukhta Myron (xkukht01@stud.fit.vutbr.cz)
+ * @brief Implementation of the spawner class and its methods
+ * Note: This file is a freestyle interpretation of the factory method
+ */
+
 #include "Spawner.h"
 
 // typedef struct SimObjView {
@@ -25,10 +33,6 @@ Spawner::Spawner()
 
 Robot* Spawner::GenNewRobot(float x, float y, int orderIndex, bool isControlled)
 {
-    // Debug
-    std::cout << x << y << orderIndex << isControlled;
-
-    // return new Robot({ x, y }, { w, h }, speed, collisionDistance, angleStep, angleDegrees, rotateClockwise, colorCode, orderIndex, isControlled);
     if (isControlled)
     {
         return new Robot(
@@ -63,10 +67,6 @@ Robot* Spawner::GenNewRobot(float x, float y, int orderIndex, bool isControlled)
 
 Wall* Spawner::GenNewWall(float x, float y, int orderIndex)
 {
-    // Debug
-    std::cout << x << y << orderIndex;
-
-    // return new Wall({ x, y }, { w, h }, colorCode, orderIndex);
     return new Wall (
                         { x, y },
                         { _wallTemp.w, _wallTemp.h },
@@ -96,7 +96,7 @@ Robot* Spawner::GenNewRobot(std::istringstream& specification, int orderIndex, b
         return nullptr;
     }
     if(rotateClockwise != -1 && rotateClockwise != 1){
-        std::cerr << "Error: Invalid rotate clockwise valeu for robot";
+        std::cerr << "Error: Invalid rotate clockwise value for robot";
         return nullptr;
     }
 
@@ -114,14 +114,6 @@ Robot* Spawner::GenNewRobot(std::istringstream& specification, int orderIndex, b
     {
         return nullptr;
     }
-
-
-
-    // Debug
-    std::cout << "Controlled robot: "
-        << "x=" << x << ", y=" << y << ", r=" << r << ", speed=" << speed << ", collisionDistance=" << collisionDistance
-        << ", angleStep=" << angleStep << ", angleDegrees=" << angleDegrees << ", rotateClockwise=" << rotateClockwise
-        << std::endl;
 
     return new Robot(
                         { x, y },
@@ -156,11 +148,6 @@ Wall* Spawner::GenNewWall(std::istringstream& specification, int orderIndex)
         std::cerr << "Error: Invalid colors format for robot";
         return nullptr;
     }
-
-    // Debug
-    std::cout << "Wall: "
-        << "x=" << x << ", y=" << y << ", w=" << w << ", h=" << h
-        << std::endl;
 
     return new Wall (
                         { x, y },
